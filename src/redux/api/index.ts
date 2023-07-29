@@ -1,2 +1,2 @@
-export * from './RTKquery'
-export * from './instanse'
+export * from './RTKquery';
+export * from './instanse';

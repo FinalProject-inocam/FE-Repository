@@ -1,1 +1,1 @@
-export * from './decodeTokenSlice'
+export * from './decodeTokenSlice';

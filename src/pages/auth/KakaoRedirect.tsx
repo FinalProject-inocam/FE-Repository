@@ -1,8 +1,5 @@
-import React from "react"
+import React from 'react';
 
-
-export const KakaoRedirect:React.FC = () => {
-  return (
-    <div>KakaoRedirect</div>
-  )
-}
+export const KakaoRedirect: React.FC = () => {
+  return <div>KakaoRedirect</div>;
+};
