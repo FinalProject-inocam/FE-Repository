@@ -1,9 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const DecorationDetail: React.FC = () => {
-  return (
-    <div>
-        DecorationDetail
-    </div>
-  )
-}
+  return <div>DecorationDetail</div>;
+};

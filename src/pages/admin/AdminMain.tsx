@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const AdminMain: React.FC = () => {
-  return (
-    <div>AdminMain</div>
-  )
-}
+  return <div>AdminMain</div>;
+};

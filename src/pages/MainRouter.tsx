@@ -1,10 +1,11 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-export const MainRouter:React.FC = () =>  {
+export const MainRouter: React.FC = () => {
   return (
-    <div>mainRouter
-        <Outlet />
+    <div>
+      mainRouter
+      <Outlet />
     </div>
-  )
-}
+  );
+};
