@@ -19,15 +19,15 @@ instance.interceptors.request.use(
         .split(';')
         .filter((cookies) => cookies.includes('accessToken'))[0]
         ?.split('=')[1];
-    const refreshToken =
+    const Refresh =
       document.cookie &&
       document.cookie
         .split(';')
-        .filter((cookies) => cookies.includes('refreshToken'))[0]
+        .filter((cookies) => cookies.includes('Refresh'))[0]
         ?.split('=')[1];
     if (accessToken) config.headers.authorization = accessToken;
-    if (!accessToken && refreshToken)
-      config.headers.refreshtoken = refreshToken;
+    if (!accessToken && Refresh)
+      config.headers.Refresh = Refresh;
     return config;
   },
   (error) => {
@@ -47,12 +47,12 @@ instance.interceptors.response.use(
         response.headers.authorization
       }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
-    if (response.headers.refreshtoken) {
+    if (response.headers.Refresh) {
       // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
       expiresTime.setDate(expiresTime.getDate() + 3);
-      document.cookie = `refreshtoken=${
-        response.headers.refreshtoken
+      document.cookie = `Refresh=${
+        response.headers.Refresh
       }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
     return response;
