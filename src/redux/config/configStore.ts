@@ -1,4 +1,4 @@
-import { testApi } from '../api';
+import { inocamRTK } from '../api';
 import { decodeTokenReducer } from '../modules';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
@@ -6,10 +6,10 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 export const store = configureStore({
   reducer: {
     decodeTokenReducer,
-    [testApi.reducerPath]: testApi.reducer,
+    [inocamRTK.reducerPath]: inocamRTK.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(testApi.middleware),
+    getDefaultMiddleware().concat(inocamRTK.middleware),
 });
 
 setupListeners(store.dispatch);
