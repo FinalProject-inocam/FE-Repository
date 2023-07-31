@@ -39,12 +39,12 @@ instance.interceptors.request.use(
 // 응답 인터셉터 설정
 instance.interceptors.response.use(
   (response: axiosType.AxiosResponse) => {
-    if (response.headers.authorization) {
-      // console.log("config", response.headers.authorization);
+    if (response.headers.Authorization) {
+      console.log("config", response.headers.Authorization);
       const expiresTime = new Date();
       expiresTime.setMinutes(expiresTime.getMinutes() + 30);
       document.cookie = `accessToken=${
-        response.headers.authorization
+        response.headers.Authorization
       }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
     if (response.headers.Refresh) {

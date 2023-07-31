@@ -1,6 +1,6 @@
 import * as Type from "../../types/auth";
 
-export const auth: Type.UserInfo[] = [
+export const logindata: Type.UserInfo[] = [
   {
     email: 'test',
     password: 'test',
