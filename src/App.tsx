@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import * as Page from './pages';
+
+
 const InoCar = lazy(() =>import('./pages/main/InoCar').then(({ InoCar }) => ({ default: InoCar })));
 const Community = lazy(() =>import('./pages/main/Community').then(({ Community }) => ({ default: Community })));
 
@@ -12,7 +14,7 @@ const App: React.FC = () => {
         <Route index element={<Page.Home />} />
         <Route path="inocar" element={<Suspense fallback={<div>Loading...</div>}><InoCar /></Suspense>} /> {/* React.lazy로 화면이 로딩 중일 때 보여줄 컴포넌트 */}
         <Route path="community" element={<Community />} />
-        <Route path="communityDetail" element={<Page.CommunityDetail />} />
+        <Route path="communityDetail/:id" element={<Page.CommunityDetail />} />
         <Route path="decoration" element={<Page.Decoration />} />
         <Route path="decorationDetail" element={<Page.DecorationDetail />} />
         <Route path='mypage' element={<Page.MyPage />} />

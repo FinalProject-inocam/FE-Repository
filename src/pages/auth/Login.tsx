@@ -15,16 +15,18 @@ export const Login: React.FC = () => {
     setLoginInfo({ ...loginInfo, [name]: value })
   }
 
-  const [onpostLogin, {isSuccess, isError, error }] = usePostLoginMutation()
+  const [onpostLoginRTK, {isSuccess, data, isError, error }] = usePostLoginMutation()
   const onSubmitLogin = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    onpostLogin(loginInfo)
+    onpostLoginRTK(loginInfo)
   }
 
   useEffect(()=> {
-    isSuccess && onNavigate('/')()
+    if (isSuccess){
+      onNavigate('/')()
+    }
     isError && console.log("query Err", error)
-  }, [isSuccess, isError, error, onNavigate])
+  }, [isSuccess, data, isError, error, onNavigate])
 
 
   return (
