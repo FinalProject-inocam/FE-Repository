@@ -91,54 +91,6 @@ export const postDetailData: Type.PostsDetailData[] = [
     ]
   },
   {
-    post_id: 1,
-    title: "타이틀1",  
-    content: "내용1", 
-    is_like: true, 
-    like_count: 0,  
-    image_urls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
-    comment: [
-      {
-        comment_id: 1,
-        nickname: "댓글닉네임1",
-        comment: "댓글내용1",
-        created_at: "2023-07 - 31",
-        modified_at: "2023-07 - 31",
-      },
-      {
-        comment_id: 2,
-        nickname: "댓글닉네임2",
-        comment: "댓글내용2",
-        created_at: "2023-07 - 31",
-        modified_at: "2023-07 - 31",
-      }
-    ]
-  },
-  {
-    post_id: 1,
-    title: "타이틀1",  
-    content: "내용1", 
-    is_like: true, 
-    like_count: 0,  
-    image_urls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
-    comment: [
-      {
-        comment_id: 1,
-        nickname: "댓글닉네임1",
-        comment: "댓글내용1",
-        created_at: "2023-07 - 31",
-        modified_at: "2023-07 - 31",
-      },
-      {
-        comment_id: 2,
-        nickname: "댓글닉네임2",
-        comment: "댓글내용2",
-        created_at: "2023-07 - 31",
-        modified_at: "2023-07 - 31",
-      }
-    ]
-  },
-  {
     post_id: 2,
     title: "타이틀2",  
     content: "내용2", 

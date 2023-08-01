@@ -1,7 +1,10 @@
-export interface CommentsData {
+export interface Comment {
+  comment: string;
+}
+
+export interface CommentsData extends Comment {
   comment_id: number;
   nickname: string;
-  comment: string;
   created_at: string;
   modified_at: string;
 }

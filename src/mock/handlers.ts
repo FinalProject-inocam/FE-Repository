@@ -194,75 +194,80 @@ export const handlers = [
     }
   ),
 
-// patchPosts - 차량출고 커뮤니티 게시글 수정
-rest.patch(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
-async (req, res, ctx) => {
-  console.log("patchPosts", req);
-  return res(
-    ctx.status(200),
-    ctx.json({
-      success: true,
-      status: 200,
-      msg: '게시글이 수정되었습니다.'
-    }),
-  );
-}
-),
+  // patchPosts - 차량출고 커뮤니티 게시글 수정
+  rest.patch(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
+    async (req, res, ctx) => {
+      console.log("patchPosts", req);
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: '게시글이 수정되었습니다.'
+        }),
+      );
+    }
+  ),
 
-// postPostsComment - 차량출고 커뮤니티 게시글 댓글작성
-rest.post(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id/comments`,
-async (req, res, ctx) => {
-  console.log("patchPosts", req.body);
-  return res(
-    ctx.status(200),
-    ctx.json({
-      success: true,
-      status: 200,
-      msg: '댓글이 입력 되었습니다.'
-    }),
-  );
-}
-),
+  // postPostsComment - 차량출고 커뮤니티 게시글 댓글작성
+  rest.post(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id/comments`,
+    async (req, res, ctx) => {
 
-// deletePostsComment - 차량출고 커뮤니티 게시글 댓글작성
-rest.delete(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
-async (req, res, ctx) => {
-  console.log("deletePostsComment", req.params.id);
-  return res(
-    ctx.status(200),
-    ctx.json({
-      success: true,
-      status: 200,
-      msg: '댓글이 삭제 되었습니다.'
-    }),
-  );
-}
-),
+      const { comment } = req.body as any
+      const newComment = { comment_id: Date.now(), nickname: "테스트", comment, created_at: "2023-08-01", modified_at: "2023-08-01" }
+      const find = TestDB.postDetailData.find(post => post.post_id === +req.params.id)
+      console.log(find);
+      find?.comment.push(newComment)
 
-// postPostsComment - 차량출고 커뮤니티 게시글 댓글작성
-rest.patch(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
-async (req, res, ctx) => {
-  console.log("patchPosts", req.params.id, req.body);
-  return res(
-    ctx.status(200),
-    ctx.json({
-      success: true,
-      status: 200,
-      msg: '댓글이 수정 되었습니다.'
-    }),
-  );
-}
-),
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: '댓글이 입력 되었습니다.'
+        }),
+      );
+    }
+  ),
 
+  // deletePostsComment - 차량출고 커뮤니티 게시글 댓글삭제
+  rest.delete(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
+    async (req, res, ctx) => {
+      const { postid, commentid } = req.params
+      console.log("postid", postid, "commentid", commentid);
+      const find = TestDB.postDetailData.find(post => post.post_id === +postid)
+      const findIndex: any = find?.comment.findIndex(comment => comment.comment_id === + commentid)
+      find?.comment.splice(findIndex, 1)
 
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: '댓글이 삭제 되었습니다.'
+        }),
+      );
+    }
+  ),
+
+  // postPostsComment - 차량출고 커뮤니티 게시글 댓글수정
+  rest.patch(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
+    async (req, res, ctx) => {
+      const { comment } = req.body as any
+      const { postid, commentid } = req.params
+      const find = TestDB.postDetailData.find(post => post.post_id === +postid)
+      const findcomment = find?.comment.find(comment => comment.comment_id === + commentid)
+      const findIndex: any = find?.comment.findIndex(comment => comment.comment_id === + commentid)
+      findcomment && find?.comment.splice(findIndex, 1, { ...findcomment, comment })
+
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: '댓글이 수정 되었습니다.'
+        }),
+      );
+    }
+  ),
 ];
-
-
-/*
-  rest 메소드가 핵심이고, 이를 API 가로채서, Morking 
-  첫번째 매개변수 API,
-  두번째 매개변수 비동기처 함수를 넣는거죠
-  req -> 클라이언트에서 받아온거
-  res -> 돌려줄때 
-         - ctx -> contenxt : status, data(JSON) ->  ctx.status(200) //  ctx.json({}: 타입이 필요하겠죠 )
-*/
