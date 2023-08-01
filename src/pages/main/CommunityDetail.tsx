@@ -1,37 +1,41 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useRouter } from '../../hooks';
 import * as RTK from '../../redux';
 import * as Type from '../../types';
+import { useRouter } from '../../hooks';
 import { EditCommunityDetail } from '../../components';
 import { EditComment } from '../../components/community/EditComment';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 export const CommunityDetail: React.FC = () => {
   const { getId, onNavigate } = useRouter()
 
+  // RTK - 상세페이지 GET
   const { isLoading, data, isError, error } = RTK.useGetPostsDetailQuery(getId)
 
-  const [onCommentPostRTK, { isSuccess: commentSuccess, data: commentData, isError: commentIsError, error: commentError }] = RTK.usePostPostsCommentMutation()
-  const [commentInfo, setCommentInfo] = useState<string>("")
-  const onChangeComment = (e: ChangeEvent<HTMLInputElement>): void => {
-    setCommentInfo(e.target.value)
-  }
-  const onSubmitPostComment = (post_id:number | undefined) => (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault()
-    onCommentPostRTK({post_id, data:{comment:commentInfo}})
-  }
-
-  const [onDeleteCommentRTK, { isSuccess: commentDeleteSuccess, data: commentDeleteData, isError: commentDeleteIsError, error: commentDeleteError }] = RTK.useDeletePostsCommentMutation()
-  const onDeleteComment = (post_id:number | undefined, comment_id:number | undefined) => () => {  
-    onDeleteCommentRTK({post_id, comment_id})
-  }
- 
-
+  // RTK - 상세페이지 삭제
   const [onDeletePostRTK, { isSuccess: postSuccess, data: postData, isError: postIsError, error: postError }] = RTK.useDeletePostsMutation()
   const onDeletePost = (post_id: number | undefined) => () => {
     onDeletePostRTK(post_id)
     onNavigate(-1)()
   }
 
+  // RTK - 상세페이지 댓글작성(POST)
+  const [commentInfo, setCommentInfo] = useState<string>("")
+  const [onCommentPostRTK, { isSuccess: commentSuccess, data: commentData, isError: commentIsError, error: commentError }] = RTK.usePostPostsCommentMutation()
+  const onChangeComment = (e: ChangeEvent<HTMLInputElement>): void => {
+    setCommentInfo(e.target.value)
+  }
+  const onSubmitPostComment = (post_id: number | undefined) => (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+    onCommentPostRTK({ post_id, data: { comment: commentInfo } })
+  }
+
+  // RTK - 상세페페이지 댓글삭제(DELETE)
+  const [onDeleteCommentRTK, { isSuccess: commentDeleteSuccess, data: commentDeleteData, isError: commentDeleteIsError, error: commentDeleteError }] = RTK.useDeletePostsCommentMutation()
+  const onDeleteComment = (post_id: number | undefined, comment_id: number | undefined) => () => {
+    onDeleteCommentRTK({ post_id, comment_id })
+  }
+
+  // 데이터 확인을 위한 
   useEffect(() => {
     if (postSuccess) console.log("useDeletePostsMutation 삭제성공", postData);
     if (postIsError) console.log("useDeletePostsMutation 삭제실패", postError);
@@ -39,8 +43,10 @@ export const CommunityDetail: React.FC = () => {
     if (commentIsError) console.log("commentData 입력실패", commentError);
     if (commentDeleteSuccess) console.log("commentDelete 댓글삭제성공", commentDeleteData);
     if (commentDeleteIsError) console.log("commentDelte 댓글삭제실패", commentDeleteError);
-    
-  }, [postSuccess, postData, postIsError, postError, commentSuccess, commentData, commentIsError, commentError, commentDeleteSuccess, commentDeleteData, commentDeleteIsError, commentDeleteError])
+
+  }, [postSuccess, postData, postIsError, postError, commentSuccess, 
+      commentData, commentIsError, commentError, commentDeleteSuccess, 
+      commentDeleteData, commentDeleteIsError, commentDeleteError])
 
   if (isLoading) {
     return <div>... 로딩중</div>
@@ -62,8 +68,8 @@ export const CommunityDetail: React.FC = () => {
             <img src={image_urls[0]} alt='사진이라우' />
           </div>
           <form onSubmit={onSubmitPostComment(post_id)}>
-            <input value={commentInfo} onChange={onChangeComment} placeholder='댓글입력해주세요'/>
-            <input type='submit' value="제출하기"/>
+            <input value={commentInfo} onChange={onChangeComment} placeholder='댓글입력해주세요' />
+            <input type='submit' value="제출하기" />
           </form>
           <hr />
           {comment.map(({ comment_id, nickname, comment, created_at, modified_at }: Type.CommentsData) => (

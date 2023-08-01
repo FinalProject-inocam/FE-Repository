@@ -1,25 +1,9 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import * as Type from '../../types/auth';
-import { usePostLoginMutation } from '../../redux';
-import { useRouter } from '../../hooks';
+import React, {useEffect} from 'react';
+import { useLogin, useRouter } from '../../hooks';
 
 export const Login: React.FC = () => {
   const {onNavigate} = useRouter()
-  const [loginInfo, setLoginInfo] = useState<Type.User>({
-    email: "",
-    password: ""
-  })
-
-  const onChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setLoginInfo({ ...loginInfo, [name]: value })
-  }
-
-  const [onpostLoginRTK, {isSuccess, data, isError, error }] = usePostLoginMutation()
-  const onSubmitLogin = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault()
-    onpostLoginRTK(loginInfo)
-  }
+  const  {loginInfo, onChangeInput, onSubmitLogin, isSuccess, data, isError, error} = useLogin()
 
   useEffect(()=> {
     if (isSuccess){

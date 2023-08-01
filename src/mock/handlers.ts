@@ -196,8 +196,7 @@ export const handlers = [
 
   // patchPosts - 차량출고 커뮤니티 게시글 수정
   rest.patch(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
-    async (req, res, ctx) => {
-      console.log("patchPosts", req);
+    async (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
@@ -216,7 +215,6 @@ export const handlers = [
       const { comment } = req.body as any
       const newComment = { comment_id: Date.now(), nickname: "테스트", comment, created_at: "2023-08-01", modified_at: "2023-08-01" }
       const find = TestDB.postDetailData.find(post => post.post_id === +req.params.id)
-      console.log(find);
       find?.comment.push(newComment)
 
       return res(
@@ -234,7 +232,6 @@ export const handlers = [
   rest.delete(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
     async (req, res, ctx) => {
       const { postid, commentid } = req.params
-      console.log("postid", postid, "commentid", commentid);
       const find = TestDB.postDetailData.find(post => post.post_id === +postid)
       const findIndex: any = find?.comment.findIndex(comment => comment.comment_id === + commentid)
       find?.comment.splice(findIndex, 1)

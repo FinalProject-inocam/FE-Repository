@@ -1,14 +1,9 @@
 import axios, * as axiosType from 'axios';
-// import axios, { AxiosInstance, AxiosRequestHeaders, AxiosRequestConfig, AxiosResponse } from "axios";
-
+import { MyAxiosRequestConfig } from '../../types/async';
 // axios 인스턴스 생성
 const instance: axiosType.AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_KEY, // API의 기본 URL을 설정합니다.
+  baseURL: process.env.REACT_APP_SERVER_KEY,
 });
-
-interface MyAxiosRequestConfig extends axiosType.AxiosRequestConfig {
-  headers: axiosType.AxiosRequestHeaders;
-}
 
 // 요청 인터셉터 설정
 instance.interceptors.request.use(
@@ -31,7 +26,6 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    // 요청 인터셉터에서 에러가 발생한 경우 처리할 수 있습니다.
     return Promise.reject(error);
   },
 );
@@ -43,22 +37,19 @@ instance.interceptors.response.use(
       console.log("config", response.headers.Authorization);
       const expiresTime = new Date();
       expiresTime.setMinutes(expiresTime.getMinutes() + 30);
-      document.cookie = `accessToken=${
-        response.headers.Authorization
-      }; expires=${expiresTime.toUTCString()}; path=/;`;
+      document.cookie = `accessToken=${response.headers.Authorization
+        }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
     if (response.headers.Refresh) {
       // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
       expiresTime.setDate(expiresTime.getDate() + 3);
-      document.cookie = `Refresh=${
-        response.headers.Refresh
-      }; expires=${expiresTime.toUTCString()}; path=/;`;
+      document.cookie = `Refresh=${response.headers.Refresh
+        }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
     return response;
   },
   (error) => {
-    // 응답 인터셉터에서 에러가 발생한 경우 처리할 수 있습니다.
     return Promise.reject(error);
   },
 );

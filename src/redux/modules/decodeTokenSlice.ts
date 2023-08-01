@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { DecodeToken } from '../reduxType';
+import { DecodeToken } from '../../types/async';
 
 const decodeTokenSlice = createSlice({
   name: 'decodeToken',
