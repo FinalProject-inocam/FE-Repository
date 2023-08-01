@@ -142,14 +142,35 @@ export const inocamRTK = createApi({
       }),
 
       // postComment - 차량출고 커뮤니티 댓글작성
-      postComment: build.mutation({
-        query: ({postId, data}) => ({
-          url: `/api/posts/${postId}/comments`,
+      postPostsComment: build.mutation({
+        query: ({post_id, data}) => ({
+          url: `/api/posts/${post_id}/comments`,
           method: 'post',
           data
         }),
-        invalidatesTags: ['POSTDETAIL']
+        invalidatesTags: ['POSTS','POSTDETAIL']
       }),
+
+
+      // DeleteComment - 차량출고 커뮤니티 댓글 삭제
+      deletePostsComment: build.mutation({
+        query: ({post_id, comment_id}) => ({
+          url: `/api/posts/${post_id}/comments/${comment_id}`,
+          method: 'delete',
+        }),
+        invalidatesTags: ['POSTS','POSTDETAIL']
+      }),
+
+      // pathComment - 차량출고 커뮤니티 댓글수정
+      patchPostComment: build.mutation({
+        query: ({post_id, comment_id, data}) => ({
+          url: `/api/posts/${post_id}/comments/${comment_id}`,
+          method: 'patch',
+          data: data,
+        }),
+        invalidatesTags: ['POSTS','POSTDETAIL']
+      }),
+
 
 
     };
@@ -169,5 +190,9 @@ export const {
   useDeletePostsMutation,
   usePatchPostsMutation,
   useGetPostsDetailQuery,
-  usePostCommentMutation,
+
+  // Posts 차량출고 커뮤니티 댓글 관련
+  usePostPostsCommentMutation,
+  usePatchPostCommentMutation,
+  useDeletePostsCommentMutation
 } = inocamRTK;
