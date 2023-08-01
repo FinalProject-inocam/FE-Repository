@@ -209,6 +209,52 @@ async (req, res, ctx) => {
 }
 ),
 
+// postPostsComment - 차량출고 커뮤니티 게시글 댓글작성
+rest.post(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id/comments`,
+async (req, res, ctx) => {
+  console.log("patchPosts", req.body);
+  return res(
+    ctx.status(200),
+    ctx.json({
+      success: true,
+      status: 200,
+      msg: '댓글이 입력 되었습니다.'
+    }),
+  );
+}
+),
+
+// deletePostsComment - 차량출고 커뮤니티 게시글 댓글작성
+rest.delete(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
+async (req, res, ctx) => {
+  console.log("deletePostsComment", req.params.id);
+  return res(
+    ctx.status(200),
+    ctx.json({
+      success: true,
+      status: 200,
+      msg: '댓글이 삭제 되었습니다.'
+    }),
+  );
+}
+),
+
+// postPostsComment - 차량출고 커뮤니티 게시글 댓글작성
+rest.patch(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
+async (req, res, ctx) => {
+  console.log("patchPosts", req.params.id, req.body);
+  return res(
+    ctx.status(200),
+    ctx.json({
+      success: true,
+      status: 200,
+      msg: '댓글이 수정 되었습니다.'
+    }),
+  );
+}
+),
+
+
 ];
 
 

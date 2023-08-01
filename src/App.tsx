@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import * as Page from './pages';
+import { GlobalStyled } from './components';
 
 
 const InoCar = lazy(() =>import('./pages/main/InoCar').then(({ InoCar }) => ({ default: InoCar })));
@@ -9,6 +10,8 @@ const Community = lazy(() =>import('./pages/main/Community').then(({ Community }
 const App: React.FC = () => {
 
   return (
+    <>
+    <GlobalStyled />
     <Routes>
       <Route path="/" element={<Page.MainRouter />}>
         <Route index element={<Page.Home />} />
@@ -37,6 +40,7 @@ const App: React.FC = () => {
         </Route>
       </Route>
     </Routes>
+    </>
   );
 };
 

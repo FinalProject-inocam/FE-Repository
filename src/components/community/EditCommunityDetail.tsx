@@ -24,7 +24,7 @@ export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ post_id, title, 
     // data 폼데이터 -> posts Write : "data" = blob
     const formData = new FormData();
     formData.append('data', new Blob([JSON.stringify(inputValue)], {type:'application/json'}))
-    onPatchPostsRTK({post_id, formData})
+    onPatchPostsRTK({post_id, formData}) 
     setEdit(!edit)
     setInputValue({
       title: "",
@@ -41,7 +41,7 @@ export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ post_id, title, 
     <div>
       {!edit ? <><div>{title}</div>
         <div>{content}</div>
-        <button onClick={onToogleEdit}>수정하기</button>
+        <div onClick={onToogleEdit}>수정하기</div>
       </>
         : <>
           <input
