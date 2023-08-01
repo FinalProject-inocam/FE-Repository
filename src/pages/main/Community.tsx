@@ -1,7 +1,7 @@
 import React from 'react';
-import { useGetPostsQuery } from '../../redux';
-import * as Type from '../../types/post';
 import { useRouter } from '../../hooks';
+import * as Type from '../../types/post';
+import { useGetPostsQuery } from '../../redux';
 
 export const Community: React.FC = () => {
   const { onNavigate } = useRouter()
