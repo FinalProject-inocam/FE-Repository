@@ -51,7 +51,7 @@ const axiosBaseQuery =
 
 export const inocamRTK = createApi({
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['POSTS', 'POSTDETAIL'],
+  tagTypes: ['POSTS', 'POSTDETAIL', 'POSTCOMMENT'],
   endpoints(build) {
     return {
       // loginRTK
@@ -141,6 +141,15 @@ export const inocamRTK = createApi({
         providesTags: ['POSTDETAIL']
       }),
 
+      // postComment - 차량출고 커뮤니티 댓글작성
+      postComment: build.mutation({
+        query: ({postId, data}) => ({
+          url: `/api/posts/${postId}/comments`,
+          method: 'post',
+          data
+        }),
+        invalidatesTags: ['POSTDETAIL']
+      }),
 
 
     };
@@ -148,13 +157,17 @@ export const inocamRTK = createApi({
 });
 
 export const {
+  // Auth
   usePostLoginMutation,
   usePostSignupMutation,
   useGetEmailCheckQuery,
   useGetNickCheckQuery,
+
+  // Posts 차량출고 커뮤니티 관련
   useGetPostsQuery,
   usePostPostsMutation,
   useDeletePostsMutation,
   usePatchPostsMutation,
-  useGetPostsDetailQuery
+  useGetPostsDetailQuery,
+  usePostCommentMutation,
 } = inocamRTK;

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from '../../hooks';
-import { useGetPostsDetailQuery, useDeletePostsMutation } from '../../redux';
+import { useGetPostsDetailQuery, useDeletePostsMutation, usePostCommentMutation } from '../../redux';
 import * as Type from '../../types';
 import { EditCommunityDetail } from '../../components';
 
@@ -12,9 +12,16 @@ export const CommunityDetail: React.FC = () => {
   const { isLoading, data, isError, error } = useGetPostsDetailQuery(getId)
   data && console.log(data)
 
+  const [onCommentPostRTK, { isSuccess: commentSuccess, data: commentData, isError: commentIsError, error: commentError }] = usePostCommentMutation()
+  const [commentInfo, setCommentInfo] = useState<string>("")
+  const onChangeComment = (e: ChangeEvent<HTMLInputElement>): void => {
+    setCommentInfo(e.target.value)
+  }
+  const onCommentButton = (): void => {
+    onCommentPostRTK(commentInfo)
+  }
 
   const [onDeletePostRTK, { isSuccess: postSuccess, data: postData, isError: postIsError, error: postError }] = useDeletePostsMutation()
-
   const onDeletePost = (post_id: number | undefined) => () => {
     onDeletePostRTK(post_id)
     onNavigate(-1)()
@@ -23,7 +30,9 @@ export const CommunityDetail: React.FC = () => {
   useEffect(() => {
     if (postSuccess) console.log("useDeletePostsMutation 삭제성공", postData);
     if (postIsError) console.log("useDeletePostsMutation 삭제실패", postError);
-  }, [postSuccess, postData, postIsError, postError])
+    if (commentSuccess) console.log("useDeletePostsMutation 삭제성공", commentData);
+    if (commentIsError) console.log("useDeletePostsMutation 삭제실패", commentError);
+  }, [postSuccess, postData, postIsError, postError, commentSuccess, commentData, commentIsError, commentError])
 
   if (isLoading) {
     return <div>... 로딩중</div>
@@ -56,6 +65,10 @@ export const CommunityDetail: React.FC = () => {
               </div>
             ))
           }
+          <form>
+            <input type='text' name='comment' value={commentInfo}  onChange={onChangeComment} placeholder='댓글을 입력해 주세요' />
+            <div onClick={onCommentButton}>제출하기</div>
+          </form>
         </>
       ))}
     </div>
