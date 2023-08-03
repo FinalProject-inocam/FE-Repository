@@ -9,5 +9,6 @@ export * from './Error';
 export * from './NotFound';
 export * from './MainRouter';
 export * from './MyPageRouter';
+export * from './Chat'
 // ProtectiveRouter
 export * from './ProtectiveRouter';

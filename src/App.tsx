@@ -45,6 +45,9 @@ const App: React.FC = () => {
           <Route index element={<Page.AdminMain />} />
         </Route>
       </Route>
+
+      {/* 채팅을 위한 임시 라우터 :: Chat */}
+      <Route path='/chat' element={<Page.Chat />} />
     </Routes>
     </>
   );
