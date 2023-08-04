@@ -8,7 +8,9 @@ export const useSignup = () => {
     email: "",
     password: "",
     nickname: "",
-    phone_number: "",
+    phoneNumber: "",
+    gender : "male",
+    birthdate : "2023-08-04",
     isAdmin: false,
     admincode: "E002"
   })
@@ -27,12 +29,12 @@ export const useSignup = () => {
   }
 
   const [checkEmail, setCheckEmail] = useState(true)
-  const { isSuccess: checkEmailSuccess, data: checkEmailData, isError: checkEmailError, error: emailError } = useGetEmailCheckQuery(signInfo.email, {
+  const { isSuccess: checkEmailSuccess, data: checkEmailData } = useGetEmailCheckQuery(signInfo.email, {
     skip: checkEmail,
   })
 
   const [checkNickName, setCheckNickName] = useState(true)
-  const { isSuccess: checkNickNameSuccess, data: checkNickNameData, isError: checkNickNameError, error: nickNameError } = useGetNickCheckQuery(signInfo.nickname, {
+  const { isSuccess: checkNickNameSuccess, data: checkNickNameData } = useGetNickCheckQuery(signInfo.nickname, {
     skip: checkNickName
   })
 
@@ -46,8 +48,7 @@ export const useSignup = () => {
   }
   return { onChangeInput, onSubmitSign, onCheckEmail, onCheckNickName, 
             signInfo, isSuccess, data, isError, error, 
-            checkEmailSuccess, checkEmailData, checkEmailError, 
-            emailError, checkNickNameSuccess, checkNickNameData, 
-            checkNickNameError, nickNameError }
+            checkEmailSuccess, checkEmailData, 
+            checkNickNameSuccess, checkNickNameData }
 }
 

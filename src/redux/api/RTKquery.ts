@@ -18,14 +18,14 @@ const axiosBaseQuery =
         switch (types) {
           case 'login':
             const auth = await instance({ url, method, data });
-            console.log("auth.data", auth);
             return { data: auth.data.msg };
           case 'signup':
             const signup = await instance({ url, method, data });
+            console.log(signup);
             return { data: signup.data.msg };
           case 'getCheck':
-            const getEmailCheck = await instance({ url, method });
-            return { data: getEmailCheck.data.msg };
+            const getCheck = await instance({ url, method });
+            return { data: getCheck.data.data };
           case 'multipart':
             const postMultipart = await instance({
               url, method, data,
@@ -39,6 +39,8 @@ const axiosBaseQuery =
             return { data: getData.data.data };
           default:
             const res = await instance({ url, method, data });
+            console.log(res);
+            
             return { data: res.data.msg };
         }
       } catch (axiosError) {
@@ -51,7 +53,7 @@ const axiosBaseQuery =
 
 export const inocamRTK = createApi({
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['POSTS', 'POSTDETAIL', 'POSTCOMMENT'],
+  tagTypes: ['POSTS', 'POSTDETAIL', 'POSTCOMMENT', 'KAKAO'],
   endpoints(build) {
     return {
       // loginRTK
@@ -63,6 +65,15 @@ export const inocamRTK = createApi({
           types: 'login',
         }),
       }),
+    // SNSLogin
+    loginSNSRTK: build.query({
+      query: (payload) => ({
+        url: `/api/auth/kakao${payload}`,
+        method: "get",
+      }),
+      providesTags: ["KAKAO"],
+    }), 
+
       // Signup
       postSignup: build.mutation({
         query: (data) => ({
@@ -121,8 +132,8 @@ export const inocamRTK = createApi({
 
       // EditPosts - 차량출고 커뮤니티 게시글 수정
       patchPosts: build.mutation({
-        query: ({postId, formData}) => ({
-        url: `/api/posts/${postId}`,
+        query: ({post_id, formData}) => ({
+        url: `/api/posts/${post_id}`,
         method: 'patch',
         data:formData,
         types:'multipart'
@@ -183,6 +194,7 @@ export const {
   usePostSignupMutation,
   useGetEmailCheckQuery,
   useGetNickCheckQuery,
+  useLoginSNSRTKQuery,
 
   // Posts 차량출고 커뮤니티 관련
   useGetPostsQuery,

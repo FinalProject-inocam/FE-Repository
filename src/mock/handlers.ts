@@ -47,6 +47,20 @@ export const handlers = [
     },
   ),
 
+  // SNS-Login 
+  rest.get(`${process.env.REACT_APP_SERVER_KEY}/api/auth/kakao`,
+  async (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        status: 200,
+        msg: '소셜로그인 성공',
+      }),
+    );
+  }
+),
+
   // Signup
   rest.post<Type.UserInfo>(`${process.env.REACT_APP_SERVER_KEY}/api/auth/signup`,
     async (req, res, ctx) => {
@@ -150,7 +164,7 @@ export const handlers = [
   // getPostDeatil - 차량출고 커뮤니티 게시글 조회 
   rest.get(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
     async (req, res, ctx) => {
-      const find = TestDB.postDetailData.find(post => post.post_id === +req.params.id)
+      const find = TestDB.postDetailData.find(post => post.postId === +req.params.id)
       return res(
         ctx.status(200),
         ctx.json({
@@ -180,7 +194,7 @@ export const handlers = [
   // deletePosts - 차량출고 커뮤니티 게시글 삭제
   rest.delete(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
     async (req, res, ctx) => {
-      const findIndex = TestDB.postdata.findIndex((post: Type.PostsData) => post.post_id === +req.params.id)
+      const findIndex = TestDB.postdata.findIndex((post: Type.PostsData) => post.postId === +req.params.id)
       TestDB.postdata.splice(findIndex, 1)
 
       return res(
@@ -213,9 +227,9 @@ export const handlers = [
     async (req, res, ctx) => {
 
       const { comment } = req.body as any
-      const newComment = { comment_id: Date.now(), nickname: "테스트", comment, created_at: "2023-08-01", modified_at: "2023-08-01" }
-      const find = TestDB.postDetailData.find(post => post.post_id === +req.params.id)
-      find?.comment.push(newComment)
+      const newComment = { commentId: Date.now(), nickname: "테스트", comment, createdAt: "2023-08-01", modifiedAt: "2023-08-01" }
+      const find = TestDB.postDetailData.find(post => post.postId === +req.params.id)
+      find?.commentsList.push(newComment)
 
       return res(
         ctx.status(200),
@@ -232,9 +246,9 @@ export const handlers = [
   rest.delete(`${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
     async (req, res, ctx) => {
       const { postid, commentid } = req.params
-      const find = TestDB.postDetailData.find(post => post.post_id === +postid)
-      const findIndex: any = find?.comment.findIndex(comment => comment.comment_id === + commentid)
-      find?.comment.splice(findIndex, 1)
+      const find = TestDB.postDetailData.find(post => post.postId === +postid)
+      const findIndex: any = find?.commentsList.findIndex(comment => comment.commentId === + commentid)
+      find?.commentsList.splice(findIndex, 1)
 
       return res(
         ctx.status(200),
@@ -252,10 +266,10 @@ export const handlers = [
     async (req, res, ctx) => {
       const { comment } = req.body as any
       const { postid, commentid } = req.params
-      const find = TestDB.postDetailData.find(post => post.post_id === +postid)
-      const findcomment = find?.comment.find(comment => comment.comment_id === + commentid)
-      const findIndex: any = find?.comment.findIndex(comment => comment.comment_id === + commentid)
-      findcomment && find?.comment.splice(findIndex, 1, { ...findcomment, comment })
+      const find = TestDB.postDetailData.find(post => post.postId === +postid)
+      const findcomment = find?.commentsList.find(comment => comment.commentId === + commentid)
+      const findIndex: any = find?.commentsList.findIndex(comment => comment.commentId === + commentid)
+      findcomment && find?.commentsList.splice(findIndex, 1, { ...findcomment, comment })
 
       return res(
         ctx.status(200),

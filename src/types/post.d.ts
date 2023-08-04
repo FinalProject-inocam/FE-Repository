@@ -3,25 +3,25 @@ export interface Comment {
 }
 
 export interface CommentsData extends Comment {
-  comment_id: number;
+  commentId: number;
   nickname: string;
-  created_at: string;
-  modified_at: string;
+  createdAt: string;
+  modifiedAt: string;
 }
 
 export interface PostPosts {
   title:string;
   content:string;
-  post_id?: number;
+  postId?: number;
 }
 
 export interface PostsData extends PostPosts {
-  is_like: boolean;
-  like_count: number;
-  comment_count?: number;
+  isLike: boolean;
+  likeCount: number;
+  commentCount?: number;
 }
 
 export interface PostsDetailData extends PostsData {
-  image_urls: string[];
-  comment: CommentsData[];
+  imageUrls: string[];
+  commentsList: CommentsData[];
 }

@@ -6,7 +6,7 @@ export interface FigureImg {
 }
 
 export interface EditComment {
-  post_id: number | undefined;
-  comment_id: number;
+  postId: number | undefined;
+  commentId: number;
   comment: string;
 }

@@ -16,9 +16,9 @@ export const Community: React.FC = () => {
 
   return (
     <>
-      {data.map(({ post_id, title, content }: Type.PostsData) => (
-        <div key={post_id}>
-          <div onClick={onNavigate(`/communityDetail/${post_id}`)}>{title} : {content} 상세페이지로</div>
+      {data.map(({ postId, title, content }: Type.PostsData) => (
+        <div key={postId}>
+          <div onClick={onNavigate(`/communityDetail/${postId}`)}>{title} : {content} 상세페이지로</div>
         </div>
       ))}
     </>
