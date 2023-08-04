@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 const InoCar = lazy(() =>import('./pages/main/InoCar').then(({ InoCar }) => ({ default: InoCar })));
 const Community = lazy(() =>import('./pages/main/Community').then(({ Community }) => ({ default: Community })));
 
-const App: React.FC = () => {
+const App: React.FC = () => {  
 
   return (
     <>
@@ -34,9 +34,9 @@ const App: React.FC = () => {
       {/* 헤더에 따른 중첩라우터 :: AuthRouter */}
       <Route element={<Page.AuthRouter />}>
         <Route path="signup" element={<Page.Signup />} />
-        <Route path="signup/admin" element={<Page.AdminSignup />} />
+        <Route path="signu˚p/admin" element={<Page.AdminSignup />} />
         <Route path="login" element={<Page.Login />} />
-        <Route path="kakao/auth" element={<Page.KakaoRedirect />} />
+        <Route path="kakao/auto" element={<Page.KakaoRedirect />} />
       </Route>
 
       {/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}
@@ -48,6 +48,7 @@ const App: React.FC = () => {
 
       {/* 채팅을 위한 임시 라우터 :: Chat */}
       <Route path='/chat' element={<Page.Chat />} />
+      <Route path='/webrtc' element={<Page.WebRTC />} />
     </Routes>
     </>
   );

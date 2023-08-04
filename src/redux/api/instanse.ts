@@ -14,15 +14,15 @@ instance.interceptors.request.use(
         .split(';')
         .filter((cookies) => cookies.includes('accessToken'))[0]
         ?.split('=')[1];
-    const Refresh =
+    const refreshToken =
       document.cookie &&
       document.cookie
         .split(';')
-        .filter((cookies) => cookies.includes('Refresh'))[0]
+        .filter((cookies) => cookies.includes('refreshToken'))[0]
         ?.split('=')[1];
     if (accessToken) config.headers.authorization = accessToken;
-    if (!accessToken && Refresh)
-      config.headers.Refresh = Refresh;
+    if (!accessToken && refreshToken)
+      config.headers.refresh = refreshToken;
     return config;
   },
   (error) => {
@@ -33,18 +33,18 @@ instance.interceptors.request.use(
 // 응답 인터셉터 설정
 instance.interceptors.response.use(
   (response: axiosType.AxiosResponse) => {
-    if (response.headers.Authorization) {
-      console.log("config", response.headers.Authorization);
+    if (response.headers.authorization) {
+      // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
       expiresTime.setMinutes(expiresTime.getMinutes() + 30);
-      document.cookie = `accessToken=${response.headers.Authorization
+      document.cookie = `accessToken=${response.headers.authorization
         }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
-    if (response.headers.Refresh) {
+    if (response.headers.refresh) {
       // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
       expiresTime.setDate(expiresTime.getDate() + 3);
-      document.cookie = `Refresh=${response.headers.Refresh
+      document.cookie = `refreshToken=${response.headers.refresh
         }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
     return response;

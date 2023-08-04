@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import * as Type from '../../types'
 import { usePatchPostCommentMutation } from '../../redux'
 
-export const EditComment: React.FC<Type.EditComment> = ({ post_id, comment_id, comment }) => {
+export const EditComment: React.FC<Type.EditComment> = ({ postId, commentId, comment }) => {
   const [edit, setEdit] = useState<Boolean>(false)
   const [inputValue, setInputValue] = useState<Type.Comment>({ comment: "" })
 
@@ -20,7 +20,7 @@ export const EditComment: React.FC<Type.EditComment> = ({ post_id, comment_id, c
 
   const onSubmitPatchComments = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onPatchPostCommentRTK({ post_id, comment_id, data:inputValue })
+    onPatchPostCommentRTK({ postId, commentId, data:inputValue })
     setEdit(!edit)
     setInputValue({comment: ""})
   }

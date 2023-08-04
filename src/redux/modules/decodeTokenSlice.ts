@@ -1,12 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { DecodeToken } from '../../types/async';
+import jwtDecode from 'jwt-decode';
 
 const decodeTokenSlice = createSlice({
   name: 'decodeToken',
   initialState: {} as DecodeToken,
   reducers: {
-    setDecodeToken: (_, action: PayloadAction<DecodeToken>) => {
-      return { ...action.payload };
+    setDecodeToken: (state, action: PayloadAction<any>) => { // DecodeToken
+      const decode = jwtDecode(action.payload)
+      console.log("setDecodeToken - state", state);
+      console.log("setDecodeToken - decode", decode);
+      
+      return state
     },
     deleteDecodeToken: () => {
       return {} as DecodeToken;

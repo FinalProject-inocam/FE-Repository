@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import * as Type from '../../types'
 import { usePatchPostsMutation } from '../../redux'
 
-export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ post_id, title, content }) => {
+export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ postId, title, content }) => {
   const [edit, setEdit] = useState<Boolean>(false)
   const [inputValue, setInputValue] = useState<Type.PostPosts>({
     title: "",
@@ -54,7 +54,7 @@ export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ post_id, title, 
             name='content'
             onChange={onChangeValue}
             placeholder="콘텐트수정" />
-          <button onClick={onPatchPosts(post_id)}>수정제출</button>
+          <button onClick={onPatchPosts(postId)}>수정제출</button>
           <button onClick={onToogleEdit}>수정취소</button>
         </>}
     </div>

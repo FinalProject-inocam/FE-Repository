@@ -10,6 +10,8 @@ export const CommunityDetail: React.FC = () => {
 
   // RTK - 상세페이지 GET
   const { isLoading, data, isError, error } = RTK.useGetPostsDetailQuery(getId)
+  console.log(data);
+  
 
   // RTK - 상세페이지 삭제
   const [onDeletePostRTK, { isSuccess: postSuccess, data: postData, isError: postIsError, error: postError }] = RTK.useDeletePostsMutation()
@@ -44,9 +46,7 @@ export const CommunityDetail: React.FC = () => {
     if (commentDeleteSuccess) console.log("commentDelete 댓글삭제성공", commentDeleteData);
     if (commentDeleteIsError) console.log("commentDelte 댓글삭제실패", commentDeleteError);
 
-  }, [postSuccess, postData, postIsError, postError, commentSuccess, 
-      commentData, commentIsError, commentError, commentDeleteSuccess, 
-      commentDeleteData, commentDeleteIsError, commentDeleteError])
+  }, [postSuccess, postData, postIsError, postError, commentSuccess, commentData, commentIsError,commentError, commentDeleteSuccess, commentDeleteData, commentDeleteIsError, commentDeleteError])
 
   if (isLoading) {
     return <div>... 로딩중</div>
@@ -58,27 +58,27 @@ export const CommunityDetail: React.FC = () => {
   return (
     <div>
       CommunityDetail
-      {data && data.map(({ post_id, title, content, is_like, like_count, image_urls, comment }: Type.PostsDetailData) => (
-        <div key={post_id}>
+      {data && [data].map(({ postId, title, content, isLike, likeCount, imageUrls, commentsList}: Type.PostsDetailData) => (
+        <div key={postId}>
           <div>
-            <EditCommunityDetail post_id={post_id} title={title} content={content} />
-            <button onClick={onDeletePost(post_id)}>삭제</button>
-            <div>item.is_like : {JSON.stringify(is_like)}</div>
-            <div>like_count: {like_count}개</div>
-            <img src={image_urls[0]} alt='사진이라우' />
+            <EditCommunityDetail postId={postId} title={title} content={content} />
+            <button onClick={onDeletePost(postId)}>삭제</button>
+            <div>item.is_like : {JSON.stringify(isLike)}</div>
+            <div>like_count: {likeCount}개</div>
+            <img src={imageUrls[0]} alt='사진이라우' />
           </div>
-          <form onSubmit={onSubmitPostComment(post_id)}>
+          <form onSubmit={onSubmitPostComment(postId)}>
             <input value={commentInfo} onChange={onChangeComment} placeholder='댓글입력해주세요' />
             <input type='submit' value="제출하기" />
           </form>
           <hr />
-          {comment.map(({ comment_id, nickname, comment, created_at, modified_at }: Type.CommentsData) => (
-            <div key={comment_id}>
+          {commentsList.map(({ commentId, nickname, comment, createdAt, modifiedAt }: Type.CommentsData) => (
+            <div key={commentId}>
               <div>작성자 : {nickname}</div>
-              <EditComment post_id={post_id} comment_id={comment_id} comment={comment} />
-              <div>작성시간 : {created_at}</div>
-              <div>수정시간 : {modified_at}</div>
-              <div onClick={onDeleteComment(post_id, comment_id)}>삭제하기</div>
+              <EditComment postId={postId} commentId={commentId} comment={comment} />
+              <div>작성시간 : {createdAt}</div>
+              <div>수정시간 : {modifiedAt}</div>
+              <div onClick={onDeleteComment(postId, commentId)}>삭제하기</div>
               <hr />
             </div>
           ))
