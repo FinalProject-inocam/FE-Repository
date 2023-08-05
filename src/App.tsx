@@ -48,7 +48,7 @@ const App: React.FC = () => {
         {/* 헤더에 따른 중첩라우터 :: AuthRouter */}
         <Route element={<Page.AuthRouter />}>
           <Route path="signup" element={<Page.Signup />} />
-          <Route path="signu˚p/admin" element={<Page.AdminSignup />} />
+          <Route path="signup/admin" element={<Page.AdminSignup />} />
           <Route path="login" element={<Page.Login />} />
           <Route path="kakao/auth" element={<Page.KakaoRedirect />} />
         </Route>
