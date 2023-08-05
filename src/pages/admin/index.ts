@@ -1,1 +1,2 @@
-export * from './AdminMain';
+export * from "./AdminMain";
+export * from "./MyPage";
