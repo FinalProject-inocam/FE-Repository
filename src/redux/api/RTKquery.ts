@@ -99,6 +99,14 @@ export const inocamRTK = createApi({
           types: "getCheck",
         }),
       }),
+      // getCertificateCheck
+      getCertificateEmail: build.query({
+        query: (email) => ({
+          url: `/api/auth/verify?email=${email}`,
+          method: "get",
+          types: "getCheck",
+        }),
+      }),
 
       // getPosts - 차량출고 커뮤니티
       getPosts: build.query({
@@ -214,7 +222,7 @@ export const inocamRTK = createApi({
         query: ({ purchaseId, data }) => ({
           url: `/api/purchases/${purchaseId}`,
           method: "patch",
-          data,
+          data: data,
         }),
         invalidatesTags: ["ICOCAR"],
       }),
@@ -228,6 +236,7 @@ export const {
   usePostSignupMutation,
   useGetEmailCheckQuery,
   useGetNickCheckQuery,
+  useGetCertificateEmailQuery,
   useLoginSNSRTKQuery,
 
   // Posts 차량출고 커뮤니티 관련

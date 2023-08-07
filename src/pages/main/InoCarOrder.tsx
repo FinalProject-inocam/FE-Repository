@@ -1,18 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { usePostPurchasesMutation } from "../../redux";
-
-interface CarOrderInfoType {
-  type: string;
-  color: string;
-  alarm: boolean;
-  content: string;
-  addressName: string;
-  zoneNo: string;
-}
+import * as Type from "../../types";
 
 export const InoCarOrder: React.FC = () => {
-  const [carOrderInfo, setCarOrderInfo] = useState<CarOrderInfoType>({
+  const [carOrderInfo, setCarOrderInfo] = useState<Type.CarOrderInfo>({
     type: "",
     color: "",
     alarm: true,
