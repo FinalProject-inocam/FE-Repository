@@ -359,14 +359,31 @@ export const handlers = [
   rest.delete(
     `${process.env.REACT_APP_SERVER_KEY}/api/purchases/:purchaseId`,
     async (req, res, ctx) => {
-      console.log("deleteInoCarOrder", +req.params.purchaseId);
-      TestDB.postCarOderData.pop();
+      const findindex = TestDB.postCarOderData.findIndex(
+        (data) => data.purchaseId === +req.params.purchaseId
+      );
+      TestDB.postCarOderData.splice(findindex, 1);
       return res(
         ctx.status(200),
         ctx.json({
           success: true,
           status: 200,
           msg: "차량 신청이 취소되었습니다",
+        })
+      );
+    }
+  ),
+
+  //  patchInoCarOrder = 차량출고 신청 수정
+  rest.patch(
+    `${process.env.REACT_APP_SERVER_KEY}/api/purchases/:purchaseId`,
+    async (_, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: "차량 신청 정보가 수정되었습니다",
         })
       );
     }

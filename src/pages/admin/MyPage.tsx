@@ -1,5 +1,7 @@
 import React from "react";
 import { useDeletePurchasesMutation, useGetPurchasesQuery } from "../../redux";
+import { EditPurchase } from "../../components/myPage/EditPurchase";
+import * as Type from "../../types";
 
 export const MyPage: React.FC = () => {
   const { isLoading, data } = useGetPurchasesQuery({});
@@ -10,26 +12,40 @@ export const MyPage: React.FC = () => {
     onDeletePurchases(purchaseId);
   };
 
-  const { content, type, color, alarm, addressName, zoneNo } = [...data][0];
-
   if (isLoading) return <div>Loadgin....g...</div>;
+  console.log(data[1]);
+
   return (
     <div>
       <h2>MyPage</h2>
       <div>
-        {data[0] && (
-          <>
-            {content}
-            {type}
-            {color}
-            {alarm}
-            {addressName}
-            {zoneNo}
-            <button onClick={onClickDeletePurchases(data[0].purchaseId)}>
-              취소하기
-            </button>
-          </>
-        )}
+        {data &&
+          data.map(
+            ({
+              purchaseId,
+              type,
+              color,
+              alarm,
+              content,
+              addressName,
+              zoneNo,
+            }: Type.CarOrderRes) => (
+              <div key={purchaseId}>
+                <EditPurchase
+                  purchaseId={purchaseId}
+                  type={type}
+                  color={color}
+                  alarm={alarm}
+                  content={content}
+                  addressName={addressName}
+                  zoneNo={zoneNo}
+                />
+                <button onClick={onClickDeletePurchases(purchaseId)}>
+                  취소하기
+                </button>
+              </div>
+            )
+          )}
       </div>
     </div>
   );
