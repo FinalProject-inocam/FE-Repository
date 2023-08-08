@@ -3,7 +3,7 @@ import * as Type from "../../types";
 import { useRouter } from "../../hooks";
 import { EditCommunityDetail } from "../../components";
 import { EditComment } from "../../components/community/EditComment";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React,  { ChangeEvent, FormEvent, useState, useEffect } from "react";
 
 export const CommunityDetail: React.FC = () => {
   const { getId, onNavigate } = useRouter();
@@ -98,30 +98,23 @@ export const CommunityDetail: React.FC = () => {
   return (
     <div>
       CommunityDetail
+      {/* 요청된 값이 하나면, {} 객체로 보내주고 있어요  :: >> 맵을 돌릴 필요가 없다. */}
       {data &&
-        data.map(
-          ({
-            postId,
-            title,
-            content,
-            isLike,
-            likeCount,
-            imageUrls,
-            commentsList,
-          }: Type.PostsDetailData) => (
-            <div key={postId}>
+        [data].map(
+          (info: Type.PostsDetailData) => (
+            <div key={info.postId}>
               <div>
                 <EditCommunityDetail
-                  postId={postId}
-                  title={title}
-                  content={content}
+                  postId={info.postId}
+                  title={info.title}
+                  content={info.content}
                 />
-                <button onClick={onDeletePost(postId)}>삭제</button>
-                <div>item.is_like : {JSON.stringify(isLike)}</div>
-                <div>like_count: {likeCount}개</div>
-                <img src={imageUrls[0]} alt="사진이라우" />
+                <button onClick={onDeletePost(info.postId)}>삭제</button>
+                <div>item.is_like : {JSON.stringify(info.isLike)}</div>
+                <div>like_count: {info.likeCount}개</div>
+                <img src={info.imageUrls[0]} alt="사진이라우" />
               </div>
-              <form onSubmit={onSubmitPostComment(postId)}>
+              <form onSubmit={onSubmitPostComment(info.postId)}>
                 <input
                   value={commentInfo}
                   onChange={onChangeComment}
@@ -130,7 +123,7 @@ export const CommunityDetail: React.FC = () => {
                 <input type="submit" value="제출하기" />
               </form>
               <hr />
-              {commentsList.map(
+              {info.commentsList.map(
                 ({
                   commentId,
                   nickname,
@@ -141,14 +134,14 @@ export const CommunityDetail: React.FC = () => {
                   <div key={commentId}>
                     <div>작성자 : {nickname}</div>
                     <EditComment
-                      postId={postId}
+                      postId={info.postId}
                       commentId={commentId}
                       comment={comment}
                     />
                     <div>작성시간 : {createdAt}</div>
                     <div>수정시간 : {modifiedAt}</div>
-                    <div onClick={onDeleteComment(postId, commentId)}>
-                      삭제하기
+                    <div onClick={onDeleteComment(info.postId, commentId)}>
+                      info
                     </div>
                     <hr />
                   </div>

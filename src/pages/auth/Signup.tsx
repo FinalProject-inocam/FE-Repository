@@ -20,7 +20,12 @@ export const Signup: React.FC = () => {
     checkNickNameData,
     CertificateEmail,
     onCertificateEmail,
+    onCertificateCode,
+    GetCertificateCode
   } = useSignup();
+
+
+
 
   useEffect(() => {
     if (isSuccess) onNavigate("/login")();
@@ -38,6 +43,7 @@ export const Signup: React.FC = () => {
       );
     CertificateEmail?.isSuccess && console.log(CertificateEmail);
     CertificateEmail?.isError && console.log(CertificateEmail);
+    GetCertificateCode && console.log(GetCertificateCode);
   }, [
     isSuccess,
     data,
@@ -49,6 +55,7 @@ export const Signup: React.FC = () => {
     checkNickNameSuccess,
     checkNickNameData,
     CertificateEmail,
+    GetCertificateCode
   ]);
 
   return (
@@ -86,6 +93,7 @@ export const Signup: React.FC = () => {
       <input type="submit" value="회원가입" />
       <div onClick={onCheckEmail}>이메일 중복확인</div> {/* onBlur */}
       <div onClick={onCertificateEmail}>이메일 인증메일보내기</div>
+      <div onClick={onCertificateCode}>이메일 확인</div>
       <div onClick={onCheckNickName}>닉네임 중복확인</div>
     </form>
   );
