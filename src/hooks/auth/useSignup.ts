@@ -5,6 +5,7 @@ import {
   useGetNickCheckQuery,
   usePostSignupMutation,
   useGetCertificateEmailQuery,
+  useGetCertificateCodeQuery,
 } from "../../redux";
 
 export const useSignup = () => {
@@ -25,6 +26,7 @@ export const useSignup = () => {
     setCheckEmail(true);
     setCheckNickName(true);
     setCertificateEmail(true);
+    setCertificateCode(true)  
   };
 
   const [onpostSignupRTK, { isSuccess, data, isError, error }] =
@@ -63,6 +65,17 @@ export const useSignup = () => {
     !!signInfo.email && setCertificateEmail(false);
   };
 
+
+
+  const [certificateCode, setCertificateCode] = useState(true);
+  const GetCertificateCode = useGetCertificateCodeQuery({email:signInfo.email, code:"ANGUM5"}, {
+    skip:certificateCode
+  })
+
+  const onCertificateCode = () => {
+    setCertificateCode(false)  
+  }
+
   return {
     onChangeInput,
     onSubmitSign,
@@ -79,5 +92,7 @@ export const useSignup = () => {
     checkNickNameData,
     CertificateEmail,
     onCertificateEmail,
+    onCertificateCode, 
+    GetCertificateCode
   };
 };

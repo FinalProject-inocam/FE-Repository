@@ -23,7 +23,8 @@ const axiosBaseQuery =
           return { data: signup.data.msg };
         case "getCheck":
           const getCheck = await instance({ url, method });
-          return { data: getCheck.data.data };
+          console.log(getCheck);
+          return { data: getCheck.data.success };
         case "multipart":
           const postMultipart = await instance({
             url,
@@ -107,6 +108,15 @@ export const inocamRTK = createApi({
           types: "getCheck",
         }),
       }),
+      // getCertificateCode
+      getCertificateCode: build.query({
+        query: ({email, code}) => ({
+          url: `/api/auth/checkcode?email=${email}&code=${code}`,
+          method: "get",
+          types: "getCheck",
+        }),
+      }),
+
 
       // getPosts - 차량출고 커뮤니티
       getPosts: build.query({
@@ -180,8 +190,8 @@ export const inocamRTK = createApi({
 
       // pathComment - 차량출고 커뮤니티 댓글수정
       patchPostComment: build.mutation({
-        query: ({ post_id, comment_id, data }) => ({
-          url: `/api/posts/${post_id}/comments/${comment_id}`,
+        query: ({ postId, commentId, data }) => ({
+          url: `/api/posts/${postId}/comments/${commentId}`,
           method: "patch",
           data: data,
         }),
@@ -237,6 +247,7 @@ export const {
   useGetEmailCheckQuery,
   useGetNickCheckQuery,
   useGetCertificateEmailQuery,
+  useGetCertificateCodeQuery,
   useLoginSNSRTKQuery,
 
   // Posts 차량출고 커뮤니티 관련

@@ -5,6 +5,8 @@ import * as Type from "../../types";
 
 export const MyPage: React.FC = () => {
   const { isLoading, data } = useGetPurchasesQuery({});
+  console.log("MyPage", data);
+  
   const [onDeletePurchases, query] = useDeletePurchasesMutation({});
 
   const onClickDeletePurchases = (purchaseId: number) => () => {
