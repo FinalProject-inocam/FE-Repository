@@ -54,7 +54,14 @@ const axiosBaseQuery =
 
 export const inocamRTK = createApi({
   baseQuery: axiosBaseQuery(),
-  tagTypes: ["POSTS", "POSTDETAIL", "POSTCOMMENT", "KAKAO", "ICOCAR"],
+  tagTypes: [
+    "POSTS",
+    "POSTDETAIL",
+    "POSTCOMMENT",
+    "KAKAO",
+    "ICOCAR",
+    "PURCHASESCHAR",
+  ],
   endpoints(build) {
     return {
       // loginRTK
@@ -110,13 +117,12 @@ export const inocamRTK = createApi({
       }),
       // getCertificateCode
       getCertificateCode: build.query({
-        query: ({email, code}) => ({
+        query: ({ email, code }) => ({
           url: `/api/auth/checkcode?email=${email}&code=${code}`,
           method: "get",
           types: "getCheck",
         }),
       }),
-
 
       // getPosts - 차량출고 커뮤니티
       getPosts: build.query({
@@ -236,6 +242,16 @@ export const inocamRTK = createApi({
         }),
         invalidatesTags: ["ICOCAR"],
       }),
+
+      // getPurchasesChar - 차량 통계 데이터
+      getPurchasesChar: build.query({
+        query: (term) => ({
+          url: `/api/stat/purchases/chart?cal=2023-08-08&term=${term}`,
+          method: "get",
+          types: "getData",
+        }),
+        providesTags: ["PURCHASESCHAR"],
+      }),
     };
   },
 });
@@ -267,4 +283,7 @@ export const {
   useGetPurchasesQuery,
   useDeletePurchasesMutation,
   usePatchPurchasesMutation,
+
+  // Get 차량 통계 데이터 관련
+  useGetPurchasesCharQuery,
 } = inocamRTK;

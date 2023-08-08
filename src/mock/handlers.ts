@@ -388,4 +388,26 @@ export const handlers = [
       );
     }
   ),
+
+  //  getPurchasesChar = 차량 통계 데이터
+  rest.get(
+    `${process.env.REACT_APP_SERVER_KEY}/api/stat/purchases/chart`,
+    async (req, res, ctx) => {
+      const term = req.url.search.split("&")[1].split("=")[1];
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: "연간 차량 신청 통계 조회 완료",
+          data:
+            term === "getYears"
+              ? TestDB.purchasesChartYearData
+              : term === "getMonth"
+              ? TestDB.purchasesChartMonthData
+              : TestDB.purchasesChartWeekData,
+        })
+      );
+    }
+  ),
 ];
