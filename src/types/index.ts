@@ -5,3 +5,4 @@ export * from "./styled";
 export * from "./props";
 export * from "./async";
 export * from "./carOrder";
+export * from "./purchasesChart";
