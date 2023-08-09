@@ -61,6 +61,7 @@ export const inocamRTK = createApi({
     "KAKAO",
     "ICOCAR",
     "PURCHASESCHAR",
+    "WRAPPINGSHOP"
   ],
   endpoints(build) {
     return {
@@ -252,6 +253,16 @@ export const inocamRTK = createApi({
         }),
         providesTags: ["PURCHASESCHAR"],
       }),
+
+      // getWrappingShop - 랩핑샵 조회(사용자 위치기반)
+      getWrappingShop: build.query({
+        query: (geolocation) => ({
+          url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=1&size=10`,
+          method: "get",
+          types: "getData",
+        }),
+        providesTags: ["WRAPPINGSHOP"],
+      }),
     };
   },
 });
@@ -286,4 +297,7 @@ export const {
 
   // Get 차량 통계 데이터 관련
   useGetPurchasesCharQuery,
+
+  // WrappingShop 관련
+  useGetWrappingShopQuery
 } = inocamRTK;
