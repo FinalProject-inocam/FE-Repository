@@ -51,6 +51,7 @@ const App: React.FC = () => {
           <Route path="signup/admin" element={<Page.AdminSignup />} />
           <Route path="login" element={<Page.Login />} />
           <Route path="kakao/auth" element={<Page.KakaoRedirect />} />
+          <Route path="login/oauth2/code/google" element={<Page.GoogleRedirect />} /> {/* /login/sns?code= */}
         </Route>
 
         {/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}

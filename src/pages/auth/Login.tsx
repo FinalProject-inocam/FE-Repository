@@ -16,6 +16,10 @@ export const Login: React.FC = () => {
     window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`
   }
 
+  const onGoogleLogin = () => {
+    window.location.href=`https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=241187094315-9h1rc47r7k69fr03uldk4dggtq8l739v.apps.googleusercontent.com&redirect_uri=http://inocamfinal.s3-website.ap-northeast-2.amazonaws.com/login/oauth2/code/google&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&o2v=1&flowName=GeneralOAuthFlow`
+  }
+
   return (
     <>
     <form onSubmit={onSubmitLogin}>
@@ -24,6 +28,7 @@ export const Login: React.FC = () => {
       <input type='submit' value="로그인" />
     </form>
     <button onClick={onSnsLogin}>카카오로 로그인하기</button>
+    <button onClick={onGoogleLogin}>구글로 로그인하기</button>
     </>
   )
 };
