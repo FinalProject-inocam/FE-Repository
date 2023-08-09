@@ -100,7 +100,7 @@ export const CommunityDetail: React.FC = () => {
       CommunityDetail
       {/* 요청된 값이 하나면, {} 객체로 보내주고 있어요  :: >> 맵을 돌릴 필요가 없다. */}
       {data &&
-        [data].map(
+        data.map(
           (info: Type.PostsDetailData) => (
             <div key={info.postId}>
               <div>
