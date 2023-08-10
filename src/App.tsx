@@ -12,6 +12,12 @@ const Community = lazy(() =>
   }))
 );
 
+const Threejs = lazy(() =>
+  import("./pages/Threejs").then(({ Threejs }) => ({
+    default: Threejs,
+  }))
+);
+
 const App: React.FC = () => {
   return (
     <>
@@ -64,6 +70,7 @@ const App: React.FC = () => {
         {/* 채팅을 위한 임시 라우터 :: Chat */}
         <Route path="/chat" element={<Page.Chat />} />
         <Route path="/webrtc" element={<Page.WebRTC />} />
+        <Route path="/threejs" element={<Threejs />} />
       </Routes>
     </>
   );
