@@ -110,10 +110,26 @@ export const handlers = [
     }
   ),
 
+  rest.get(
+    `${process.env.REACT_APP_SERVER_KEY}/api/auth/checkcode`,
+    async (req, res, ctx) => {
+      console.log("req", req.url.searchParams.get("code"));
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: "이메일이 인증됐습니다",
+        })
+      );
+    }
+  ),
+
   // Signup-NickNameCheck
   rest.get<Type.UserInfo>(
     `${process.env.REACT_APP_SERVER_KEY}/api/auth/nickname`,
     async (req, res, ctx) => {
+      console.log("연습", req);
       const checkNickName = req.url.searchParams.get("nickname");
       const find =
         TestDB.logindata.find((user) => user.nickname === checkNickName) ||
