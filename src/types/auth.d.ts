@@ -1,11 +1,21 @@
 export type User = {
-  email:string;
-  password:string;
-}
+  email: string;
+  password: string;
+};
 
 export type UserInfo = UserType & {
-  nickname:string;
+  nickname: string;
   phone_number: string;
-  isAdmin:boolean;
+  isAdmin: boolean;
   admincode: string;
-}
+};
+
+export type UserInfoCheckPW = UserInfoType & {
+  pwChecked: string;
+};
+
+export type ValiditeMsg = {
+  validteEmail: [string, boolean];
+  validtepassword: [string, boolean];
+  passwordChMsg: [string, boolean];
+};

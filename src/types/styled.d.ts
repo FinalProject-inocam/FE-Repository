@@ -1,8 +1,8 @@
 export interface Styled {
   // commen
-  $color:string;
-  $width:string;
-  $height:string;
+  $color: string;
+  $width: string;
+  $height: string;
 
   // Felx-Grid
   $gap: number;
@@ -13,15 +13,20 @@ export interface Styled {
   $ai: string;
 
   // Grid
-  $gtc:string;
-  $gtr:string;
-  $gar:string;
+  $gtc: string;
+  $gtr: string;
+  $gar: string;
   $cgap: number;
   $rgap: number;
 
   // GridMergedSpace
-  $mergedgcs: number
-  $mergedgce: number
-  $mergedgrs: number
-  $mergedgre: number
+  $mergedgcs: number;
+  $mergedgce: number;
+  $mergedgrs: number;
+  $mergedgre: number;
+
+  //signup
+  $state: string;
+  $signColor: boolean;
+  $signupbtnColor: string;
 }

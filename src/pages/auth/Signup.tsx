@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSignup } from "../../hooks";
+import { AuthInput, ValidateInputMsg, Timer } from "../../components";
 
 export const Signup: React.FC = () => {
   const { onNavigate } = useRouter();
+  const [validateCheckCode, setvalidateCheckCode] = useState<boolean>(false);
 
   const {
     onSubmitSign,
@@ -20,12 +22,16 @@ export const Signup: React.FC = () => {
     checkNickNameData,
     CertificateEmail,
     onCertificateEmail,
-    onCertificateCode,
-    GetCertificateCode
+    GetCertificateCode,
+    //아래것 추가함
+    certificateEmail,
+    checkCode,
+    onChangeCheckCode,
+    onClickCheckCode,
+    validiteMsg,
+    showPW,
+    onClickShowPW,
   } = useSignup();
-
-
-
 
   useEffect(() => {
     if (isSuccess) onNavigate("/login")();
@@ -41,9 +47,9 @@ export const Signup: React.FC = () => {
           ? "사용 가능한 닉네임 입니다"
           : "이미 사용 중인 닉네임입니다"
       );
-    CertificateEmail?.isSuccess && console.log(CertificateEmail);
-    CertificateEmail?.isError && console.log(CertificateEmail);
-    GetCertificateCode && console.log(GetCertificateCode);
+    CertificateEmail.isSuccess && console.log(CertificateEmail);
+    CertificateEmail.isError && console.log(CertificateEmail);
+    GetCertificateCode.isSuccess && setvalidateCheckCode(true);
   }, [
     isSuccess,
     data,
@@ -55,12 +61,12 @@ export const Signup: React.FC = () => {
     checkNickNameSuccess,
     checkNickNameData,
     CertificateEmail,
-    GetCertificateCode
+    GetCertificateCode,
   ]);
 
   return (
     <form onSubmit={onSubmitSign}>
-      <input
+      <AuthInput
         type="text"
         value={signInfo.email}
         name="email"
@@ -68,7 +74,10 @@ export const Signup: React.FC = () => {
         onChange={onChangeInput}
         placeholder="이메일 형식으로 입력해주세요."
       />
-      <input
+      <ValidateInputMsg $signColor={validiteMsg.validteEmail[1]}>
+        {validiteMsg.validteEmail[0]}
+      </ValidateInputMsg>
+      <AuthInput
         type="text"
         value={signInfo.nickname}
         name="nickname"
@@ -76,14 +85,28 @@ export const Signup: React.FC = () => {
         onChange={onChangeInput}
         placeholder="이름을 입력해 주세요"
       />
-      <input
-        type="password"
+      <AuthInput
+        type={showPW ? "text" : "password"}
         value={signInfo.password}
         name="password"
         onChange={onChangeInput}
         placeholder="비밀번호를 입력해 주세요"
       />
-      <input
+      <button onClick={onClickShowPW}>{showPW ? "숨김" : "표시"}</button>
+      <ValidateInputMsg $signColor={validiteMsg.validtepassword[1]}>
+        {validiteMsg.validtepassword[0]}
+      </ValidateInputMsg>
+      <AuthInput
+        type="password"
+        value={signInfo.pwChecked}
+        name="pwChecked"
+        onChange={onChangeInput}
+        placeholder="비밀번호를 다시 입력해주세요"
+      />
+      <ValidateInputMsg $signColor={validiteMsg.passwordChMsg[1]}>
+        {validiteMsg.passwordChMsg[0]}
+      </ValidateInputMsg>
+      <AuthInput
         type="text"
         value={signInfo.phone_number}
         name="phoneNumber"
@@ -93,7 +116,13 @@ export const Signup: React.FC = () => {
       <input type="submit" value="회원가입" />
       <div onClick={onCheckEmail}>이메일 중복확인</div> {/* onBlur */}
       <div onClick={onCertificateEmail}>이메일 인증메일보내기</div>
-      <div onClick={onCertificateCode}>이메일 확인</div>
+      <input value={checkCode} onChange={onChangeCheckCode} />
+      <div onClick={onClickCheckCode}>이메일 확인</div>
+      {!certificateEmail && (
+        <>
+          <Timer state={validateCheckCode} />
+        </>
+      )}
       <div onClick={onCheckNickName}>닉네임 중복확인</div>
     </form>
   );

@@ -9,9 +9,10 @@ import {
 } from "../../redux";
 
 export const useSignup = () => {
-  const [signInfo, setSignInfo] = useState<Type.UserInfo>({
+  const [signInfo, setSignInfo] = useState<Type.UserInfoCheckPW>({
     email: "",
     password: "",
+    pwChecked: "",
     nickname: "",
     phoneNumber: "",
     gender: "male",
@@ -20,13 +21,78 @@ export const useSignup = () => {
     admincode: "E002",
   });
 
+  const [validiteMsg, setValiditeMse] = useState<Type.ValiditeMsg>({
+    validteEmail: ["", false],
+    validtepassword: ["", false],
+    passwordChMsg: ["", false],
+  });
+
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setSignInfo({ ...signInfo, [name]: value });
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      emailRegex.test(value)
+        ? setValiditeMse({
+            ...validiteMsg,
+            validteEmail: ["사용 가능한 이메일입니다.", true],
+          })
+        : setValiditeMse({
+            ...validiteMsg,
+            validteEmail: ["이메일을 입력해주세요(exam@.exam.com)", false],
+          });
+    }
+
+    if (name === "password") {
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#?$%^&*]).{8,15}$/;
+      value.length < 8
+        ? setValiditeMse({
+            ...validiteMsg,
+            validtepassword: ["8자 이상 입력해 주세요.", false],
+          })
+        : passwordRegex.test(value)
+        ? setValiditeMse({
+            ...validiteMsg,
+            validtepassword: [
+              "보안등급: 높음 보안등급이 높을 수록 서비스를 안전하게 이용할 수 있습니다.",
+              true,
+            ],
+          })
+        : setValiditeMse({
+            ...validiteMsg,
+            validtepassword: [
+              "알파벳 대문자,알파벳 소문자, 숫자, 특수문자(?, !, * 등)를 조합하여 입력해 주세요.",
+              false,
+            ],
+          });
+    }
+
+    if (name === "pwChecked") {
+      !validiteMsg.validtepassword[1]
+        ? setValiditeMse({ ...validiteMsg, passwordChMsg: ["", false] })
+        : validiteMsg.validtepassword[1] && signInfo.password === value
+        ? setValiditeMse({
+            ...validiteMsg,
+            passwordChMsg: ["비밀번호가 일치합니다.", true],
+          })
+        : setValiditeMse({
+            ...validiteMsg,
+            passwordChMsg: ["입력하신 비밀번호가 서로 다릅니다.", false],
+          });
+    }
+
     setCheckEmail(true);
     setCheckNickName(true);
     setCertificateEmail(true);
-    setCertificateCode(true)  
+    setCertificateCode(true);
+  };
+
+  const [checkCode, setCheckCode] = useState<string>("");
+
+  const onChangeCheckCode = (e: ChangeEvent<HTMLInputElement>): void => {
+    setCheckCode(e.target.value);
+    setCertificateCode(true);
   };
 
   const [onpostSignupRTK, { isSuccess, data, isError, error }] =
@@ -65,16 +131,23 @@ export const useSignup = () => {
     !!signInfo.email && setCertificateEmail(false);
   };
 
-
-
   const [certificateCode, setCertificateCode] = useState(true);
-  const GetCertificateCode = useGetCertificateCodeQuery({email:signInfo.email, code:"ANGUM5"}, {
-    skip:certificateCode
-  })
+  const GetCertificateCode = useGetCertificateCodeQuery(
+    { email: signInfo.email, code: checkCode },
+    {
+      skip: certificateCode,
+    }
+  );
 
-  const onCertificateCode = () => {
-    setCertificateCode(false)  
-  }
+  const onClickCheckCode = () => {
+    setCertificateCode(false);
+  };
+
+  const [showPW, setShowPw] = useState(false);
+
+  const onClickShowPW = () => {
+    setShowPw(!showPW);
+  };
 
   return {
     onChangeInput,
@@ -92,7 +165,13 @@ export const useSignup = () => {
     checkNickNameData,
     CertificateEmail,
     onCertificateEmail,
-    onCertificateCode, 
-    GetCertificateCode
+    GetCertificateCode,
+    certificateEmail,
+    checkCode,
+    onChangeCheckCode,
+    onClickCheckCode,
+    validiteMsg,
+    showPW,
+    onClickShowPW,
   };
 };
