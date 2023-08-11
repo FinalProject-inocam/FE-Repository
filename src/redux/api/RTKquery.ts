@@ -62,7 +62,7 @@ export const inocamRTK = createApi({
     "KAKAO",
     "ICOCAR",
     "PURCHASESCHAR",
-    "WRAPPINGSHOP"
+    "WRAPPINGSHOP",
     "WRAPPINGSHOPCOMMENT",
 		"WRAPPINGSHOP_D",
   ],
