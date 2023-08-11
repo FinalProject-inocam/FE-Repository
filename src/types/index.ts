@@ -6,3 +6,5 @@ export * from "./props";
 export * from "./async";
 export * from "./carOrder";
 export * from "./purchasesChart";
+export * from "./decoshop";
+export * from "./modal";

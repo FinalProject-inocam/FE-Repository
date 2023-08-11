@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useGetWrappingShopQuery } from '../../redux';
 import { geolocationContext } from '../MainRouter';
+import { useKakaoMap, useRouter } from "../../hooks";
 
 interface GetWrappingShop {
   avgStar: number
@@ -15,12 +16,13 @@ interface GetWrappingShop {
 }
 
 export const Decoration: React.FC = () => {
+  	const { onNavigate } = useRouter();
   const mapRef = useRef(null);
   const geolocation = useContext(geolocationContext)
   const [checkGeolocation, setCheckGeolocation] = useState<boolean>(true)
-  const { data } = useGetWrappingShopQuery(geolocation, {
-    skip: checkGeolocation,
-  })
+	const { isLoading, data, isError } = useGetWrappingShopQuery(geolocation, {
+		skip: checkGeolocation,
+	});
 
   // 조건부 useGetWrappingShopQuery 요청을 위한 
   useEffect(() => {
@@ -72,6 +74,15 @@ export const Decoration: React.FC = () => {
       })
     }
   }, [data, getMaps, kakaoMaps.Marker, kakaoMaps.LatLng, kakaoMaps.Size, kakaoMaps.MarkerImage, kakaoMaps.CustomOverlay, kakaoMaps.event])
+  
+  useEffect(() => {
+		geolocation && geolocation.lat && setCheckGeolocation(false);
+	}, [geolocation]);
+	console.log(data);
+  
+  if (isLoading) return <div>로딩중...</div>;
+	if (isError) return <div>error</div>;
+
 
   return (<div>
     <h1>Decoration</h1>
@@ -84,5 +95,42 @@ export const Decoration: React.FC = () => {
         position: "relative"
       }}
     />
+      			{data &&
+				data.map((item: Type.ShopDataType) => {
+					return (
+						<ShopInfoContainer key={item.shopId} onClick={onNavigate(`/decorationDetail/${item.shopId}`)}>
+							<ShopInfo>
+								<div>{item.shopName}</div>
+								<div>
+									{Array.from({ length: 5 }).map((_, index) => (
+										<span key={index}>{index < item.avgStar ? "★" : "☆"}</span>
+									))}
+								</div>
+							</ShopInfo>
+							<div>
+								<div>{item.rdnmAdr}</div>
+							</div>
+							<StyledHr />
+						</ShopInfoContainer>
+					);
+				})}
   </div>)
 };
+  
+  const ShopInfoContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 20px;
+`;
+
+const ShopInfo = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
+const StyledHr = styled.hr`
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 10px 0;
+`;
