@@ -14,19 +14,17 @@ import { theme } from "./components";
 //   worker.start();
 // }
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <ErrorBoundary FallbackComponent={Error}>
-          <App />
-        </ErrorBoundary>
-      </ThemeProvider>
-    </Provider>
-  </BrowserRouter>
+	<BrowserRouter>
+		<Provider store={store}>
+			<ThemeProvider theme={theme}>
+				<ErrorBoundary FallbackComponent={Error}>
+					<App />
+				</ErrorBoundary>
+			</ThemeProvider>
+		</Provider>
+	</BrowserRouter>
 );
 
 reportWebVitals();
