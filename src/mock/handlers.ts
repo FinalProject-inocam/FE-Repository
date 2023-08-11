@@ -426,4 +426,19 @@ export const handlers = [
       );
     }
   ),
+
+  rest.get(
+    `${process.env.REACT_APP_SERVER_KEY}/api/shops`,
+    async (req, res, ctx) => {
+      console.log(req);
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: "랩핑 샵 조회 완료",
+        })
+      );
+    }
+  ),
 ];

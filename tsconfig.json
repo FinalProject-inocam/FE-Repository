@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "types": ["node", "axios"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [
+      "node",
+      "axios"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
