@@ -54,37 +54,43 @@ const axiosBaseQuery =
 	};
 
 export const inocamRTK = createApi({
-	baseQuery: axiosBaseQuery(),
-	tagTypes: [
-		"POSTS",
-		"POSTDETAIL",
-		"POSTCOMMENT",
-		"KAKAO",
-		"ICOCAR",
-		"PURCHASESCHAR",
-		"WRAPPINGSHOP",
-		"WRAPPINGSHOPCOMMENT",
+  baseQuery: axiosBaseQuery(),
+  tagTypes: [
+    "POSTS",
+    "POSTDETAIL",
+    "POSTCOMMENT",
+    "KAKAO",
+    "ICOCAR",
+    "PURCHASESCHAR",
+    "WRAPPINGSHOP"
+    "WRAPPINGSHOPCOMMENT",
 		"WRAPPINGSHOP_D",
-	],
-	endpoints(build) {
-		return {
-			// loginRTK
-			postLogin: build.mutation({
-				query: (data) => ({
-					url: "/api/auth/login",
-					method: "post",
-					data,
-					types: "login",
-				}),
-			}),
-			// SNSLogin
-			loginSNSRTK: build.query({
-				query: (payload) => ({
-					url: `/api/auth/kakao${payload}`,
-					method: "get",
-				}),
-				providesTags: ["KAKAO"],
-			}),
+  ],
+  endpoints(build) {
+    return {
+      // loginRTK
+      postLogin: build.mutation({
+        query: (data) => ({
+          url: "/api/auth/login",
+          method: "post",
+          data,
+          types: "login",
+        }),
+      }),
+      // SNSLogin - kakao
+      loginSNSRTK: build.query({
+        query: (payload) => ({
+          url: `/api/auth/kakao${payload}`,
+          method: "get",
+        }),
+      }),
+      // SNSLogin - google
+      loginSNSGoogleRTK: build.query({
+        query: (payload) => ({
+          url: `/login/oauth2/code/a${payload}`,
+          method: "get",
+        }),
+      }),
 
 			// Signup
 			postSignup: build.mutation({
@@ -320,6 +326,8 @@ export const {
 	useGetCertificateEmailQuery,
 	useGetCertificateCodeQuery,
 	useLoginSNSRTKQuery,
+  useLoginSNSGoogleRTKQuery,
+
 
 	// Posts 차량출고 커뮤니티 관련
 	useGetPostsQuery,

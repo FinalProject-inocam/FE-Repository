@@ -10,6 +10,12 @@ const Community = lazy(() =>
 	}))
 );
 
+const Threejs = lazy(() =>
+  import("./pages/Threejs").then(({ Threejs }) => ({
+    default: Threejs,
+  }))
+);
+
 const App: React.FC = () => {
 	return (
 		<>
@@ -40,13 +46,14 @@ const App: React.FC = () => {
 					</Route>
 				</Route>
 
-				{/* 헤더에 따른 중첩라우터 :: AuthRouter */}
-				<Route element={<Page.AuthRouter />}>
-					<Route path='signup' element={<Page.Signup />} />
-					<Route path='signup/admin' element={<Page.AdminSignup />} />
-					<Route path='login' element={<Page.Login />} />
-					<Route path='kakao/auth' element={<Page.KakaoRedirect />} />
-				</Route>
+        {/* 헤더에 따른 중첩라우터 :: AuthRouter */}
+        <Route element={<Page.AuthRouter />}>
+          <Route path="signup" element={<Page.Signup />} />
+          <Route path="signup/admin" element={<Page.AdminSignup />} />
+          <Route path="login" element={<Page.Login />} />
+          <Route path="kakao/auth" element={<Page.KakaoRedirect />} />
+          <Route path="login/oauth2/code/google" element={<Page.GoogleRedirect />} /> {/* /login/sns?code= */}
+        </Route>
 
 				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}
 				<Route element={<Page.ProtectiveRouter />}>
@@ -55,12 +62,13 @@ const App: React.FC = () => {
 					</Route>
 				</Route>
 
-				{/* 채팅을 위한 임시 라우터 :: Chat */}
-				{/* <Route path='/chat' element={<Page.Chat />} /> */}
-				<Route path='/webrtc' element={<Page.WebRTC />} />
-			</Routes>
-		</>
-	);
+        {/* 채팅을 위한 임시 라우터 :: Chat */}
+        <Route path="/chat" element={<Page.Chat />} />
+        <Route path="/webrtc" element={<Page.WebRTC />} />
+        <Route path="/threejs" element={<Threejs />} />
+      </Routes>
+    </>
+  );
 };
 
 export default App;

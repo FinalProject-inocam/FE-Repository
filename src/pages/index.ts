@@ -11,5 +11,6 @@ export * from './MainRouter';
 export * from './MyPageRouter';
 export * from './Chat'
 export * from './WebRTC'
+export * from './Threejs'
 // ProtectiveRouter
 export * from './ProtectiveRouter';
