@@ -5,5 +5,5 @@ export * from "./Decoration";
 export * from "./DecorationDetail";
 export * from "./DecorationWrite";
 export * from "./Home";
-export * from "./InoCar";
-export * from "./InoCarOrder";
+export * from "./InnoCar";
+export * from "./InnoCarOrder";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as Type from "../../types/hooks";
+import * as Type from "../../types/hooks/hooks";
 
 export const useGeolocation = () => {
   const [geolocation, setGeolocation] = useState<Partial<Type.useGeolocation>>({});

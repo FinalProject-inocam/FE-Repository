@@ -98,7 +98,7 @@ export const Decoration: React.FC = () => {
       }}
     />
     {data &&
-      data.map((item: Type.ShopDataType) => {
+      data.map((item: Type.WrappingShop) => {
         return (
           <ShopInfoContainer key={item.shopId} onClick={onNavigate(`/decorationDetail/${item.shopId}`)}>
             <ShopInfo>

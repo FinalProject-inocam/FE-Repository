@@ -11,86 +11,87 @@ const axiosBaseQuery =
 		data?: AxiosRequestConfig["data"];
 		types?: string;
 	}> =>
-	async ({ url, method, data, types }) => {
-		try {
-			switch (types) {
-				case "login":
-					const auth = await instance({ url, method, data });
-					return { data: auth.data.msg };
-				case "signup":
-					const signup = await instance({ url, method, data });
-					console.log(signup);
-					return { data: signup.data.msg };
-				case "getCheck":
-					const getCheck = await instance({ url, method });
-					console.log(getCheck);
-					return { data: getCheck.data.success };
-				case "multipart":
-					const postMultipart = await instance({
-						url,
-						method,
-						data,
-						headers: {
-							"Content-Type": "multipart/form-data",
-						},
-					});
-					console.log(data);
-					return { data: postMultipart.data };
-				case "getData":
-					const getData = await instance({ url, method });
-					return { data: getData.data.data };
-				default:
-					const res = await instance({ url, method, data });
-					console.log(res);
+		async ({ url, method, data, types }) => {
+			try {
+				switch (types) {
+					case "login":
+						const auth = await instance({ url, method, data });
+						return { data: auth.data.msg };
+					case "signup":
+						const signup = await instance({ url, method, data });
+						console.log(signup);
+						return { data: signup.data.msg };
+					case "getCheck":
+						const getCheck = await instance({ url, method });
+						console.log(getCheck);
+						return { data: getCheck.data.success };
+					case "multipart":
+						const postMultipart = await instance({
+							url,
+							method,
+							data,
+							headers: {
+								"Content-Type": "multipart/form-data",
+							},
+						});
+						console.log(data);
+						return { data: postMultipart.data };
+					case "getData":
+						const getData = await instance({ url, method });
+						return { data: getData.data.data };
+					default:
+						const res = await instance({ url, method, data });
+						console.log(res);
 
-					return { data: res.data.msg };
+						return { data: res.data.msg };
+				}
+			} catch (axiosError) {
+				const err = axiosError as Type.CustomAxiosError<Type.ErrorType["data"]>; // 타입단언
+				return {
+					error: err.response?.data.msg,
+				};
 			}
-		} catch (axiosError) {
-			const err = axiosError as Type.CustomAxiosError<Type.ErrorType["data"]>; // 타입단언
-			return {
-				error: err.response?.data.msg,
-			};
-		}
-	};
+		};
 
 export const inocamRTK = createApi({
-  baseQuery: axiosBaseQuery(),
-  tagTypes: [
-    "POSTS",
-    "POSTDETAIL",
-    "POSTCOMMENT",
-    "KAKAO",
-    "ICOCAR",
-    "PURCHASESCHAR",
-    "WRAPPINGSHOP",
-    "WRAPPINGSHOPCOMMENT",
+	baseQuery: axiosBaseQuery(),
+	tagTypes: [
+		"POSTS",
+		"POSTDETAIL",
+		"POSTCOMMENT",
+		"KAKAO",
+		"ICOCAR",
+		"PURCHASESCHAR",
+		"WRAPPINGSHOP",
+		"WRAPPINGSHOPCOMMENT",
 		"WRAPPINGSHOP_D",
-  ],
-  endpoints(build) {
-    return {
-      // loginRTK
-      postLogin: build.mutation({
-        query: (data) => ({
-          url: "/api/auth/login",
-          method: "post",
-          data,
-          types: "login",
-        }),
-      }),
-      // SNSLogin - kakao
-      loginSNSRTK: build.query({
-        query: (payload) => ({
-          url: `/api/auth/kakao${payload}`,
-          method: "get",
-        }),
-      }),
-      // SNSLogin - google
-      loginSNSGoogleRTK: build.query({
-        query: (payload) => ({
-          url: `/login/oauth2/code/a${payload}`,
-          method: "get",
-        }),
-      }),
+	],
+	endpoints(build) {
+		return {
+			/* / 01 Auth / -------------------------------------------------------- */
+			// loginRTK
+			postLogin: build.mutation({
+				query: (data) => ({
+					url: "/api/auth/login",
+					method: "post",
+					data,
+					types: "login",
+				}),
+			}),
+			// SNSLogin - kakao
+			loginSNSRTK: build.query({
+				query: (payload) => ({
+					url: `/api/auth/kakao${payload}`,
+					method: "get",
+				}),
+			}),
+			// SNSLogin - google
+			loginSNSGoogleRTK: build.query({
+				query: (payload) => ({
+					url: `/login/oauth2/code/a${payload}`,
+					method: "get",
+				}),
+			}),
 
 			// Signup
 			postSignup: build.mutation({
@@ -134,87 +135,8 @@ export const inocamRTK = createApi({
 				}),
 			}),
 
-			// getPosts - 차량출고 커뮤니티
-			getPosts: build.query({
-				query: () => ({
-					url: `/api/posts`,
-					method: "get",
-					types: "getData",
-				}),
-				providesTags: ["POSTS"],
-			}),
-
-			// postPosts - 차량출고 커뮤니티
-			postPosts: build.mutation({
-				query: (data) => ({
-					url: `/api/posts`,
-					method: "post",
-					data,
-					types: "multipart",
-				}),
-				invalidatesTags: ["POSTS"],
-			}),
-
-			// DeletePosts - 차량출고 커뮤니티 게시글 삭제
-			DeletePosts: build.mutation({
-				query: (postId) => ({
-					url: `/api/posts/${postId}`,
-					method: "delete",
-				}),
-				invalidatesTags: ["POSTS"],
-			}),
-
-			// EditPosts - 차량출고 커뮤니티 게시글 수정
-			patchPosts: build.mutation({
-				query: ({ post_id, formData }) => ({
-					url: `/api/posts/${post_id}`,
-					method: "patch",
-					data: formData,
-					types: "multipart",
-				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
-			}),
-
-			// getPostsDetail - 차량출고 커뮤니티 게시글
-			getPostsDetail: build.query({
-				query: (postId) => ({
-					url: `/api/posts/${postId}`,
-					method: "get",
-					types: "getData",
-				}),
-				providesTags: ["POSTDETAIL"],
-			}),
-
-			// postComment - 차량출고 커뮤니티 댓글작성
-			postPostsComment: build.mutation({
-				query: ({ post_id, data }) => ({
-					url: `/api/posts/${post_id}/comments`,
-					method: "post",
-					data,
-				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
-			}),
-
-			// DeleteComment - 차량출고 커뮤니티 댓글 삭제
-			deletePostsComment: build.mutation({
-				query: ({ post_id, comment_id }) => ({
-					url: `/api/posts/${post_id}/comments/${comment_id}`,
-					method: "delete",
-				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
-			}),
-
-			// pathComment - 차량출고 커뮤니티 댓글수정
-			patchPostComment: build.mutation({
-				query: ({ postId, commentId, data }) => ({
-					url: `/api/posts/${postId}/comments/${commentId}`,
-					method: "patch",
-					data: data,
-				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
-			}),
-
-			// carOrder - 차량신청페이지 차량 신청
+			/* / 02 Purchases 관련(Innocar, MyPage, AdminPage) / -------------------------------------------------------- */
+			// postPurchases - 차량신청 차량 출고 신청
 			postPurchases: build.mutation({
 				query: (data) => ({
 					url: `/api/purchases`,
@@ -263,7 +185,89 @@ export const inocamRTK = createApi({
 				providesTags: ["PURCHASESCHAR"],
 			}),
 
-			// getWrappingShop - 랩핑샵 조회(사용자 위치기반)
+			/* / 03 Community 관련 / -------------------------------------------------------- */
+			// getCommunity - 커뮤니티 게시글 요청
+			getCommunity: build.query({
+				query: () => ({
+					url: `/api/posts?page=1&size=10`,
+					method: "get",
+					types: "getData",
+				}),
+				providesTags: ["POSTS"],
+			}),
+
+			// postCommunity - 커뮤니티 게시글 작성
+			postCommunity: build.mutation({
+				query: (data) => ({
+					url: `/api/posts`,
+					method: "post",
+					data,
+					types: "multipart",
+				}),
+				invalidatesTags: ["POSTS"],
+			}),
+
+			// DeleteCommunity - 커뮤니티 게시글 삭제
+			DeleteCommunity: build.mutation({
+				query: (postId) => ({
+					url: `/api/posts/${postId}`,
+					method: "delete",
+				}),
+				invalidatesTags: ["POSTS"],
+			}),
+
+			// patchCommunity - 커뮤니티 게시글 수정 
+			patchCommunity: build.mutation({
+				query: ({ post_id, formData }) => ({
+					url: `/api/posts/${post_id}`,
+					method: "patch",
+					data: formData,
+					types: "multipart",
+				}),
+				invalidatesTags: ["POSTS", "POSTDETAIL"],
+			}),
+
+			// getCommunityDetail - 커뮤니티 게시글 요청
+			getCommunityDetail: build.query({
+				query: (postId) => ({
+					url: `/api/posts/${postId}`,
+					method: "get",
+					types: "getData",
+				}),
+				providesTags: ["POSTDETAIL"],
+			}),
+
+			// postCommunityComment - 커뮤니티 댓글 작성
+			postCommunityComment: build.mutation({
+				query: ({ post_id, data }) => ({
+					url: `/api/posts/${post_id}/comments`,
+					method: "post",
+					data,
+				}),
+				invalidatesTags: ["POSTS", "POSTDETAIL"],
+			}),
+
+			// deleteCommunityComment - 커뮤니티 댓글 삭제
+			deleteCommunityComment: build.mutation({
+				query: ({ post_id, comment_id }) => ({
+					url: `/api/posts/${post_id}/comments/${comment_id}`,
+					method: "delete",
+				}),
+				invalidatesTags: ["POSTS", "POSTDETAIL"],
+			}),
+
+			// patchCommunityComment - 커뮤니티 댓글 수정
+			patchCommunityComment: build.mutation({
+				query: ({ postId, commentId, data }) => ({
+					url: `/api/posts/${postId}/comments/${commentId}`,
+					method: "patch",
+					data: data,
+				}),
+				invalidatesTags: ["POSTS", "POSTDETAIL"],
+			}),
+
+			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
+			// getWrappingShop - 랩핑샵 조회
 			getWrappingShop: build.query({
 				query: (geolocation) => ({
 					url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=1&size=10`,
@@ -273,7 +277,7 @@ export const inocamRTK = createApi({
 				providesTags: ["WRAPPINGSHOP"],
 			}),
 
-			// getWrappingShop - 랩핑샵 상세조회(사용자 위치기반)
+			// getWrappingShop - 랩핑샵 상세조회
 			getWrappingShopDetail: build.query({
 				query: (shopId) => ({
 					url: `/api/shops/${shopId}`,
@@ -283,7 +287,7 @@ export const inocamRTK = createApi({
 				providesTags: ["WRAPPINGSHOP_D"],
 			}),
 
-			// postDecoComment - 래핑샵 댓글작성
+			// postWrappingShopComment - 래핑샵 댓글작성
 			postDecoShopComment: build.mutation({
 				query: ({ shopId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews`,
@@ -294,7 +298,7 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["WRAPPINGSHOP_D"],
 			}),
 
-			// DeleteDecoComment - 래핑샵 댓글 삭제
+			// DeleteWrappingShopComment - 래핑샵 댓글 삭제
 			deleteDecoShopComment: build.mutation({
 				query: ({ shopId, reviewId }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
@@ -303,7 +307,7 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["WRAPPINGSHOP_D"],
 			}),
 
-			// pathComment - 차량출고 커뮤니티 댓글수정
+			// pathWrappingShopComment - 차량출고 커뮤니티 댓글수정
 			patchDecoShopComment: build.mutation({
 				query: ({ shopId, reviewId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
@@ -326,20 +330,19 @@ export const {
 	useGetCertificateEmailQuery,
 	useGetCertificateCodeQuery,
 	useLoginSNSRTKQuery,
-  useLoginSNSGoogleRTKQuery,
+	useLoginSNSGoogleRTKQuery,
 
+	// Community 차량출고 커뮤니티 관련
+	useGetCommunityQuery,
+	usePostCommunityMutation,
+	useDeleteCommunityMutation,
+	usePatchCommunityMutation,
+	useGetCommunityDetailQuery,
 
-	// Posts 차량출고 커뮤니티 관련
-	useGetPostsQuery,
-	usePostPostsMutation,
-	useDeletePostsMutation,
-	usePatchPostsMutation,
-	useGetPostsDetailQuery,
-
-	// Posts 차량출고 커뮤니티 댓글 관련
-	usePostPostsCommentMutation,
-	usePatchPostCommentMutation,
-	useDeletePostsCommentMutation,
+	// CommunityComment 차량출고 커뮤니티 댓글 관련
+	usePostCommunityCommentMutation,
+	usePatchCommunityCommentMutation,
+	useDeleteCommunityCommentMutation,
 
 	// Posts 차량 신청 관련
 	usePostPurchasesMutation,

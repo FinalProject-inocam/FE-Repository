@@ -1,13 +1,16 @@
 import App from "./App";
-import { Error } from "./pages";
-import { store } from "./redux";
-import { Provider } from "react-redux";
+// 설정관련
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { ThemeProvider } from "styled-components";
+// Provider 관련 
+import { store } from "./redux";
 import { theme } from "./components";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+// 컴포넌트 관련
+import { Error } from "./pages";
 
 // if (process.env.NODE_ENV === "development") {
 //   const { worker } = require("./mock/browser");

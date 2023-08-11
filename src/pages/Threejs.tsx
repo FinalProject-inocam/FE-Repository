@@ -18,7 +18,7 @@ export const Threejs: React.FC = () => {
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       <Canvas shadows camera={{ position: [-5, 4, 10], fov: 20 }} >
         <Suspense fallback={null}>
-          <directionalLight intensity={1} position={[1, 1, -1]} /> {/* [{1:앞, -1:뒤}, {1:위, -1:아래}, {1:왼쪽, -1:오른쪽}] */}
+          <directionalLight intensity={1} position={[1, 1, -1]} />
           <ambientLight intensity={1} />
           <group dispose={null}>
             <group scale={0.01}>
@@ -143,7 +143,7 @@ const Contain = styled.div`
 
   directionalLight : 태양광이라고 생각하면 된다. 
     - 그림자를 넣을 수 있는 속성이다.   
-    - position={[2, 3, -5]}
+    - position={[2, 3, -5]} [{1:앞, -1:뒤}, {1:위, -1:아래}, {1:왼쪽, -1:오른쪽}]
       - 내가보는 위치에서 가운데가 영이고, 양수 : 왼쪽으로 한칸씩, 음수는 오른쪽으로 한칸씩
     - 고정위치는 항사 위 이다. 그러나 position을 통해서 위치치를 조절해 줄 수 있다. 
     

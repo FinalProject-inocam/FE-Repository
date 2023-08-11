@@ -1,10 +1,13 @@
+// 파일
+export * from './data'
+export * from './props'
+export * from './hooks'
+// 폴더
 export * from "./responseType";
-export * from "./post";
+export * from "./data/data";
 export * from "./auth";
 export * from "./styled";
-export * from "./props";
 export * from "./async";
 export * from "./carOrder";
 export * from "./purchasesChart";
-export * from "./decoshop";
 export * from "./modal";

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import * as Type from "../../types";
 import { styled } from "styled-components";
 import imageCompression from "browser-image-compression";
-import { EditComment } from "../../components";
+import { EditWrappingReview } from "../../components";
 
 export const DecorationDetail: React.FC = () => {
 	// const { getId } = useRouter();
@@ -16,7 +16,7 @@ export const DecorationDetail: React.FC = () => {
 	const { isLoading, data, isError, error } = RTK.useGetWrappingShopDetailQuery(shopId);
 
 	// RTK - 랩핑샵 댓글작성(POST)
-	const [shopCommentInfo, setShopCommentInfo] = useState<Type.ShopPostComment>({ review: "", star: 0 });
+	const [shopCommentInfo, setShopCommentInfo] = useState<Type.WrappingShopReview>({ review: "", star: 0 });
 	const [fileInfo, setFileInfo] = useState<File | null>(null);
 	const [
 		onShopCommentPostRTK,
@@ -132,7 +132,7 @@ export const DecorationDetail: React.FC = () => {
 			</form>
 			<hr />
 			{data.reviews &&
-				data.reviews.map(({ reviewId, nickname, review, imageUrls, star }: Type.ShopComment) => {
+				data.reviews.map(({ reviewId, nickname, review, imageUrls, star }: Type.TotalWrappingShopReview) => {
 					return (
 						<div key={reviewId}>
 							<div>{nickname}</div>
@@ -143,7 +143,7 @@ export const DecorationDetail: React.FC = () => {
 									<ShopCommentImg key={index} src={url} alt={`이미지-${index}`} />
 								))}
 							<div onClick={onDeleteShopComment(shopId, reviewId)}>삭제하기</div>
-							<EditComment reviewId={reviewId} shopId={shopId} />
+							<EditWrappingReview reviewId={reviewId} shopId={shopId} />
 						</div>
 					);
 				})}

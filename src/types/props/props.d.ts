@@ -1,3 +1,10 @@
+
+/* / WrappingShop 컴포넌트 / -------------------------------------------------------- */
+export interface EditWrappingShopReview {
+	shopId: string | undefined;
+	reviewId: number;
+}
+
 export interface FigureImg {
   src: string;
   alt: string;

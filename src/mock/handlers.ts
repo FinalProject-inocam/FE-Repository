@@ -227,7 +227,7 @@ export const handlers = [
     `${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
     async (req, res, ctx) => {
       const findIndex = TestDB.postdata.findIndex(
-        (post: Type.PostsData) => post.postId === +req.params.id
+        (post: Type.TotalCommunity) => post.postId === +req.params.id
       );
       TestDB.postdata.splice(findIndex, 1);
 
@@ -294,7 +294,7 @@ export const handlers = [
         (post) => post.postId === +postid
       );
       const findIndex: any = find?.commentsList.findIndex(
-        (comment) => comment.commentId === +commentid
+        (comment:any) => comment.commentId === +commentid
       );
       find?.commentsList.splice(findIndex, 1);
 
@@ -319,10 +319,10 @@ export const handlers = [
         (post) => post.postId === +postid
       );
       const findcomment = find?.commentsList.find(
-        (comment) => comment.commentId === +commentid
+        (comment:any) => comment.commentId === +commentid
       );
       const findIndex: any = find?.commentsList.findIndex(
-        (comment) => comment.commentId === +commentid
+        (comment:any) => comment.commentId === +commentid
       );
       findcomment &&
         find?.commentsList.splice(findIndex, 1, { ...findcomment, comment });

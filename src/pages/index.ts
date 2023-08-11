@@ -2,6 +2,7 @@
 export * from './admin';
 export * from './auth';
 export * from './main';
+export * from './lazy';
 // tsx 파일
 export * from './AdminRouter';
 export * from './AuthRouter';
