@@ -1,9 +1,10 @@
 
-import React, { Suspense } from "react";
+import React, { Suspense, useState, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { styled } from "styled-components";
 import { ContactShadows, OrbitControls, useGLTF } from "@react-three/drei";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from "three";
 
 interface IGLTF extends GLTF {
   nodes: { [key: string]: THREE.Mesh }
@@ -11,114 +12,170 @@ interface IGLTF extends GLTF {
 }
 
 export const Threejs: React.FC = () => {
-  const { nodes, materials } = useGLTF("/scene.gltf") as IGLTF;
+  const ContainRef = useRef<HTMLDivElement>(null)
+  const ContainRef2 = useRef<HTMLDivElement>(null)
+  const ContainRef3 = useRef<HTMLDivElement>(null)
+  const { nodes, materials } = useGLTF("/models/typeone/scene.gltf") as IGLTF;
+  const [spinning, setSpinning] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (ContainRef.current) {
+      ContainRef.current.style.height = `${window.innerHeight}px`
+    }
+    if (ContainRef2.current) {
+      ContainRef2.current.style.height = `${window.innerHeight}px`
+    }
+    if (ContainRef3.current) {
+      ContainRef3.current.style.height = `${window.innerHeight}px`
+    }
+  }, [ContainRef, ContainRef3])
 
   return (
-    <Contain>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <Canvas shadows camera={{ position: [-5, 4, 10], fov: 20 }} >
-        <Suspense fallback={null}>
-          <directionalLight intensity={1} position={[1, 1, -1]} /> {/* [{1:앞, -1:뒤}, {1:위, -1:아래}, {1:왼쪽, -1:오른쪽}] */}
-          <ambientLight intensity={1} />
-          <group dispose={null}>
-            <group scale={0.01}>
-              <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.headlight_headlight_signal_lights_0.geometry} material={materials.headlight_signal_lights} />
-                <mesh geometry={nodes.headlight_headlight_0.geometry} material={materials.headlight} />
+    <>
+      <Contain ref={ContainRef}>
+        <TextBox>INNOCAM</TextBox>
+        <Button onClick={() => {
+          if (ContainRef2.current) {
+            ContainRef2.current.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+        }}>섹션이동</Button>
+        <Triangle />
+        <Canvas shadows camera={{ position: [0, 0, 0], fov: 20 }} onDoubleClick={() => setSpinning(pre => !pre)} style={{ width: "926px", margin: "0 auto" }}>
+          <Suspense fallback={null}>
+            <directionalLight intensity={1} position={[0, 1, 0]} />
+            <directionalLight intensity={1} position={[0, -1, 0]} />
+            <directionalLight intensity={1} position={[1, 0, 0]} />
+            <directionalLight intensity={1} position={[-1, 0, 0]} />
+            <directionalLight intensity={1} position={[0, 0, 1]} />
+            <directionalLight intensity={1} position={[0, 0, -1]} />
+            <ambientLight intensity={1} />
+            <group dispose={null}>
+              <group position={[-0.015, -0.009, 0.063]} rotation={[-Math.PI / 2, 0, 0]} scale={0.578}>
+                <group position={[0, -0.003, 0.007]}>
+                  <mesh geometry={nodes.windshield_0.geometry} material={materials.window} />
+                  <mesh geometry={nodes.windshield_1.geometry} material={materials.plastic} />
+                </group>
+                <group position={[0, 0, 0.029]}>
+                  <mesh geometry={nodes.Cylinder000_0.geometry} material={materials.silver} />
+                  <mesh geometry={nodes.Cylinder000_1.geometry} material={materials.plastic} />
+                  <mesh geometry={nodes.Cylinder000_2.geometry} material={materials.rubber} />
+                  <mesh geometry={nodes.Cylinder000_3.geometry} material={materials['Material.001']} />
+                </group>
+                <group position={[0, 0, 0.029]}>
+                  <mesh geometry={nodes.Cylinder001_0.geometry} material={materials.silver} />
+                  <mesh geometry={nodes.Cylinder001_1.geometry} material={materials.plastic} />
+                  <mesh geometry={nodes.Cylinder001_2.geometry} material={materials.rubber} />
+                  <mesh geometry={nodes.Cylinder001_3.geometry} material={materials['Material.001']} />
+                </group>
+                <mesh geometry={nodes.window_rear_0.geometry} material={materials.window} />
+                <mesh geometry={nodes.Plane002_0.geometry} material={materials.paint} position={[-1.053, 3.51, -0.126]} rotation={[-1.439, -0.62, 0.775]} scale={0.024} />
+                <mesh geometry={nodes.Plane003_0.geometry} material={materials.paint} position={[0.436, 3.723, -0.117]} rotation={[-1.483, 0.105, 0.803]} scale={0.024} />
+                <mesh geometry={nodes.Plane004_0.geometry} material={materials.paint} position={[-0.488, 3.684, -0.328]} rotation={[-1.415, -0.045, 0.802]} scale={0.059} />
+                <mesh geometry={nodes.boot_0.geometry} material={materials.full_black} />
+                <mesh geometry={nodes.underbody_0.geometry} material={materials.full_black} />
+                <mesh geometry={nodes.Plane_0.geometry} material={materials.Material} position={[0, 0, -1.054]} scale={[6.953, 9.785, 7.496]} />
+                <mesh geometry={nodes.Cube001_0.geometry} material={materials.plastic} position={[0.036, -1.56, 0.333]} rotation={[0.709, -0.071, -0.245]} scale={[0.014, 0.014, 0.012]} />
+                <mesh geometry={nodes.bumper_front004_0.geometry} material={materials.silver} />
+                <mesh geometry={nodes.bumper_front004_1.geometry} material={materials.lights} />
+                <mesh geometry={nodes.bumper_front004_2.geometry} material={materials.plastic} />
+                <mesh geometry={nodes.bumper_front007_0.geometry} material={materials.glass} rotation={[-0.006, 0, 0]} scale={1.036} />
+                <mesh geometry={nodes.bumper_front009_0.geometry} material={materials.tex_shiny} />
+                <mesh geometry={nodes.bumper_front001_0.geometry} material={materials.plastic} />
+                <mesh geometry={nodes.bumper_front001_1.geometry} material={materials.silver} />
+                <mesh geometry={nodes.bumper_front001_2.geometry} material={materials.lights} />
+                <mesh geometry={nodes.bumper_front003_0.geometry} material={materials.plastic} />
+                <mesh geometry={nodes.bumper_front003_1.geometry} material={materials.glass} />
+                <mesh geometry={nodes.boot001_0.geometry} material={materials.paint} />
+                <mesh geometry={nodes.boot002_0.geometry} material={materials.paint} />
+                <mesh geometry={nodes.Plane001_0.geometry} material={materials.tex_shiny} position={[0.005, 3.581, 0.107]} />
+                <mesh geometry={nodes.boot003_0.geometry} material={materials.tex_shiny} position={[0, 0.003, 0]} />
+                <mesh geometry={nodes.boot004_0.geometry} material={materials.window} />
+                <mesh geometry={nodes.boot005_0.geometry} material={materials.paint} />
+                <mesh geometry={nodes.boot006_0.geometry} material={materials.full_black} />
+                <mesh geometry={nodes.window_rear001_0.geometry} material={materials.full_black} />
+                <mesh geometry={nodes.boot007_0.geometry} material={materials.logo} />
+                <mesh geometry={nodes.Plane005_0.geometry} material={materials.license} position={[0, 3.704, -0.292]} rotation={[0.114, 0, 0]} scale={[0.393, 0.393, 0.356]} />
+                <mesh geometry={nodes.Plane006_0.geometry} material={materials.license} position={[0, -3.75, -0.432]} rotation={[0.082, 0, Math.PI]} scale={[0.395, 0.395, 0.357]} />
+                <mesh geometry={nodes.boot008_0.geometry} material={materials.paint} />
+                <mesh geometry={nodes.boot009_0.geometry} material={materials.silver} />
+                <mesh geometry={nodes.boot010_0.geometry} material={materials.plastic} />
+                <mesh geometry={nodes.boot011_0.geometry} material={materials.coat} />
+                <mesh geometry={nodes.boot011_0_1.geometry} material={materials.coat} />
+                <mesh geometry={nodes.Cube002_0.geometry} material={materials.full_black} scale={[0.332, 0.318, 0.318]} />
               </group>
-              <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.body_body_paint_0.geometry} material={materials.body_paint} />
-                <mesh geometry={nodes.body_body_plastic_0.geometry} material={materials.body_plastic} />
-                <mesh geometry={nodes.body_body_focus_0.geometry} material={materials.body_focus} />
-                <mesh geometry={nodes.body_win_0.geometry} material={materials.material} />
-                <mesh geometry={nodes.body_win_frame_0.geometry} material={materials.win_frame} />
-                <mesh geometry={nodes.body_body_chrome_0.geometry} material={materials.body_chrome} />
-                <mesh geometry={nodes.body_mirror_0.geometry} material={materials.mirror} />
-                <mesh geometry={nodes.body_body_print_0.geometry} material={materials.body_print} />
-              </group>
-              <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.focus_int_mirror_int_focus_0.geometry} material={materials['mirror_int._focus']} />
-                <mesh geometry={nodes.focus_int_tree_0.geometry} material={materials.tree} />
-                <mesh geometry={nodes.focus_int_tree_rope_0.geometry} material={materials.tree_rope} />
-                <mesh geometry={nodes.focus_int_mirror_int_0.geometry} material={materials['mirror_int.']} />
-              </group>
-              <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.front_lights_Material001_0.geometry} material={materials['Material.001']} />
-                <mesh geometry={nodes.front_lights_alum_0.geometry} material={materials.alum} />
-                <mesh geometry={nodes.front_lights_Material013_0.geometry} material={materials['Material.013']} />
-                <mesh geometry={nodes.front_lights_Material003_0.geometry} material={materials['Material.003']} />
-              </group>
-              <group position={[75.477, 33.808, 138.656]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.wheel_FL_tire004_0.geometry} material={materials['tire.004']} />
-                <mesh geometry={nodes.wheel_FL_blt004_0.geometry} material={materials['blt.004']} />
-                <mesh geometry={nodes.wheel_FL_disk004_0.geometry} material={materials['disk.004']} />
-                <mesh geometry={nodes.wheel_FL_disk_paint004_0.geometry} material={materials['disk_paint.004']} />
-                <mesh geometry={nodes.wheel_FL_bbs_tex004_0.geometry} material={materials['bbs_tex.004']} />
-              </group>
-              <group position={[-75.477, 33.808, 138.656]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.wheel_FR_tire002_0.geometry} material={materials['tire.002']} />
-                <mesh geometry={nodes.wheel_FR_blt002_0.geometry} material={materials['blt.002']} />
-                <mesh geometry={nodes.wheel_FR_disk002_0.geometry} material={materials['disk.002']} />
-                <mesh geometry={nodes.wheel_FR_disk_paint002_0.geometry} material={materials['disk_paint.002']} />
-                <mesh geometry={nodes.wheel_FR_bbs_tex002_0.geometry} material={materials['bbs_tex.002']} />
-              </group>
-              <group position={[75.477, 33.808, -141.389]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.wheel_RL_tire003_0.geometry} material={materials['tire.003']} />
-                <mesh geometry={nodes.wheel_RL_blt003_0.geometry} material={materials['blt.003']} />
-                <mesh geometry={nodes.wheel_RL_disk003_0.geometry} material={materials['disk.003']} />
-                <mesh geometry={nodes.wheel_RL_disk_paint003_0.geometry} material={materials['disk_paint.003']} />
-                <mesh geometry={nodes.wheel_RL_bbs_tex003_0.geometry} material={materials['bbs_tex.003']} />
-              </group>
-              <group position={[-76.425, 33.808, -141.389]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.wheel_RR_tire_0.geometry} material={materials.tire} />
-                <mesh geometry={nodes.wheel_RR_blt_0.geometry} material={materials.material_35} />
-                <mesh geometry={nodes.wheel_RR_disk_0.geometry} material={materials.disk} />
-                <mesh geometry={nodes.wheel_RR_disk_paint_0.geometry} material={materials.disk_paint} />
-                <mesh geometry={nodes.wheel_RR_bbs_tex_0.geometry} material={materials.bbs_tex} />
-              </group>
-              <group position={[75.477, 34.287, 139.504]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.brake_RR_disk_brake_tr004_0.geometry} material={materials['disk_brake_tr.004']} />
-                <mesh geometry={nodes.brake_RR_disk_brake004_0.geometry} material={materials['disk_brake.004']} />
-              </group>
-              <group position={[-75.477, 34.287, 139.504]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.brake_RL_disk_brake_tr005_0.geometry} material={materials['disk_brake_tr.005']} />
-                <mesh geometry={nodes.brake_RL_disk_brake005_0.geometry} material={materials['disk_brake.005']} />
-              </group>
-              <group position={[75.477, 34.296, -140.571]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.brake_FR_disk_brake_tr006_0.geometry} material={materials['disk_brake_tr.006']} />
-                <mesh geometry={nodes.brake_FR_disk_brake006_0.geometry} material={materials['disk_brake.006']} />
-              </group>
-              <group position={[-75.477, 34.296, -140.571]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                <mesh geometry={nodes.brake_FL_disk_brake_tr007_0.geometry} material={materials['disk_brake_tr.007']} />
-                <mesh geometry={nodes.brake_FL_disk_brake007_0.geometry} material={materials['disk_brake.007']} />
-              </group>
-              <group position={[0, 37.685, -221.456]} rotation={[2.799, 0, -Math.PI]} scale={[26, 5.6, 5.826]}>
-                <mesh geometry={nodes['������������������_����������������_0'].geometry} material={materials.material_47} />
-                <mesh geometry={nodes['������������������_number_texture_0'].geometry} material={materials.number_texture} />
-              </group>
-              <group position={[0, 74.149, 237.505]} rotation={[-0.169, 0, 0]} scale={[26, 5.6, 5.826]}>
-                <mesh geometry={nodes['������������������001_����������������001_0'].geometry} material={materials['.001']} />
-                <mesh geometry={nodes['������������������001_number_texture001_0'].geometry} material={materials['number_texture.001']} />
-              </group>
-              <mesh geometry={nodes.logo_bmw_logo_0.geometry} material={materials.bmw_logo} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-              <mesh geometry={nodes['��������������_����������������002_0'].geometry} material={materials['.002']} scale={[0.329, 0.329, 1.228]} />
             </group>
-          </group>
-          <ContactShadows position={[0, 0, 0]} color="#ff5555" />
-          <OrbitControls autoRotate/> 
-        </Suspense>
-      </Canvas>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    </Contain>
+            <ContactShadows position={[0, 0, 0]} color="#ff5555" />
+            <OrbitControls autoRotate={spinning} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} minDistance={10} maxDistance={20} target={[0, 0, 0]} />
+          </Suspense>
+        </Canvas>
+      </Contain>
+      <Contain2 ref={ContainRef2}>
+        <Triangle2 />
+      </Contain2>
+      <Contain ref={ContainRef3} />
+    </>
   );
 }
 
 
 const Contain = styled.div`
-    width:100%;
-    height:500px;
+    position: relative;
+    background-color: black;
 `
 
+const Contain2 = styled(Contain)`
+    background-color: white;
+`
+
+
+const TextBox = styled.div`
+    text-align: center;
+    line-height:350px;
+    width:100%;
+    height:350px;
+    font-size: 150px;
+    position: absolute;
+    color: white;
+`
+
+const Button = styled.button`
+  position:absolute;
+  color:white;
+  background-color: transparent;
+  border-radius: 50px;
+  border: 1px solid white;
+  height: 300px;
+  width: 35px;
+  text-align: center;
+  top:50%;
+  right: 3%;
+  transform: translateY(-50%);
+  z-index: 10;
+`
+
+const Triangle = styled.div`
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  width: 0;
+    height: 0;
+    border-left: 100vw solid transparent; /* 왼쪽 변 */
+    border-right: 0 solid transparent; /* 오른쪽 변 */
+    border-bottom: 100px solid white; /* 밑변 */
+`
+
+const Triangle2 = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 0;
+    height: 0;
+    border-left: 100vw solid transparent; /* 왼쪽 변 */
+    border-right: 0 solid transparent; /* 오른쪽 변 */
+    border-bottom: 100px solid black; /* 밑변 */
+`
 
 // https://velog.io/@iepppop/react-three.js-적용법
 // https://solitary-choi.tistory.com/entry/【React-Three-Fiber】01-시작하기초기-설정-정육면체-렌더링
@@ -126,6 +183,7 @@ const Contain = styled.div`
 // https://velog.io/@9rganizedchaos/Three.js-journey-%EA%B0%95%EC%9D%98%EB%85%B8%ED%8A%B8-14
 
 /*
+  00 파일 풀기 : npx gltfjsx scene.gltf
   01 라이브러리 설치
   yarn add three @react-three/fiber @react-three/drei
   yarn add --dev @types/three 
@@ -153,11 +211,12 @@ const Contain = styled.div`
 
   04 OrbitControls 
   - autoRotate : 자동으로 회전하는 속성
+  - maxPolarAngle={Math.PI / 2} minPolarAngle={0} 좌우만 동작하도록 
 
   05 Canvas colorManagement
     colorManagement : 렌더링된 장면에 대산 색상 관리를 활성화하기 위한 속성이다.
     다양한 장치 및 색상 공간에서 색상이 정확하고 일관되게 표시되도록 한다. 장면의 색 공간과 출력 장치의 색 공간 간에 색상이 적절하게 변환되도록하여 정확한 색상 표현이 되도록 
 
 
-
+[-5, 4, 10]
 */
