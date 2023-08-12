@@ -19,12 +19,16 @@ export const Chat: React.FC = () => {
   }
 
   const onBlurChat = () => {
-    chatMsg && socket.emit('send_message', {chatMsg, chatNum})
+    chatMsg && socket.emit('chat_message', {
+      content: chatMsg,
+      roomId: 1,
+      nickname: 'YOUR_USERNAME'
+    })
     chatMsg && setReceiveData((prevReceive) => [...prevReceive, {id:"나요", chatMsg}]);
     setChatMsg("")
   }
 
-  const socket = useSocket('http://localhost:3001', {
+  const socket = useSocket('http://13.125.15.196:9090?roomId=1', {
     reconnectionAttempts: 5,
     reconnectionDelay: 1000,
     autoConnect: false,
@@ -37,7 +41,7 @@ export const Chat: React.FC = () => {
     /* Connect to the Web Socket */
     socket.connect();
     
-    socket.on("receive_message", (data) => {
+    socket.on("chat_message", (data) => {
       setReceiveData((prevReceive) => [...prevReceive, data]);
     });
 
