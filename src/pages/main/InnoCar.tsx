@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const InoCar: React.FC = () => {
+export const InnoCar: React.FC = () => {
   return <div>InoCar</div>;
 };

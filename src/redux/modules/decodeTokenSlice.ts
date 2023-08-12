@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { DecodeToken } from '../../types/async';
+import { DecodeToken } from '../../types';
 import jwtDecode from 'jwt-decode';
 
 const decodeTokenSlice = createSlice({

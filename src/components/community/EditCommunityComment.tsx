@@ -1,28 +1,27 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import * as Type from '../../types'
-import { usePatchPostCommentMutation } from '../../redux'
+import * as RTK from '../../redux'
 
-export const EditComment: React.FC<Type.EditComment> = ({ postId, commentId, comment }) => {
+export const EditCommunityComment: React.FC<Type.EditComment> = ({ postId, commentId, comment }) => {
   const [edit, setEdit] = useState<Boolean>(false)
-  const [inputValue, setInputValue] = useState<Type.Comment>({ comment: "" })
+  const [inputValue, setInputValue] = useState<string>("")
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setInputValue({ ...inputValue, [name]: value })
+    setInputValue(e.target.value)
   }
 
   const onToogleEdit = () => {
     setEdit(!edit)
   }
 
-  const [onPatchPostCommentRTK, { isSuccess: patchIsSuccess, data, isError: patchIsError, error }] = usePatchPostCommentMutation()
+  const [onPatchPostCommentRTK, { isSuccess: patchIsSuccess, data, isError: patchIsError, error }] = RTK.usePatchCommunityCommentMutation()
 
 
   const onSubmitPatchComments = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onPatchPostCommentRTK({ postId, commentId, data:inputValue })
+    onPatchPostCommentRTK({ postId, commentId, data: { comment: inputValue } })
     setEdit(!edit)
-    setInputValue({comment: ""})
+    setInputValue("")
   }
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export const EditComment: React.FC<Type.EditComment> = ({ postId, commentId, com
         :
         <form onSubmit={onSubmitPatchComments}>
           <input
-            value={inputValue.comment}
+            value={inputValue}
             name="comment"
             onChange={onChangeValue} />
           <input type='submit' value="수정제출" />

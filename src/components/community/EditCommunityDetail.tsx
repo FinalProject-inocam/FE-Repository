@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import * as Type from '../../types'
-import { usePatchPostsMutation } from '../../redux'
+import { usePatchCommunityMutation } from '../../redux'
 
-export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ postId, title, content }) => {
+export const EditCommunityDetail: React.FC<Type.Community> = ({ postId, title, content }) => {
   const [edit, setEdit] = useState<Boolean>(false)
-  const [inputValue, setInputValue] = useState<Type.PostPosts>({
+  const [inputValue, setInputValue] = useState<Type.Community>({
     title: "",
     content: ""
   })
@@ -18,7 +18,7 @@ export const EditCommunityDetail: React.FC<Type.PostPosts> = ({ postId, title, c
     setEdit(!edit)
   }
 
-  const [onPatchPostsRTK, {isSuccess:patchSuccess, data:patchData, isError:patchIsError, error:patchError}] = usePatchPostsMutation()
+  const [onPatchPostsRTK, {isSuccess:patchSuccess, data:patchData, isError:patchIsError, error:patchError}] = usePatchCommunityMutation()
 
   const onPatchPosts = (post_id:number | undefined) => () => {
     // data 폼데이터 -> posts Write : "data" = blob

@@ -1,26 +1,21 @@
 import React from 'react';
-import { useRouter } from '../../hooks';
-import * as Type from '../../types/post';
-import { useGetPostsQuery } from '../../redux';
+import * as Type from '../../types';
+import { useCommunity } from '../../hooks';
 
 export const Community: React.FC = () => {
-  const { onNavigate } = useRouter()
-  const { isLoading, data, isError, error } = useGetPostsQuery({})
+  const { isLoading, data, isError, error, onNavigate } = useCommunity()
 
-  if (isLoading) {
-    return <div>... 로딩중</div>
+  if (isLoading) return <div>... 로딩중</div>
+  else if (isError) return <div>에러발생... {JSON.stringify(error)}</div> // <ErrorBoundary FallbackComponent={Error}>
+  else {
+    return (
+      <div>
+        {data.content.map(({ postId, title, content }: Type.TotalCommunity) => (
+          <div key={postId}>
+            <div onClick={onNavigate && onNavigate(`${postId}`)}>{title} : {content} 상세페이지로</div>
+          </div>
+        ))}
+      </div>
+    )
   }
-  if (isError) {
-    return <div>에러발생... {JSON.stringify(error)}</div>
-  }
-
-  return (
-    <>
-      {data.map(({ postId, title, content }: Type.PostsData) => (
-        <div key={postId}>
-          <div onClick={onNavigate(`/communityDetail/${postId}`)}>{title} : {content} 상세페이지로</div>
-        </div>
-      ))}
-    </>
-  )
 };

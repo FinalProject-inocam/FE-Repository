@@ -1,10 +1,6 @@
-export * from "./responseType";
-export * from "./post";
-export * from "./auth";
-export * from "./styled";
-export * from "./props";
-export * from "./async";
-export * from "./carOrder";
-export * from "./purchasesChart";
-export * from "./decoshop";
-export * from "./modal";
+// 파일
+export * from './global'
+export * from './network'
+export * from './data'
+export * from './props'
+export * from './hooks'

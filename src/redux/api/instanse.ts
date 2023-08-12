@@ -1,5 +1,5 @@
 import axios, * as axiosType from 'axios';
-import { MyAxiosRequestConfig } from '../../types/async';
+import { MyAxiosRequestConfig } from '../../types';
 // axios 인스턴스 생성
 const instance: axiosType.AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_KEY,

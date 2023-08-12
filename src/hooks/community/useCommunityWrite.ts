@@ -1,18 +1,18 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as Type from "../../types";
-import { usePostPostsMutation } from "../../redux";
+import { usePostCommunityMutation } from "../../redux";
 import imageCompression from "browser-image-compression";
 
-export const useCommunityWrite = () => {
+export const useCommunityWrite = ():Type.useCommunityWirte => {
 
   // (1) 게시글과 관련된 상태
   const [fileInfo, setFileInfo] = useState<File | null>(null);
-  const [postInfo, setPostInfo] = useState<Type.PostPosts>({
+  const [postInfo, setPostInfo] = useState<Type.Community>({
     title: "",
     content: "",
   })
   // (2) RTK - 게시글 작성에 대한 비동기 함수 관련 Mutation Hooks
-  const [onPostPost, {isSuccess, data, isError, error }] = usePostPostsMutation()
+  const [onPostPost, {isSuccess, data, isError, error }] = usePostCommunityMutation()
 
   // (3) INPUTChange - value
   const onChangePost = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -64,5 +64,11 @@ export const useCommunityWrite = () => {
       content: "",
     })
   }
-  return {onChangePost,onChageFile, onSubmitPostPosts, isSuccess, data, isError, error, postInfo}
+
+  useEffect(()=> {
+    isSuccess && console.log("isSuccess", data);
+    isError && console.log("isError", error);
+  }, [isSuccess, data, isError, error ])
+
+  return {onChangePost,onChageFile, onSubmitPostPosts, postInfo}
 }

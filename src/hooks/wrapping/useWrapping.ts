@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useGetWrappingShopQuery } from '../../redux';
-import { geolocationContext } from '../MainRouter';
+import { useEffect, useState, useRef, useContext } from "react";
+import * as RTK from '../../redux';
 import { useRouter } from "../../hooks";
-import { styled } from 'styled-components';
-import * as Type from '../../types';
+import { geolocationContext } from "../../pages";
+import * as Type from "../../types"
 
-interface GetWrappingShop {
-  avgStar: number
-  isLike: boolean
-  latitude: number
-  like_count: number
-  lnoAdr: string
-  longitude: number
-  rdnmAdr: string
-  shopId: string
-  shopName: string
-}
+// declare global {
+//   interface Window {
+//     kakao: any;
+//   }
+// }
 
-export const Decoration: React.FC = () => {
+export const useWrapping = ():Type.useWrapping => {
+
   const { onNavigate } = useRouter();
   const mapRef = useRef(null);
   const geolocation = useContext(geolocationContext)
   const [checkGeolocation, setCheckGeolocation] = useState<boolean>(true)
-  const { isLoading, data, isError } = useGetWrappingShopQuery(geolocation, {
+  const { isLoading, data, isSuccess, isError, error } = RTK.useGetWrappingQuery(geolocation, {
     skip: checkGeolocation,
   });
 
@@ -48,7 +42,7 @@ export const Decoration: React.FC = () => {
   useEffect(() => {
     const imageSrc = require('../../assets/marker.png')
     if (data) {
-      data.forEach((setMarker: GetWrappingShop) => {
+      data.forEach((setMarker: Type.WrappingShop) => {
         const imgSize = new kakaoMaps.Size(60, 60)
         const markerImage = new kakaoMaps.MarkerImage(imageSrc, imgSize)
         const markers = new kakaoMaps.Marker({
@@ -82,57 +76,5 @@ export const Decoration: React.FC = () => {
   }, [geolocation]);
   console.log(data);
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (isError) return <div>error</div>;
-
-
-  return (<div>
-    <h1>Decoration</h1>
-    <div
-      ref={mapRef}
-      style={{
-        height: "600px",
-        backgroundColor: 'orange',
-        borderRadius: "20px",
-        position: "relative"
-      }}
-    />
-    {data &&
-      data.map((item: Type.ShopDataType) => {
-        return (
-          <ShopInfoContainer key={item.shopId} onClick={onNavigate(`/decorationDetail/${item.shopId}`)}>
-            <ShopInfo>
-              <div>{item.shopName}</div>
-              <div>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <span key={index}>{index < item.avgStar ? "★" : "☆"}</span>
-                ))}
-              </div>
-            </ShopInfo>
-            <div>
-              <div>{item.rdnmAdr}</div>
-            </div>
-            <StyledHr />
-          </ShopInfoContainer>
-        );
-      })}
-  </div>)
-};
-
-const ShopInfoContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	margin: 20px;
-`;
-
-const ShopInfo = styled.div`
-	display: flex;
-	flex-direction: row;
-`;
-
-const StyledHr = styled.hr`
-	border: 0;
-	border-top: 1px solid #ccc;
-	margin: 10px 0;
-`;
+  return {data, mapRef, isLoading, isSuccess, isError, error, onNavigate}
+}

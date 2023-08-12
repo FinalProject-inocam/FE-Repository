@@ -1,4 +1,4 @@
-import * as Type from "../../types/auth";
+import * as Type from "../../types";
 
 export const logindata: Type.UserInfo[] = [
   {

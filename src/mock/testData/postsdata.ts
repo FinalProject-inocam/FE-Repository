@@ -1,7 +1,7 @@
-import * as Type from "../../types/post";
+import * as Type from "../../types/data/data";
 
 //전체조회
-export const postdata: Type.PostsData[] = [
+export const postdata: Type.TotalCommunity[] = [
   {
     postId: 1,
     title: "타이틀1",
@@ -65,13 +65,13 @@ export const postdata: Type.PostsData[] = [
 ]
 
 //상세조회
-export const postDetailData: Type.PostsDetailData[] = [
+export const postDetailData: Type.DetailCommunity[] = [
   {
     postId: 1,
-    title: "타이틀1",  
-    content: "내용1", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀1",
+    content: "내용1",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -92,10 +92,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 2,
-    title: "타이틀2",  
-    content: "내용2", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀2",
+    content: "내용2",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -116,10 +116,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 3,
-    title: "타이틀3",  
-    content: "내용3", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀3",
+    content: "내용3",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -140,10 +140,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 4,
-    title: "타이틀4",  
-    content: "내용4", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀4",
+    content: "내용4",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -164,10 +164,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 5,
-    title: "타이틀5",  
-    content: "내용5", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀5",
+    content: "내용5",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -188,10 +188,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 6,
-    title: "타이틀6",  
-    content: "내용6", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀6",
+    content: "내용6",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -212,10 +212,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 7,
-    title: "타이틀7",  
-    content: "내용7", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀7",
+    content: "내용7",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {
@@ -236,10 +236,10 @@ export const postDetailData: Type.PostsDetailData[] = [
   },
   {
     postId: 8,
-    title: "타이틀8",  
-    content: "내용8", 
-    isLike: true, 
-    likeCount: 0,  
+    title: "타이틀8",
+    content: "내용8",
+    isLike: true,
+    likeCount: 0,
     imageUrls: ["https://hips.hearstapps.com/hmg-prod/images/2024-bmw-i7-m70-119-643d69e564b2a.jpg?crop=0.558xw:0.627xh;0.325xw,0.325xh&resize=640:*"],
     commentsList: [
       {

@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import * as RTK from "../../redux";
 import * as Type from "../../types";
-import { usePatchDecoShopCommentMutation } from "../../redux";
 
-export const EditComment: React.FC<Type.ShopPatchComment> = ({ reviewId, shopId }) => {
+export const EditWrappingReview: React.FC<Type.EditWrappingShopReview> = ({ reviewId, shopId }) => {
 	const [edit, setEdit] = useState<Boolean>(false);
-	const [inputValue, setInputValue] = useState<Type.ShopPostComment>({ review: "", star: 0 });
+	const [inputValue, setInputValue] = useState<Type.WrappingShopReview>({ review: "", star: 0 });
 
 	const onChangeValue = (e: ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = e.target;
@@ -16,7 +16,7 @@ export const EditComment: React.FC<Type.ShopPatchComment> = ({ reviewId, shopId 
 	};
 
 	const [onPatchShopCommentRTK, { isSuccess: patchIsSuccess, data, isError: patchIsError, error }] =
-		usePatchDecoShopCommentMutation();
+		RTK.usePatchWrappingCommentMutation();
 
 	const onSubmitPatchComments = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

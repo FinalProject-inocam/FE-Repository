@@ -1,14 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useCommunityWrite } from '../../hooks';
 
 
 export const CommunityWrite: React.FC = () => {
-  const  {onChangePost,onChageFile, onSubmitPostPosts, isSuccess, data, isError, error, postInfo} = useCommunityWrite()
-
-  useEffect(()=> {
-    isSuccess && console.log("isSuccess", data);
-    isError && console.log("isError", error);
-  }, [isSuccess, data, isError, error ])
+  const  {onChangePost,onChageFile, onSubmitPostPosts, postInfo} = useCommunityWrite()
 
   return (
     <form onSubmit={onSubmitPostPosts}>
