@@ -1,2 +1,2 @@
 export * from "./async"
-export * from "./responseType"
+export * from "./error"
