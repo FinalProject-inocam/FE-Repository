@@ -268,7 +268,7 @@ export const inocamRTK = createApi({
 
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			// getWrappingShop - 랩핑샵 조회
-			getWrappingShop: build.query({
+			getWrapping: build.query({
 				query: (geolocation) => ({
 					url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=1&size=10`,
 					method: "get",
@@ -288,7 +288,7 @@ export const inocamRTK = createApi({
 			}),
 
 			// postWrappingShopComment - 래핑샵 댓글작성
-			postDecoShopComment: build.mutation({
+			postWrappingComment: build.mutation({
 				query: ({ shopId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews`,
 					method: "post",
@@ -299,7 +299,7 @@ export const inocamRTK = createApi({
 			}),
 
 			// DeleteWrappingShopComment - 래핑샵 댓글 삭제
-			deleteDecoShopComment: build.mutation({
+			deleteWrappingComment: build.mutation({
 				query: ({ shopId, reviewId }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
 					method: "delete",
@@ -308,7 +308,7 @@ export const inocamRTK = createApi({
 			}),
 
 			// pathWrappingShopComment - 차량출고 커뮤니티 댓글수정
-			patchDecoShopComment: build.mutation({
+			patchWrappingComment: build.mutation({
 				query: ({ shopId, reviewId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
 					method: "patch",
@@ -354,9 +354,9 @@ export const {
 	useGetPurchasesCharQuery,
 
 	// WrappingShop 관련
-	useGetWrappingShopQuery,
+	useGetWrappingQuery,
 	useGetWrappingShopDetailQuery,
-	usePostDecoShopCommentMutation,
-	useDeleteDecoShopCommentMutation,
-	usePatchDecoShopCommentMutation,
+	usePostWrappingCommentMutation,
+	useDeleteWrappingCommentMutation,
+	usePatchWrappingCommentMutation,
 } = inocamRTK;

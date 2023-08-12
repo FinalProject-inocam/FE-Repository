@@ -16,7 +16,7 @@ export const EditWrappingReview: React.FC<Type.EditWrappingShopReview> = ({ revi
 	};
 
 	const [onPatchShopCommentRTK, { isSuccess: patchIsSuccess, data, isError: patchIsError, error }] =
-		RTK.usePatchDecoShopCommentMutation();
+		RTK.usePatchWrappingCommentMutation();
 
 	const onSubmitPatchComments = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

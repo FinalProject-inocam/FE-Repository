@@ -1,3 +1,4 @@
+// 네트워크 ==> 경덕 
 export interface ErrorType {
   data: {
     error: boolean,

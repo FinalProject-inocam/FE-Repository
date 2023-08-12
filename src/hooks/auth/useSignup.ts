@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import * as Type from "../../types/auth";
+import * as Type from "../../types";
 import {
   useGetEmailCheckQuery,
   useGetNickCheckQuery,

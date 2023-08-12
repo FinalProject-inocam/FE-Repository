@@ -5,7 +5,7 @@
 <details>
 <summary>1차 리팩토링 - 8월 1일</summary>
 
-1. 코드유지보스 및 모듈의 재사용성 개선 : `"리엑트 모듈 인덱스"` 또는 `"바렐(rel) 모듈 인덱스"` 패턴
+1. 코드유지보수 및 모듈의 재사용성 개선 : `"리엑트 모듈 인덱스"` 또는 `"바렐(rel) 모듈 인덱스"` 패턴
 
     <details>
     <summary>코드 살펴보기 </summary>
@@ -40,7 +40,7 @@
 </details>
 
 <details>
-  <summary>2차 리팩토링 - 8월 11일</summary>
+  <summary>2차 리팩토링 - 8월 11-12일</summary>
 
   1. 성능최적화와 코드 스플리팅(React.lazy)
   
@@ -83,7 +83,51 @@
 - 타입선언과 Interface, declare
   - `Interface` : 객체나 클래스 단위의 형태에 대한 명시적인 정의 타입 생성, extends를 통해서 앞선 Interface를 상속받아 프로토타입 체인을 형성한다. 
   - `declare` : 외부 라이브러리나 모듈의 타입을 확장하거나 정의할 때 사용되며, 외부 라이브러리의 타입 정보가 없을 경우 declare를 사용함으로, 선언된 타입이 컴파일러가 타입을 검사할 때 통과되게 처리한다. 
-  
 
+      ```bash
+      📂 types
+      ┣ 🥑 index.ts
+      ┃
+      ┣ 📂 data # 애플리케이션 내 Data와 관련된 정적타입들에 대한 선언 
+      ┃    ┣ 🥑 index.ts
+      ┃    ┗ 🗿 data.d.ts 
+      ┃  
+      ┣ 📂 global # 프로젝트 전체에 적용되는 style과 파일 타입에 대한 선언
+      ┃    ┣ 🥑 index.ts
+      ┃    ┣ 🗿 declare.d.ts 
+      ┃    ┗ 🗿 styled.d.ts
+      ┃ 
+      ┣ 📂 hooks # 커스텀훅과 관련된 정적타입들에 대한 선언
+      ┃    ┣ 🥑 index.ts
+      ┃    ┗ 🗿 hooks.d.ts
+      ┃ 
+      ┣ 📂 network # AXIOS 통신과 관련된 정적타입들에 대한 선언
+      ┃    ┣ 🥑 index.ts
+      ┃    ┣ 🗿 async.d.ts 
+      ┃    ┗ 🗿 responseType.d.ts
+      ┃
+      ┗ 📂 props # props 전달과 관련된 정적타입들에 대한 선언
+          ┣ 🥑 index.ts
+          ┗ 🗿 props.d.ts 
+      ```
+  
+  3. 코드유지보수 및 가독성을 위한 Shared > Routes 폴더 
+  - 초기 APP.tsx 파일 안에 모든 Route를 넣는 방식을 채택했었으나, Route가 많아질수록 코드유지보수 및 가독성이 떨어지는 문제점을 발견함
+  - 이를 해결하고자, shared 폴더를 만들어 공통된 Header에 따른 Route들을 분리함
+  - App.tsx에서는 shard 폴더 안의 분리된 Routes를 import해서 사용함
+  
+      ```tsx
+        const App: React.FC = () => {
+        return (
+          <BrowserRouter>
+            <GlobalStyled />
+            <Shared.MainRoutes />
+            <Shared.AuthRoutes />
+            <Shared.ProtectiveRouters />
+            <Shared.ChatRoutes />
+          </BrowserRouter>
+        );
+      };
+      ```
 </details>
 

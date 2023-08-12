@@ -2,7 +2,6 @@ import App from "./App";
 // 설정관련
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 // Provider 관련 
 import { store } from "./redux";
@@ -19,7 +18,6 @@ import { Error } from "./pages";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-	<BrowserRouter>
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<ErrorBoundary FallbackComponent={Error}>
@@ -27,7 +25,6 @@ root.render(
 				</ErrorBoundary>
 			</ThemeProvider>
 		</Provider>
-	</BrowserRouter>
 );
 
 reportWebVitals();

@@ -12,7 +12,7 @@ export const Community: React.FC = () => {
       <div>
         {data.content.map(({ postId, title, content }: Type.TotalCommunity) => (
           <div key={postId}>
-            <div onClick={onNavigate && onNavigate(`/communityDetail/${postId}`)}>{title} : {content} 상세페이지로</div>
+            <div onClick={onNavigate && onNavigate(`${postId}`)}>{title} : {content} 상세페이지로</div>
           </div>
         ))}
       </div>
