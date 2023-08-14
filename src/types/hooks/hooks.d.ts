@@ -116,3 +116,12 @@ export interface UseHeadScroll {
   preScrolly: boolean; 
   isTop: boolean
 }
+
+/* / 10 useLogin / -------------------------------------------------------- */
+export interface useLogin extends AsyncHooksDefault {
+  loginInfo: User;
+  data: any;
+  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void 
+  onSnsLogin: (sns: string) => () => void;
+}

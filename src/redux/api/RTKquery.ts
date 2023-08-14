@@ -78,17 +78,11 @@ export const inocamRTK = createApi({
 					types: "login",
 				}),
 			}),
-			// SNSLogin - kakao
+			// SNSLogin - kakao, google, naver
+			// {types:"kakao", search}
 			loginSNSRTK: build.query({
-				query: (payload) => ({
-					url: `/api/auth/kakao${payload}`,
-					method: "get",
-				}),
-			}),
-			// SNSLogin - google
-			loginSNSGoogleRTK: build.query({
-				query: (payload) => ({
-					url: `/login/oauth2/code/a${payload}`,
+				query: ({types, code}) => ({
+					url: `/api/auth/${types}${code}`,
 					method: "get",
 				}),
 			}),
@@ -330,7 +324,6 @@ export const {
 	useGetCertificateEmailQuery,
 	useGetCertificateCodeQuery,
 	useLoginSNSRTKQuery,
-	useLoginSNSGoogleRTKQuery,
 
 	// Community 차량출고 커뮤니티 관련
 	useGetCommunityQuery,
