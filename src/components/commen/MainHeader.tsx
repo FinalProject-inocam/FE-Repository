@@ -8,7 +8,7 @@ export const MainHeader: React.FC = () => {
   return (
     <SC.HeaderOutLine $scrolly={scrolly}>
       <SC.HeaderLayout $scrolly={scrolly}>
-        <div>INNOCAM</div>
+        <h1>INNOCAM</h1>
       </SC.HeaderLayout>
     </SC.HeaderOutLine>
   )

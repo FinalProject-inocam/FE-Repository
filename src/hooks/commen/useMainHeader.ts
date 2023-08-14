@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react"
 import * as Type from '../../types';
 
-export const useMainHeader = ():Type.UseHeadScroll => {
+export const useMainHeader = ():any => {
 
   const [scrolly, setScrolly] = useState<Type.UseHeadScroll>({
     scrolly:0,
     innerHeight:window.innerHeight,
     preScrolly:false,
-    isTop:true
+    isTop:false
   })
+
+  setTimeout(()=>{
+    setScrolly({...scrolly, scrolly:window.scrollY, preScrolly:false, isTop:true})
+  }, 3000)
 
   useEffect(()=> {
     const onSetScrollY = () => {

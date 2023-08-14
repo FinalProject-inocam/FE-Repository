@@ -104,6 +104,7 @@ export interface useWrappingDetail extends AsyncHooksDefault {
 
 /* / 09 useHome / -------------------------------------------------------- */
 export interface useHome {
+  SplashScreenRef : MutableRefObject<HTMLDivElement | null>;
   sectionRef1: MutableRefObject<HTMLDivElement | null>;
   sectionRef2: MutableRefObject<HTMLDivElement | null>;
   sectionRef3: MutableRefObject<HTMLDivElement | null>;
