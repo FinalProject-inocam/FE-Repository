@@ -101,3 +101,18 @@ export interface useWrappingDetail extends AsyncHooksDefault {
   onChageShopFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
   onDeleteShopComment: (shopId: string | undefined, reviewId: number | undefined) => () => void;
 }
+
+/* / 09 useHome / -------------------------------------------------------- */
+export interface useHome {
+  sectionRef1: MutableRefObject<HTMLDivElement | null>;
+  sectionRef2: MutableRefObject<HTMLDivElement | null>;
+  sectionRef3: MutableRefObject<HTMLDivElement | null>;
+  sectionRef4: MutableRefObject<HTMLDivElement | null>;
+}
+
+export interface UseHeadScroll {
+  scrolly: number; 
+  innerHeight: number; 
+  preScrolly: boolean; 
+  isTop: boolean
+}

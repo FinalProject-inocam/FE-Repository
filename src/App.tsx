@@ -53,9 +53,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-// <Shared.MainRoutes />
-// <Shared.AuthRoutes />
-// <Shared.ProtectiveRouters />
-// <Shared.ChatRoutes />

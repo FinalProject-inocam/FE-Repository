@@ -4,3 +4,4 @@ export * from "./atom";
 export * from "./admin";
 export * from "./signup";
 export * from "./wrappingshop";
+export * from "./commen"

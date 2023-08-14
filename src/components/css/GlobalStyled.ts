@@ -17,14 +17,63 @@ export const GlobalStyled = sc.createGlobalStyle`
     padding: 0;
     border: 0;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 16px;
     color: rgb(29, 29, 31);
 }
 
   body {
     width: 100%;
     height: 100%;
-    // 전역 상태 글꼴 : font-family: 'SUITE-Regular';
+    position:relative;
+    
+    // 전역글꼴 선언부 (1) : pretendard - 전역기본폰트
+    @font-face {
+        font-family: 'Pretendard-ExtraLight';
+        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Pretendard-Light';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Pretendard-SemiBold';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Pretendard-Bold';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Pretendard-Medium';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+      font-style: normal;
+      font-display: swap;
+    }
+
+    // 포인트글꼴 선언부(1) : 
+
+    // 전역글꼴 적용
+    ${({theme}) => theme.font.PretendardL}
+    
   }
 `
 
@@ -39,12 +88,12 @@ const Flex = sc.css<Partial<Styled>>`
 
 const Grid = sc.css<Partial<Styled>>`
   display: grid;
-  grid-template-columns: ${({$gtc}) => $gtc ? $gtc : "repeat(2, 1fr)" }; 
+  grid-template-columns: ${({ $gtc }) => $gtc ? $gtc : "repeat(2, 1fr)"}; 
   // repeat(7, 1fr) || repeat(auto-fill, minmax(20%, auto));
   //  20%를 해서 5개의 item 이 필요한데, 4개가 오면 4개가 남은 공간을 더해서 25%씩 공간을 차지합니다. 
-  grid-template-rows: ${({$gtr}) => $gtr ? $gtr : "none" }; 
+  grid-template-rows: ${({ $gtr }) => $gtr ? $gtr : "none"}; 
   // 구체적인 row를 알고 있을 때 // auto || repeat(3, minmax(100px, auto));
-  grid-auto-rows: ${({$gar}) => $gar ? $gar : "none" }; 
+  grid-auto-rows: ${({ $gar }) => $gar ? $gar : "none"}; 
   // 구체적인 row를 모를 때 // //minmax(100px, auto);
   gap: ${({ $gap }) => ($gap ? `${$gap}px` : "none")}; 
   column-gap: ${({ $cgap }) => ($cgap ? `${$cgap}px` : "none")}; 
@@ -55,7 +104,6 @@ const cursor = sc.css`
   cursor: pointer;
 `;
 
-
 /* About Div styled ---------------------------------------------- */
 const FlexBox = sc.styled.div<Partial<Styled>>`
   ${Flex}
@@ -63,14 +111,14 @@ const FlexBox = sc.styled.div<Partial<Styled>>`
 
 const GridBox = sc.styled.div<Partial<Styled>>`
   ${Grid}
-  background-color:${({$color}) => $color};
+  background-color:${({ $color }) => $color};
 `
 
 const GridMergedSpace = sc.styled.div<Partial<Styled>>`
-  grid-column-start: ${({$mergedgcs}) => $mergedgcs ? $mergedgcs : "auto"};
-  grid-column-end: ${({$mergedgce}) => $mergedgce ? $mergedgce : "auto"}; // span 2;
-  grid-row-start: ${({$mergedgrs}) => $mergedgrs ? $mergedgrs : "auto"};
-  grid-row-end: ${({$mergedgre}) => $mergedgre ? $mergedgre : "auto"}; // span 3;
+  grid-column-start: ${({ $mergedgcs }) => $mergedgcs ? $mergedgcs : "auto"};
+  grid-column-end: ${({ $mergedgce }) => $mergedgce ? $mergedgce : "auto"}; // span 2;
+  grid-row-start: ${({ $mergedgrs }) => $mergedgrs ? $mergedgrs : "auto"};
+  grid-row-end: ${({ $mergedgre }) => $mergedgre ? $mergedgre : "auto"}; // span 3;
 `
 
 const GridMergedSpaceFlex = sc.styled(GridMergedSpace)`
@@ -79,7 +127,7 @@ const GridMergedSpaceFlex = sc.styled(GridMergedSpace)`
 
 const Figure = sc.styled.figure<Partial<Styled>>`
   ${Flex}
-  position: relative;
+  position: ${({ $position }) => $position ? $position : "relative"};
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
 
@@ -92,7 +140,6 @@ const Figure = sc.styled.figure<Partial<Styled>>`
 const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
-  
   img {
     position: absolute;
     top: 50%;
@@ -105,5 +152,11 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   }
 `;
 
+const RouterLayout = sc.styled.div<Partial<Styled>>`
+  ${Flex};
+`
 
-export { Flex, Grid, cursor, FlexBox, GridBox, GridMergedSpace, GridMergedSpaceFlex,Figure, FigureObjectFit };
+
+export { Flex, Grid, cursor, FlexBox, GridBox, GridMergedSpace, GridMergedSpaceFlex, Figure, FigureObjectFit, 
+    
+  RouterLayout };

@@ -1,8 +1,13 @@
+import { UseHeadScroll } from "../hooks";
+
 export interface Styled {
   // commen
   $color: string;
   $width: string;
   $height: string;
+  $imgUrl:string;
+  $position:string;
+  $types:string;
 
   // Felx-Grid
   $gap: number;
@@ -29,4 +34,7 @@ export interface Styled {
   $state: string;
   $signColor: boolean;
   $signupbtnColor: string;
+
+  //Header
+  $scrolly: UseHeadScroll
 }
