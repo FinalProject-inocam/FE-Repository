@@ -82,7 +82,7 @@ export const inocamRTK = createApi({
 			// {types:"kakao", search}
 			loginSNSRTK: build.query({
 				query: ({types, code}) => ({
-					url: `/api/auth/${types}${code}`,
+					url: `/api/auth/login/${types}${code}`,
 					method: "get",
 				}),
 			}),
