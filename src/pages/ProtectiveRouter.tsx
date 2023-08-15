@@ -1,12 +1,10 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom'; 
+import * as RD from '../redux';
 
 export const ProtectiveRouter: React.FC = () => {
-  // 만역 관리자가 아니면 Redirect => 원래 위치로
-  // 만역 회원이 아니면 Redirect => 원래 위치로
+  const {sub} = RD.useAppSelector(RD.selectDecode)
+  console.log(sub);
 
-  // let {decodeToken} = useSelector(selectToken)
-  // console.log(JSON.stringify(!decodeToken));
-  // return !decodeToken ? <Outlet/> : <Navigate to={"/login"}/>
-  return <Outlet />;
+  return sub ? <Outlet/> : <Navigate to={"/login"} replace={true}/>
 };

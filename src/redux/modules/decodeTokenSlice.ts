@@ -4,21 +4,19 @@ import jwtDecode from 'jwt-decode';
 
 const decodeTokenSlice = createSlice({
   name: 'decodeToken',
-  initialState: {} as DecodeToken,
+  initialState: {} as DecodeToken | {},
   reducers: {
-    setDecodeToken: (state, action: PayloadAction<any>) => { // DecodeToken
+    setDecodeToken: (state, action: PayloadAction<any>) => { 
       const decode = jwtDecode(action.payload)
-      console.log("setDecodeToken - state", state);
-      console.log("setDecodeToken - decode", decode);
-      
-      return state
+      return decode ? decode : state
     },
-    deleteDecodeToken: () => {
-      return {} as DecodeToken;
-    },
+    deleteToken : () => {
+      return {}
+    }
+
   },
 });
 
 export const decodeTokenReducer = decodeTokenSlice.reducer;
 export const selectDecode = (state: any) => state.decodeTokenReducer;
-export const { setDecodeToken, deleteDecodeToken } = decodeTokenSlice.actions;
+export const { setDecodeToken, deleteToken  } = decodeTokenSlice.actions;

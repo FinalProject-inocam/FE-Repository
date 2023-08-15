@@ -1,17 +1,14 @@
 import React, { createContext } from 'react';
+import * as Hooks from '../hooks';
 import { Outlet } from 'react-router-dom';
-import { useGeolocation } from '../hooks';
-import * as Type from '../types/hooks/hooks';
 import { MainHeader } from '../components';
-import { useDecodeToken } from '../hooks/auth/useDecodeToken';
+import * as Type from '../types/hooks/hooks';
 export const geolocationContext = createContext<Partial<Type.useGeolocation> | null>(null)
 
 export const MainRouter: React.FC = () => {
-  const geolocation = useGeolocation()
-
-const { decodeToken } = useDecodeToken()
-console.log("MainRouter - useDecodeToken", decodeToken);
-
+  const geolocation = Hooks.useGeolocation()
+  Hooks.useDecodeDispatch()
+  
   return (
     <geolocationContext.Provider value={geolocation}>
         <MainHeader/>
@@ -19,6 +16,7 @@ console.log("MainRouter - useDecodeToken", decodeToken);
     </geolocationContext.Provider>
   );
 };
+
 
 
 

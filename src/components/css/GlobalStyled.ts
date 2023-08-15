@@ -27,47 +27,8 @@ export const GlobalStyled = sc.createGlobalStyle`
     position:relative;
     
     // 전역글꼴 선언부 (1) : pretendard - 전역기본폰트
-    @font-face {
-        font-family: 'Pretendard-ExtraLight';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
-        font-style: normal;
-        font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Pretendard-Light';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Pretendard-Regular';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Pretendard-SemiBold';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Pretendard-Bold';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Pretendard-Medium';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
-      font-style: normal;
-      font-display: swap;
-    }
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
+    
 
     // 포인트글꼴 선언부(1) : 
 
