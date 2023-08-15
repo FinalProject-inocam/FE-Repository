@@ -20,14 +20,14 @@ const App: React.FC = () => {
 					{/* 프로텍티드 라우터(ProtectiveRouter, Token 이 존재하면 ) */}
 					<Route element={<Page.ProtectiveRouter />}>
 						<Route path='innocarorder' element={<Page.InnoCarOrder />} />
-						<Route path='communityWrite' element={<Page.CommunityWrite />} />
-						<Route path='wrappingWrite' element={<Page.DecorationWrite />} />
+						<Route path='communitywrite' element={<Page.CommunityWrite />} />
+						<Route path='wrappingwrite' element={<Page.DecorationWrite />} />
 					</Route>
 				</Route>
 
 				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}
 				<Route element={<Page.ProtectiveRouter />}>
-					<Route path='mypage' element={<Page.MyPage />} />
+					<Route path='/mypage' element={<Page.MyPage />} />
 					<Route path='/admin' element={<Page.AdminRouter />}>
 						<Route index element={<Page.AdminMain />} />
 					</Route>

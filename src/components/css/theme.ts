@@ -23,13 +23,16 @@ const PretendardEB = css`
 const color = {
   blackM: "#0E0D13",
   green: "#539B39",
-  white: "#fff"
+  white: "white"
 }
 
 /* About theme ---------------------------------------------- */
 
 export const theme = {
-  headerHeight: "90px",
+  headerHeight: {
+    desktop : "90px",
+    mobile : "70px"
+  },
   color,
   font: {
     PretendardL,
@@ -59,14 +62,14 @@ export const theme = {
     Top: css`
       background-color: ${color.blackM};
       color : ${color.white};
-      h1{
+      h1, div, li {
         color : ${color.white}
       }
     `,
     else: css`
-    background-color: ${color.white};
+    background-color:${color.white};
     color : ${color.blackM};
-    h1 {
+    h1, div, li {
         color : ${color.blackM}
       }
     `
