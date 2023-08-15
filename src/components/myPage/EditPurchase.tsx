@@ -50,7 +50,7 @@ export const EditPurchase: React.FC<Type.CarOrderRes> = ({
 
   const [edit, setEdit] = useState<Boolean>(false);
 
-  const onToogleEdit = () => {
+  const onToggleEdit = () => {
     setEdit(!edit);
   };
 
@@ -73,7 +73,7 @@ export const EditPurchase: React.FC<Type.CarOrderRes> = ({
             {addressName}
             {zoneNo}
           </div>
-          <button onClick={onToogleEdit}> 수정하기 </button>
+          <button onClick={onToggleEdit}> 수정하기 </button>
         </>
       ) : (
         <>
@@ -122,11 +122,9 @@ export const EditPurchase: React.FC<Type.CarOrderRes> = ({
           </button>
           {openDaumPost && <DaumPostcode onComplete={handleComplete} />}
           <button onClick={onPatchPurchases(purchaseId)}>수정제출</button>
-          <button onClick={onToogleEdit}>수정취소</button>
+          <button onClick={onToggleEdit}>수정취소</button>
         </>
       )}
     </div>
   );
 };
-
-// delete 수정해야함 현재 pop이라서 뒤에것만 지워짐

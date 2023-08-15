@@ -19,7 +19,6 @@ interface AsyncHooksDefault {
   onNavigate?: (path: string | number) => () => void;
 }
 
-
 /* / 02 useGeolocation / -------------------------------------------------------- */
 export interface useGeolocation {
   lat: number;
@@ -46,9 +45,9 @@ interface CommunityData {
     pageSize: number;
     paged: boolean;
     sort: Sort;
-    unpaged: boolean
-  }
-  size: number
+    unpaged: boolean;
+  };
+  size: number;
   sort: Sort;
   totalElements: number;
   totalPages: number;
@@ -63,16 +62,21 @@ export interface useCommunityDetail extends AsyncHooksDefault {
   data: DetailCommunity;
   commentInfo: string;
   onDeletePost: (post_id: number | undefined) => () => void;
-  onSubmitPostComment: (post_id: number | undefined) => (e: FormEvent<HTMLFormElement>) => void;
+  onSubmitPostComment: (
+    post_id: number | undefined
+  ) => (e: FormEvent<HTMLFormElement>) => void;
   onChangeComment: (e: ChangeEvent<HTMLInputElement>) => void;
-  onDeleteComment: (post_id: number | undefined, comment_id: number | undefined) => () => void;
+  onDeleteComment: (
+    post_id: number | undefined,
+    comment_id: number | undefined
+  ) => () => void;
 }
 
 /* / 05 useCommunityWrite / -------------------------------------------------------- */
 export interface useCommunityWirte {
   postInfo: Community;
   onChangePost: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChageFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>
+  onChageFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
   onSubmitPostPosts: (e: FormEvent<HTMLFormElement>) => void;
 }
 
@@ -95,11 +99,14 @@ export interface useWrapping extends AsyncHooksDefault {
 /* / 08 useWrappingDetail / -------------------------------------------------------- */
 export interface useWrappingDetail extends AsyncHooksDefault {
   data: any;
-  shopCommentInfo: WrappingShopReview
+  shopCommentInfo: WrappingShopReview;
   onSubmitShopComment: (e: FormEvent<HTMLFormElement>) => void;
   onChangeShopComment: (e: ChangeEvent<HTMLInputElement>) => void;
   onChageShopFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
-  onDeleteShopComment: (shopId: string | undefined, reviewId: number | undefined) => () => void;
+  onDeleteShopComment: (
+    shopId: string | undefined,
+    reviewId: number | undefined
+  ) => () => void;
 }
 
 /* / 09 useHome / -------------------------------------------------------- */
@@ -111,8 +118,18 @@ export interface useHome {
 }
 
 export interface UseHeadScroll {
-  scrolly: number; 
-  innerHeight: number; 
-  preScrolly: boolean; 
-  isTop: boolean
+  scrolly: number;
+  innerHeight: number;
+  preScrolly: boolean;
+  isTop: boolean;
+}
+
+/* / 10 useEditUser / -------------------------------------------------------- */
+export interface UseEditUser extends AsyncHooksDefault {
+  edit: boolean;
+  userInfo: MyPageEditData;
+  onToggleEdit: () => void;
+  onSubmitPatchUserInfo: (e: FormEvent<HTMLFormElement>) => void;
+  onChangeFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
+  onChangeUserInfo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
