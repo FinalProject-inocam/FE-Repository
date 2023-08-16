@@ -13,5 +13,5 @@ export const KakaoRedirect: React.FC = () => {
     console.log(query);
     query.isSuccess && onNavigate(-2)();
   }, [query, onNavigate]);
-  return <div>KakaoRedirect</div>;
+  return <div/>;
 };

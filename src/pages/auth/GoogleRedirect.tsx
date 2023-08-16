@@ -14,6 +14,6 @@ export const GoogleRedirect: React.FC = () => {
     console.log(query);
     query.isSuccess && onNavigate('/')();
   }, [query, onNavigate]);
-  return <div>GoogleRedirect</div>;
+  return <div/>;
 };
 

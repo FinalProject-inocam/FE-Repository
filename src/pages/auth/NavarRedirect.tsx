@@ -12,5 +12,5 @@ export const NavarRedirect: React.FC = () => {
     console.log(query);
     // query.isSuccess && onNavigate("/")();
   }, [query, onNavigate]);
-  return <div>NavarRedirect</div>;
+  return <div />;
 };
