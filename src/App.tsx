@@ -25,6 +25,8 @@ const App: React.FC = () => {
 					</Route>
 				</Route>
 
+
+				{/* ↓↓↓↓↓↓ 렌더링 쿠키에 있는 토큰을 redux 체계에 반영하는 문제 및, 새로고침시에도 대응하기 */}
 				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}
 				<Route element={<Page.ProtectiveRouter />}>
 					<Route path='/mypage' element={<Page.MyPage />} />
@@ -45,7 +47,7 @@ const App: React.FC = () => {
 				<Route path="/api/auth/login/google" element={<Page.GoogleRedirect />} />
 				<Route path="/api/auth/login/naver" element={<Page.NaverRedirect />} />
 
-				{/* 채팅을 위한 임시 라우터 :: Chat */}
+				{/* 채팅 및 임시 라우터 :: Chat */}
 				<Route path="/chat" element={<Page.Chat />} />
 				<Route path="/webrtc" element={<Page.WebRTC />} />
 				<Route path="/threejs" element={<Suspense fallback={<div>Loading...</div>}><Page.LazyThreejs /></Suspense>} />

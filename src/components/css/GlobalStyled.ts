@@ -25,12 +25,6 @@ export const GlobalStyled = sc.createGlobalStyle`
     width: 100%;
     height: 100%;
     position:relative;
-    
-    // 전역글꼴 선언부 (1) : pretendard - 전역기본폰트
-    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
-    
-
-    // 포인트글꼴 선언부(1) : 
 
     // 전역글꼴 적용
     ${({theme}) => theme.font.PretendardL}
