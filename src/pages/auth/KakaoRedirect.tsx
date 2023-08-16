@@ -11,7 +11,7 @@ export const KakaoRedirect: React.FC = () => {
 
   useEffect(() => {
     console.log(query);
-    // query.isSuccess && onNavigate("/")();
+    query.isSuccess && onNavigate(-2)();
   }, [query, onNavigate]);
   return <div>KakaoRedirect</div>;
 };

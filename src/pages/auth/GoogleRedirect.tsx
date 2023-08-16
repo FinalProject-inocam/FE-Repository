@@ -12,7 +12,7 @@ export const GoogleRedirect: React.FC = () => {
 
   useEffect(() => {
     console.log(query);
-    // query.isSuccess && onNavigate("/")();
+    query.isSuccess && onNavigate('/')();
   }, [query, onNavigate]);
   return <div>GoogleRedirect</div>;
 };

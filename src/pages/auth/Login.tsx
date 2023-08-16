@@ -1,8 +1,12 @@
 import React, {useEffect} from 'react';
 import { useLogin, useRouter } from '../../hooks';
 
+
+
 export const Login: React.FC = () => {
   const {onNavigate} = useRouter()
+  console.log(window.location);
+  
   const  {loginInfo, isSuccess, data, isError, error, onChangeInput, onSubmitLogin, onSnsLogin} = useLogin()
 
   useEffect(()=> {
