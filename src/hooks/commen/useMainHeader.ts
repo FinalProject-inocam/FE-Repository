@@ -36,9 +36,10 @@ export const useMainHeader = (setState?:any): any => {
   }
 
   useEffect(() => {
+   
     setTimeout(() => {
       setScrolly({ ...scrolly, scrolly: window.scrollY, preScrolly: false, isTop: true })
-    }, 2000)
+    }, 1100)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

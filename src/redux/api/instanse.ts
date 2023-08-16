@@ -54,4 +54,26 @@ instance.interceptors.response.use(
   },
 );
 
-export default instance;
+const instanceLogout: axiosType.AxiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_KEY,
+});
+
+instanceLogout.interceptors.request.use((config: MyAxiosRequestConfig) => {
+  const accessToken =
+      document.cookie &&
+      document.cookie
+        .split(';')
+        .filter((cookies) => cookies.includes('accessToken'))[0]
+        ?.split('=')[1];
+  const refreshToken =
+  document.cookie &&
+  document.cookie
+    .split(';')
+    .filter((cookies) => cookies.includes('refreshToken'))[0]
+    ?.split('=')[1];
+  accessToken && (config.headers.authorization = accessToken);
+  refreshToken && (config.headers.refresh = refreshToken);
+  return config
+})
+
+export {instance, instanceLogout};

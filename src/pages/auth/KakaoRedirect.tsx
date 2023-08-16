@@ -7,11 +7,10 @@ export const KakaoRedirect: React.FC = () => {
   const { search } = useLocation();
   console.log(search);
   const { onNavigate } = useRouter();
-  const query = useLoginSNSRTKQuery({types:"kakao", code:search});
+  const {isSuccess} = useLoginSNSRTKQuery({types:"kakao", code:search});
 
   useEffect(() => {
-    console.log(query);
-    query.isSuccess && onNavigate(-2)();
-  }, [query, onNavigate]);
+    isSuccess && onNavigate(-2)();
+  }, [isSuccess, onNavigate]);
   return <div/>;
 };

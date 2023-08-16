@@ -104,10 +104,13 @@ export interface useWrappingDetail extends AsyncHooksDefault {
 
 /* / 09 useHome / -------------------------------------------------------- */
 export interface useHome {
-	sectionRef1: MutableRefObject<HTMLDivElement | null>;
-	sectionRef2: MutableRefObject<HTMLDivElement | null>;
-	sectionRef3: MutableRefObject<HTMLDivElement | null>;
-	sectionRef4: MutableRefObject<HTMLDivElement | null>;
+
+  sectionRef1: MutableRefObject<HTMLDivElement | null>;
+  sectionRef2: MutableRefObject<HTMLDivElement | null>;
+  sectionRef3: MutableRefObject<HTMLDivElement | null>;
+  sectionRef4: MutableRefObject<HTMLDivElement | null>;
+  sectionRef5: MutableRefObject<HTMLDivElement | null>;
+  sectionContentRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 export interface UseHeadScroll {

@@ -8,7 +8,10 @@ export interface Styled {
   $imgUrl:string;
   $position:string;
   $types:string;
+  $size:number;
+  $mSize:number;
   $state:boolean;
+  $font:RuleSet<object>;
 
   // Felx-Grid
   $gap: number;
