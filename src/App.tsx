@@ -55,7 +55,7 @@ const App: React.FC = () => {
 				{/* 소셜로그인을 위한 Redirect 경로 */}
 				<Route path="/api/auth/login/kakao" element={<Page.KakaoRedirect />} />
 				<Route path="/api/auth/login/google" element={<Page.GoogleRedirect />} />
-				<Route path="/api/auth/login/naver" element={<Page.NavarRedirect />} />
+				<Route path="/api/auth/login/naver" element={<Page.NaverRedirect />} />
 
 			</Routes>
 		</BrowserRouter>
