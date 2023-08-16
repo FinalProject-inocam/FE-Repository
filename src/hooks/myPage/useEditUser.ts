@@ -4,12 +4,12 @@ import * as RTK from "../../redux";
 import * as Type from "../../types";
 
 export const useEditUser = ({
-  imageUrls,
+  profileImg,
   nickname,
   phoneNumber,
 }: Type.MyPageData): Type.UseEditUser => {
   const [userInfo, setUserInfo] = useState<Type.MyPageEditData>({
-    imageUrls: imageUrls,
+    profileImg: profileImg,
     nickname: nickname,
     phoneNumber: phoneNumber,
     password: "",
@@ -71,7 +71,7 @@ export const useEditUser = ({
     onPatchMyPageRTK(formData);
     setFileInfo(null);
     setUserInfo({
-      imageUrls: "",
+      profileImg: "",
       nickname: "",
       phoneNumber: "",
       password: "",
