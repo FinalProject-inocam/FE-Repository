@@ -127,7 +127,14 @@ export interface UseEditUser extends AsyncHooksDefault {
 	onChangeUserInfo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-/* / 11 useLogin / -------------------------------------------------------- */
+
+/* / 11 useWrappingMap / -------------------------------------------------------- */
+
+export interface UseWrappingMap extends AsyncHooksDefault {
+	mapRef: React.RefObject<HTMLDivElement>;
+}
+
+/* / 12 useLogin / -------------------------------------------------------- */
 export interface useLogin extends AsyncHooksDefault {
   loginInfo: User;
   data: any;
