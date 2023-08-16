@@ -115,6 +115,8 @@ export interface useHome {
   sectionRef2: MutableRefObject<HTMLDivElement | null>;
   sectionRef3: MutableRefObject<HTMLDivElement | null>;
   sectionRef4: MutableRefObject<HTMLDivElement | null>;
+  sectionRef5: MutableRefObject<HTMLDivElement | null>;
+  sectionContentRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 export interface UseHeadScroll {

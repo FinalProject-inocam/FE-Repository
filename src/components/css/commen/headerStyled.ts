@@ -28,6 +28,7 @@ const HeaderOutLine = styled.header<Partial<Styled>>`
   transform: translateX(-50%);
   transition: all 0.15s linear;
   width: 100vw;
+  z-index: 1000;
 
 ${({ $scrolly, theme }) => $scrolly !== undefined && ($scrolly.isTop
     ? css`
