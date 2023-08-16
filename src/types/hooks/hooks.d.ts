@@ -111,10 +111,10 @@ export interface useHome {
 }
 
 export interface UseHeadScroll {
-	scrolly: number;
-	innerHeight: number;
-	preScrolly: boolean;
-	isTop: boolean;
+  scrolly: number; 
+  innerHeight: number; 
+  preScrolly: boolean; 
+  isTop: boolean
 }
 
 /* / 10 useEditUser / -------------------------------------------------------- */
@@ -125,4 +125,13 @@ export interface UseEditUser extends AsyncHooksDefault {
 	onSubmitPatchUserInfo: (e: FormEvent<HTMLFormElement>) => void;
 	onChangeFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
 	onChangeUserInfo: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+/* / 11 useLogin / -------------------------------------------------------- */
+export interface useLogin extends AsyncHooksDefault {
+  loginInfo: User;
+  data: any;
+  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void 
+  onSnsLogin: (sns: string) => () => void;
 }
