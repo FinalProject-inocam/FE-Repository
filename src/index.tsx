@@ -16,17 +16,15 @@ import { Error } from "./pages";
 //   worker.start();
 // }
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary FallbackComponent={Error}>
-        <App />
-      </ErrorBoundary>
-    </ThemeProvider>
-  </Provider>
+	<Provider store={store}>
+		<ThemeProvider theme={theme}>
+			<ErrorBoundary FallbackComponent={Error}>
+				<App />
+			</ErrorBoundary>
+		</ThemeProvider>
+	</Provider>
 );
 
 reportWebVitals();
