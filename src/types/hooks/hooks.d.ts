@@ -126,3 +126,9 @@ export interface UseEditUser extends AsyncHooksDefault {
 	onChangeFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
 	onChangeUserInfo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
+
+/* / 11 useWrappingMap / -------------------------------------------------------- */
+
+export interface UseWrappingMap extends AsyncHooksDefault {
+	mapRef: React.RefObject<HTMLDivElement>;
+}
