@@ -5,12 +5,13 @@ import { useLoginSNSRTKQuery } from "../../redux";
 
 export const KakaoRedirect: React.FC = () => {
   const { search } = useLocation();
+  console.log(search);
   const { onNavigate } = useRouter();
-  const query = useLoginSNSRTKQuery(search);
+  const query = useLoginSNSRTKQuery({types:"kakao", code:search});
 
   useEffect(() => {
     console.log(query);
-    query.isSuccess && onNavigate("/")();
+    query.isSuccess && onNavigate(-2)();
   }, [query, onNavigate]);
-  return <div>KakaoRedirect</div>;
+  return <div/>;
 };

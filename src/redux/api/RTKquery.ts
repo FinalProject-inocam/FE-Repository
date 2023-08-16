@@ -67,33 +67,26 @@ export const inocamRTK = createApi({
     "WRAPPINGSHOP_D",
     "MYPAGE",
   ],
-  endpoints(build) {
-    return {
-      /* / 01 Auth / -------------------------------------------------------- */
-      // loginRTK
-      postLogin: build.mutation({
-        query: (data) => ({
-          url: "/api/auth/login",
-          method: "post",
-          data,
-          types: "login",
-        }),
-      }),
-      // SNSLogin - kakao
-      loginSNSRTK: build.query({
-        query: (payload) => ({
-          url: `/api/auth/kakao${payload}`,
-          method: "get",
-        }),
-      }),
-      // SNSLogin - google
-      loginSNSGoogleRTK: build.query({
-        query: (payload) => ({
-          url: `/login/oauth2/code/a${payload}`,
-          method: "get",
-        }),
-      }),
-
+	endpoints(build) {
+		return {
+			/* / 01 Auth / -------------------------------------------------------- */
+			// loginRTK
+			postLogin: build.mutation({
+				query: (data) => ({
+					url: "/api/auth/login",
+					method: "post",
+					data,
+					types: "login",
+				}),
+			}),
+			// SNSLogin - kakao, google, naver
+			// {types:"kakao", search}
+			loginSNSRTK: build.query({
+				query: ({types, code}) => ({
+					url: `/api/auth/login/${types}${code}`,
+					method: "get",
+				}),
+			}),
       // Signup
       postSignup: build.mutation({
         query: (data) => ({
@@ -351,7 +344,6 @@ export const {
   useGetCertificateEmailQuery,
   useGetCertificateCodeQuery,
   useLoginSNSRTKQuery,
-  useLoginSNSGoogleRTKQuery,
 
   // Community 차량출고 커뮤니티 관련
   useGetCommunityQuery,
