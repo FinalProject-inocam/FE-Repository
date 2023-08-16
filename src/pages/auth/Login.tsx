@@ -12,13 +12,23 @@ export const Login: React.FC = () => {
     isError && console.log("query Err", error)
   }, [isSuccess, data, isError, error, onNavigate])
 
-  const onSnsLogin = () => {
-    window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`
-  }
-
-  const onGoogleLogin = () => {
-    window.location.href=`https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=241187094315-9h1rc47r7k69fr03uldk4dggtq8l739v.apps.googleusercontent.com&redirect_uri=http://inocamfinal.s3-website.ap-northeast-2.amazonaws.com/login/oauth2/code/google&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&o2v=1&flowName=GeneralOAuthFlow`
-  }
+  const onSnsLogin = (sns: string) => () => {
+    console.log(sns);
+    
+    switch (sns) {
+        case "kakao":
+          window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API}&redirect_uri=${window.location.origin}/${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code`
+            break
+        case "google":
+          window.location.href=`https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=${process.env.REACT_APP_GOOGLE_REST_API}&redirect_uri=${window.location.origin}/${process.env.REACT_APP_GOOGLE_REDIRECT_URL}&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&o2v=1&flowName=GeneralOAuthFlow`
+            break
+        case "naver":
+            window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_REST_API}&state=STATE_STRING&redirect_uri=${window.location.origin}/${process.env.REACT_APP_NAVER_REDIRECT_URL}`
+            break    
+        default:
+            break
+    }
+}
 
   return (
     <>
@@ -27,8 +37,9 @@ export const Login: React.FC = () => {
       <input type="password" value={loginInfo.password} name='password' onChange={onChangeInput} placeholder='비밀번호를 입력해 주세요.' />
       <input type='submit' value="로그인" />
     </form>
-    <button onClick={onSnsLogin}>카카오로 로그인하기</button>
-    <button onClick={onGoogleLogin}>구글로 로그인하기</button>
+    <button onClick={onSnsLogin("kakao")}>카카오로 로그인하기</button>
+    <button onClick={onSnsLogin("google")}>구글로 로그인하기</button>
+    <button onClick={onSnsLogin("naver")}>네이버로 로그인하기</button>
     </>
   )
 };

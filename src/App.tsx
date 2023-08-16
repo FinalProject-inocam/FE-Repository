@@ -38,9 +38,12 @@ const App: React.FC = () => {
 					<Route path="signup" element={<Page.Signup />} />
 					<Route path="signup/admin" element={<Page.AdminSignup />} />
 					<Route path="login" element={<Page.Login />} />
-					<Route path="kakao/auth" element={<Page.KakaoRedirect />} />
-					<Route path="login/oauth2/code/google" element={<Page.GoogleRedirect />} /> {/* /login/sns?code= */}
 				</Route>
+
+				{/* Redirect 페이지 */}
+				<Route path="/api/auth/login/kakao" element={<Page.KakaoRedirect />} />
+				<Route path="/api/auth/login/google" element={<Page.GoogleRedirect />} />
+				<Route path="/api/auth/login/naver" element={<Page.NaverRedirect />} />
 
 				{/* 채팅을 위한 임시 라우터 :: Chat */}
 				<Route path="/chat" element={<Page.Chat />} />
