@@ -92,7 +92,7 @@ export const Signup: React.FC = () => {
         onChange={onChangeInput}
         placeholder="비밀번호를 입력해 주세요"
       />
-      <button onClick={onClickShowPW}>{showPW ? "숨김" : "표시"}</button>
+      <div onClick={onClickShowPW}>{showPW ? "숨김" : "표시"}</div>
       <ValidateInputMsg $signColor={validiteMsg.validtepassword[1]}>
         {validiteMsg.validtepassword[0]}
       </ValidateInputMsg>

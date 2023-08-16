@@ -1,27 +1,27 @@
 /* / Community 관련 타입 / -------------------------------------------------------- */
 export interface Community {
-  title:string;
-  content:string;
-  postId?: number;
+	title: string;
+	content: string;
+	postId?: number;
 }
 
 export interface TotalCommunity extends Community {
-  isLike: boolean;
-  likeCount: number;
-  commentCount?: number;
+	isLike: boolean;
+	likeCount: number;
+	commentCount?: number;
 }
 
 export interface CommunityComments {
-  commentId: number;
-  comment: string;
-  nickname: string;
-  createdAt: string;
-  modifiedAt: string;
+	commentId: number;
+	comment: string;
+	nickname: string;
+	createdAt: string;
+	modifiedAt: string;
 }
 
 export interface DetailCommunity extends TotalCommunity {
-  imageUrls: string[];
-  commentsList: CommunityComments[];
+	imageUrls: string[];
+	commentsList: CommunityComments[];
 }
 
 /* / WrappingShop 관련 타입 / -------------------------------------------------------- */
@@ -48,6 +48,7 @@ export interface TotalWrappingShopReview extends WrappingShopReview {
 	modifiedAt: string;
 	nickname: string;
 	reviewId: number;
+	revisit: boolean;
 }
 
 /* / DecodeToken 관련 타입 : Redux 및 ??  / -------------------------------------------------------- */
@@ -58,7 +59,7 @@ export interface DecodeToken {
 	gender: string;
 	exp: number;
 	iat: number;
-  }
+}
 
 /* / Auth 관련 타입 / -------------------------------------------------------- */
 export type User = {
@@ -91,11 +92,11 @@ export interface CarOrderInfo {
 	content: string;
 	addressName: string;
 	zoneNo: string;
-	}
-	
-	export interface CarOrderRes extends CarOrderInfo {
+}
+
+export interface CarOrderRes extends CarOrderInfo {
 	purchaseId: number;
-	}
+}
 
 /* / purchasesChart 관련 타입 / -------------------------------------------------------- */
 
@@ -103,44 +104,58 @@ interface NotificationArr {
 	purchase: number[];
 	approve: number[];
 	cancel: number[];
-  }
-  
-  interface NotificationNum {
+}
+
+interface NotificationNum {
 	purchase: number;
 	approve: number;
 	cancel: number;
-  }
-  
-  interface Gender {
+}
+
+interface Gender {
 	gender: { byGender: number[]; ratio: number[] };
-  }
-  
-  interface Age {
+}
+
+interface Age {
 	age: { byAge: number[]; ratio: number[] };
-  }
-  
-  interface PurchasesGet extends NotificationArr, Gender, Age {}
-  
-  interface PurchasesGetData {
+}
+
+interface PurchasesGet extends NotificationArr, Gender, Age {}
+
+interface PurchasesGetData {
 	total: PurchasesGet;
 	model1: PurchasesGet;
 	model2: PurchasesGet;
-  }
-  
-  interface PurchasesPreData {
+}
+
+interface PurchasesPreData {
 	total: NotificationNum;
 	model1: NotificationNum;
 	model2: NotificationNum;
-  }
-  
-  export interface PurchasesChartYear extends PurchasesGetData {
+}
+
+export interface PurchasesChartYear extends PurchasesGetData {
 	preYear: PurchasesPreData;
-  }
-  
-  export interface PurchasesChartMonth extends PurchasesGetData {
+}
+
+export interface PurchasesChartMonth extends PurchasesGetData {
 	preMonth: PurchasesPreData;
-  }
-  
-  export interface PurchasesChartWeek extends PurchasesGetData {
+}
+
+export interface PurchasesChartWeek extends PurchasesGetData {
 	preWeek: PurchasesPreData;
-  }
+}
+
+/* / myPage 관련 타입 / -------------------------------------------------------- */
+
+export interface MyPageData {
+	imageUrls: string;
+	nickname: string;
+	phoneNumber: string;
+}
+
+export interface MyPageEditData extends MyPageData {
+	password: string;
+	newPassword: string;
+	newPWChecked: string;
+}

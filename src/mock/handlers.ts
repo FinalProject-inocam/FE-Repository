@@ -294,7 +294,7 @@ export const handlers = [
         (post) => post.postId === +postid
       );
       const findIndex: any = find?.commentsList.findIndex(
-        (comment:any) => comment.commentId === +commentid
+        (comment: any) => comment.commentId === +commentid
       );
       find?.commentsList.splice(findIndex, 1);
 
@@ -319,10 +319,10 @@ export const handlers = [
         (post) => post.postId === +postid
       );
       const findcomment = find?.commentsList.find(
-        (comment:any) => comment.commentId === +commentid
+        (comment: any) => comment.commentId === +commentid
       );
       const findIndex: any = find?.commentsList.findIndex(
-        (comment:any) => comment.commentId === +commentid
+        (comment: any) => comment.commentId === +commentid
       );
       findcomment &&
         find?.commentsList.splice(findIndex, 1, { ...findcomment, comment });
@@ -371,7 +371,7 @@ export const handlers = [
     }
   ),
 
-  // deleteInoCarOrder = 차량출고 신청 삭제
+  // deleteInoCarOrder - 차량출고 신청 삭제
   rest.delete(
     `${process.env.REACT_APP_SERVER_KEY}/api/purchases/:purchaseId`,
     async (req, res, ctx) => {
@@ -390,7 +390,7 @@ export const handlers = [
     }
   ),
 
-  //  patchInoCarOrder = 차량출고 신청 수정
+  //  patchInoCarOrder - 차량출고 신청 수정
   rest.patch(
     `${process.env.REACT_APP_SERVER_KEY}/api/purchases/:purchaseId`,
     async (_, res, ctx) => {
@@ -405,7 +405,7 @@ export const handlers = [
     }
   ),
 
-  //  getPurchasesChar = 차량 통계 데이터
+  //  getPurchasesChar - 차량 통계 데이터
   rest.get(
     `${process.env.REACT_APP_SERVER_KEY}/api/stat/purchases/chart`,
     async (req, res, ctx) => {
@@ -427,6 +427,7 @@ export const handlers = [
     }
   ),
 
+  // getWrapping - 랩핑샵 전체 조회
   rest.get(
     `${process.env.REACT_APP_SERVER_KEY}/api/shops`,
     async (req, res, ctx) => {
@@ -437,6 +438,38 @@ export const handlers = [
           success: true,
           status: 200,
           msg: "랩핑 샵 조회 완료",
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${process.env.REACT_APP_SERVER_KEY}/api/mypage`,
+    async (req, res, ctx) => {
+      console.log(req);
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: "마이페이지 회원 정보 조회 완료",
+          data: TestDB.mypagedata,
+        })
+      );
+    }
+  ),
+
+  rest.patch(
+    `${process.env.REACT_APP_SERVER_KEY}/api/mypage`,
+    async (req, res, ctx) => {
+      console.log("req", req.body);
+
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          status: 200,
+          msg: "회원정보가 수정되었습니다",
         })
       );
     }

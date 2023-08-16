@@ -10,15 +10,19 @@ export const useHome = (): Type.useHome => {
 
   useEffect(() => {
     /* 컴포넌트 마운트 시, Ref의 height에 대한 초기설정 및, window.addEventListener.resize에 대한 대응 */
+    
     const setSectionHeight = () => {
       const sectionRefs = [{ref:sectionRef1,setHeight:1}, {ref:sectionRef2, setHeight:1}, {ref:sectionRef3,setHeight:1}, {ref:sectionRef4,setHeight:1}]
-      sectionRefs.forEach(setHeight => setHeight.ref.current && (setHeight.ref.current.style.height = `${window.innerHeight * setHeight.setHeight}px`))
+      sectionRefs.forEach(setHeight => setHeight.ref.current && window.innerHeight > 650 && (setHeight.ref.current.style.height = `${window.innerHeight * setHeight.setHeight}px`))
     }
+    
 
     /* setSectionHeight 호출의 3가지 시점, 초기, resize 변경시, 변경에 대한 기존의 함수 초기화  */
     setSectionHeight()
     window.addEventListener("resize", setSectionHeight)
-    return () => { window.removeEventListener("resize", setSectionHeight) }
+    return () => { 
+      window.removeEventListener("resize", setSectionHeight) 
+    }
   }, []);
 
   return { sectionRef1, sectionRef2, sectionRef3, sectionRef4 }

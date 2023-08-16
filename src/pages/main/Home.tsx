@@ -7,8 +7,9 @@ export const Home: React.FC = () => {
   const {sectionRef1, sectionRef2, sectionRef3, sectionRef4} = useHome()
 
   return (
-    <div>
-      <Section ref={sectionRef1} $color="red" />
+    <div style={{wordBreak:"break-word"}}>
+      <Section ref={sectionRef1} $color="red">
+      </Section>
       <Section ref={sectionRef2} $color="skyblue" />
       <Section ref={sectionRef3} $color="green" />
       <Section ref={sectionRef4} $color="yellow" />
@@ -19,6 +20,6 @@ export const Home: React.FC = () => {
 
 const Section = styled.section<Partial<Styled>>`
   width: 100%;
-  height: 750px;
+  height: 650px;
   border-bottom: 3px dotted red;
 `
