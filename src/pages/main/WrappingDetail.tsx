@@ -1,11 +1,13 @@
 import React from "react";
-import { WrappingShopReview } from "../../components/wrappingshop/WrappingShopReview";
-import WrappingShopInfo from "../../components/wrappingshop/WrappingShopInfo";
 import { useWrappingMap } from "../../hooks/wrapping/useWrappingMap";
-import * as WS from "../../components/css/wrappingshop/wrappingwhopStyled";
+import * as SC from "../../components/css";
+import * as CP from "../../components/wrappingshop";
+import { useWrappingDetail } from "../../hooks";
 
 export const WrappingDetail: React.FC = () => {
-	const { mapRef, isLoading, isError, error } = useWrappingMap();
+	const { isLoading, isError, error, data } = useWrappingDetail();
+	const { mapRef } = useWrappingMap();
+	console.log(data);
 
 	if (isLoading) {
 		return <div>... 로딩중</div>;
@@ -15,16 +17,16 @@ export const WrappingDetail: React.FC = () => {
 	}
 
 	return (
-		<WS.PageContainer>
-			<WS.WrappingShopMapWrapper>
-				<WS.WrappingShopMap ref={mapRef} />
-			</WS.WrappingShopMapWrapper>
-			<WS.PageOnSideContainer>
-				<WS.PageOnSideWrapper>
-					<WrappingShopInfo />
-					<WrappingShopReview />
-				</WS.PageOnSideWrapper>
-			</WS.PageOnSideContainer>
-		</WS.PageContainer>
+		<SC.PageContainer>
+			<SC.WrappingShopMapWrapper>
+				<SC.WrappingShopMap ref={mapRef} />
+			</SC.WrappingShopMapWrapper>
+			<SC.PageOnSideContainer>
+				<SC.PageOnSideWrapper>
+					<CP.WrappingShopInfo />
+					<CP.WrappingShopReview />
+				</SC.PageOnSideWrapper>
+			</SC.PageOnSideContainer>
+		</SC.PageContainer>
 	);
 };

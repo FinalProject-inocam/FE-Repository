@@ -1,4 +1,4 @@
-/* / WrappingShop 컴포넌트 / -------------------------------------------------------- */
+import { MutableRefObject } from "react";
 export interface EditWrappingShopReview {
 	shopId: string | undefined;
 	reviewId: number;
@@ -21,4 +21,9 @@ export interface EditComment {
 export interface WrappingShopBannerProps {
 	bannerNumber: number;
 	$bannerSize: "big" | "small";
+}
+
+/* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */
+export interface WrappingKakaomapsProps {
+	ref: MutableRefObject<HTMLDivElement | null>;
 }

@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
 			<CP.HomeSection2 sectionRef2={sectionRef2} sectionRef3={sectionRef3} />
 			<CP.HomeSection3 sectionRef3={sectionRef3} />
 			<CP.HomeSection4 sectionRef4={sectionRef4} />
-			<CP.HomeSection3 sectionRef5={sectionRef5} />
+			<CP.HomeSection5 sectionRef5={sectionRef5} />
 		</>
 	);
 };

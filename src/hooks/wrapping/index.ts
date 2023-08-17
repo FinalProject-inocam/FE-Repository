@@ -1,2 +1,3 @@
-export * from "./useWrapping"
-export * from "./useWrappingDetail"
+export * from "./useWrapping";
+export * from "./useWrappingMap";
+export * from "./useWrappingDetail";

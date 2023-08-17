@@ -1,1 +1,2 @@
-export * from './decodeTokenSlice';
+export * from "./decodeTokenSlice";
+export * from "./geoLocationSlice";
