@@ -22,54 +22,54 @@ const SplashScreen = styled.figure<Partial<Styled>>`
 
 /* / 02 HeaderOutLine 관련 스타일 / -------------------------------------------------------- */
 const HeaderOutLine = styled.header<Partial<Styled>>`
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: all 0.15s linear;
-  width: 100vw;
-  z-index: 1000;
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: all 0.15s linear;
+	width: 100vw;
+	z-index: 1000;
 
-${({ $scrolly, theme }) => $scrolly !== undefined && ($scrolly.isTop
-    ? css`
-          top: 0;
-          background-color: ${theme.color.blackM};
-        `
-    : !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
-      ? css`
-        top: -90px;
-        background-color: ${theme.color.blackM};
-      `
-      : !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly > $scrolly.innerHeight
-        ? css`
-          top: -90px;
-          background-color: ${theme.color.white};`
-        : !$scrolly.isTop && $scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
-          ? css`
-            top: 0;
-            background-color: ${theme.color.blackM};
-          `
-          : css`
-            top: 0;
-            background-color: ${theme.color.white};
-          `)
-  }
+	${({ $scrolly, theme }) =>
+		$scrolly !== undefined &&
+		($scrolly.isTop
+			? css`
+					top: 0;
+					background-color: ${theme.color.blackM};
+			  `
+			: !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
+			? css`
+					top: -90px;
+					background-color: ${theme.color.blackM};
+			  `
+			: !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly > $scrolly.innerHeight
+			? css`
+					top: -90px;
+					background-color: ${theme.color.white};
+			  `
+			: !$scrolly.isTop && $scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
+			? css`
+					top: 0;
+					background-color: ${theme.color.blackM};
+			  `
+			: css`
+					top: 0;
+					background-color: ${theme.color.white};
+			  `)}
 
-
-  @media (max-width: 1024px) {
-    top: 0;
-    ${({ $scrolly, theme }) =>
-    // 스크롤 값이 있으면서,
-    // 1) isTop 이거나 $scrolly.preScrolly 값이 변경되었는데  $scrolly.innerHeight 같거나 작거나 
-    $scrolly !== undefined && ($scrolly.isTop || $scrolly.scrolly <= $scrolly.innerHeight)
-      ? css`    
-          background-color: ${theme.color.blackM};
-        `
-      : css`
-            background-color: ${theme.color.white};
-            `
-  }
-  }
-`
+	@media (max-width: 1024px) {
+		top: 0;
+		${({ $scrolly, theme }) =>
+			// 스크롤 값이 있으면서,
+			// 1) isTop 이거나 $scrolly.preScrolly 값이 변경되었는데  $scrolly.innerHeight 같거나 작거나
+			$scrolly !== undefined && ($scrolly.isTop || $scrolly.scrolly <= $scrolly.innerHeight)
+				? css`
+						background-color: ${theme.color.blackM};
+				  `
+				: css`
+						background-color: ${theme.color.white};
+				  `}
+	}
+`;
 
 const HeaderLayout = styled.div<Partial<Styled>>`
 	${SC.Flex}
@@ -154,7 +154,7 @@ const AuthAreaNav = styled.div<Partial<Styled>>`
 const MSideNav = styled.p`
 	${SC.Flex}
 	${SC.cursor}
-  justify-content: flex-start;
+  	justify-content: flex-start;
 	font-size: 1rem;
 	color: white;
 	width: 100%;
