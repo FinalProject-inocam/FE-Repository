@@ -12,6 +12,7 @@ export interface Styled {
 	$mSize: number;
 	$state: boolean;
 	$font: RuleSet<object>;
+  $borderR : string
 
 	// Felx-Grid
 	$gap: number;
@@ -35,7 +36,6 @@ export interface Styled {
 	$mergedgre: number;
 
 	//signup
-	$state: string;
 	$signColor: boolean;
 	$signupbtnColor: string;
 

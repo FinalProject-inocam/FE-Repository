@@ -12,47 +12,25 @@ interface IGLTF extends GLTF {
 
 export const Threejs: React.FC = () => {
 	const ContainRef = useRef<HTMLDivElement>(null);
-	const ContainRef2 = useRef<HTMLDivElement>(null);
-	const ContainRef3 = useRef<HTMLDivElement>(null);
 	const { nodes, materials } = useGLTF("/models/typeone/scene.gltf") as IGLTF;
-	const [spinning, setSpinning] = useState<boolean>(false);
+	const [spinning, setSpinning] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (ContainRef.current) {
 			ContainRef.current.style.height = `${window.innerHeight}px`;
 		}
-		if (ContainRef2.current) {
-			ContainRef2.current.style.height = `${window.innerHeight}px`;
-		}
-		if (ContainRef3.current) {
-			ContainRef3.current.style.height = `${window.innerHeight}px`;
-		}
-	}, [ContainRef, ContainRef3]);
+	}, [ContainRef]);
 
 	return (
 		<>
 			<Contain ref={ContainRef}>
-				<TextBox>INNOCAM</TextBox>
-				<Button
-					onClick={() => {
-						if (ContainRef2.current) {
-							ContainRef2.current.scrollIntoView({
-								behavior: "smooth",
-								block: "start",
-							});
-						}
-					}}>
-					섹션이동
-				</Button>
-				<Triangle />
-				<Canvas
+				<CustomCanvas
 					shadows
-					camera={{ position: [0, 0, 0], fov: 20 }}
-					onDoubleClick={() => setSpinning((pre) => !pre)}
-					style={{ width: "2500px", margin: "0 auto" }}>
+					camera={{ position: [0, 0, 0], fov: 6.58 }}
+					onDoubleClick={() => setSpinning((pre) => !pre)}>
 					<Suspense fallback={null}>
-						<directionalLight intensity={12} position={[0, 10, 5]} />
-						<directionalLight intensity={12} position={[1, 10, 0]} />
+						<directionalLight intensity={5} position={[0, 10, 5]} />
+						<directionalLight intensity={5} position={[1, 5, 0]} />
 						{/* <ambientLight intensity={10} /> */}
 						<group dispose={null}>
 							<group position={[-0.015, -0.009, 0.063]} rotation={[-Math.PI / 2, 0, 5.5]} scale={0.58}>
@@ -178,75 +156,28 @@ export const Threejs: React.FC = () => {
 							autoRotate={spinning}
 							maxPolarAngle={Math.PI / 2}
 							minPolarAngle={Math.PI / 2}
-							minDistance={10}
+							minDistance={13}
 							maxDistance={20}
 							target={[0, 0, 0]}
 						/>
 					</Suspense>
-				</Canvas>
+				</CustomCanvas>
 			</Contain>
-			<Contain2 ref={ContainRef2}>
-				<Triangle2 />
-			</Contain2>
-			<Contain ref={ContainRef3} />
 		</>
 	);
 };
 
 const Contain = styled.div`
-	position: relative;
-	background-color: black;
+	position: absolute;
+	max-width: 926px;
+	width: 64.305%;
+	max-height: 300px;
 `;
 
-const Contain2 = styled(Contain)`
-	background-color: white;
-`;
-
-const TextBox = styled.div`
-	text-align: center;
-	line-height: 350px;
+const CustomCanvas = styled(Canvas)`
 	width: 100%;
-	height: 350px;
-	font-size: 150px;
-	position: absolute;
-	color: white;
-`;
+`
 
-const Button = styled.button`
-	position: absolute;
-	color: white;
-	background-color: transparent;
-	border-radius: 50px;
-	border: 1px solid white;
-	height: 300px;
-	width: 35px;
-	text-align: center;
-	top: 50%;
-	right: 3%;
-	transform: translateY(-50%);
-	z-index: 10;
-`;
-
-const Triangle = styled.div`
-	position: absolute;
-	z-index: 10;
-	bottom: 0;
-	width: 0;
-	height: 0;
-	border-left: 100vw solid transparent; /* 왼쪽 변 */
-	border-right: 0 solid transparent; /* 오른쪽 변 */
-	border-bottom: 100px solid white; /* 밑변 */
-`;
-
-const Triangle2 = styled.div`
-	position: absolute;
-	bottom: 0;
-	width: 0;
-	height: 0;
-	border-left: 100vw solid transparent; /* 왼쪽 변 */
-	border-right: 0 solid transparent; /* 오른쪽 변 */
-	border-bottom: 100px solid black; /* 밑변 */
-`;
 
 // https://velog.io/@iepppop/react-three.js-적용법
 // https://solitary-choi.tistory.com/entry/【React-Three-Fiber】01-시작하기초기-설정-정육면체-렌더링

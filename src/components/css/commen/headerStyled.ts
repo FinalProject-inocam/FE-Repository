@@ -76,7 +76,7 @@ const HeaderLayout = styled.div<Partial<Styled>>`
 	height: ${({ theme }) => theme.headerHeight.desktop};
 	max-width: 1440px;
 	margin: 0 auto;
-	border: 1px solid blue;
+	/* border: 1px solid blue; */
 	transition: all 0.15s linear;
 
 	${({ $scrolly, theme }) =>

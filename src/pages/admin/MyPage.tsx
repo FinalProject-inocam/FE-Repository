@@ -32,7 +32,7 @@ export const MyPage: React.FC = () => {
       <h2>MyPage</h2>
       <div>
         <COMP.EditUser
-          imageUrls={UserData.imageUrls}
+          profileImg={UserData.profileImg}
           nickname={UserData.nickname}
           phoneNumber={UserData.phoneNumber}
         />

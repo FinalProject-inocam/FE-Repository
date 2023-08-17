@@ -3,7 +3,7 @@ import * as Type from "../../types";
 import { useEditUser } from "../../hooks";
 
 export const EditUser: React.FC<Type.MyPageData> = ({
-  imageUrls,
+  profileImg,
   nickname,
   phoneNumber,
 }) => {
@@ -18,7 +18,7 @@ export const EditUser: React.FC<Type.MyPageData> = ({
     onSubmitPatchUserInfo,
     onChangeFile,
     onChangeUserInfo,
-  } = useEditUser({ imageUrls, nickname, phoneNumber });
+  } = useEditUser({ profileImg, nickname, phoneNumber });
 
   useEffect(() => {
     isLoading && <div>로딩중</div>;
@@ -31,7 +31,7 @@ export const EditUser: React.FC<Type.MyPageData> = ({
       {!edit ? (
         <>
           <div>
-            {imageUrls && <img src={imageUrls} alt="UserImg" />}
+            {profileImg && <img src={profileImg} alt="UserImg" />}
             <br />
             {nickname}
             <br />
