@@ -11,8 +11,9 @@ export interface Styled {
 	$size: number;
 	$mSize: number;
 	$state: boolean;
-	$font: RuleSet<object>;
-  $borderR : string
+	$font: string;
+	$borderR: string;
+	$bColor: string;
 
 	// Felx-Grid
 	$gap: number;

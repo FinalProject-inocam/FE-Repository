@@ -193,6 +193,11 @@ const ReviewRevisit = styled.div`
 	color: #4c4cff;
 `;
 
+const ReviewCommentimg = styled.img`
+	width: 100%;
+	height: 100%;
+`;
+
 export {
 	// 페이지
 	PageContainer,
@@ -231,4 +236,5 @@ export {
 	ReviewContents,
 	ReviewSimpleImage,
 	ReviewRevisit,
+	ReviewCommentimg,
 };

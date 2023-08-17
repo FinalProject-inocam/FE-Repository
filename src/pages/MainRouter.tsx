@@ -1,25 +1,15 @@
-import React, { createContext } from 'react';
-import * as Hooks from '../hooks';
-import { Outlet } from 'react-router-dom';
-import { MainHeader } from '../components';
-import * as Type from '../types/hooks/hooks';
-export const geolocationContext = createContext<Partial<Type.useGeolocation> | null>(null)
+import React from "react";
+import * as Hooks from "../hooks";
+import { Outlet } from "react-router-dom";
+import { MainHeader } from "../components";
 
 export const MainRouter: React.FC = () => {
-  const geolocation = Hooks.useGeolocation()
-  Hooks.useDecodeDispatch()
-  
-  return (
-    <geolocationContext.Provider value={geolocation}>
-        <MainHeader/>
-        <Outlet />
-    </geolocationContext.Provider>
-  );
+	Hooks.useDecodeDispatch();
+
+	return (
+		<>
+			<MainHeader />
+			<Outlet />
+		</>
+	);
 };
-
-
-
-
-
-
-

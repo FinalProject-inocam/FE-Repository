@@ -1,5 +1,5 @@
 import React from "react";
-import * as WS from "../../components/css/wrappingshop/wrappingwhopStyled";
+import * as WS from "../css/wrappingshop/wrappingShopDetailStyled";
 import { useWrappingDetail } from "../../hooks";
 import { WrappingShopBannerProps } from "../../types";
 

@@ -1,29 +1,31 @@
-import { useEffect, useState } from "react";
-import * as Type from "../../types/hooks/hooks";
+import { useEffect } from "react";
+import * as RTK from "../../redux";
 
 export const useGeolocation = () => {
-  const [geolocation, setGeolocation] = useState<Partial<Type.useGeolocation>>({});
+	const dispatch = RTK.useAppDispatch();
+	useEffect(() => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					dispatch(
+						RTK.setGeoLocation({
+							lat: position.coords.latitude,
+							long: position.coords.longitude,
+						})
+					);
+				},
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          setGeolocation({
-            lat: position.coords.latitude,
-            long: position.coords.longitude,
-          });
-        },
-          // navigator.geolocation 이 차단되었을 때 
-          () => {
-            setGeolocation({
-              lat: 37.5665,
-              long: 126.9780
-            }
-            );
-          })
-      }
-    }, 4000)
-  }, []);
-
-  return geolocation
-}
+				// navigator.geolocation 이 차단되었을 때
+				() => {
+					dispatch(
+						RTK.setGeoLocation({
+							lat: 37.5665,
+							long: 126.978,
+						})
+					);
+				}
+			);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+};

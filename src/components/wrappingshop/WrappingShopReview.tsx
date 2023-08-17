@@ -1,10 +1,8 @@
 import React from "react";
 import * as Type from "../../types";
-import { styled } from "styled-components";
 import { useWrappingDetail } from "../../hooks";
-import { EditWrappingReview } from "./EditWrappingReview";
-import * as WS from "../../components/css/wrappingshop/wrappingwhopStyled";
-import { WrappingShopBanner } from "./WrappingShopBanner";
+import * as SC from "../../components/css";
+import * as CP from "../../components/wrappingshop";
 
 export const WrappingShopReview: React.FC = () => {
 	const {
@@ -27,13 +25,13 @@ export const WrappingShopReview: React.FC = () => {
 	};
 
 	return (
-		<WS.RightOnSide>
-			<WS.BannerWrapper>
-				<WrappingShopBanner bannerNumber={1} $bannerSize='small' />
-				<WrappingShopBanner bannerNumber={2} $bannerSize='small' />
-				<WrappingShopBanner bannerNumber={3} $bannerSize='small' />
-			</WS.BannerWrapper>
-			<WS.RightContentWrapper>
+		<SC.RightOnSide>
+			<SC.BannerWrapper>
+				<CP.WrappingShopBanner bannerNumber={1} $bannerSize='small' />
+				<CP.WrappingShopBanner bannerNumber={2} $bannerSize='small' />
+				<CP.WrappingShopBanner bannerNumber={3} $bannerSize='small' />
+			</SC.BannerWrapper>
+			<SC.RightContentWrapper>
 				{/* <form onSubmit={onSubmitShopComment}>
 						<input
 							value={shopCommentInfo.review}
@@ -69,44 +67,39 @@ export const WrappingShopReview: React.FC = () => {
 							createAt,
 						}: Type.TotalWrappingShopReview) => {
 							return (
-								<WS.ReviewBox key={reviewId}>
-									<WS.ReviewUpperContainer $jc='space-between'>
-										<WS.ReviewUserWrapper>
-											<WS.ReviewUserName>{nickname}</WS.ReviewUserName>
+								<SC.ReviewBox key={reviewId}>
+									<SC.ReviewUpperContainer $jc='space-between'>
+										<SC.ReviewUserWrapper>
+											<SC.ReviewUserName>{nickname}</SC.ReviewUserName>
 											{Array.from({ length: 5 }).map((_, index) => (
-												<WS.ReviewStar key={index}>{index < star ? "★" : "☆"}</WS.ReviewStar>
+												<SC.ReviewStar key={index}>{index < star ? "★" : "☆"}</SC.ReviewStar>
 											))}
-											<WS.ReviewScore>({star})</WS.ReviewScore>
-											<WS.ReviewRevisit>
+											<SC.ReviewScore>({star})</SC.ReviewScore>
+											<SC.ReviewRevisit>
 												{revisit && revisit ? "재방문의사" : ""}
-											</WS.ReviewRevisit>
-										</WS.ReviewUserWrapper>
-										<WS.ReviewMenueWrapper>
+											</SC.ReviewRevisit>
+										</SC.ReviewUserWrapper>
+										<SC.ReviewMenueWrapper>
 											<p>신고</p>
-											<EditWrappingReview reviewId={reviewId} shopId={data.shopId} />
+											<CP.EditWrappingReview reviewId={reviewId} shopId={data.shopId} />
 											<p onClick={onDeleteShopComment(data.shopId, reviewId)}>삭제하기</p>
 											<p>{formatDate(createAt)}</p>
-										</WS.ReviewMenueWrapper>
-									</WS.ReviewUpperContainer>
+										</SC.ReviewMenueWrapper>
+									</SC.ReviewUpperContainer>
 
-									<WS.ReviewContents>{review}</WS.ReviewContents>
+									<SC.ReviewContents>{review}</SC.ReviewContents>
 
 									{imageUrls &&
 										imageUrls.map((url, index) => (
-											<WS.ReviewSimpleImage key={index}>
-												<ShopCommentImg src={url} alt={`이미지-${index}`} />
-											</WS.ReviewSimpleImage>
+											<SC.ReviewSimpleImage key={index}>
+												<SC.ReviewCommentimg src={url} alt={`이미지-${index}`} />
+											</SC.ReviewSimpleImage>
 										))}
-								</WS.ReviewBox>
+								</SC.ReviewBox>
 							);
 						}
 					)}
-			</WS.RightContentWrapper>
-		</WS.RightOnSide>
+			</SC.RightContentWrapper>
+		</SC.RightOnSide>
 	);
 };
-
-const ShopCommentImg = styled.img`
-	width: 100%;
-	height: 100%;
-`;
