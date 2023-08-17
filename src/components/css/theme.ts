@@ -22,7 +22,10 @@ const PretendardEB = css`
 
 const color = {
   blackM: "#0E0D13",
+  darkBlue:"#151565",
+  darkGray:"#26252B",
   green: "#539B39",
+  purple:"#362783",
   white: "white"
 }
 

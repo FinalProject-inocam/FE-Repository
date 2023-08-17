@@ -43,7 +43,7 @@ instance.interceptors.response.use(
     if (response.headers.refresh) {
       // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
-      expiresTime.setDate(expiresTime.getDate() + 3);
+      expiresTime.setDate(expiresTime.getDate() + 14);
       document.cookie = `refreshToken=${response.headers.refresh
         }; expires=${expiresTime.toUTCString()}; path=/;`;
     }

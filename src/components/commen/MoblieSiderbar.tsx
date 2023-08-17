@@ -50,7 +50,7 @@ const AuthAreaInner: React.FC<{ idx: number, nav: string[], onClick?: any }> =
   ({ idx, nav: [kor, eng], onClick }) => {
 
     return (
-      <SC.AuthAreaNav $color={idx === 0 ? "#4C4CFF" : "#2F2B3A"} onClick={onClick}>
+      <SC.AuthAreaNav $color={idx === 0 ? "#4C4CFF" : "#2F2B3A"} onClick={onClick}> 
         <p>{kor}</p>
         <p>{eng}</p>
       </SC.AuthAreaNav>
