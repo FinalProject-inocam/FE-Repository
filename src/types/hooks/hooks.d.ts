@@ -104,20 +104,20 @@ export interface useWrappingDetail extends AsyncHooksDefault {
 
 /* / 09 useHome / -------------------------------------------------------- */
 export interface useHome {
-
-  sectionRef1: MutableRefObject<HTMLDivElement | null>;
-  sectionRef2: MutableRefObject<HTMLDivElement | null>;
-  sectionRef3: MutableRefObject<HTMLDivElement | null>;
-  sectionRef4: MutableRefObject<HTMLDivElement | null>;
-  sectionRef5: MutableRefObject<HTMLDivElement | null>;
-  sectionContentRef: MutableRefObject<HTMLDivElement | null>;
+	sectionRef1: MutableRefObject<HTMLDivElement | null>;
+	sectionRef2: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3: MutableRefObject<HTMLDivElement | null>;
+	sectionRef4: MutableRefObject<HTMLDivElement | null>;
+	sectionRef5: MutableRefObject<HTMLDivElement | null>;
+	sectionContentRef: MutableRefObject<HTMLDivElement | null>;
+	videoUrl: string;
 }
 
 export interface UseHeadScroll {
-  scrolly: number; 
-  innerHeight: number; 
-  preScrolly: boolean; 
-  isTop: boolean
+	scrolly: number;
+	innerHeight: number;
+	preScrolly: boolean;
+	isTop: boolean;
 }
 
 /* / 10 useEditUser / -------------------------------------------------------- */
@@ -130,7 +130,6 @@ export interface UseEditUser extends AsyncHooksDefault {
 	onChangeUserInfo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-
 /* / 11 useWrappingMap / -------------------------------------------------------- */
 
 export interface UseWrappingMap extends AsyncHooksDefault {
@@ -139,9 +138,9 @@ export interface UseWrappingMap extends AsyncHooksDefault {
 
 /* / 12 useLogin / -------------------------------------------------------- */
 export interface useLogin extends AsyncHooksDefault {
-  loginInfo: User;
-  data: any;
-  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void 
-  onSnsLogin: (sns: string) => () => void;
+	loginInfo: User;
+	data: any;
+	onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void;
+	onSnsLogin: (sns: string) => () => void;
 }
