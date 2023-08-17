@@ -36,7 +36,7 @@ export const EditWrappingReview: React.FC<Type.EditWrappingShopReview> = ({ revi
 		<div>
 			{!edit ? (
 				<div>
-					<div onClick={onToogleEdit}>수정하기</div>
+					<p onClick={onToogleEdit}>수정하기</p>
 				</div>
 			) : (
 				<form onSubmit={onSubmitPatchComments}>

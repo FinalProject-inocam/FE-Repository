@@ -3,7 +3,6 @@ import { WrappingShopReview } from "../../components/wrappingshop/WrappingShopRe
 import WrappingShopInfo from "../../components/wrappingshop/WrappingShopInfo";
 import { useWrappingMap } from "../../hooks/wrapping/useWrappingMap";
 import * as WS from "../../components/css/wrappingshop/wrappingwhopStyled";
-import { WrappingShopBanner } from "../../components/wrappingshop/WrappingShopBanner";
 
 export const WrappingDetail: React.FC = () => {
 	const { mapRef, isLoading, isError, error } = useWrappingMap();
@@ -17,10 +16,9 @@ export const WrappingDetail: React.FC = () => {
 
 	return (
 		<WS.PageContainer>
-			<WS.WrappingShopMap ref={mapRef} />
-			<WS.BannerContainer>
-				<WrappingShopBanner />
-			</WS.BannerContainer>
+			<WS.WrappingShopMapWrapper>
+				<WS.WrappingShopMap ref={mapRef} />
+			</WS.WrappingShopMapWrapper>
 			<WS.PageOnSideContainer>
 				<WS.PageOnSideWrapper>
 					<WrappingShopInfo />
