@@ -94,6 +94,7 @@ const Figure = sc.styled.figure<Partial<Styled>>`
 `;
 
 const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
+   position: relative;
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
   img {

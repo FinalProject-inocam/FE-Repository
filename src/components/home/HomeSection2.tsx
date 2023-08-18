@@ -3,7 +3,7 @@ import * as SC from "../../components";
 import { Threejs } from "../../pages";
 import * as Type from "../../types";
 
-export const HomeSection2: React.FC<Partial<Type.useHome>> = ({ sectionRef2, sectionRef3 }) => {
+export const HomeSection2: React.FC<Partial<Type.UseHome>> = ({ sectionRef2, sectionRef3 }) => {
 	return (
 		<SC.SectionFlex ref={sectionRef2} $color='orange' $bColor='blackM'>
 			<SC.SectionInner>

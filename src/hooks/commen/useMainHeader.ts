@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Type from "../../types";
 import { useRouter } from "../useRouter";
 
-export const useMainHeader = (setState?: any): any => {
+export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 	const { onNavigate } = useRouter();
 	const SplashScreenRef = useRef<HTMLDivElement | null>(null);
 	const [hanbagerToggle, setHanbagerToggle] = useState<boolean>(false);
@@ -14,7 +14,7 @@ export const useMainHeader = (setState?: any): any => {
 		isTop: false,
 	});
 
-	const onHanbagerToggle = () => {
+	const onHanbagerToggle = (): void => {
 		setHanbagerToggle((pre) => !pre);
 	};
 
@@ -44,7 +44,7 @@ export const useMainHeader = (setState?: any): any => {
 	// 03 : E0001 일때 : 관리자페이지 Admin page && 로그아웃 Logout
 	// !!, 그러나 빈객체를 판별해야 하기에 => Object.keys(decode).length === 0
 
-	const onNaigateSidebarToggle = (url: string) => () => {
+	const onNaigateSidebarToggle = (url: string) => (): void => {
 		onNavigate(url)();
 		setState ? setState((pre: boolean) => !pre) : setHanbagerToggle((pre: boolean) => !pre);
 	};

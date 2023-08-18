@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as Type from "../../types";
 
-export const useHome = (): Type.useHome => {
+export const useHome = (): Type.UseHome => {
 	/* "Home 내부 Section"에 대한 Ref */
 	const sectionRef1 = useRef<HTMLDivElement | null>(null);
 	const sectionRef2 = useRef<HTMLDivElement | null>(null);

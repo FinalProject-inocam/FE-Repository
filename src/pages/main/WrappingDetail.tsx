@@ -1,32 +1,25 @@
 import React from "react";
-import { useWrappingMap } from "../../hooks/wrapping/useWrappingMap";
+import * as Hooks from "../../hooks";
 import * as SC from "../../components/css";
 import * as CP from "../../components/wrappingshop";
-import { useWrappingDetail } from "../../hooks";
 
 export const WrappingDetail: React.FC = () => {
-	const { isLoading, isError, error, data } = useWrappingDetail();
-	const { mapRef } = useWrappingMap();
-	console.log(data);
+	const { isLoading, isError, error, data } = Hooks.useWrappingDetail();
+	const { mapRef } = Hooks.useWrappingMap(data);
+	console.log(isLoading, isError, error);
 
-	if (isLoading) {
-		return <div>... 로딩중</div>;
-	}
-	if (isError) {
-		return <div>에러발생... {JSON.stringify(error)}</div>;
-	}
-
-	return (
-		<SC.PageContainer>
-			<SC.WrappingShopMapWrapper>
-				<SC.WrappingShopMap ref={mapRef} />
-			</SC.WrappingShopMapWrapper>
-			<SC.PageOnSideContainer>
-				<SC.PageOnSideWrapper>
-					<CP.WrappingShopInfo />
-					<CP.WrappingShopReview />
-				</SC.PageOnSideWrapper>
-			</SC.PageOnSideContainer>
-		</SC.PageContainer>
-	);
+	if (isError) return <div>{JSON.stringify(error)}</div>; // <ErrorBoundary FallbackComponent={Error}>
+	else
+		return (
+			<SC.DetailOutline $fd='column'>
+				{/* 상단 지도영역 */}
+				<SC.DetailKakaoMaps>
+					<section ref={mapRef} />
+				</SC.DetailKakaoMaps>
+				<SC.DetailContent $gtc={"466px 1fr"} $gap={20}>
+					<CP.DetailLeft isLoading={isLoading} data={data} />
+					<CP.DetailRight isLoading={isLoading} data={data} />
+				</SC.DetailContent>
+			</SC.DetailOutline>
+		);
 };

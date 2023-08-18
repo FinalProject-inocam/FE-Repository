@@ -3,7 +3,7 @@ import * as Type from "../../types";
 import { useRouter } from "../../hooks";
 import * as SC from "../../components/css";
 
-export const WraappingContent: React.FC<Partial<Type.useWrapping>> = ({
+export const WraappingContent: React.FC<Partial<Type.UseWrapping>> = ({
 	isLoading,
 	isSuccess,
 	isError,
@@ -11,6 +11,7 @@ export const WraappingContent: React.FC<Partial<Type.useWrapping>> = ({
 	data,
 }) => {
 	const { onNavigate } = useRouter();
+	console.log("WraappingContent", data);
 
 	const searchIcon = (
 		<svg

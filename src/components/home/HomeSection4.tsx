@@ -2,7 +2,7 @@ import React from "react";
 import * as Type from "../../types";
 import * as SC from "../../components";
 
-export const HomeSection4: React.FC<Partial<Type.useHome>> = ({ sectionRef4 }) => {
+export const HomeSection4: React.FC<Partial<Type.UseHome>> = ({ sectionRef4 }) => {
 	return (
 		<SC.SectionFlex ref={sectionRef4} $color='yellow' $bColor='blackM'>
 			<SC.SectionInner>

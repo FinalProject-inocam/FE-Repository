@@ -1,4 +1,8 @@
 import { MutableRefObject } from "react";
+import { AsyncHooksDefault } from "../hooks";
+
+export type SetState = Dispatch<SetStateAction<boolean>>;
+
 export interface EditWrappingShopReview {
 	shopId: string | undefined;
 	reviewId: number;
@@ -21,6 +25,10 @@ export interface EditComment {
 export interface WrappingShopBannerProps {
 	bannerNumber: number;
 	$bannerSize: "big" | "small";
+}
+
+export interface WrappingDetailProps extends AsyncHooksDefault {
+	data: WrappingShopDetail;
 }
 
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */

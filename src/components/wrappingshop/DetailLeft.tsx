@@ -1,12 +1,17 @@
 import React from "react";
+import * as Type from "../../types";
+import { FigureObjectFitImg } from "../atom";
 import * as SC from "../../components/css";
-import * as CP from "../../components/wrappingshop";
 
-export const WrappingShopInfo: React.FC<any> = ({ data }) => {
-	return (
-		<SC.LeftOnSide>
-			<SC.WrappInfo>
-				<CP.WrappingShopBanner bannerNumber={0} $bannerSize='big' />
+export const DetailLeft: React.FC<Type.WrappingDetailProps> = ({ isLoading, data }) => {
+	console.log(isLoading, data);
+	if (isLoading) return <div>로딩 중....</div>;
+	else
+		return (
+			<div style={{ backgroundColor: "red", position: "relative" }}>
+				<div style={{ position: "absolute", transform: "translateY(-50%)", zIndex: "20" }}>
+					<FigureObjectFitImg width={`466px`} height={`333px`} src={data.banner[0]} alt='SomeImg' />
+				</div>
 				<SC.LeftContentWrapper>
 					<SC.WrappingShopName>{data.shopName}</SC.WrappingShopName>
 					<SC.WrappingShopAddress>{data.address}</SC.WrappingShopAddress>
@@ -19,7 +24,6 @@ export const WrappingShopInfo: React.FC<any> = ({ data }) => {
 						<span key={index}>{index < data.avgStar ? "★" : "☆"}</span>
 					))}
 				</SC.WrappingShopScore>
-			</SC.WrappInfo>
-		</SC.LeftOnSide>
-	);
+			</div>
+		);
 };
