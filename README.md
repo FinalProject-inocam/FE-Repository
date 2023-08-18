@@ -121,19 +121,19 @@
   - 초기 APP.tsx 파일 안에 모든 Route를 넣는 방식을 채택했었으나, Route가 많아질수록 코드유지보수 및 가독성이 떨어지는 문제점을 발견함
   - 이를 해결하고자, shared 폴더를 만들어 공통된 Header에 따른 Route들을 분리함
   - App.tsx에서는 shard 폴더 안의 분리된 Routes를 import해서 사용함
-    `tsx
-        const App: React.FC = () => {
-        return (
-          <BrowserRouter>
-            <GlobalStyled />
-            <Shared.MainRoutes />
-            <Shared.AuthRoutes />
-            <Shared.ProtectiveRouters />
-            <Shared.ChatRoutes />
-          </BrowserRouter>
-        );
-      };
-      `
+          ```tsx
+            const App: React.FC = () => {
+            return (
+              <BrowserRouter>
+                <GlobalStyled />
+                <Shared.MainRoutes />
+                <Shared.AuthRoutes />
+                <Shared.ProtectiveRouters />
+                <Shared.ChatRoutes />
+              </BrowserRouter>
+            );
+          };
+          ```
     </details>
 
 ## 트러블슈팅
@@ -227,7 +227,7 @@
       - Signup 컴포넌트 속 하나의 state로 관리되던 여러 input들의 연결고리를 끊고, 각각의 onChange에 대해서만 리렌더링 되도록 useState를 커스텀훅에서 관리하여 모듈화 함
         - 결과 : input들을 각각 리렌더링 동작시킴
         - 문제 : 분리된 input 컴포넌트의 값을 부모 컴포넌트로 끌어올려준 뒤, 통합해야하는 문제 발생
-        </details><br/>
+      </details><br/>
 
   3.  리펙토링 2차, 하위컴포넌트의 상태를 끌어올려 Form.onSubmit으로 POST 요청보내기
 
@@ -263,41 +263,43 @@
         });
         ```
 
-        - 리덕스 모듈(setSignupDate) : 각각의 컴포넌트에서 나온 값을 모으는 역할을 함. - name을 프로퍼티의 Keys로 설정하고 input을 Value로 설정 - initialState : {email: 'example@web.com'}
-        </details> <br/>
+        - 리덕스 모듈(setSignupDate) : 각각의 컴포넌트에서 나온 값을 모으는 역할을 함. 
+          - name을 프로퍼티의 Keys로 설정하고 input을 Value로 설정 
+          - initialState : {email: 'example@web.com'}
+      </details> <br/>
 
-  4.  리펙토링 3차, 하위컴포넌트의 상태에 따라 조건부 상태 메시지 기록하기
+  4.  리펙토링 3차, 하위컴포넌트의 상태에 따라 조건부 상태 메시지 기록하기 
 
           이 부분이 특히 어려웠다. 단순히 onChange 이벤트에만 대응하는 것이 아니라, onBlur 이벤트 발생시 email과 nickName의 경우 서버에 일치하는 값이 있는지 확인한 후에 해당 상태를 화면에 반영해주어야 했기 때문이다.
 
       <details>
-      <summary>내용 상세보기</summary>
+      <summary>내용 상세보기</summary>  
 
       - 첫번째 시도, useState를 통한 각각의 메시지 관리 : 함수의 한계로, useState의 값이 입력대비 한 단계 늦는 사례 발생
       - 두번째 시도, 변수를 통한 각각의 메시지 관리 : 변수로 인해서 값의 변경을 컴포넌트가 인식하지 못하여 리렌더링이 발생되지 않음
       - 세번째 시도, 전역상태를 통한 상태관리 채택
-
+      
         ```tsx
-        // onChangeInput에서 제어할 onValiditeMsg 모듈 생성
+        // onChangeInput에서 제어할 onValiditeMsg 모듈 생성 
         const onValiditeMsg = (input: string): void => {
-          if (name === "email") {
-            input === ""
-              ? dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))
-              : !emailRegex.test(input)
-              ? dispatch(
-                  RTK.setValiditeMsg({
-                    type: name,
-                    msg: ["이메일을 입력해주세요(exam@.exam.com)", false],
-                  })
-                )
-              : dispatch(
-                  RTK.setValiditeMsg({
-                    type: name,
-                    msg: ["이메일 형식에 부합합니다.", false],
-                  })
-                );
-          }
-        };
+            if (name === "email") {
+              input === ""
+                ? dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))
+                : !emailRegex.test(input)
+                ? dispatch(
+                    RTK.setValiditeMsg({
+                      type: name,
+                      msg: ["이메일을 입력해주세요(exam@.exam.com)", false],
+                    })
+                  )
+                : dispatch(
+                    RTK.setValiditeMsg({
+                      type: name,
+                      msg: ["이메일 형식에 부합합니다.", false],
+                    })
+                  );
+            } 
+          };
 
         // (1) Input의 onChange 실행에 따라, ValiditeMsg 리덕스 모듈 동작
         const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -306,42 +308,38 @@
           setInput(e.target.value);
         };
 
-        // (2) onBlurSignupDispatch 실행에 따라, 조건부 GET요청 실행
+        // (2) onBlurSignupDispatch 실행에 따라, 조건부 GET요청 실행 
         const [serverCheck, setServerCheck] = useState<boolean>(true);
-        const {
-          isSuccess: isSuccessEmailCheck,
-          data: dataEmailCheck,
-          isError: isErrorEmailCheck,
-          error: errorEmailCheck,
-        } = RTK.useGetEmailCheckQuery(input, { skip: serverCheck });
+        const { isSuccess: isSuccessEmailCheck,
+                data: dataEmailCheck,
+                isError: isErrorEmailCheck,
+                error: errorEmailCheck,
+          } = RTK.useGetEmailCheckQuery(input, { skip: serverCheck }); 
         const onBlurSignupDispatch = () => {
-          name !== "pwChecked" &&
-            dispatch(RTK.setSignupDate({ [`${name}`]: input }));
+          name !== "pwChecked" && dispatch(RTK.setSignupDate({ [`${name}`]: input }));
           name === "email" && emailRegex.test(input) && setServerCheck(false);
         };
-
+        
         useEffect(() => {
           isSuccessEmailCheck &&
-            dispatch(
-              RTK.setValiditeMsg({
+            dispatch( RTK.setValiditeMsg({
                 type: "email",
-                msg: [
-                  dataEmailCheck,
-                  dataEmailCheck.includes("사용") ? true : false,
-                ],
+                msg: [dataEmailCheck, dataEmailCheck.includes("사용") ? true : false],
               })
             );
           isErrorEmailCheck && console.log(errorEmailCheck);
-        }, [
-          isSuccessEmailCheck,
-          dataEmailCheck,
-          isErrorEmailCheck,
-          errorEmailCheck,
-          dispatch,
-        ]);
-        ```
+        }, [ isSuccessEmailCheck, dataEmailCheck, isErrorEmailCheck, errorEmailCheck, dispatch]);
+        ```  
 
-        - input 입력에 따라 2 가지 상황에서의 상태 메세지 제어가 요구되었다. 첫째는 onChangeInput, 둘째는 onBlurSignupDispatch 시 이다. - onChangeInput : 입력값이 이메일 형식인지 - onBlurSignupDispatch : 입력값이 서버에 등록된 값인지에 대한 판단 - 두 상황에 따라 하나의 상태메시지의 관리가 요구됨 - 나아가 onBlurSignupDispatch에 따라 `useGetEmailCheckQuery`가 조건부 요청이 되어야 했음 - 두 이벤트에 따라 `dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))`를 동작 - msg의 내용은 조건에 따른 내용이 기록되게 하였으며, - type을 name으로 설정하여 해당 내용을 꺼내어 화면에 기록하도록 설정하였다.
-        </details>
+        - input 입력에 따라 2 가지 상황에서의 상태 메세지 제어가 요구되었다. 첫째는 onChangeInput, 둘째는 onBlurSignupDispatch 시 이다. 
+          - onChangeInput : 입력값이 이메일 형식인지
+          - onBlurSignupDispatch : 입력값이 서버에 등록된 값인지에 대한 판단
+          - 두 상황에 따라 하나의 상태메시지의 관리가 요구됨 
+          - 나아가 onBlurSignupDispatch에 따라 `useGetEmailCheckQuery`가 조건부 요청이 되어야 했음
+            - 두 이벤트에 따라 `dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))`를 동작
+              - msg의 내용은 조건에 따른 내용이 기록되게 하였으며,
+              - type을 name으로 설정하여 해당 내용을 꺼내어 화면에 기록하도록 설정하였다. 
+      </details>
 
 </details>
+
