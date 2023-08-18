@@ -1,17 +1,12 @@
 import React from "react";
 import * as SC from "../css";
 import * as Type from "../../types";
-import { useSignupInput } from "../../hooks";
+import { useSignupNickName } from "../../hooks";
 
-export const SignUpInput: React.FC<Type.SignUpInputProps> = ({
-  placeholder,
-  name,
-  type,
-  length,
-  inputRef,
-  submitted,
-}) => {
-  const { input, onChangeInput, onBlurSignupDispatch } = useSignupInput({
+
+export const SignUpInputN: React.FC<Type.SignUpInputProps> = ({
+  placeholder, name, type, length, inputRef, submitted }) => {
+  const { input, getValidateMsg, onChangeInput, onBlurSignupDispatch } = useSignupNickName({
     name,
     submitted,
   });
@@ -26,6 +21,10 @@ export const SignUpInput: React.FC<Type.SignUpInputProps> = ({
         onChange={onChangeInput}
         maxLength={length}
         placeholder={placeholder}
+      />
+      <SC.ValidateInputMsg
+        $signColor={getValidateMsg[1]}
+        children={getValidateMsg[0]}
       />
     </>
   );

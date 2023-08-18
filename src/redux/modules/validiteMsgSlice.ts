@@ -13,6 +13,8 @@ const validiteMsgSlice = createSlice({
       switch (action.payload.type) {
         case "email":
           return { ...state, emailMsg: action.payload.msg };
+        case "nickname":
+          return { ...state, nickNameMsg: action.payload.msg };
         default:
           return state;
       }
@@ -24,5 +26,8 @@ const validiteMsgSlice = createSlice({
 });
 
 export const validiteMsgReducer = validiteMsgSlice.reducer;
-export const selectValiditeMsg = (state: any) => state.validiteMsgReducer;
+export const selectValiditeEMsg = (state: any) => state.validiteMsgReducer.emailMsg;
+export const selectValiditeNMsg = (state: any) => state.validiteMsgReducer.nickNameMsg;
+export const selectValiditePMsg = (state: any) => state.validiteMsgReducer.passwordMsg;
+export const selectValiditePWCMsg = (state: any) => state.validiteMsgReducer.pwCheckedMsg;
 export const { setValiditeMsg, deleteValiditeMsg } = validiteMsgSlice.actions;

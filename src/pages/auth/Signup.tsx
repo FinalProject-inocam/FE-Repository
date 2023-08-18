@@ -18,7 +18,7 @@ export const Signup: React.FC = () => {
 
   return (
     <SC.SignupForm onSubmit={onSubmitSign} $fd="column" $gap={20}>
-      <COMP.SignUpInput
+      <COMP.SignUpInputE
         type="email"
         name="email"
         length={20}
@@ -26,7 +26,7 @@ export const Signup: React.FC = () => {
         submitted={submitted}
         placeholder="이메일 형식으로 입력해주세요."
       />
-      <COMP.SignUpInput
+      <COMP.SignUpInputN
         type="text"
         name="nickname"
         length={20}
