@@ -2,7 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
 
-export const useWrapping = ({ data }: any): any => {
+export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
+	console.log("useWrapping", data);
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const geolocation: any = RTK.useAppSelector(RTK.selectgeoLocation);
 

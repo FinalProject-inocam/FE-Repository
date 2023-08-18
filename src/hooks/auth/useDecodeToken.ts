@@ -1,17 +1,19 @@
-import { useEffect } from "react"
-import { selectDecode, setDecodeToken, useAppDispatch, useAppSelector } from "../../redux";
+import { useEffect } from "react";
+import * as RTK from "../../redux";
+import * as Type from "../../types";
 
-export const useDecodeToken = () => {
-  const dispatch = useAppDispatch()
-  const decodeToken = useAppSelector(selectDecode)
-  useEffect(() => {
-    const token =  document.cookie &&
-    document.cookie
-      .split(';')
-      .filter((cookies) => cookies.includes('refreshToken'))[0]
-      ?.split('=')[1];
-      token && dispatch(setDecodeToken(token))
-  }, [dispatch])
+export const useDecodeToken = (): Type.DecodeToken | {} => {
+	const dispatch = RTK.useAppDispatch();
+	const decodeToken = RTK.useAppSelector(RTK.selectDecode);
+	useEffect(() => {
+		const token =
+			document.cookie &&
+			document.cookie
+				.split(";")
+				.filter((cookies) => cookies.includes("refreshToken"))[0]
+				?.split("=")[1];
+		token && dispatch(RTK.setDecodeToken(token));
+	}, [dispatch]);
 
-  return decodeToken
-}
+	return decodeToken;
+};

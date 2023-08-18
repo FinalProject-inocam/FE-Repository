@@ -3,10 +3,9 @@ import * as Type from "../../types";
 
 const geoLocationSlice = createSlice({
 	name: "geoLocation",
-	initialState: {} as Type.useGeolocation | {},
+	initialState: {} as Type.UseGeolocation | {},
 	reducers: {
-		setGeoLocation: (_, action: PayloadAction<any>) => {
-			console.log(action.payload);
+		setGeoLocation: (_, action: PayloadAction<Type.UseGeolocation>) => {
 			return action.payload;
 		},
 	},

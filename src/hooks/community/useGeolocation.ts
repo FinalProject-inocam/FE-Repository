@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import * as RTK from "../../redux";
 
-export const useGeolocation = () => {
+export const useGeolocation = (): void => {
 	const dispatch = RTK.useAppDispatch();
 	useEffect(() => {
 		if (navigator.geolocation) {

@@ -3,7 +3,7 @@ import * as SC from "../../components";
 import { useHome } from "../../hooks";
 import * as Type from "../../types";
 
-export const HomeSection1: React.FC<Partial<Type.useHome>> = ({ sectionRef1, sectionRef2 }) => {
+export const HomeSection1: React.FC<Partial<Type.UseHome>> = ({ sectionRef1, sectionRef2 }) => {
 	const { sectionContentRef, videoUrl } = useHome();
 	return (
 		<SC.SectionFlex ref={sectionRef1} $color='red' $position='relative'>
