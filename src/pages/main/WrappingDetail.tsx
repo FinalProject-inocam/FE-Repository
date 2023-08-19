@@ -6,13 +6,11 @@ import * as CP from "../../components/wrappingshop";
 export const WrappingDetail: React.FC = () => {
 	const { isLoading, isError, error, data } = Hooks.useWrappingDetail();
 	const { mapRef } = Hooks.useWrappingMap(data);
-	console.log(isLoading, isError, error);
 
-	if (isError) return <div>{JSON.stringify(error)}</div>; // <ErrorBoundary FallbackComponent={Error}>
+	if (isError) return <div>{JSON.stringify(error)}</div>;
 	else
 		return (
 			<SC.DetailOutline $fd='column'>
-				{/* 상단 지도영역 */}
 				<SC.DetailKakaoMaps>
 					<section ref={mapRef} />
 				</SC.DetailKakaoMaps>

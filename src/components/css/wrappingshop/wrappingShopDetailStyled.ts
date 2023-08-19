@@ -1,13 +1,13 @@
 import { css, styled } from "styled-components";
 import * as Type from "../../../types";
-import { Flex, Grid } from "../GlobalStyled";
+import { Flex, Grid, cursor } from "../GlobalStyled";
 
 // 페이지 --------------------------------
 const DetailOutline = styled.div<Partial<Type.Styled>>`
 	${Flex}
 	margin: 0 auto;
-	height: 100vh;
 	background-color: #efefef;
+	height: 100vh;
 `;
 
 // Map ------------------------------------
@@ -31,7 +31,6 @@ const DetailContent = styled.section<Partial<Type.Styled>>`
 	margin: 0 auto;
 	padding: 0 72px;
 	border: 1px dotted red;
-	// overflow: auto;
 `;
 
 // Banner --------------------------------
@@ -41,7 +40,7 @@ const BannerContainer = styled.div`
 
 const BannerItem = styled.div<Partial<Type.Styled>>`
 	border-radius: 10px;
-	overflow: hidden;
+
 	${({ $bannerSize }) =>
 		$bannerSize === "big"
 			? css`
@@ -66,7 +65,6 @@ const BannerImage = styled.img`
 	z-index: 1;
 
 	&:hover {
-		/* box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px, rgb(0 0 0 / 72%) 0px 30px 22px -10px; */
 		transform: scale(1.05);
 		border-color: rgba(249, 249, 249, 0.8);
 	}
@@ -80,28 +78,36 @@ const BannerWrapper = styled.div<Partial<Type.Styled>>`
 const RightBanner = styled.div<Partial<Type.Styled>>`
 	${Grid}
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	transform: translateY(-50%);
 	z-index: 20;
 `;
 
 const MoreButton = styled.button`
+	${cursor}
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-
-	background-size: cover;
-	width: 100px;
-	height: 50px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
 	border: none;
-	cursor: pointer;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 2.5rem;
+	font-weight: bold;
 `;
 
 // Info --------------------------------
 const LeftOnSide = styled.div`
 	width: 466px;
-	height: 800px;
+	height: 100vh;
 	transform: translateY(-10%);
 	margin: 0;
 	padding: 0;
@@ -146,14 +152,12 @@ const RightOnSide = styled.div`
 	transform: translateY(0%);
 	margin: 0;
 	padding: 0;
-
 	z-index: 9;
 	background-color: #fff;
 `;
 
-const RightContentWrapper = styled.div`
-	height: 100%;
-	overflow-y: scroll;
+const RightReviewFormer = styled.div`
+	margin-top: 10%;
 	padding-top: 1rem;
 	padding-left: 13px;
 	padding-right: 13px;
@@ -178,7 +182,7 @@ const ReviewUserWrapper = styled.div`
 	justify-content: space-between;
 `;
 
-const ReviewMenueWrapper = styled.div`
+const ReviewMenuWrapper = styled.div`
 	display: flex;
 
 	p {
@@ -200,9 +204,13 @@ const ReviewScore = styled.div`
 	margin-right: 0.62rem;
 `;
 
-const ReviewContents = styled.div``;
+const ReviewSImageContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	gap: 1.1rem;
+`;
 
-const ReviewSimpleImage = styled.div`
+const ReviewImageWrapper = styled.div`
 	border: 1px solid black;
 	width: 6.3rem;
 	height: 6.3rem;
@@ -212,9 +220,16 @@ const ReviewRevisit = styled.div`
 	color: #4c4cff;
 `;
 
-const ReviewCommentimg = styled.img`
+const ReviewCommentImg = styled.img`
 	width: 100%;
 	height: 100%;
+`;
+
+const RightReviewOutline = styled.div`
+	height: calc(100vh - 490px);
+	padding-left: 20px;
+	padding-right: 20px;
+	overflow-y: scroll;
 `;
 
 export {
@@ -245,16 +260,17 @@ export {
 
 	// Review
 	RightOnSide,
-	RightContentWrapper,
+	RightReviewFormer,
+	RightReviewOutline,
 	ReviewBox,
 	ReviewUpperContainer,
 	ReviewUserWrapper,
-	ReviewMenueWrapper,
+	ReviewMenuWrapper,
 	ReviewUserName,
 	ReviewStar,
 	ReviewScore,
-	ReviewContents,
-	ReviewSimpleImage,
+	ReviewSImageContainer,
+	ReviewImageWrapper,
 	ReviewRevisit,
-	ReviewCommentimg,
+	ReviewCommentImg,
 };
