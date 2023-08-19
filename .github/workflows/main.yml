@@ -22,9 +22,9 @@ jobs:
       - name: Setting .env
         run: |
           echo "GENERATE_SOURCEMAP=${{ secrets.GENERATE_SOURCEMAP }}" >> .env
-          echo "REACT_APP_SERVER_KEY=${{ secrets.REACT_APP_SERVER_KEY }}" >> .env
+          echo "REACT_APP_SERVER_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
           echo "REACT_APP_KAKAO_REST_API=${{ secrets.REACT_APP_KAKAO_REST_API }}" >> .env
-          echo "REACT_APP__KAKAO_REDIRECT_URL=${{ secrets.REACT_APP__KAKAO_REDIRECT_URL }}" >> .env
+          echo "REACT_APP__KAKAO_REDIRECT_URL=${{ secrets.REACT_APP_KAKAO_REDIRECT_URL }}" >> .env
           echo "REACT_APP_GOOGLE_REST_API=${{ secrets.REACT_APP_GOOGLE_REST_API }}" >> .env
           echo "REACT_APP_GOOGLE_REDIRECT_URL=${{ secrets.REACT_APP_GOOGLE_REDIRECT_URL }}" >> .env
           echo "REACT_APP_NAVER_REDIRECT_URL=${{ secrets.REACT_APP_NAVER_REDIRECT_URL }}" >> .env
