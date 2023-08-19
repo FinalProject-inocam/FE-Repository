@@ -9,7 +9,7 @@ export const MainHeader: React.FC = () => {
 	return (
 		<>
 			{/* 스플래시 스크린 */}
-			{/* <CP.Splash /> */}
+			<CP.Splash />
 			{/* 헤더디자인 */}
 			<SC.HeaderOutLine $scrolly={scrolly}>
 				<SC.HeaderLayout $scrolly={scrolly}>

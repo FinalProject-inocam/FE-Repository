@@ -49,10 +49,11 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 		setState ? setState((pre: boolean) => !pre) : setHanbagerToggle((pre: boolean) => !pre);
 	};
 
+	// SplashScreenRef 아후, 헤더 - setTimeout
 	useEffect(() => {
 		setTimeout(() => {
 			setScrolly({ ...scrolly, scrolly: window.scrollY, preScrolly: false, isTop: true });
-		}, 1100);
+		}, 2600);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -65,7 +66,7 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 						scrolly: window.scrollY,
 						preScrolly: scrolly.scrolly > window.scrollY,
 						isTop: false,
-				  });
+			});
 		};
 
 		window.addEventListener("scroll", () => {
@@ -76,11 +77,12 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 		});
 	}, [scrolly]);
 
+	// SplashScreenRef - setTimeout
 	useEffect(() => {
 		setTimeout(() => {
 			SplashScreenRef.current && (SplashScreenRef.current.style.opacity = "0");
 			SplashScreenRef.current && (SplashScreenRef.current.style.display = "none");
-		}, 1000);
+		}, 2500);
 		return () => {
 			SplashScreenRef.current = null;
 		};

@@ -4,12 +4,13 @@ import * as SC from "../GlobalStyled";
 
 /* / 01 SplashScreen 관련 스타일 / -------------------------------------------------------- */
 const SplashScreen = styled.figure<Partial<Styled>>`
+	${SC.Flex}
 	position: fixed;
 	top: 0;
 	width: 100%;
 	height: 100vh;
 	opacity: 1;
-	background-color: white;
+	background-color: black;
 	transition: all 1s linear;
 	z-index: 1000;
 

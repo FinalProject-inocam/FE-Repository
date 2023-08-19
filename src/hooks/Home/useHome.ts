@@ -33,7 +33,7 @@ export const useHome = (): Type.UseHome => {
 		};
 		setTimeout(() => {
 			sectionContentRef.current && (sectionContentRef.current.style.transform = "translateY(0)");
-		}, 1100);
+		}, 2600);
 
 		/* setSectionHeight 호출의 3가지 시점, 초기, resize 변경시, 변경에 대한 기존의 함수 초기화  */
 		setSectionHeight();
