@@ -11,6 +11,7 @@ export const GlobalStyled = sc.createGlobalStyle`
   h1, h2, h3, h4, h5, h6,
   p, a, img, ol, ul, li, fieldset,
   form, label, legend, article,figure,
+  input,
   figcaption, footer, header,nav, section {
     box-sizing: border-box;
     margin: 0;
@@ -72,9 +73,11 @@ const GridBox = sc.styled.div<Partial<Styled>>`
 
 const GridMergedSpace = sc.styled.div<Partial<Styled>>`
   grid-column-start: ${({ $mergedgcs }) => ($mergedgcs ? $mergedgcs : "auto")};
-  grid-column-end: ${({ $mergedgce }) => ($mergedgce ? $mergedgce : "auto")}; // span 2;
+  grid-column-end: ${({ $mergedgce }) =>
+    $mergedgce ? $mergedgce : "auto"}; // span 2;
   grid-row-start: ${({ $mergedgrs }) => ($mergedgrs ? $mergedgrs : "auto")};
-  grid-row-end: ${({ $mergedgre }) => ($mergedgre ? $mergedgre : "auto")}; // span 3;
+  grid-row-end: ${({ $mergedgre }) =>
+    $mergedgre ? $mergedgre : "auto"}; // span 3;
 `;
 
 const GridMergedSpaceFlex = sc.styled(GridMergedSpace)`
@@ -114,14 +117,14 @@ const RouterLayout = sc.styled.div<Partial<Styled>>`
 `;
 
 export {
-	Flex,
-	Grid,
-	cursor,
-	FlexBox,
-	GridBox,
-	GridMergedSpace,
-	GridMergedSpaceFlex,
-	Figure,
-	FigureObjectFit,
-	RouterLayout,
+  Flex,
+  Grid,
+  cursor,
+  FlexBox,
+  GridBox,
+  GridMergedSpace,
+  GridMergedSpaceFlex,
+  Figure,
+  FigureObjectFit,
+  RouterLayout,
 };
