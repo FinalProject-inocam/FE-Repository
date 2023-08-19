@@ -517,4 +517,4 @@
 
 </details>
 
-- github 환경변수 문제 
+-- [Fix] Github 환경변수 설정(인식오류)...
