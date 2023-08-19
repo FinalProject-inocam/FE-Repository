@@ -517,3 +517,4 @@
 
 </details>
 
+- github : secrets 수정
