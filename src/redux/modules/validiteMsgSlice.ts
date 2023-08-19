@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const initialState = {
+  emailMsg: ["", false],
+  nickNameMsg: ["", false],
+  passwordMsg: ["", false],
+  pwCheckedMsg: ["", false],
+}
+
 const validiteMsgSlice = createSlice({
   name: "validiteMsgSlice",
-  initialState: {
-    emailMsg: ["", false],
-    nickNameMsg: ["", false],
-    passwordMsg: ["", false],
-    pwCheckedMsg: ["", false],
-  } as any,
+  initialState,
   reducers: {
     setValiditeMsg: (state, action: PayloadAction<any>) => {
       switch (action.payload.type) {
@@ -15,12 +17,16 @@ const validiteMsgSlice = createSlice({
           return { ...state, emailMsg: action.payload.msg };
         case "nickname":
           return { ...state, nickNameMsg: action.payload.msg };
+        case "password":
+          return { ...state, passwordMsg: action.payload.msg };
+        case "pwChecked":
+          return { ...state, pwCheckedMsg: action.payload.msg };
         default:
-          return state;
+          return;
       }
     },
     deleteValiditeMsg: () => {
-      return {};
+      return initialState;
     },
   },
 });

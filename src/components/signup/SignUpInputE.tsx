@@ -1,4 +1,3 @@
-
 import React from "react";
 import * as SC from "../css";
 import * as Type from "../../types";

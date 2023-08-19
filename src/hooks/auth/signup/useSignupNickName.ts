@@ -10,6 +10,7 @@ export const useSignupNickName = ({ name, submitted }: any): any => {
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setServerCheck(true);
+    e.target.value === "" && dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))
     setInput(e.target.value);
   };
 
