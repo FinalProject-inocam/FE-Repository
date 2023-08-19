@@ -16,12 +16,14 @@ export const CommunityDetail: React.FC = () => {
     onDeleteComment 
   } = useCommunityDetail()
 
+  console.log(data)
+
   if (isLoading) return <div>... 로딩중</div>;
   else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
   else {
     const { postId, title, content, isLike, likeCount, imageUrls, commentsList } = data  
     return (
-      <div>
+      <div style={{marginTop:"90px"}}>
         CommunityDetail
         <div key={postId}>
           <div>
