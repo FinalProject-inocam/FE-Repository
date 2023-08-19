@@ -210,12 +210,9 @@ interface AuthNav {
 export interface UseMainHeader {
   scrolly: UseHeadScroll;
   SplashScreenRef: MutableRefObject<HTMLDivElement | null>;
-  hanbagerToggle: boolean;
-  setHanbagerToggle: Dispatch<React.SetStateAction<boolean>>;
   sideBarNav: string[][];
   authNav: AuthNav;
-  onHanbagerToggle: () => void;
-  onNaigateSidebarToggle: (url: string) => () => void;
+  onNaigateSidebarToggle: ({url: string, setState:any, types:boolean }) => () => void;
   onNavigate: (path: string | number) => () => void;
 }
 
