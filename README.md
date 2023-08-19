@@ -516,5 +516,3 @@
         </details>
 
 </details>
-
-- github 환경변수 문제 
