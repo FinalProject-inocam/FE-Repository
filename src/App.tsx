@@ -16,23 +16,6 @@ const App: React.FC = () => {
 					<Route path='community/:id' element={<Page.CommunityDetail />} />
 					<Route path='wrapping' element={<Suspense fallback={<div>Loading...</div>}><Page.LazyWrapping /></Suspense>} />
 					<Route path='wrapping/:id' element={<Page.WrappingDetail />} />
-
-					{/* 프로텍티드 라우터(ProtectiveRouter, Token 이 존재하면 ) */}
-					<Route element={<Page.ProtectiveRouter />}>
-						<Route path='innocarorder' element={<Page.InnoCarOrder />} />
-						<Route path='communitywrite' element={<Page.CommunityWrite />} />
-						<Route path='wrappingwrite' element={<Page.DecorationWrite />} />
-					</Route>
-				</Route>
-
-
-				{/* ↓↓↓↓↓↓ 렌더링 쿠키에 있는 토큰을 redux 체계에 반영하는 문제 및, 새로고침시에도 대응하기 */}
-				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}
-				<Route element={<Page.ProtectiveRouter />}>
-					<Route path='/mypage' element={<Page.MyPage />} />
-					<Route path='/admin' element={<Page.AdminRouter />}>
-						<Route index element={<Page.AdminMain />} />
-					</Route>
 				</Route>
 
 				{/* 헤더에 따른 중첩라우터 :: AuthRouter */}
@@ -40,6 +23,20 @@ const App: React.FC = () => {
 					<Route path="signup" element={<Page.Signup />} />
 					<Route path="signup/admin" element={<Page.AdminSignup />} />
 					<Route path="login" element={<Page.Login />} />
+				</Route>
+
+				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
+				<Route element={<Page.ProtectiveRouter />}>
+					<Route path='innocar/order' element={<Page.InnoCarOrder />} />
+					<Route path='community/write' element={<Page.CommunityWrite />} />
+					<Route path='wrapping/write' element={<Page.DecorationWrite />} />
+					<Route path='/mypage' element={<Page.MyPage />} />
+				</Route>
+
+				<Route element={<Page.ProtectiveRouterA />}>
+					<Route path='/admin' element={<Page.AdminRouter />}>
+							<Route index element={<Page.AdminMain />} />
+					</Route>
 				</Route>
 
 				{/* Redirect 페이지 */}

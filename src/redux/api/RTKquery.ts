@@ -69,6 +69,7 @@ export const inocamRTK = createApi({
     "WRAPPINGSHOPCOMMENT",
     "WRAPPINGSHOP_D",
     "MYPAGE",
+    "PURCHASESCHARTY"
   ],
   endpoints(build) {
     return {
@@ -341,6 +342,17 @@ export const inocamRTK = createApi({
         }),
         invalidatesTags: ["MYPAGE"],
       }),
+
+      /* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */      
+      getpurchasesChartY: build.query({
+        query: (year) => ({
+          url: `/api/admin/stats/purchases/year?cal=${year}`,
+          method: "get",
+          types: "getAdminData",
+        }),
+        providesTags: ["PURCHASESCHARTY"],
+      }),
+
     };
   },
 });
@@ -387,4 +399,7 @@ export const {
   // MyPage 관련
   useGetMyPageQuery,
   usePatchMyPageMutation,
+
+  // ADMIN
+  useGetpurchasesChartYQuery
 } = inocamRTK;

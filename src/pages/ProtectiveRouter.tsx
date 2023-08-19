@@ -1,10 +1,13 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom'; 
-import * as RD from '../redux';
+import React  from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useProtectiveRouter } from '../hooks';
 
 export const ProtectiveRouter: React.FC = () => {
-  const {sub} = RD.useAppSelector(RD.selectDecode)
-  console.log(sub);
+  const {decodeLoaded, sub} = useProtectiveRouter()
 
-  return sub ? <Outlet/> : <Navigate to={"/login"} replace={true}/>
+  return !decodeLoaded
+    ?  <div />
+    : sub
+      ? <Outlet />
+      : <Navigate to={"/login"} replace={true} />
 };
