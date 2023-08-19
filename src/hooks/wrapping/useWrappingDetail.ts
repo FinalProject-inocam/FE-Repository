@@ -4,7 +4,7 @@ import * as Type from "../../types";
 import { useParams } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 
-export const useWrappingDetail = (): Type.UseWrappingDetail => {
+export const useWrappingDetail = (): any => { // Type.UseWrappingDetail 타입에러 
 	const { id: shopId } = useParams<{ id: string }>();
 
 	// RTK - 랩핑샵 GET

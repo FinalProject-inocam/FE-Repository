@@ -9,8 +9,8 @@ export const DetailRight: React.FC<Type.WrappingDetailProps> = ({ isLoading, dat
 	const {
 		onSubmitShopComment,
 		shopCommentInfo,
-		onChangeShopComment,
 		onChangeShopFiles,
+		onChangeShopComment,
 		handleRevisitChange,
 		onDeleteShopComment,
 	} = Hooks.useWrappingDetail();
