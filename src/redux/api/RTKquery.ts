@@ -193,7 +193,7 @@ export const inocamRTK = createApi({
       // getCommunity - 커뮤니티 게시글 요청
       getCommunity: build.query({
         query: () => ({
-          url: `/api/posts?page=1&size=10`,
+          url: `/api/communities?page=1&size=10`,
           method: "get",
           types: "getData",
         }),
@@ -203,7 +203,7 @@ export const inocamRTK = createApi({
       // postCommunity - 커뮤니티 게시글 작성
       postCommunity: build.mutation({
         query: (data) => ({
-          url: `/api/posts`,
+          url: `/api/communities`,
           method: "post",
           data,
           types: "multipart",
@@ -214,7 +214,7 @@ export const inocamRTK = createApi({
       // DeleteCommunity - 커뮤니티 게시글 삭제
       DeleteCommunity: build.mutation({
         query: (postId) => ({
-          url: `/api/posts/${postId}`,
+          url: `/api/communities/${postId}`,
           method: "delete",
         }),
         invalidatesTags: ["POSTS"],
@@ -223,7 +223,7 @@ export const inocamRTK = createApi({
       // patchCommunity - 커뮤니티 게시글 수정
       patchCommunity: build.mutation({
         query: ({ post_id, formData }) => ({
-          url: `/api/posts/${post_id}`,
+          url: `/api/communities/${post_id}`,
           method: "patch",
           data: formData,
           types: "multipart",
@@ -234,7 +234,7 @@ export const inocamRTK = createApi({
       // getCommunityDetail - 커뮤니티 게시글 요청
       getCommunityDetail: build.query({
         query: (postId) => ({
-          url: `/api/posts/${postId}`,
+          url: `/api/communities/${postId}`,
           method: "get",
           types: "getData",
         }),
@@ -244,7 +244,7 @@ export const inocamRTK = createApi({
       // postCommunityComment - 커뮤니티 댓글 작성
       postCommunityComment: build.mutation({
         query: ({ post_id, data }) => ({
-          url: `/api/posts/${post_id}/comments`,
+          url: `/api/communities/${post_id}/comments`,
           method: "post",
           data,
         }),
@@ -254,7 +254,7 @@ export const inocamRTK = createApi({
       // deleteCommunityComment - 커뮤니티 댓글 삭제
       deleteCommunityComment: build.mutation({
         query: ({ post_id, comment_id }) => ({
-          url: `/api/posts/${post_id}/comments/${comment_id}`,
+          url: `/api/communities/${post_id}/comments/${comment_id}`,
           method: "delete",
         }),
         invalidatesTags: ["POSTS", "POSTDETAIL"],
@@ -263,7 +263,7 @@ export const inocamRTK = createApi({
       // patchCommunityComment - 커뮤니티 댓글 수정
       patchCommunityComment: build.mutation({
         query: ({ postId, commentId, data }) => ({
-          url: `/api/posts/${postId}/comments/${commentId}`,
+          url: `/api/communities/${postId}/comments/${commentId}`,
           method: "patch",
           data: data,
         }),

@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useRef, useEffect } from "react";
+import React, { Suspense, useState, useRef, useEffect, MouseEvent } from "react";
 import { Canvas } from "@react-three/fiber";
 import { styled } from "styled-components";
 import { ContactShadows, OrbitControls, useGLTF } from "@react-three/drei";
@@ -15,6 +15,11 @@ export const Threejs: React.FC = () => {
 	const { nodes, materials } = useGLTF("/models/typeone/scene.gltf") as IGLTF;
 	const [spinning, setSpinning] = useState<boolean>(true);
 
+	const onDoubleToggle = (e:MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation()
+		setSpinning((pre) => !pre)
+	}
+
 	useEffect(() => {
 		if (ContainRef.current) {
 			ContainRef.current.style.height = `${window.innerHeight}px`;
@@ -27,7 +32,7 @@ export const Threejs: React.FC = () => {
 				<CustomCanvas
 					shadows
 					camera={{ position: [0, 0, 0], fov: 6.58 }}
-					onDoubleClick={() => setSpinning((pre) => !pre)}>
+					onDoubleClick={onDoubleToggle}>
 					<Suspense fallback={null}>
 						<directionalLight intensity={5} position={[0, 10, 5]} />
 						<directionalLight intensity={5} position={[1, 5, 0]} />
