@@ -4,7 +4,7 @@ import * as Type from "../../types";
 import { useParams } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 
-export const useWrappingDetail = (): Type.UseWrappingDetail => {
+export const useWrappingDetail = (): any => { // Type.UseWrappingDetail 타입에러 
 	const { id: shopId } = useParams<{ id: string }>();
 
 	// RTK - 랩핑샵 GET
@@ -14,7 +14,7 @@ export const useWrappingDetail = (): Type.UseWrappingDetail => {
 	const [shopCommentInfo, setShopCommentInfo] = useState<Type.WrappingShopReview>({ review: "", star: 0 });
 	const [revisit, setRevisit] = useState<boolean>(false);
 
-	const [fileInfo, setFileInfo] = useState<File | null>(null);
+	const [fileInfo, setFileInfo] = useState<File[]>([]);
 	const [
 		onShopCommentPostRTK,
 		{ isSuccess: shopCommentSuccess, data: shopCommentData, isError: shopCommentIsError, error: shopCommentError },
@@ -46,29 +46,34 @@ export const useWrappingDetail = (): Type.UseWrappingDetail => {
 		}
 	};
 
-	const onChageShopFile = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+	const onChangeShopFiles = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
 		if (e.target.files) {
-			const file = e.target.files[0];
-			const compressImg = await onActionImgResize(file);
-			if (compressImg instanceof File) {
-				setFileInfo(compressImg);
+			const files = e.target.files;
+			const compressFiles: File[] = [];
+			for (let i = 0; i < files.length; i++) {
+				const file = files[i];
+				const compressImg = await onActionImgResize(file);
+				if (compressImg instanceof File) {
+					compressFiles.push(compressImg);
+				}
 			}
+			setFileInfo(compressFiles);
 		}
 	};
 
 	const onSubmitShopComment = (e: FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
-		console.log("서버로 보내기 전 revisit 상태:", revisit);
 		const formData = new FormData();
 		formData.append(
 			"data",
 			new Blob([JSON.stringify({ ...shopCommentInfo, revisit })], { type: "application/json" })
 		);
-		if (fileInfo) {
-			formData.append("images", fileInfo);
-		}
+		fileInfo.forEach((file) => {
+			formData.append("images", file);
+		});
+		console.log(formData);
 		onShopCommentPostRTK({ shopId, formData });
-		setFileInfo(null);
+		setFileInfo([]);
 		setShopCommentInfo({ review: "", star: 0 });
 		setRevisit(false);
 	};
@@ -111,7 +116,7 @@ export const useWrappingDetail = (): Type.UseWrappingDetail => {
 		onSubmitShopComment,
 		shopCommentInfo,
 		onChangeShopComment,
-		onChageShopFile,
+		onChangeShopFiles,
 		onDeleteShopComment,
 		handleRevisitChange,
 	};
