@@ -518,3 +518,5 @@
 </details>
 
 -- [Fix] Github 환경변수 설정(인식오류)...
+-- [Fix] Github 환경변수 설정(인식오류)... KEY -> API 수정
+ 
