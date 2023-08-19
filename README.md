@@ -517,4 +517,4 @@
 
 </details>
 
-- github : secrets 수정
+- github 환경변수 문제 
