@@ -2,6 +2,7 @@ import React from "react";
 import * as COMP from "../../components";
 import * as SC from "../../components";
 import { useSignup } from "../../hooks";
+// import { SignUpEmailCheck } from "../../components/signup/SignUpEmailCheck";
 
 export const Signup: React.FC = () => {
   const {
