@@ -5,6 +5,7 @@ import { MainHeader } from "../components";
 
 export const MainRouter: React.FC = () => {
 	Hooks.useDecodeDispatch();
+	console.log(process.env.REACT_APP_SERVER_KEY)
 
 	return (
 		<>
