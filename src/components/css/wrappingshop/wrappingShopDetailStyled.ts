@@ -7,11 +7,12 @@ const DetailOutline = styled.div<Partial<Type.Styled>>`
 	${Flex}
 	margin: 0 auto;
 	background-color: #efefef;
-	height: 100vh;
+	/* height: 100vh; */
 `;
 
 // Map ------------------------------------
 const DetailKakaoMaps = styled.div`
+	position: relative;
 	width: 100%;
 	padding-top: ${({ theme }) => theme.headerHeight.desktop};
 	min-height: 490px;
@@ -19,7 +20,17 @@ const DetailKakaoMaps = styled.div`
 	section {
 		width: 100%;
 		height: 100%;
+		min-height: 490px;
 	}
+`;
+
+const MapFadeBottom = styled.div`
+	background-image: linear-gradient(180deg, rgba(129, 134, 138, 0), rgba(129, 134, 138, 0.3), #111);
+	height: 4rem;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 1;
 `;
 
 // DetailContent ------------------------------------
@@ -30,7 +41,7 @@ const DetailContent = styled.section<Partial<Type.Styled>>`
 	height: 100%;
 	margin: 0 auto;
 	padding: 0 72px;
-	border: 1px dotted red;
+	/* border: 1px dotted red; */
 `;
 
 // Banner --------------------------------
@@ -169,10 +180,15 @@ const ReviewBox = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-	margin-bottom: 4.4rem;
+	margin-bottom: 2rem;
+
+	hr {
+		border: 1px solid black;
+		color: black;
 `;
 
 const ReviewUpperContainer = styled.div<Partial<Type.Styled>>`
+	margin-top: 1rem;
 	display: flex;
 	justify-content: space-between;
 `;
@@ -238,6 +254,7 @@ export {
 
 	//Map
 	DetailKakaoMaps,
+	MapFadeBottom,
 
 	// DetailContent
 	DetailContent,
