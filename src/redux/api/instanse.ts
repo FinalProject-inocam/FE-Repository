@@ -2,7 +2,7 @@ import axios, * as axiosType from 'axios';
 import { MyAxiosRequestConfig } from '../../types';
 // axios 인스턴스 생성
 const instance: axiosType.AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_KEY,
+  baseURL: process.env.REACT_APP_SERVER_API,
 });
 
 // 요청 인터셉터 설정
@@ -55,7 +55,7 @@ instance.interceptors.response.use(
 );
 
 const instanceLogout: axiosType.AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_KEY,
+  baseURL: process.env.REACT_APP_SERVER_API,
 });
 
 instanceLogout.interceptors.request.use((config: MyAxiosRequestConfig) => {

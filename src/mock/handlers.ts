@@ -5,7 +5,7 @@ import * as Type from "../types";
 export const handlers = [
   // Login
   rest.post<Type.User>(
-    `${process.env.REACT_APP_SERVER_KEY}/api/auth/login`,
+    `${process.env.REACT_APP_SERVER_API}/api/auth/login`,
     async (req, res, ctx) => {
       const request = req.body;
       const find = TestDB.logindata.find(
@@ -51,7 +51,7 @@ export const handlers = [
 
   // SNS-Login
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/auth/kakao`,
+    `${process.env.REACT_APP_SERVER_API}/api/auth/kakao`,
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -66,7 +66,7 @@ export const handlers = [
 
   // Signup
   rest.post<Type.UserInfo>(
-    `${process.env.REACT_APP_SERVER_KEY}/api/auth/signup`,
+    `${process.env.REACT_APP_SERVER_API}/api/auth/signup`,
     async (req, res, ctx) => {
       const request = req.body;
       TestDB.logindata.push(request);
@@ -83,7 +83,7 @@ export const handlers = [
 
   // Signup-emailCheck
   rest.get<Type.UserInfo>(
-    `${process.env.REACT_APP_SERVER_KEY}/api/auth/email`,
+    `${process.env.REACT_APP_SERVER_API}/api/auth/email`,
     async (req, res, ctx) => {
       const checkEmail = req.url.searchParams.get("email");
       const find =
@@ -111,7 +111,7 @@ export const handlers = [
   ),
 
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/auth/checkcode`,
+    `${process.env.REACT_APP_SERVER_API}/api/auth/checkcode`,
     async (req, res, ctx) => {
       console.log("req", req.url.searchParams.get("code"));
       return res(
@@ -127,7 +127,7 @@ export const handlers = [
 
   // Signup-NickNameCheck
   rest.get<Type.UserInfo>(
-    `${process.env.REACT_APP_SERVER_KEY}/api/auth/nickname`,
+    `${process.env.REACT_APP_SERVER_API}/api/auth/nickname`,
     async (req, res, ctx) => {
       console.log("연습", req);
       const checkNickName = req.url.searchParams.get("nickname");
@@ -158,7 +158,7 @@ export const handlers = [
 
   // getPosts - 차량출고 커뮤니티
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts`,
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -174,7 +174,7 @@ export const handlers = [
 
   // getPosts - 차량출고 커뮤니티 게시글 조회
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/`, // ${postId}
+    `${process.env.REACT_APP_SERVER_API}/api/posts/`, // ${postId}
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -190,7 +190,7 @@ export const handlers = [
 
   // getPostDeatil - 차량출고 커뮤니티 게시글 조회
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts/:id`,
     async (req, res, ctx) => {
       const find = TestDB.postDetailData.find(
         (post) => post.postId === +req.params.id
@@ -209,7 +209,7 @@ export const handlers = [
 
   // postPosts - 차량출고 커뮤니티
   rest.post(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts`,
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -224,7 +224,7 @@ export const handlers = [
 
   // deletePosts - 차량출고 커뮤니티 게시글 삭제
   rest.delete(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts/:id`,
     async (req, res, ctx) => {
       const findIndex = TestDB.postdata.findIndex(
         (post: Type.TotalCommunity) => post.postId === +req.params.id
@@ -244,7 +244,7 @@ export const handlers = [
 
   // patchPosts - 차량출고 커뮤니티 게시글 수정
   rest.patch(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/:id`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts/:id`,
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -259,7 +259,7 @@ export const handlers = [
 
   // postPostsComment - 차량출고 커뮤니티 게시글 댓글작성
   rest.post(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/:id/comments`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts/:id/comments`,
     async (req, res, ctx) => {
       const { comment } = req.body as any;
       const newComment = {
@@ -287,7 +287,7 @@ export const handlers = [
 
   // deletePostsComment - 차량출고 커뮤니티 게시글 댓글삭제
   rest.delete(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts/:postid/comments/:commentid`,
     async (req, res, ctx) => {
       const { postid, commentid } = req.params;
       const find = TestDB.postDetailData.find(
@@ -311,7 +311,7 @@ export const handlers = [
 
   // postPostsComment - 차량출고 커뮤니티 게시글 댓글수정
   rest.patch(
-    `${process.env.REACT_APP_SERVER_KEY}/api/posts/:postid/comments/:commentid`,
+    `${process.env.REACT_APP_SERVER_API}/api/posts/:postid/comments/:commentid`,
     async (req, res, ctx) => {
       const { comment } = req.body as any;
       const { postid, commentid } = req.params;
@@ -340,7 +340,7 @@ export const handlers = [
 
   // postInoCarOrder - 차량출고 신청
   rest.post(
-    `${process.env.REACT_APP_SERVER_KEY}/api/purchases`,
+    `${process.env.REACT_APP_SERVER_API}/api/purchases`,
     async (req, res, ctx) => {
       console.log(req.body);
 
@@ -357,7 +357,7 @@ export const handlers = [
 
   // getInoCarOrder - 차량출고 신청 정보 조회
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/purchases`,
+    `${process.env.REACT_APP_SERVER_API}/api/purchases`,
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -373,7 +373,7 @@ export const handlers = [
 
   // deleteInoCarOrder - 차량출고 신청 삭제
   rest.delete(
-    `${process.env.REACT_APP_SERVER_KEY}/api/purchases/:purchaseId`,
+    `${process.env.REACT_APP_SERVER_API}/api/purchases/:purchaseId`,
     async (req, res, ctx) => {
       const findindex = TestDB.postCarOderData.findIndex(
         (data) => data.purchaseId === +req.params.purchaseId
@@ -392,7 +392,7 @@ export const handlers = [
 
   //  patchInoCarOrder - 차량출고 신청 수정
   rest.patch(
-    `${process.env.REACT_APP_SERVER_KEY}/api/purchases/:purchaseId`,
+    `${process.env.REACT_APP_SERVER_API}/api/purchases/:purchaseId`,
     async (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -407,7 +407,7 @@ export const handlers = [
 
   //  getPurchasesChar - 차량 통계 데이터
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/stat/purchases/chart`,
+    `${process.env.REACT_APP_SERVER_API}/api/stat/purchases/chart`,
     async (req, res, ctx) => {
       const term = req.url.search.split("&")[1].split("=")[1];
       return res(
@@ -429,7 +429,7 @@ export const handlers = [
 
   // getWrapping - 랩핑샵 전체 조회
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/shops`,
+    `${process.env.REACT_APP_SERVER_API}/api/shops`,
     async (req, res, ctx) => {
       console.log(req);
       return res(
@@ -444,7 +444,7 @@ export const handlers = [
   ),
 
   rest.get(
-    `${process.env.REACT_APP_SERVER_KEY}/api/mypage`,
+    `${process.env.REACT_APP_SERVER_API}/api/mypage`,
     async (req, res, ctx) => {
       console.log(req);
       return res(
@@ -460,7 +460,7 @@ export const handlers = [
   ),
 
   rest.patch(
-    `${process.env.REACT_APP_SERVER_KEY}/api/mypage`,
+    `${process.env.REACT_APP_SERVER_API}/api/mypage`,
     async (req, res, ctx) => {
       console.log("req", req.body);
 
