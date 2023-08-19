@@ -12,6 +12,8 @@ export const MainRouter: React.FC = () => {
 	console.log("REACT_APP_GOOGLE_REDIRECT_URL", process.env.REACT_APP_GOOGLE_REDIRECT_URL)
 	console.log("REACT_APP_NAVER_REST_API", process.env.REACT_APP_NAVER_REST_API)
 	console.log("REACT_APP_NAVER_REDIRECT_URL", process.env.REACT_APP_NAVER_REDIRECT_URL)
+	console.log("REACT_APP_NAVER_REST_API", process.env.REACT_APP_SERVER_API)
+	console.log("REACT_APP_NAVER_REDIRECT_URL", process.env.REACT_APP_SERVER_APII)
 
 
 	return (
