@@ -97,7 +97,7 @@ export interface UseWrappingDetail extends AsyncHooksDefault {
 	shopCommentInfo: Type.WrappingShopReview;
 	onSubmitShopComment: (e: FormEvent<HTMLFormElement>) => void;
 	onChangeShopComment: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChageShopFile: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
+	onChangeShopFiles: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
 	onDeleteShopComment: (shopId: string | undefined, reviewId: number | undefined) => () => void;
 	handleRevisitChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
