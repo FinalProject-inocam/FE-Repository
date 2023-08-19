@@ -138,7 +138,7 @@
 
 ## 트러블슈팅
 
-1.  ### Form 태그의 input 태그들의 리렌더링 제어 및, 입력에 따른 조건부 상태메시지
+1.  ### 성능최적화 :  Form 태그의 input 태그들의 리렌더링 제어 및, 입력에 따른 조건부 상태메시지
 
 - 상황 : inputValue에 따른 조건부 메시지 노출과 관련하여, onChange, onBlur 이벤트에 대응하며, input.name에 따라 각각 동작하는 상태메시지가 요구됨
 
@@ -339,7 +339,181 @@
             - 두 이벤트에 따라 `dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))`를 동작
               - msg의 내용은 조건에 따른 내용이 기록되게 하였으며,
               - type을 name으로 설정하여 해당 내용을 꺼내어 화면에 기록하도록 설정하였다. 
-      </details>
+      </details><br/>
+
+  5.  리펙토링 최종, 부모컴포넌트로 전달된 조건부 상태메시지(객체) 묶음으로 인한 input 태그의 연결, 동시리렌더링 제어
+
+      - input과 관련된 state는 분리했지만, validiteMsg에 대한 상태를 리덕스를 사용하지만, 결국 하나의 state를 사용한다는 점에서 메시지 부분에서 하나의 validiteMsg이 변견되면, 전체가 리랜더링되는 문제 발생
+
+        <details>
+        <summary>수정 전 코드</summary>        
+
+          ```tsx
+          // 기존 validiteMsgSlice 
+            const validiteMsgSlice = createSlice({
+              name: "validiteMsgSlice",
+              initialState: {
+                emailMsg: ["", false],
+                nickNameMsg: ["", false],
+                passwordMsg: ["", false],
+                pwCheckedMsg: ["", false],
+              } as any,
+              // .... 
+            });
+
+            export const validiteMsgReducer = validiteMsgSlice.reducer;
+            export const selectValiditeMsg = (state: any) => state.validiteMsgReducer;
+            export const { setValiditeMsg, deleteValiditeMsg } = validiteMsgSlice.actions;
+
+
+          // 컴포넌트에서의 사용 
+          import React from "react";
+          import * as SC from "../css";
+          import * as Type from "../../types";
+          import { useSignupInput } from "../../hooks";
+          import * as RTK from "../../redux";
+
+          export const SignUpInput: React.FC<Type.SignUpInputProps> = ( ) => {
+            const getValidateMsg = RTK.useAppSelector(RTK.selectValiditeMsg);
+
+            return (
+              <>
+                {/* ...  */}
+                {name === "email" && getValidateMsg.emailMsg && (
+                  <SC.ValidateInputMsg
+                    $signColor={getValidateMsg.emailMsg[1]}
+                    children={getValidateMsg.emailMsg[0]}
+                  />
+                )}
+              </>
+            );
+          };
+          ```
+        </details>
+
+
+        <details>
+        <summary>수정 후 코드 : input 별 [ 컴포넌트/커스텀훅 모델화 ], 이를 통해 연결고리 분리 input별 리렌저링 제어</summary>
+
+        - 관련 input에 대한 컴포넌트 분리 + 해당 컴포넌트에 맞춘 커스텀훅 모델화 
+          - SignUpInputE + useSignupEmail : onChange + onBlur(비동기통신 서버 중복확인) + 유효성검사
+          - SignUpInputN + useSignupNickName : onChange + onBlur(비동기통신 서버 중복확인) + 유효성검사
+          - SignUpInputP + useSignupPassword : onChange + 유효성검사
+          - SignUpInputPWC + useSignupPWC : onChange + 유효성검사
+          - SignUpInput + useSignup : 유효성 검사가 필요없는 컴포넌트 
+
+        ```tsx
+        // state.validiteMsgReducer에서 나가는 값에 대해서 분리 
+        export const selectValiditeEMsg = (state: any) => state.validiteMsgReducer.emailMsg;
+        export const selectValiditeNMsg = (state: any) => state.validiteMsgReducer.nickNameMsg;
+        export const selectValiditePMsg = (state: any) => state.validiteMsgReducer.passwordMsg;
+        export const selectValiditePWCMsg = (state: any) => state.validiteMsgReducer.pwCheckedMsg;
+
+        // SignUpInputE : Eamil 관련된 input 컴포넌트 분리 
+        import React from "react";
+        import * as SC from "../css";
+        import * as Type from "../../types";
+        import { useSignupEmail } from "../../hooks";
+
+
+        export const SignUpInputE: React.FC<Type.SignUpInputProps> = ({ 
+          placeholder, name, type, length, inputRef, submitted }) => {
+          const { input, getValidateMsg, onChangeInput, onBlurSignupDispatch } = useSignupEmail({
+            name,
+            submitted,
+          });
+
+          return (
+            <>
+              <SC.AuthInput
+                ref={inputRef}
+                type={type}
+                value={input}
+                onBlur={onBlurSignupDispatch}
+                onChange={onChangeInput}
+                maxLength={length}
+                placeholder={placeholder}
+              />
+              <SC.ValidateInputMsg
+                $signColor={getValidateMsg[1]}
+                children={getValidateMsg[0]}
+              />
+            </>
+          );
+        };
+
+        // SignUpInputE 에 맞춘 useSignupEmail을 별도로 구성 
+        import { ChangeEvent, useEffect, useState } from "react";
+        import * as RTK from "../../../redux";
+
+        export const useSignupEmail = ({ name, submitted }: any): any => {
+
+          const dispatch = RTK.useAppDispatch();
+          const [input, setInput] = useState<string>("");
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const [serverCheck, setServerCheck] = useState<boolean>(true);
+          const getValidateMsg = RTK.useAppSelector(RTK.selectValiditeEMsg);
+
+          const onValiditeMsg = (input: string): void => {
+            input === ""
+              ? dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))
+              : !emailRegex.test(input)
+                ? dispatch(
+                  RTK.setValiditeMsg({
+                    type: name,
+                    msg: ["이메일을 입력해주세요(exam@.exam.com)", false],
+                  })
+                )
+                : dispatch(
+                  RTK.setValiditeMsg({
+                    type: name,
+                    msg: ["이메일 형식에 부합합니다.", false],
+                  })
+                );
+          }
+
+          const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+            setServerCheck(true);
+            onValiditeMsg(e.target.value);
+            setInput(e.target.value);
+          };
+
+          const onBlurSignupDispatch = () => {
+            dispatch(RTK.setSignupDate({ [`${name}`]: input }));
+            emailRegex.test(input) && setServerCheck(false);
+          };
+
+          const { isSuccess, data, isError, error } = RTK.useGetEmailCheckQuery(input, {
+            skip: serverCheck,
+          });
+
+          useEffect(() => {
+            setInput("");
+          }, [submitted]);
+
+          useEffect(() => {
+            isSuccess &&
+              dispatch(
+                RTK.setValiditeMsg({
+                  type: "email",
+                  msg: [data, data.includes("사용") ? true : false],
+                })
+              );
+            isError && console.log(error);
+          }, [
+            isSuccess,
+            data,
+            isError,
+            error,
+            dispatch,
+          ]);
+
+          return { input, getValidateMsg, onChangeInput, onBlurSignupDispatch }
+
+        }
+        ```        
+
+        </details>
 
 </details>
 

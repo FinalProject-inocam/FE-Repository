@@ -1,28 +1,39 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const initialState = {
+  emailMsg: ["", false],
+  nickNameMsg: ["", false],
+  passwordMsg: ["", false],
+  pwCheckedMsg: ["", false],
+}
+
 const validiteMsgSlice = createSlice({
   name: "validiteMsgSlice",
-  initialState: {
-    emailMsg: ["", false],
-    nickNameMsg: ["", false],
-    passwordMsg: ["", false],
-    pwCheckedMsg: ["", false],
-  } as any,
+  initialState,
   reducers: {
     setValiditeMsg: (state, action: PayloadAction<any>) => {
       switch (action.payload.type) {
         case "email":
           return { ...state, emailMsg: action.payload.msg };
+        case "nickname":
+          return { ...state, nickNameMsg: action.payload.msg };
+        case "password":
+          return { ...state, passwordMsg: action.payload.msg };
+        case "pwChecked":
+          return { ...state, pwCheckedMsg: action.payload.msg };
         default:
-          return state;
+          return;
       }
     },
     deleteValiditeMsg: () => {
-      return {};
+      return initialState;
     },
   },
 });
 
 export const validiteMsgReducer = validiteMsgSlice.reducer;
-export const selectValiditeMsg = (state: any) => state.validiteMsgReducer;
+export const selectValiditeEMsg = (state: any) => state.validiteMsgReducer.emailMsg;
+export const selectValiditeNMsg = (state: any) => state.validiteMsgReducer.nickNameMsg;
+export const selectValiditePMsg = (state: any) => state.validiteMsgReducer.passwordMsg;
+export const selectValiditePWCMsg = (state: any) => state.validiteMsgReducer.pwCheckedMsg;
 export const { setValiditeMsg, deleteValiditeMsg } = validiteMsgSlice.actions;

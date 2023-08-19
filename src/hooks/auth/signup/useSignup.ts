@@ -1,6 +1,6 @@
-import { useRef, useState, FormEvent } from "react";
-import * as RTK from "../../redux";
-import * as Type from "../../types";
+import { useRef, useState, FormEvent, useEffect } from "react";
+import * as RTK from "../../../redux";
+import * as Type from "../../../types";
 
 export const useSignup = (): Type.UseSignup => {
   const [submitted, setSubmitted] = useState<boolean>(true);
@@ -14,12 +14,19 @@ export const useSignup = (): Type.UseSignup => {
 
   const getSignup = RTK.useAppSelector(RTK.selectSignup);
   const dispatch = RTK.useAppDispatch();
+  const [onpostSignupRTK, { isSuccess, isError, data, error }] = RTK.usePostSignupMutation();
   const onSubmitSign = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(getSignup);
+    onpostSignupRTK(getSignup);
     dispatch(RTK.deleteSignupDate());
+    dispatch(RTK.deleteValiditeMsg());
     setSubmitted((pre) => !pre);
   };
+
+  useEffect(()=>{
+    isSuccess && console.log(data)
+    isError && console.log(error)
+  }, [isSuccess, data,isError, error])
 
   return {
     inputRef1,

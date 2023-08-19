@@ -24,4 +24,5 @@ const SignupSlice = createSlice({
 
 export const SignupReducer = SignupSlice.reducer;
 export const selectSignup = (state: any) => state.SignupReducer;
+export const selectSignupP = (state: any) => state.SignupReducer.password;
 export const { setSignupDate, deleteSignupDate } = SignupSlice.actions;
