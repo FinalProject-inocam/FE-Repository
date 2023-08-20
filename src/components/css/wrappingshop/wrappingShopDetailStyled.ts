@@ -116,19 +116,87 @@ const MoreButton = styled.button`
 `;
 
 // Info --------------------------------
-const LeftOnSide = styled.div`
-	width: 466px;
-	height: 100vh;
-	transform: translateY(-10%);
-	margin: 0;
-	padding: 0;
-	z-index: 9;
+const DetailLeftOutLine = styled.div`
+	position: relative;
 `;
 
-const WrappInfo = styled.div`
+const DetailLeftShopInfoLayout = styled.div`
+	margin-top: 32%;
+
+	background-color: #ffffff;
+	padding-top: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 30px;
+`;
+
+const DetailLeftBanner = styled.div`
+	overflow: hidden;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	font-size: 20px;
+	font-weight: 600;
+`;
+
+const WrappingShopName = styled.div`
+	font-size: 1.25rem;
+	font-weight: bold;
+	margin-bottom: 10px;
+`;
+
+const WrappingShopAddress = styled.div`
+	font-size: 1rem;
+	color: #999999;
+`;
+
+const DetailLeftShopScoreOutline = styled.div`
+	margin-top: 5px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: #fff;
+`;
+
+const ReviewCountTitleLayout = styled.div`
+	margin-bottom: 20px;
 	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
+	flex-direction: row;
+`;
+
+const ReviewCountTitleItem = styled.div<Partial<Type.Styled>>`
+	font-size: 20px;
+	font-weight: 600;
+	margin-left: ${(props) => (props.$highlight ? "10px" : "0")};
+	color: ${(props) => (props.$highlight ? "#4c4cff" : "black")};
+`;
+
+const ReviewScoreLayout = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+`;
+
+const ReviewScoreInner = styled.div<Partial<Type.Styled>>`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 213.5px;
+	height: 70px;
+	border: ${(props) => (props.$highlight ? "1px solid #c7c7cb" : "none")};
+	background-color: ${(props) => (props.$highlight ? "none" : "#c7c7cb")};
+`;
+
+const ReviewScoreItem = styled.div<Partial<Type.Styled>>`
+	margin-right: ${(props) => (props.$highlight ? "8px" : "0")};
+	font-size: ${(props) => (props.$highlight ? "40px" : "20px")};
+	color: ${(props) => (props.$highlight ? "#1d1d1f" : "#555555")};
+`;
+
+const ReviewStarItem = styled.div`
+	font-size: 30px;
 `;
 
 const LeftContentWrapper = styled.div`
@@ -147,15 +215,6 @@ const WrappingShopScore = styled.div`
 	background-color: #fff;
 `;
 
-const WrappingShopName = styled.div`
-	font-size: 1.25rem;
-	font-weight: bold;
-`;
-
-const WrappingShopAddress = styled.div`
-	font-size: 1rem;
-	color: #999999;
-`;
 // Review --------------------------------
 const RightOnSide = styled.div`
 	width: 710px;
@@ -268,8 +327,17 @@ export {
 	MoreButton,
 
 	// Info
-	LeftOnSide,
-	WrappInfo,
+	/* LeftOnSide, */
+	DetailLeftOutLine,
+	DetailLeftShopInfoLayout,
+	DetailLeftBanner,
+	DetailLeftShopScoreOutline,
+	ReviewCountTitleLayout,
+	ReviewCountTitleItem,
+	ReviewScoreLayout,
+	ReviewScoreInner,
+	ReviewScoreItem,
+	ReviewStarItem,
 	LeftContentWrapper,
 	WrappingShopScore,
 	WrappingShopName,

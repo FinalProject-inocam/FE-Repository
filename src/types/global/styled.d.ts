@@ -13,7 +13,11 @@ export interface Styled {
 	$state: boolean;
 	$font: string;
 	$borderR: string;
+	$borderTopRightR: string;
+	$borderTopLeftR: string;
+	$overflow: string;
 	$bColor: string;
+	$highlight: boolean;
 
 	// Felx-Grid
 	$gap: number;
