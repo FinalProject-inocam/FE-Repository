@@ -180,16 +180,6 @@ export const inocamRTK = createApi({
         invalidatesTags: ["ICOCAR"],
       }),
 
-      // getPurchasesChar - 차량 통계 데이터
-      getPurchasesChar: build.query({
-        query: (term) => ({
-          url: `/api/stat/purchases/chart?cal=2023-08-08&term=${term}`,
-          method: "get",
-          types: "getData",
-        }),
-        providesTags: ["PURCHASESCHAR"],
-      }),
-
       /* / 03 Community 관련 / -------------------------------------------------------- */
       // getCommunity - 커뮤니티 게시글 요청
       getCommunity: build.query({
@@ -385,9 +375,6 @@ export const {
   useGetPurchasesQuery,
   useDeletePurchasesMutation,
   usePatchPurchasesMutation,
-
-  // Get 차량 통계 데이터 관련
-  useGetPurchasesCharQuery,
 
   // WrappingShop 관련
   useGetWrappingQuery,
