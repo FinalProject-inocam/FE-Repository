@@ -218,6 +218,6 @@ export interface UseMainHeader {
 
 /* / 17 useRouter / -------------------------------------------------------- */
 export interface UseRouter {
-  getId: number | undefined;
+  getId: number | string | undefined;
   onNavigate: (path: string | number) => () => void;
 }
