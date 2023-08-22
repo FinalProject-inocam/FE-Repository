@@ -3,9 +3,9 @@ import * as SC from "../css";
 import * as Hooks from "../../hooks";
 
 export const DeskTopNavbar: React.FC = () => {
-
-  const { sideBarNav, authNav, onNavigate } = Hooks.useMainHeader({});
+  const { sideBarNav, authNav, onNavigate, pathname } = Hooks.useMainHeader({});
   const { sub, onLogout } = Hooks.useLogout();
+  console.log(pathname);
 
   return (
     <SC.DeskTopNav>
@@ -25,13 +25,16 @@ export const DeskTopNavbar: React.FC = () => {
                 <SC.CustomLi
                   key={nav[1]}
                   children={nav[1]}
-                  onClick={onNavigate({ url: nav[2], opts: { replace: true } })}
+                  onClick={onNavigate({
+                    url: nav[2],
+                    opts: { state: pathname },
+                  })}
                 />
               ) : (
                 <SC.CustomLi
                   key={nav[1]}
                   children={nav[1]}
-                  onClick={onNavigate({ url: nav[1], opts: { replace: true } })}
+                  onClick={onNavigate({ url: nav[1] })}
                 />
               )
             )

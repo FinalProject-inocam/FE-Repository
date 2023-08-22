@@ -3,7 +3,7 @@ import * as Type from "../../types";
 import { useRouter } from "../useRouter";
 
 export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
-  const { onNavigate } = useRouter();
+  const { onNavigate, pathname } = useRouter();
   const SplashScreenRef = useRef<HTMLDivElement | null>(null);
   const [hanbagerToggle, setHanbagerToggle] = useState<boolean>(false);
 
@@ -113,5 +113,6 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
     sideBarNav,
     authNav,
     onNavigate,
+    pathname,
   };
 };
