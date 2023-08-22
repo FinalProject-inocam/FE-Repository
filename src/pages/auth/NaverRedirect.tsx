@@ -9,7 +9,7 @@ export const NaverRedirect: React.FC = () => {
   const { isSuccess } = useLoginSNSRTKQuery({ types: "naver", code: search });
 
   useEffect(() => {
-    isSuccess && onNavigate({ url: -1 })();
+    isSuccess && onNavigate({ url:"-1" })();
   }, [isSuccess, onNavigate]);
   return <div />;
 };

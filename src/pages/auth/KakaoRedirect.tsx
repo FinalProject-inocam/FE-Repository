@@ -10,7 +10,7 @@ export const KakaoRedirect: React.FC = () => {
   const { isSuccess } = useLoginSNSRTKQuery({ types: "kakao", code: search });
 
   useEffect(() => {
-    isSuccess && onNavigate({ url: -1 })();
+    isSuccess && onNavigate({ url:"-1" })();
   }, [isSuccess, onNavigate]);
   return <div />;
 };

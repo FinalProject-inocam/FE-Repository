@@ -1,7 +1,6 @@
 import { ChangeEvent, Dispatch, FormEvent, MutableRefObject, LegacyRef } from "react";
 import * as Type from "../data";
 import { CarOrderInfo } from "../carOrder";
-import { StringLiteral } from "typescript";
 
 /* / 00 KakaoMaps declare / -------------------------------------------------------- */
 declare global {
@@ -11,7 +10,7 @@ declare global {
 }
 
 export interface Native {
-  url: string | number;
+  url: string;
   opts?: any;
 }
 
@@ -211,10 +210,7 @@ export interface UseMainHeader {
   onNaigateSidebarToggle: ({
     url,
     opts,
-  }: {
-    url: string | number;
-    opts?: any;
-  }) => () => void;
+  }:Native) => () => void;
   onNavigate: (Native) => () => void;
 }
 
