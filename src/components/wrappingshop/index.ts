@@ -12,3 +12,7 @@ export * from "./DetailRight";
 export * from "./DetailRightBanner";
 export * from "./DetailRightInputForm";
 export * from "./DetailRightReview";
+export * from "./DetailRightStarPointer";
+
+// Detail
+export * from "./DetailButton";

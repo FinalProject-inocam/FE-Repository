@@ -30,7 +30,27 @@ export interface WrappingShopBannerProps {
 }
 
 export interface WrappingDetailProps extends AsyncHooksDefault {
-	data: WrappingShopDetail;
+	data?: WrappingShopDetail;
+}
+
+export interface WrappingDetailStar {
+	star: number;
+	width: string;
+	height: string;
+	handleStarClick: (starNumber: number) => void;
+}
+
+export interface WrappingDetailStyled {
+	$bgColor?: string;
+	$bColor?: string;
+	$color?: string;
+	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "default";
+	$outlined?: boolean;
+	children?: React.ReactNode;
+	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	type?: "button" | "reset" | "submit";
+	value?: string;
+	$clicked?: boolean;
 }
 
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */

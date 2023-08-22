@@ -4,14 +4,7 @@ import * as SC from "../../components/css";
 
 export const DetailLeftMainBanner: React.FC<Type.WrappingDetailProps> = ({ data }) => {
 	return (
-		<div
-			style={{
-				position: "absolute",
-				top: "0",
-				left: "0",
-				transform: "translateY(-50%)",
-				zIndex: "20",
-			}}>
+		<div>
 			<SC.DetailLeftBanner>
 				<FigureObjectFitImg width={`467px`} height={`300px`} src={data.banner[0]} alt='SomeImg' />
 			</SC.DetailLeftBanner>

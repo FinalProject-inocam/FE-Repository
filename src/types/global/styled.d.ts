@@ -18,6 +18,7 @@ export interface Styled {
 	$overflow: string;
 	$bColor: string;
 	$highlight: boolean;
+	$bgColor: string;
 
 	// Felx-Grid
 	$gap: number;
@@ -49,4 +50,8 @@ export interface Styled {
 
 	// WrappingShop Detail
 	$bannerSize: "big" | "small";
+	$outlined: boolean;
+	$buttonSize: string;
+	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "like" | "comment" | "default";
+	$clicked?: boolean;
 }

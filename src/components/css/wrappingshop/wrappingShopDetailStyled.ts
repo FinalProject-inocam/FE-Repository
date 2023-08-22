@@ -16,6 +16,7 @@ const DetailKakaoMaps = styled.div`
 	width: 100%;
 	padding-top: ${({ theme }) => theme.headerHeight.desktop};
 	min-height: 490px;
+	margin-bottom: 30px;
 
 	section {
 		width: 100%;
@@ -25,7 +26,7 @@ const DetailKakaoMaps = styled.div`
 `;
 
 const MapFadeBottom = styled.div`
-	background-image: linear-gradient(180deg, rgba(129, 134, 138, 0), rgba(129, 134, 138, 0.3), #111);
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.15) 100%);
 	height: 4rem;
 	position: absolute;
 	bottom: 0;
@@ -88,12 +89,15 @@ const BannerWrapper = styled.div<Partial<Type.Styled>>`
 
 const RightBanner = styled.div<Partial<Type.Styled>>`
 	${Grid}
+	column-gap: 20px;
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
-	transform: translateY(-50%);
+
 	z-index: 20;
+	overflow: hidden;
+	border-radius: 10px;
 `;
 
 const MoreButton = styled.button`
@@ -121,8 +125,6 @@ const DetailLeftOutLine = styled.div`
 `;
 
 const DetailLeftShopInfoLayout = styled.div`
-	margin-top: 32%;
-
 	background-color: #ffffff;
 	padding-top: 30px;
 	padding-left: 20px;
@@ -172,16 +174,13 @@ const ReviewCountTitleItem = styled.div<Partial<Type.Styled>>`
 `;
 
 const ReviewScoreLayout = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	${Flex}
 	align-items: center;
 `;
 
 const ReviewScoreInner = styled.div<Partial<Type.Styled>>`
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	${Flex}
+	line-height: 70px;
 	text-align: center;
 	width: 213.5px;
 	height: 70px;
@@ -199,96 +198,132 @@ const ReviewStarItem = styled.div`
 	font-size: 30px;
 `;
 
-const LeftContentWrapper = styled.div`
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 13px;
-	padding-right: 13px;
-	background-color: #fff;
-`;
-
-const WrappingShopScore = styled.div`
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 13px;
-	padding-right: 13px;
-	background-color: #fff;
-`;
-
 // Review --------------------------------
-const RightOnSide = styled.div`
-	width: 710px;
-	max-height: calc(100vh - 590px);
-	transform: translateY(0%);
-	margin: 0;
-	padding: 0;
-	z-index: 9;
-	background-color: #fff;
+const DetailRightOutLine = styled.div`
+	position: relative;
 `;
 
-const RightReviewFormer = styled.div`
-	margin-top: 10%;
-	padding-top: 1rem;
-	padding-left: 13px;
-	padding-right: 13px;
-	margin-bottom: 4.4rem;
-	background-color: #fff;
+const DetailRightBannerInner = styled.div`
+	overflow: hidden;
+	border-radius: 10px;
+	position: relative;
 `;
 
-const ReviewBox = styled.div`
+const DetailRightFormOutLine = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
-	margin-bottom: 2rem;
-
-	hr {
-		border: 1px solid black;
-		color: black;
+	background-color: #ffffff;
+	margin-top: 80px;
 `;
 
-const ReviewUpperContainer = styled.div<Partial<Type.Styled>>`
-	margin-top: 1rem;
+const DetailRightFormLayout = styled.form`
+	margin-top: 8.4%;
+
+	padding-top: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 30px;
+`;
+
+const DetailRightFormUpperInner = styled.div`
 	display: flex;
 	justify-content: space-between;
 `;
 
-const ReviewUserWrapper = styled.div`
+const DetailRightFromUpperButtons = styled.div`
 	display: flex;
-	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	width: 442px;
+	margin-bottom: 10px;
 `;
 
-const ReviewMenuWrapper = styled.div`
+const DetailRightReviewsOutline = styled.div`
+	margin-top: 20px;
+	background-color: #ffffff;
+`;
+
+const DetailRightReviewOutline = styled.div`
+	padding-top: 22px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 30px;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 3px solid #eee;
+`;
+
+const ReviewUpperLayout = styled.div<Partial<Type.Styled>>`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const ReviewUserInner = styled.div`
+	display: flex;
+	/* justify-content: space-between; */
+	align-items: center;
+	width: 302.5px;
+	gap: 20px;
+`;
+
+const ReviewMenuInner = styled.div`
 	display: flex;
 
 	p {
-		font-size: 12px;
-		margin-left: 5px;
+		font-size: 16px;
+		margin-left: 10px;
+		color: #828295;
 	}
 `;
 
 const ReviewUserName = styled.div`
-	font-size: 16px;
-	font-weight: bold;
-	margin-right: 10px;
+	display: flex;
+	max-width: 74px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.25;
+	letter-spacing: -0.18px;
+	text-align: left;
+	flex: 1;
+`;
+
+const ReviewStarContainer = styled.div`
+	display: flex;
+	align-items: center;
+	margin-right: 5px;
 `;
 
 const ReviewStar = styled.div`
 	color: #4c4cff;
 `;
 const ReviewScore = styled.div`
-	margin-right: 0.62rem;
+	line-height: 20px;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 `;
 
-const ReviewSImageContainer = styled.div`
+const ReviewImageInner = styled.div`
+	margin-top: 22px;
 	display: flex;
 	flex-direction: row;
-	gap: 1.1rem;
+	gap: 10px;
+`;
+
+const ReviewContentsLayout = styled.div`
+	padding-left: 93px;
 `;
 
 const ReviewImageWrapper = styled.div`
-	border: 1px solid black;
-	width: 6.3rem;
-	height: 6.3rem;
+	border: 1px solid #c7c7cb;
+	width: 101px;
+	height: 101px;
+	border-radius: 4px;
+	overflow: hidden;
 `;
 
 const ReviewRevisit = styled.div`
@@ -305,6 +340,56 @@ const RightReviewOutline = styled.div`
 	padding-left: 20px;
 	padding-right: 20px;
 	overflow-y: scroll;
+`;
+
+const ReviewContentsTextItem = styled.div`
+	margin-top: 22px;
+	padding-right: 219px;
+`;
+
+const ReviewFromUserName = styled.div`
+	display: flex;
+	color: #555555;
+	flex: 1;
+`;
+
+const ReviewFormReviewInputInner = styled.div`
+	padding-left: 100px;
+	margin-bottom: 10px;
+`;
+
+const ReviewFormReviewInput = styled.textarea`
+	border: solid 1px #c7c7cb;
+	width: 812px;
+	height: 100px;
+	padding: 20px 70px 20px 23px;
+	background-color: #f3f3f8;
+	font-size: 16px;
+`;
+
+const ReviewUploadImageButton = styled.label`
+	${Flex}
+	padding-left: 10px
+`;
+
+const ReviewPreviewImageLayout = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
+const ReviewPreviewImageInner = styled.div`
+	padding-left: 100px;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+`;
+const ReviewPreviewImageItem = styled.img`
+	width: 101px;
+	height: 101px;
+	flex-grow: 0;
+	border-radius: 4px;
+	border: solid 1px #c7c7cb;
+	background-color: #f3f3f8;
 `;
 
 export {
@@ -327,7 +412,6 @@ export {
 	MoreButton,
 
 	// Info
-	/* LeftOnSide, */
 	DetailLeftOutLine,
 	DetailLeftShopInfoLayout,
 	DetailLeftBanner,
@@ -338,24 +422,37 @@ export {
 	ReviewScoreInner,
 	ReviewScoreItem,
 	ReviewStarItem,
-	LeftContentWrapper,
-	WrappingShopScore,
 	WrappingShopName,
 	WrappingShopAddress,
 
 	// Review
-	RightOnSide,
-	RightReviewFormer,
+	DetailRightOutLine,
+	DetailRightBannerInner,
+	DetailRightFormOutLine,
+	DetailRightFormLayout,
+	DetailRightFormUpperInner,
+	DetailRightFromUpperButtons,
+	DetailRightReviewsOutline,
+	DetailRightReviewOutline,
 	RightReviewOutline,
-	ReviewBox,
-	ReviewUpperContainer,
-	ReviewUserWrapper,
-	ReviewMenuWrapper,
+	ReviewUpperLayout,
+	ReviewUserInner,
+	ReviewMenuInner,
 	ReviewUserName,
+	ReviewContentsLayout,
+	ReviewContentsTextItem,
+	ReviewStarContainer,
 	ReviewStar,
 	ReviewScore,
-	ReviewSImageContainer,
+	ReviewImageInner,
 	ReviewImageWrapper,
 	ReviewRevisit,
 	ReviewCommentImg,
+	ReviewFromUserName,
+	ReviewFormReviewInputInner,
+	ReviewFormReviewInput,
+	ReviewUploadImageButton,
+	ReviewPreviewImageLayout,
+	ReviewPreviewImageInner,
+	ReviewPreviewImageItem,
 };

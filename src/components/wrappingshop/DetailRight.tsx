@@ -1,5 +1,6 @@
 import React from "react";
 import * as Type from "../../types";
+import * as SC from "../../components/css";
 import * as CP from "../../components";
 
 export const DetailRight: React.FC<Type.WrappingDetailProps> = ({ isLoading, isError, error, data }) => {
@@ -7,11 +8,11 @@ export const DetailRight: React.FC<Type.WrappingDetailProps> = ({ isLoading, isE
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
 		return (
-			<div style={{ position: "relative" }}>
+			<SC.DetailRightOutLine>
 				<CP.DetailRightBanner data={data} />
 				<CP.DetailRightInputForm />
-				<CP.DetailRightReview data={data} />
-			</div>
+				<CP.DetailRightReview />
+			</SC.DetailRightOutLine>
 		);
 	}
 };

@@ -9,16 +9,15 @@ export const DetailRightBanner: React.FC<Type.WrappingDetailProps> = ({ data }) 
 	const moreImagesCount = data.reviewImageSize - 4;
 
 	return (
-		<SC.RightBanner $gtc={"repeat(4, 1fr)"} $gap={20}>
+		<SC.RightBanner $gtc={"repeat(4, 1fr)"}>
 			{data.banner.map((_: string, idx: number) => (
-				<div key={idx} style={{ position: "relative" }}>
+				<SC.DetailRightBannerInner key={idx}>
 					{idx <= 3 || showMore ? (
 						<FigureObjectFitImg
 							width={`100%`}
 							height={`159px`}
 							src={data.banner[idx]}
 							borderR={"10px"}
-							overflow={`hidden`}
 							alt='SomeImg'
 						/>
 					) : null}
@@ -26,7 +25,7 @@ export const DetailRightBanner: React.FC<Type.WrappingDetailProps> = ({ data }) 
 					{idx === 3 && moreImagesCount > 0 && !showMore && (
 						<SC.MoreButton onClick={() => setShowMore(true)}>+{moreImagesCount}</SC.MoreButton>
 					)}
-				</div>
+				</SC.DetailRightBannerInner>
 			))}
 		</SC.RightBanner>
 	);
