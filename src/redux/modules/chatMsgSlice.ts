@@ -6,6 +6,8 @@ const chatMsgSlice = createSlice({
   initialState: [] as any | [],
   reducers: {
     setChatMsg: (state, action: PayloadAction<any>) => { 
+      console.log(action.payload);
+      
       return [...state, action.payload]
     },
   },

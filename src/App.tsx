@@ -50,9 +50,9 @@ const App: React.FC = () => {
 				<Route path="/api/auth/login/naver" element={<Page.NaverRedirect />} />
 
 				{/* 채팅 및 임시 라우터 :: Chat */}
-				<Route path="/chat" element={<Page.Chat />} />
-				<Route path="/Chatlist" element={<ChatList />} />
-				<Route path="/Chatlist/:id" element={<ChatRoom />} />
+				<Route path="/chatlist" element={<Page.Chat />} />
+				<Route path="/chat" element={<ChatList />} />
+				<Route path="/chat/:id" element={<ChatRoom />} />
 				<Route path="/webrtc" element={<Page.WebRTC />} />
 				<Route path="/threejs" element={<Suspense fallback={<div>Loading...</div>}><Page.LazyThreejs /></Suspense>} />
 

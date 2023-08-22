@@ -1,33 +1,81 @@
-import { useEffect, useRef } from "react";
-import { ManagerOptions, SocketOptions, io } from "socket.io-client";
-import { setChatMsg, useAppDispatch } from "../redux";
+import { ChangeEvent, useEffect, useState, useRef } from "react"; 
+import { io } from "socket.io-client";
+import * as RTK from "../redux";
+import { useParams } from "react-router-dom";
 
-export const useSocket = (url: string, opts?: Partial<ManagerOptions & SocketOptions> | undefined) => {
-	const { current: socket } = useRef(io(url, opts));
-	const dispatch = useAppDispatch()
+export const useSocket = () => {
+	const {id:getId} = useParams();
+	const dispatch = RTK.useAppDispatch()
+	const [sendM, setSendM] = useState<string>("")
+	// const refreshToken =
+	// document.cookie &&
+	// document.cookie
+	// 	.split(';')
+	// 	.filter((cookies) => cookies.includes('refreshToken'))[0]
+	// 	?.split('=')[1];
+	const { current: socket } = useRef(io(`${process.env.REACT_APP_SOCKET_API}?room=${getId}&username=${getId?.split('!')[1]}}`, {
+		// query : {
+		// 	username:getId?.split('!')[1],
+		// 	autholization : refreshToken
+		// }
+	}));
+ 
+
+	
+	// Client InputMsg
+	const onChangeMsg = (e:ChangeEvent<HTMLInputElement>) => {
+		setSendM(e.target.value)
+	}
+
+	// Client 메시지 보내기, socket.emit("sendMsg")
+  const onSendMsg = () => {
+    socket.emit("sendMsg", {
+      content: "테스트",
+      username: getId?.split('!')[1],
+      room: getId
+    })
+    dispatch(RTK.setChatMsg({
+      content: sendM,
+      username: getId?.split('!')[1],
+      room: getId
+    }))
+    setSendM("")
+  }
+
+	useEffect(()=> {
+		socket.connect()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 
 	useEffect(() => {
-		socket.connect()
+		// previousMsg 받아오기 
+		socket.on("previousMsg", data => {
+      console.log("previousMsg", data)
+			// dispatch(RTK.setChatMsg(data))
+    })
 
-		socket.on("previousM", data => {
-      console.log("previousM", data)
-    } )
-
-    socket.on("read_message", data => {
-      // console.log("read_message", data)
-			dispatch(setChatMsg(data))
+		// // previousMsg 이후, socket.on("readMsg") 상대가 전달하는 메시지 받아오기  
+    socket.on("readMsg", data => {
+			console.log(data)
+			// dispatch(RTK.setChatMsg(data))
+    })
+		socket.on("error", data => {
+			console.log(data)
+			// dispatch(RTK.setChatMsg(data))
     })
 
 		return () => {
-			if (socket) socket.close(); // socket.disconnect() 이 두개는 같은 명령어
+			if (socket) socket.close(); 
 		};
 
 	}, [socket, dispatch]);
 
-	return socket;
+	return {sendM, onChangeMsg, onSendMsg};
 };
 
-
-
-// emit("이벤트이름", data)
-// on("이벤트이름", data)
+// const opts = {
+// 	reconnectionAttempts: 1,
+// 	reconnectionDelay: 1000,
+// 	autoConnect: false,
+// }
