@@ -9,10 +9,12 @@ import {
 
 export const KakaoRedirect: React.FC = () => {
   const { search } = useLocation();
+  const getLocation = useAppSelector(selectLocation);
+  console.log("getLocation", getLocation)
   console.log(search);
   // const { onNavigate } = useRouter();
   const { isSuccess } = useLoginSNSRTKQuery({ types: "kakao", code: search });
-  const getLocation = useAppSelector(selectLocation);
+
 
   useEffect(() => {
     isSuccess && console.log(getLocation);
