@@ -73,11 +73,9 @@ const GridBox = sc.styled.div<Partial<Styled>>`
 
 const GridMergedSpace = sc.styled.div<Partial<Styled>>`
   grid-column-start: ${({ $mergedgcs }) => ($mergedgcs ? $mergedgcs : "auto")};
-  grid-column-end: ${({ $mergedgce }) =>
-    $mergedgce ? $mergedgce : "auto"}; // span 2;
+  grid-column-end: ${({ $mergedgce }) => ($mergedgce ? $mergedgce : "auto")}; // span 2;
   grid-row-start: ${({ $mergedgrs }) => ($mergedgrs ? $mergedgrs : "auto")};
-  grid-row-end: ${({ $mergedgre }) =>
-    $mergedgre ? $mergedgre : "auto"}; // span 3;
+  grid-row-end: ${({ $mergedgre }) => ($mergedgre ? $mergedgre : "auto")}; // span 3;
 `;
 
 const GridMergedSpaceFlex = sc.styled(GridMergedSpace)`
@@ -100,6 +98,9 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
    position: relative;
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
+  overflow?: ${({ $overflow }) => $overflow};
+  border-radius?: ${({ $borderR }) => $borderR};
+
   img {
     position: absolute;
     top: 50%;
@@ -117,14 +118,14 @@ const RouterLayout = sc.styled.div<Partial<Styled>>`
 `;
 
 export {
-  Flex,
-  Grid,
-  cursor,
-  FlexBox,
-  GridBox,
-  GridMergedSpace,
-  GridMergedSpaceFlex,
-  Figure,
-  FigureObjectFit,
-  RouterLayout,
+	Flex,
+	Grid,
+	cursor,
+	FlexBox,
+	GridBox,
+	GridMergedSpace,
+	GridMergedSpaceFlex,
+	Figure,
+	FigureObjectFit,
+	RouterLayout,
 };

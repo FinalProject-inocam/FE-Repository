@@ -44,11 +44,6 @@ export interface WrappingShopDetail extends WrappingShop {
 	reviews: Review[];
 }
 
-export interface WrappingShopReview {
-	star: number;
-	review: string;
-}
-
 export interface TotalWrappingShopReview extends WrappingShopReview {
 	createAt: string;
 	imageUrls: string[];
@@ -56,6 +51,8 @@ export interface TotalWrappingShopReview extends WrappingShopReview {
 	nickname: string;
 	reviewId: number;
 	revisit: boolean;
+	star: number;
+	review: string;
 }
 
 /* / DecodeToken 관련 타입 : Redux 및 ??  / -------------------------------------------------------- */
