@@ -57,87 +57,88 @@ const axiosBaseQuery =
 	};
 
 export const inocamRTK = createApi({
-	baseQuery: axiosBaseQuery(),
-	tagTypes: [
-		"POSTS",
-		"POSTDETAIL",
-		"POSTCOMMENT",
-		"KAKAO",
-		"ICOCAR",
-		"PURCHASESCHAR",
-		"WRAPPINGSHOP",
-		"WRAPPINGSHOPCOMMENT",
-		"WRAPPINGSHOP_D",
-		"MYPAGE",
-	],
-	endpoints(build) {
-		return {
-			/* / 01 Auth / -------------------------------------------------------- */
-			// loginRTK
-			postLogin: build.mutation({
-				query: (data) => ({
-					url: "/api/auth/login",
-					method: "post",
-					data,
-					types: "login",
-				}),
-			}),
-			// getLogout
-			getLogout: build.query({
-				query: () => ({
-					url: `/api/auth/logout`,
-					method: "get",
-					types: "logout",
-				}),
-			}),
-			// SNSLogin - kakao, google, naver
-			loginSNSRTK: build.query({
-				query: ({ types, code }) => ({
-					url: `/api/auth/login/${types}${code}`,
-					method: "get",
-				}),
-			}),
-			// Signup
-			postSignup: build.mutation({
-				query: (data) => ({
-					url: "/api/auth/signup",
-					method: "post",
-					data,
-					types: "signup",
-				}),
-			}),
-			// getEmailCheck
-			getEmailCheck: build.query({
-				query: (email) => ({
-					url: `/api/auth/email?email=${email}`,
-					method: "get",
-					types: "getCheck",
-				}),
-			}),
-			// getNickNameCheck
-			getNickCheck: build.query({
-				query: (nickname) => ({
-					url: `/api/auth/nickname?nickname=${nickname}`,
-					method: "get",
-					types: "getCheck",
-				}),
-			}),
-			// getCertificateCheck
-			getCertificateEmail: build.query({
-				query: (email) => ({
-					url: `/api/auth/verify?email=${email}`,
-					method: "get",
-					types: "getCheck",
-				}),
-			}),
-			// getCertificateCode
-			getCertificateCode: build.query({
-				query: ({ email, code }) => ({
-					url: `/api/auth/checkcode?email=${email}&code=${code}`,
-					method: "get",
-					types: "getCheck",
-				}),
-			}),
+  baseQuery: axiosBaseQuery(),
+  tagTypes: [
+    "POSTS",
+    "POSTDETAIL",
+    "POSTCOMMENT",
+    "KAKAO",
+    "ICOCAR",
+    "PURCHASESCHAR",
+    "WRAPPINGSHOP",
+    "WRAPPINGSHOPCOMMENT",
+    "WRAPPINGSHOP_D",
+    "MYPAGE",
+    "PURCHASESCHARTY"
+  ],
+  endpoints(build) {
+    return {
+      /* / 01 Auth / -------------------------------------------------------- */
+      // loginRTK
+      postLogin: build.mutation({
+        query: (data) => ({
+          url: "/api/auth/login",
+          method: "post",
+          data,
+          types: "login",
+        }),
+      }),
+      // getLogout
+      getLogout: build.query({
+        query: () => ({
+          url: `/api/auth/logout`,
+          method: "get",
+          types: "logout",
+        }),
+      }),
+      // SNSLogin - kakao, google, naver
+      loginSNSRTK: build.query({
+        query: ({ types, code }) => ({
+          url: `/api/auth/login/${types}${code}`,
+          method: "get",
+        }),
+      }),
+      // Signup
+      postSignup: build.mutation({
+        query: (data) => ({
+          url: "/api/auth/signup",
+          method: "post",
+          data,
+          types: "signup",
+        }),
+      }),
+      // getEmailCheck
+      getEmailCheck: build.query({
+        query: (email) => ({
+          url: `/api/auth/email?email=${email}`,
+          method: "get",
+          types: "getCheck",
+        }),
+      }),
+      // getNickNameCheck
+      getNickCheck: build.query({
+        query: (nickname) => ({
+          url: `/api/auth/nickname?nickname=${nickname}`,
+          method: "get",
+          types: "getCheck",
+        }),
+      }),
+      // getCertificateCheck
+      getCertificateEmail: build.query({
+        query: (email) => ({
+          url: `/api/auth/verify?email=${email}`,
+          method: "get",
+          types: "getCheck",
+        }),
+      }),
+      // getCertificateCode
+      getCertificateCode: build.query({
+        query: ({ email, code }) => ({
+          url: `/api/auth/checkcode?email=${email}&code=${code}`,
+          method: "get",
+          types: "getCheck",
+        }),
+      }),
 
 			/* / 02 Purchases 관련(Innocar, MyPage, AdminPage) / -------------------------------------------------------- */
 			// postPurchases - 차량신청 차량 출고 신청
@@ -178,7 +179,6 @@ export const inocamRTK = createApi({
 				}),
 				invalidatesTags: ["ICOCAR"],
 			}),
-
 			// getPurchasesChar - 차량 통계 데이터
 			getPurchasesChar: build.query({
 				query: (term) => ({
@@ -331,7 +331,6 @@ export const inocamRTK = createApi({
 				}),
 				invalidatesTags: ["WRAPPINGSHOP_D"],
 			}),
-
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			getMyPage: build.query({
 				query: () => ({
@@ -353,6 +352,18 @@ export const inocamRTK = createApi({
 			}),
 		};
 	},
+          /* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */      
+      getpurchasesChartY: build.query({
+        query: (year) => ({
+          url: `/api/admin/stats/purchases/year?cal=${year}`,
+          method: "get",
+          types: "getAdminData",
+        }),
+        providesTags: ["PURCHASESCHARTY"],
+      }),
+
+    };
+  },
 });
 
 export const {
@@ -398,4 +409,6 @@ export const {
 	// MyPage 관련
 	useGetMyPageQuery,
 	usePatchMyPageMutation,
+    // ADMIN
+  useGetpurchasesChartYQuery
 } = inocamRTK;
