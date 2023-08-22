@@ -24,7 +24,7 @@ export const EditUser: React.FC<Type.MyPageData> = ({
 
   useEffect(() => {
     isLoading && <div>로딩중</div>;
-    isSuccess && onNavigate("/")();
+    isSuccess && onNavigate({ url: "/" })();
     isError && console.log("isError", error);
   }, [isLoading, isSuccess, isError, error, onNavigate]);
 

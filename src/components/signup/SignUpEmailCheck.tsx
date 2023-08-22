@@ -1,14 +1,17 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-// import { Timer } from "./Timer";
+import { Timer } from "./Timer";
 import * as RTK from "../../redux";
 import { useSelector } from "react-redux";
 
 export const SignUpEmailCheck: React.FC<any> = () => {
   const [certificateEmail, setCertificateEmail] = useState(true);
   const [certificateCode, setCertificateCode] = useState(true);
+  const dispatch = RTK.useAppDispatch();
   // 인증코드 state
   const [checkCode, setCheckCode] = useState<string>("");
-  const email = useSelector(RTK.selectSignup);
+  // 인증코드 인증 성공 state
+  const [validateCheckCode, setvalidateCheckCode] = useState<boolean>(false);
+  const { email } = useSelector(RTK.selectSignup);
 
   //이메일 보내는 rtk
   const CertificateEmailRTK = RTK.useGetCertificateEmailQuery(email, {
@@ -42,26 +45,34 @@ export const SignUpEmailCheck: React.FC<any> = () => {
   useEffect(() => {
     CertificateEmailRTK.isSuccess &&
       console.log("CertificateEmailRTK", "인증메일이 발송되었습니다.");
-    GetCertificateCodeRTK.isSuccess &&
-      console.log("GetCertificateCodeRTK", "이메일이 인증되었습니다");
-  }, [CertificateEmailRTK, GetCertificateCodeRTK]);
+    if (GetCertificateCodeRTK.isSuccess) {
+      setvalidateCheckCode((pre) => !pre);
+      dispatch(
+        RTK.setValiditeMsg({
+          type: "emailCheckedMsg",
+          msg: [
+            GetCertificateCodeRTK.data,
+            GetCertificateCodeRTK.data.includes("완료") ? true : false,
+          ],
+        })
+      );
+    }
+  }, [CertificateEmailRTK, GetCertificateCodeRTK, email, dispatch]);
 
   return (
     <div>
-      <div onClick={onCertificateEmail}>이메일 인증메일보내기</div>
+      {
+        <div onClick={onCertificateEmail}>
+          {certificateEmail ? "이메일 인증메일보내기" : "이메일 재발송하기"}
+        </div>
+      }
       <input value={checkCode} onChange={onChangeCheckCode} />
       <div onClick={onClickCheckCode}>이메일 확인</div>
-      {/* {!certificateEmail && (
+      {!certificateEmail && (
         <>
           <Timer state={validateCheckCode} />
         </>
-      )} */}
+      )}
     </div>
   );
 };
-
-// function SignUpEmailCheck() {
-//   return <div>SignUpEmailCheck</div>;
-// }
-
-// export default SignUpEmailCheck;

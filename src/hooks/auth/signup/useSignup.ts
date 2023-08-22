@@ -29,7 +29,7 @@ export const useSignup = (): Type.UseSignup => {
   console.log(setSubmitted);
 
   useEffect(() => {
-    isSuccess && onNavigate("/login")();
+    isSuccess && onNavigate({ url: "/login" })();
     isError && console.log(error);
   }, [isSuccess, isError, error, onNavigate]);
 
