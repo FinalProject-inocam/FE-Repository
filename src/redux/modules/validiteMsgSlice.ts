@@ -5,7 +5,8 @@ const initialState = {
   nickNameMsg: ["", false],
   passwordMsg: ["", false],
   pwCheckedMsg: ["", false],
-}
+  emailCheckedMsg: ["", false],
+};
 
 const validiteMsgSlice = createSlice({
   name: "validiteMsgSlice",
@@ -21,6 +22,8 @@ const validiteMsgSlice = createSlice({
           return { ...state, passwordMsg: action.payload.msg };
         case "pwChecked":
           return { ...state, pwCheckedMsg: action.payload.msg };
+        case "emailCheckedMsg":
+          return { ...state, emailCheckedMsg: action.payload.msg };
         default:
           return;
       }
@@ -32,8 +35,15 @@ const validiteMsgSlice = createSlice({
 });
 
 export const validiteMsgReducer = validiteMsgSlice.reducer;
-export const selectValiditeEMsg = (state: any) => state.validiteMsgReducer.emailMsg;
-export const selectValiditeNMsg = (state: any) => state.validiteMsgReducer.nickNameMsg;
-export const selectValiditePMsg = (state: any) => state.validiteMsgReducer.passwordMsg;
-export const selectValiditePWCMsg = (state: any) => state.validiteMsgReducer.pwCheckedMsg;
+export const selectValiditeEMsg = (state: any) =>
+  state.validiteMsgReducer.emailMsg;
+export const selectValiditeNMsg = (state: any) =>
+  state.validiteMsgReducer.nickNameMsg;
+export const selectValiditePMsg = (state: any) =>
+  state.validiteMsgReducer.passwordMsg;
+export const selectValiditePWCMsg = (state: any) =>
+  state.validiteMsgReducer.pwCheckedMsg;
+export const selectValiditeECMsg = (state: any) =>
+  state.validiteMsgReducer.emailCheckedMsg;
+
 export const { setValiditeMsg, deleteValiditeMsg } = validiteMsgSlice.actions;

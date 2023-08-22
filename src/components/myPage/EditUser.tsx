@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as Type from "../../types";
-import { useEditUser } from "../../hooks";
+import { useEditUser, useRouter } from "../../hooks";
 
 export const EditUser: React.FC<Type.MyPageData> = ({
   profileImg,
@@ -20,11 +20,13 @@ export const EditUser: React.FC<Type.MyPageData> = ({
     onChangeUserInfo,
   } = useEditUser({ profileImg, nickname, phoneNumber });
 
+  const { onNavigate } = useRouter();
+
   useEffect(() => {
     isLoading && <div>로딩중</div>;
-    isSuccess && console.log("isSuccess");
+    isSuccess && onNavigate({ url: "/" })();
     isError && console.log("isError", error);
-  }, [isLoading, isSuccess, isError, error]);
+  }, [isLoading, isSuccess, isError, error, onNavigate]);
 
   return (
     <div>

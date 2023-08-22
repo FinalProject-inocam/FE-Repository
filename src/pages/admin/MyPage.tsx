@@ -27,6 +27,8 @@ export const MyPage: React.FC = () => {
 
   if (isLoading) return <div>Loadgin....g...</div>;
 
+  console.log(UserData);
+
   return (
     <div>
       <h2>MyPage</h2>

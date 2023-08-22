@@ -6,10 +6,10 @@ import { useLoginSNSRTKQuery } from "../../redux";
 export const NaverRedirect: React.FC = () => {
   const { search } = useLocation();
   const { onNavigate } = useRouter();
-  const {isSuccess} = useLoginSNSRTKQuery({types:"naver", code:search});
+  const { isSuccess } = useLoginSNSRTKQuery({ types: "naver", code: search });
 
   useEffect(() => {
-    isSuccess && onNavigate(-2)();
+    isSuccess && onNavigate({ url: -1 })();
   }, [isSuccess, onNavigate]);
-  return <div/>;
+  return <div />;
 };

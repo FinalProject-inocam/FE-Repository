@@ -2,6 +2,8 @@ import React from "react";
 import * as COMP from "../../components";
 import * as SC from "../../components";
 import { useSignup } from "../../hooks";
+import { SignUpEmailCheck } from "../../components/signup/SignUpEmailCheck";
+// import { SignUpEmailCheck } from "../../components/signup/SignUpEmailCheck";
 
 export const Signup: React.FC = () => {
   const {
@@ -17,57 +19,60 @@ export const Signup: React.FC = () => {
   } = useSignup();
 
   return (
-    <SC.SignupForm onSubmit={onSubmitSign} $fd="column" $gap={20}>
-      <COMP.SignUpInputE
-        type="email"
-        name="email"
-        length={20}
-        inputRef={inputRef1}
-        submitted={submitted}
-        placeholder="이메일 형식으로 입력해주세요."
-      />
-      <COMP.SignUpInputN
-        type="text"
-        name="nickname"
-        length={20}
-        inputRef={inputRef2}
-        submitted={submitted}
-        placeholder="이름을 입력해 주세요."
-      />
-      <COMP.SignUpInput
-        type="date"
-        name="birthdate"
-        length={20}
-        inputRef={inputRef3}
-        submitted={submitted}
-        placeholder="생일을 입력해 주세요."
-      />
-      <COMP.SignUpInputP
-        name="password"
-        length={20}
-        inputRef={inputRef4}
-        submitted={submitted}
-        placeholder="비밀번호를 입력해 주세요."
-      />
-      {}
-      <COMP.SignUpInputP
-        name="pwChecked"
-        length={20}
-        inputRef={inputRef5}
-        submitted={submitted}
-        placeholder="비밀번호를 다시 입력해 주세요."
-      />
-      <COMP.SignUpInput
-        type="text"
-        length={20}
-        name="phonNumber"
-        inputRef={inputRef6}
-        submitted={submitted}
-        placeholder="휴대전화를 입력해주세요."
-      />
-      <COMP.SignUpInputRadio inputRef={inputRef7} submitted={submitted} />
-      <input type="submit" value="제출" />
-    </SC.SignupForm>
+    <>
+      <SC.SignupForm onSubmit={onSubmitSign} $fd="column" $gap={20}>
+        <COMP.SignUpInputE
+          type="email"
+          name="email"
+          length={20}
+          inputRef={inputRef1}
+          submitted={submitted}
+          placeholder="이메일 형식으로 입력해주세요."
+        />
+        <COMP.SignUpInputN
+          type="text"
+          name="nickname"
+          length={20}
+          inputRef={inputRef2}
+          submitted={submitted}
+          placeholder="이름을 입력해 주세요."
+        />
+        <COMP.SignUpInput
+          type="date"
+          name="birthdate"
+          length={20}
+          inputRef={inputRef3}
+          submitted={submitted}
+          placeholder="생일을 입력해 주세요."
+        />
+        <COMP.SignUpInputP
+          name="password"
+          length={20}
+          inputRef={inputRef4}
+          submitted={submitted}
+          placeholder="비밀번호를 입력해 주세요."
+        />
+        {}
+        <COMP.SignUpInputP
+          name="pwChecked"
+          length={20}
+          inputRef={inputRef5}
+          submitted={submitted}
+          placeholder="비밀번호를 다시 입력해 주세요."
+        />
+        <COMP.SignUpInput
+          type="text"
+          length={20}
+          name="phonNumber"
+          inputRef={inputRef6}
+          submitted={submitted}
+          placeholder="휴대전화를 입력해주세요."
+        />
+        <COMP.SignUpInputRadio inputRef={inputRef7} submitted={submitted} />
+        <input type="submit" value="제출" />
+      </SC.SignupForm>
+      <SignUpEmailCheck />
+    </>
   );
 };
 

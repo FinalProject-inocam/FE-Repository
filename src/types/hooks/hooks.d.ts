@@ -10,14 +10,19 @@ declare global {
 	}
 }
 
+export interface Native {
+  url: string | number;
+  opts?: any;
+}
+
 /* / 01 AsyncDefaultType / -------------------------------------------------------- */
 interface AsyncHooksDefault {
-	isLoading?: boolean;
-	isError?: boolean;
-	isSuccess?: boolean;
-	error?: string | unknown; // 통신전에는 unknown & 통신후에는 string
-	getId?: number | undefined;
-	onNavigate?: (path: string | number) => () => void;
+  isLoading?: boolean;
+  isError?: boolean;
+  isSuccess?: boolean;
+  error?: string | unknown; // 통신전에는 unknown & 통신후에는 string
+  getId?: number | undefined;
+  onNavigate?: (Native) => () => void;
 }
 
 /* / 02 useGeolocation / -------------------------------------------------------- */
@@ -196,21 +201,27 @@ interface AuthNav {
 	admin: string[][];
 }
 export interface UseMainHeader {
-	scrolly: UseHeadScroll;
-	SplashScreenRef: MutableRefObject<HTMLDivElement | null>;
-	hanbagerToggle: boolean;
-	setHanbagerToggle: Dispatch<React.SetStateAction<boolean>>;
-	sideBarNav: string[][];
-	authNav: AuthNav;
-	onHanbagerToggle: () => void;
-	onNaigateSidebarToggle: (url: string) => () => void;
-	onNavigate: (path: string | number) => () => void;
+  scrolly: UseHeadScroll;
+  SplashScreenRef: MutableRefObject<HTMLDivElement | null>;
+  hanbagerToggle: boolean;
+  setHanbagerToggle: Dispatch<React.SetStateAction<boolean>>;
+  sideBarNav: string[][];
+  authNav: AuthNav;
+  onHanbagerToggle: () => void;
+  onNaigateSidebarToggle: ({
+    url,
+    opts,
+  }: {
+    url: string | number;
+    opts?: any;
+  }) => () => void;
+  onNavigate: (Native) => () => void;
 }
 
 /* / 17 useRouter / -------------------------------------------------------- */
 export interface UseRouter {
-  getId: number | string | undefined;
-  onNavigate: (path: string | number) => () => void;
+  getId: number | undefined;
+  onNavigate: (Native) => () => void;
 }
 
 export interface WrappingShopDetailButtons {

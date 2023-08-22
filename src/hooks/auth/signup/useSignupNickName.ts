@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as RTK from "../../../redux";
 
 export const useSignupNickName = ({ name, submitted }: any): any => {
-
   const dispatch = RTK.useAppDispatch();
   const [input, setInput] = useState<string>("");
   const [serverCheck, setServerCheck] = useState<boolean>(true);
@@ -10,13 +9,14 @@ export const useSignupNickName = ({ name, submitted }: any): any => {
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setServerCheck(true);
-    e.target.value === "" && dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }))
+    e.target.value === "" &&
+      dispatch(RTK.setValiditeMsg({ type: name, msg: ["", false] }));
     setInput(e.target.value);
   };
 
   const onBlurSignupDispatch = () => {
     dispatch(RTK.setSignupDate({ [`${name}`]: input }));
-    setServerCheck(false);
+    input && setServerCheck(false);
   };
 
   const { isSuccess, data, isError, error } = RTK.useGetNickCheckQuery(input, {
@@ -36,14 +36,7 @@ export const useSignupNickName = ({ name, submitted }: any): any => {
         })
       );
     isError && console.log(error);
-  }, [
-    isSuccess,
-    data,
-    isError,
-    error,
-    dispatch,
-  ]);
+  }, [isSuccess, data, isError, error, dispatch]);
 
-  return { input, getValidateMsg, onChangeInput, onBlurSignupDispatch }
-
-}
+  return { input, getValidateMsg, onChangeInput, onBlurSignupDispatch };
+};
