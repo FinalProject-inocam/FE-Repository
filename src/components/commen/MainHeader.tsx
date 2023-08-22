@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as SC from "../css";
 import * as CP from "../commen";
 import { useMainHeader } from "../../hooks";

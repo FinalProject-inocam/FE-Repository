@@ -350,20 +350,20 @@ export const inocamRTK = createApi({
 				}),
 				invalidatesTags: ["MYPAGE"],
 			}),
-		};
-	},
-          /* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */      
-      getpurchasesChartY: build.query({
-        query: (year) => ({
-          url: `/api/admin/stats/purchases/year?cal=${year}`,
+			/* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */      
+			getpurchasesChartY: build.query({
+				query: (year) => ({
+					url: `/api/admin/stats/purchases/year?cal=${year}`,
           method: "get",
           types: "getAdminData",
-        }),
-        providesTags: ["PURCHASESCHARTY"],
-      }),
+				}),
+				providesTags: ["PURCHASESCHARTY"],
+			}),
+		};
+	},
+	
 
-    };
-  },
+
 });
 
 export const {
