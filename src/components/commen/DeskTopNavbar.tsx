@@ -3,7 +3,7 @@ import * as SC from "../css";
 import * as Hooks from "../../hooks";
 
 export const DeskTopNavbar: React.FC = () => {
-	const { sideBarNav, authNav, onNavigate } = Hooks.useMainHeader({});
+	const { sideBarNav, authNav, onNavigate } = Hooks.useMainHeader();
 	const { sub, onLogout } = Hooks.useLogout();
 
 	return (

@@ -209,8 +209,8 @@ export interface UseMainHeader {
 
 /* / 17 useRouter / -------------------------------------------------------- */
 export interface UseRouter {
-	getId: number | undefined;
-	onNavigate: (path: string | number) => () => void;
+  getId: number | string | undefined;
+  onNavigate: (path: string | number) => () => void;
 }
 
 export interface WrappingShopDetailButtons {
