@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import * as Type from "../../types";
 import { useRouter } from "../useRouter";
 
-export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
+export const useMainHeader = (): Type.UseMainHeader => {
 	const { onNavigate } = useRouter();
 	const SplashScreenRef = useRef<HTMLDivElement | null>(null);
-	const [hanbagerToggle, setHanbagerToggle] = useState<boolean>(false);
 
 	const [scrolly, setScrolly] = useState<Type.UseHeadScroll>({
 		scrolly: 0,
@@ -13,10 +12,6 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 		preScrolly: false,
 		isTop: false,
 	});
-
-	const onHanbagerToggle = (): void => {
-		setHanbagerToggle((pre) => !pre);
-	};
 
 	const sideBarNav = [
 		["Models", "innocar"],
@@ -44,9 +39,9 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 	// 03 : E0001 일때 : 관리자페이지 Admin page && 로그아웃 Logout
 	// !!, 그러나 빈객체를 판별해야 하기에 => Object.keys(decode).length === 0
 
-	const onNaigateSidebarToggle = (url: string) => (): void => {
+	const onNaigateSidebarToggle = ({url, setState, types}:{url:string, setState:any, types:boolean}) => (): void => {
 		onNavigate(url)();
-		setState ? setState((pre: boolean) => !pre) : setHanbagerToggle((pre: boolean) => !pre);
+		!types ? setState(types) : setState((pre: boolean) => !pre)
 	};
 
 	// SplashScreenRef 아후, 헤더 - setTimeout
@@ -91,9 +86,6 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 	return {
 		scrolly,
 		SplashScreenRef,
-		hanbagerToggle,
-		setHanbagerToggle,
-		onHanbagerToggle,
 		onNaigateSidebarToggle,
 		sideBarNav,
 		authNav,

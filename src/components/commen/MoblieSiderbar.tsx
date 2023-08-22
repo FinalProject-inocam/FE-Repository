@@ -3,33 +3,33 @@ import * as SC from '../css'
 import { useLogout, useMainHeader } from '../../hooks'
 
 export const MoblieSiderbar: React.FC<{ state: boolean, setState: any }> = ({ state, setState }) => {
-  const { sideBarNav, authNav, onNaigateSidebarToggle } = useMainHeader(setState)
+  const { sideBarNav, authNav, onNaigateSidebarToggle } = useMainHeader()
   const { sub, onLogout } = useLogout(setState)
 
   return (
     <SC.MSideBar $state={state}>
       <SC.FlexBox $fd="column">
         <SC.RoutesArea>
-          <SC.MSideNav children="home" onClick={onNaigateSidebarToggle('/')} />
+          <SC.MSideNav children="home" onClick={onNaigateSidebarToggle({url:'/', setState, types:true })} />
           {sideBarNav.map((nav: string[]) => 
-            <SC.MSideNav key={nav[0]} children={nav[0]} onClick={onNaigateSidebarToggle(nav[1])} />)}
+            <SC.MSideNav key={nav[0]} children={nav[0]} onClick={onNaigateSidebarToggle({url:nav[1], setState, types:true})} />)}
         </SC.RoutesArea>
         <SC.AuthArea>
           {!(!!sub)
             ? authNav.noPermission.map((nav: string[], idx: number) => (
               idx === 0
-                ? <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle(nav[2])} />
-                : <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle(nav[2])} />
+                ? <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle({url:nav[2], setState, types:true})} />
+                : <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle({url:nav[2], setState, types:true})} />
             ))
             : sub === "E002"
               ? authNav.users.map((nav: string[], idx: number) => (
                 idx === 0
-                  ? <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle(nav[2])} />
+                  ? <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle({url:nav[2], setState, types:true})} />
                   : <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onLogout} />
               ))
               : authNav.admin.map((nav: string[], idx: number) => (
                 idx === 0
-                  ? <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle(nav[2])} />
+                  ? <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onNaigateSidebarToggle({url:nav[2], setState, types:true})} />
                   : <AuthAreaInner key={idx} idx={idx} nav={nav} onClick={onLogout} />
               ))
           }

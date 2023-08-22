@@ -28,6 +28,7 @@ jobs:
           echo "REACT_APP_NAVER_REST_API=${{ secrets.REACT_APP_NAVER_REST_API }}" >> .env
           echo "REACT_APP_NAVER_REDIRECT_URL=${{ secrets.REACT_APP_NAVER_REDIRECT_URL }}" >> .env
           echo "REACT_APP_SERVER_API=${{ secrets.REACT_APP_SERVER_API }}" >> .env  
+          echo "REACT_APP_SOCKET_API=${{ secrets.REACT_APP_SOCKET_API }}" >> .env  
           echo "GENERATE_SOURCEMAP=${{ secrets.GENERATE_SOURCEMAP }}" >> .env
           cat .env
           
