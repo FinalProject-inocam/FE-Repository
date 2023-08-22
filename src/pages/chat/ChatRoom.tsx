@@ -1,26 +1,15 @@
 import { FC } from 'react'
-import { useSocket } from '../../hooks/useSocket';
-import * as RTK from '../../redux';
-import { styled } from 'styled-components';
+import { useSocket } from '../../hooks'
 
-export const ChatRoom:FC =() => {
-  const getchatMsg = RTK.useAppSelector(RTK.selectchatMsg)
-  const {sendM, onChangeMsg, onSendMsg} = useSocket()
+
+export const ChatRoom: FC = () => {
+  const onSendMsg = useSocket()
 
   return (
     <div>
+      <button onClick={onSendMsg}>onSendMsg 테스</button>
       <h1>ChatRoom : emit</h1>
-      <input value={sendM} onChange={onChangeMsg}/>
-      <input type="button" onClick={onSendMsg} value="보내기" />
-      
       <h1>ChatRoom : on</h1>
-      <CustromP>{`asd\nasdf`}</CustromP>
-      {getchatMsg.map((msg:any, idx:number) => msg.content &&  <div key={idx}>{msg.content}</div>)}
     </div>
   )
 }
-
-
-const CustromP = styled.p`
-  white-space: pre-wrap;
-`

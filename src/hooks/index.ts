@@ -6,3 +6,4 @@ export * from "./commen";
 export * from "./wrapping";
 export * from "./Home";
 export * from "./myPage";
+export * from "./chat"
