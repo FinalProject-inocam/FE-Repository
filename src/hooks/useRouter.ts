@@ -1,8 +1,9 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import * as Type from "../types";
 
 export const useRouter = (): Type.UseRouter => {
   const { id } = useParams();
+  const { pathname, state } = useLocation();
   const getId: number | undefined = id ? +id : undefined;
   const navigate = useNavigate();
   const onNavigate =
@@ -10,5 +11,5 @@ export const useRouter = (): Type.UseRouter => {
     () => {
       navigate(url, opts);
     };
-  return { getId, onNavigate };
+  return { getId, pathname, state, onNavigate };
 };

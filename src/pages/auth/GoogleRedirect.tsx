@@ -9,7 +9,7 @@ export const GoogleRedirect: React.FC = () => {
   const { isSuccess } = useLoginSNSRTKQuery({ types: "google", code: search });
 
   useEffect(() => {
-    isSuccess && onNavigate({ url:"-1"})();
+    isSuccess && console.log("무언가", window.history);
   }, [isSuccess, onNavigate]);
   return <div />;
 };

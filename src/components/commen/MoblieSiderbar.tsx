@@ -6,7 +6,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
   state,
   setState,
 }) => {
-  const { sideBarNav, authNav, onNaigateSidebarToggle } =
+  const { sideBarNav, authNav, onNaigateSidebarToggle, pathname } =
     useMainHeader(setState);
   const { sub, onLogout } = useLogout(setState);
 
@@ -36,7 +36,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     nav={nav}
                     onClick={onNaigateSidebarToggle({
                       url: nav[1],
-                      opts: { replace: true },
+                      opts: { state: pathname },
                     })}
                   />
                 ) : (
@@ -46,7 +46,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     nav={nav}
                     onClick={onNaigateSidebarToggle({
                       url: nav[1],
-                      opts: { replace: true },
+                      opts: { state: pathname },
                     })}
                   />
                 )

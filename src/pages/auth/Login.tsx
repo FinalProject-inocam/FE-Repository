@@ -2,24 +2,23 @@ import React, { useEffect } from "react";
 import { useLogin, useRouter } from "../../hooks";
 
 export const Login: React.FC = () => {
-  const { onNavigate } = useRouter();
+  const { onNavigate, state } = useRouter();
   const {
     loginInfo,
     isSuccess,
-    data,
     isError,
     error,
     onChangeInput,
     onSubmitLogin,
     onSnsLogin,
-  } = useLogin();
+  } = useLogin(state);
 
   useEffect(() => {
     if (isSuccess) {
-      onNavigate({ url: "/" })();
+      onNavigate({ url: state })();
     }
     isError && console.log("query Err", error);
-  }, [isSuccess, data, isError, error, onNavigate]);
+  }, [isSuccess, state, isError, error, onNavigate]);
 
   return (
     <>
