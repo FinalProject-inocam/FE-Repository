@@ -4,20 +4,20 @@ import * as SC from "../../components/css";
 import * as CP from "../../components/wrappingshop";
 
 export const WrappingDetail: React.FC = () => {
-	const { isLoading, isError, error, data } = Hooks.useWrappingDetail();
-	const { mapRef } = Hooks.useWrappingMap(data);
+	const { shopDetailIsLoading, shopDetailData, shopDetailIsError, shopDetailError } = Hooks.useWrappingDetailInfo();
+	const { mapRef } = Hooks.useWrappingMap(shopDetailData);
 
-	if (isError) return <div>{JSON.stringify(error)}</div>;
+	if (shopDetailIsError) return <div>{JSON.stringify(shopDetailError)}</div>;
 	else
 		return (
 			<SC.DetailOutline $fd='column'>
 				<SC.DetailKakaoMaps>
 					<section ref={mapRef} />
-					{/* <SC.MapFadeBottom /> */}
+					<SC.MapFadeBottom />
 				</SC.DetailKakaoMaps>
-				<SC.DetailContent $gtc={"466px 1fr"} $gap={20}>
-					<CP.DetailLeft isLoading={isLoading} data={data} />
-					<CP.DetailRight isLoading={isLoading} data={data} />
+				<SC.DetailContent $gtc={"467px 1fr"} $gap={20}>
+					<CP.DetailLeft isLoading={shopDetailIsLoading} data={shopDetailData} />
+					<CP.DetailRight isLoading={shopDetailIsLoading} data={shopDetailData} />
 				</SC.DetailContent>
 			</SC.DetailOutline>
 		);

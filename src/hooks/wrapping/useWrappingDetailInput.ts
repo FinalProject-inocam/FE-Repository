@@ -1,34 +1,34 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import * as RTK from "../../redux";
-import * as Type from "../../types";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import * as RTK from "../../redux";
 
-export const useWrappingDetail = (): any => { // Type.UseWrappingDetail 타입에러 
+export const useWrappingDetailInput = (): any => {
 	const { id: shopId } = useParams<{ id: string }>();
-
-	// RTK - 랩핑샵 GET
-	const { isLoading, data, isError, error } = RTK.useGetWrappingShopDetailQuery(shopId);
-
 	// RTK - 랩핑샵 댓글작성(POST)
-	const [shopCommentInfo, setShopCommentInfo] = useState<Type.WrappingShopReview>({ review: "", star: 0 });
-	const [revisit, setRevisit] = useState<boolean>(false);
-
-	const [fileInfo, setFileInfo] = useState<File[]>([]);
 	const [
 		onShopCommentPostRTK,
 		{ isSuccess: shopCommentSuccess, data: shopCommentData, isError: shopCommentIsError, error: shopCommentError },
 	] = RTK.usePostWrappingCommentMutation();
 
-	const handleRevisitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setRevisit(e.target.checked);
-	};
-
+	const [review, setReview] = useState<string>("");
 	const onChangeShopComment = (e: ChangeEvent<HTMLInputElement>): void => {
-		const { name, value } = e.target;
-		setShopCommentInfo({ ...shopCommentInfo, [name]: value });
+		setReview(e.target.value);
 	};
 
+	// 별을 클릭했을 때 별점을 업데이트하는 함수
+	const [star, setStar] = useState<number>(0);
+	const handleStarClick = (starNumber: number) => {
+		setStar(starNumber);
+	};
+
+	// 재방문 의사 함수
+	const [revisit, setRevisit] = useState<boolean>(false);
+	const handleRevisitChange = (value: boolean) => {
+		console.log(value);
+		setRevisit(value);
+	};
+	const [fileInfo, setFileInfo] = useState<File[]>([]);
 	const onActionImgResize = async (files: File): Promise<File | undefined> => {
 		const options = {
 			maxSizeMB: 1, // 1000000b === 1000kb === 1mb //
@@ -40,23 +40,51 @@ export const useWrappingDetail = (): any => { // Type.UseWrappingDetail 타입�
 			const compressFile = new File([compressBlob], files.name, {
 				type: files.type,
 			});
+			console.log("리사이징 완료");
 			return compressFile;
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
+	const [previewImages, setPreviewImages] = useState<string[]>([]);
+
 	const onChangeShopFiles = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
 		if (e.target.files) {
 			const files = e.target.files;
-			const compressFiles: File[] = [];
+			const totalImages = previewImages.length + files.length;
+
+			if (totalImages > 4) {
+				alert("최대 4장의 이미지만 업로드할 수 있습니다.");
+				return;
+			}
+
+			const compressFiles: File[] = [...fileInfo];
+			const previewFiles: string[] = [...previewImages];
+
+			const readImageFile = (file: File): Promise<string> => {
+				return new Promise((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onloadend = () => {
+						const src = reader.result as string;
+						resolve(src);
+					};
+					reader.onerror = reject;
+					reader.readAsDataURL(file);
+				});
+			};
+
 			for (let i = 0; i < files.length; i++) {
 				const file = files[i];
 				const compressImg = await onActionImgResize(file);
 				if (compressImg instanceof File) {
 					compressFiles.push(compressImg);
+					const src = await readImageFile(compressImg);
+					previewFiles.push(src);
 				}
 			}
+
+			setPreviewImages(previewFiles);
 			setFileInfo(compressFiles);
 		}
 	};
@@ -64,18 +92,17 @@ export const useWrappingDetail = (): any => { // Type.UseWrappingDetail 타입�
 	const onSubmitShopComment = (e: FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
 		const formData = new FormData();
-		formData.append(
-			"data",
-			new Blob([JSON.stringify({ ...shopCommentInfo, revisit })], { type: "application/json" })
-		);
+		formData.append("data", new Blob([JSON.stringify({ review, star, revisit })], { type: "application/json" }));
 		fileInfo.forEach((file) => {
 			formData.append("images", file);
 		});
 		console.log(formData);
 		onShopCommentPostRTK({ shopId, formData });
 		setFileInfo([]);
-		setShopCommentInfo({ review: "", star: 0 });
+		setPreviewImages([]);
+		setReview("");
 		setRevisit(false);
+		setStar(0);
 	};
 
 	// RTK - 랩핑샵 댓글삭제(DELETE)
@@ -109,15 +136,15 @@ export const useWrappingDetail = (): any => { // Type.UseWrappingDetail 타입�
 	]);
 
 	return {
-		isLoading,
-		isError,
-		error,
-		data,
 		onSubmitShopComment,
-		shopCommentInfo,
+		review,
 		onChangeShopComment,
 		onChangeShopFiles,
 		onDeleteShopComment,
 		handleRevisitChange,
+		star,
+		handleStarClick,
+		setRevisit,
+		previewImages,
 	};
 };

@@ -2,6 +2,8 @@ import { GlobalStyled } from "./components";
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as Page from "./pages";
+import { ChatList } from "./pages/chat/ChatList";
+import { ChatRoom } from "./pages/chat/ChatRoom";
 
 const App: React.FC = () => {
 	return (
@@ -16,23 +18,6 @@ const App: React.FC = () => {
 					<Route path='community/:id' element={<Page.CommunityDetail />} />
 					<Route path='wrapping' element={<Suspense fallback={<div>Loading...</div>}><Page.LazyWrapping /></Suspense>} />
 					<Route path='wrapping/:id' element={<Page.WrappingDetail />} />
-
-					{/* 프로텍티드 라우터(ProtectiveRouter, Token 이 존재하면 ) */}
-					<Route element={<Page.ProtectiveRouter />}>
-						<Route path='innocarorder' element={<Page.InnoCarOrder />} />
-						<Route path='communitywrite' element={<Page.CommunityWrite />} />
-						<Route path='wrappingwrite' element={<Page.DecorationWrite />} />
-					</Route>
-				</Route>
-
-
-				{/* ↓↓↓↓↓↓ 렌더링 쿠키에 있는 토큰을 redux 체계에 반영하는 문제 및, 새로고침시에도 대응하기 */}
-				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) :: AdminRouter */}
-				<Route element={<Page.ProtectiveRouter />}>
-					<Route path='/mypage' element={<Page.MyPage />} />
-					<Route path='/admin' element={<Page.AdminRouter />}>
-						<Route index element={<Page.AdminMain />} />
-					</Route>
 				</Route>
 
 				{/* 헤더에 따른 중첩라우터 :: AuthRouter */}
@@ -42,13 +27,29 @@ const App: React.FC = () => {
 					<Route path="login" element={<Page.Login />} />
 				</Route>
 
+				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
+				<Route element={<Page.ProtectiveRouter />}>
+					<Route path='innocar/order' element={<Page.InnoCarOrder />} />
+					<Route path='community/write' element={<Page.CommunityWrite />} />
+					<Route path='wrapping/write' element={<Page.DecorationWrite />} />
+					<Route path='/mypage' element={<Page.MyPage />} />
+				</Route>
+
+				<Route element={<Page.ProtectiveRouterA />}>
+					<Route path='/admin' element={<Page.AdminRouter />}>
+							<Route index element={<Page.AdminMain />} />
+					</Route>
+				</Route>
+
 				{/* Redirect 페이지 */}
 				<Route path="/api/auth/login/kakao" element={<Page.KakaoRedirect />} />
 				<Route path="/api/auth/login/google" element={<Page.GoogleRedirect />} />
 				<Route path="/api/auth/login/naver" element={<Page.NaverRedirect />} />
 
 				{/* 채팅 및 임시 라우터 :: Chat */}
-				<Route path="/chat" element={<Page.Chat />} />
+				<Route path="/chatlist" element={<Page.Chat />} />
+				<Route path="/chat" element={<ChatList />} />
+				<Route path="/chat/:id" element={<ChatRoom />} />
 				<Route path="/webrtc" element={<Page.WebRTC />} />
 				<Route path="/threejs" element={<Suspense fallback={<div>Loading...</div>}><Page.LazyThreejs /></Suspense>} />
 
