@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as SC from "../../components/css";
 import * as Hooks from "../../hooks";
 import * as CP from "../../components";
+import * as RTK from "../../redux";
 
 export const DetailRightInputForm: React.FC = () => {
 	const {
@@ -16,7 +17,8 @@ export const DetailRightInputForm: React.FC = () => {
 	} = Hooks.useWrappingDetailInput();
 
 	const [clicked, setClicked] = useState<boolean | null>(null);
-
+	const { nickname } = RTK.useAppSelector(RTK.selectDecode);
+	console.log(nickname);
 	const handleRevisitClick = (value: boolean) => (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		handleRevisitChange(value);
@@ -35,7 +37,7 @@ export const DetailRightInputForm: React.FC = () => {
 			<SC.DetailRightFormLayout onSubmit={onSubmitShopComment}>
 				<SC.DetailRightFormUpperInner>
 					<SC.DetailRightFromUpperButtons>
-						<SC.ReviewFromUserName>nickname</SC.ReviewFromUserName>
+						<SC.ReviewFromUserName>{nickname}</SC.ReviewFromUserName>
 						<CP.DetailRightStarPointer
 							star={star}
 							width={`20px`}
@@ -59,12 +61,21 @@ export const DetailRightInputForm: React.FC = () => {
 							</CP.DetailButton.NegativeButton>
 						</div>
 					</SC.DetailRightFromUpperButtons>
-					<CP.DetailButton.SubmitButton
-						$buttonSize='submit'
-						type='submit'
-						value='제출하기'
-						children={"리뷰 작성하기"}
-					/>
+					{nickname ? (
+						<CP.DetailButton.SubmitButton
+							$buttonSize='submit'
+							type='submit'
+							value='제출하기'
+							children={"리뷰 작성하기"}
+						/>
+					) : (
+						<CP.DetailButton.SubmitButton
+							$buttonSize='submit'
+							type='submit'
+							value='제출하기'
+							children={"로그인하러 가기"}
+						/>
+					)}
 				</SC.DetailRightFormUpperInner>
 				<SC.ReviewFormReviewInputInner>
 					<SC.ReviewFormReviewInput

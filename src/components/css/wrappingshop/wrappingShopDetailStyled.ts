@@ -7,16 +7,14 @@ const DetailOutline = styled.div<Partial<Type.Styled>>`
 	${Flex}
 	margin: 0 auto;
 	background-color: #efefef;
-	/* height: 100vh; */
 `;
 
 // Map ------------------------------------
 const DetailKakaoMaps = styled.div`
 	position: relative;
 	width: 100%;
-	padding-top: ${({ theme }) => theme.headerHeight.desktop};
+	// padding-top: ${({ theme }) => theme.headerHeight.desktop};
 	min-height: 490px;
-	margin-bottom: 30px;
 
 	section {
 		width: 100%;
@@ -41,8 +39,7 @@ const DetailContent = styled.section<Partial<Type.Styled>>`
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
-	padding: 0 72px;
-	/* border: 1px dotted red; */
+	border: 1px dotted red;
 `;
 
 // Banner --------------------------------
@@ -124,45 +121,21 @@ const DetailLeftOutLine = styled.div`
 	position: relative;
 `;
 
-const DetailLeftShopInfoLayout = styled.div`
+const DetailInfoLayout = styled.div`
 	background-color: #ffffff;
-	padding-top: 30px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 30px;
-`;
-
-const DetailLeftBanner = styled.div`
+	border-radius: 10px 10px 0 0;
 	overflow: hidden;
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-	font-size: 20px;
-	font-weight: 600;
 `;
 
-const WrappingShopName = styled.div`
-	font-size: 1.25rem;
-	font-weight: bold;
-	margin-bottom: 10px;
-`;
-
-const WrappingShopAddress = styled.div`
-	font-size: 1rem;
-	color: #999999;
-`;
-
-const DetailLeftShopScoreOutline = styled.div`
-	margin-top: 5px;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	padding-left: 20px;
-	padding-right: 20px;
-	background-color: #fff;
+const DetailInfoInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	width:100%;
+	padding: 30px 20px;
+	background-color: #ffffff;
 `;
 
 const ReviewCountTitleLayout = styled.div`
-	margin-bottom: 20px;
-	display: flex;
+	${Flex}
 	flex-direction: row;
 `;
 
@@ -171,11 +144,6 @@ const ReviewCountTitleItem = styled.div<Partial<Type.Styled>>`
 	font-weight: 600;
 	margin-left: ${(props) => (props.$highlight ? "10px" : "0")};
 	color: ${(props) => (props.$highlight ? "#4c4cff" : "black")};
-`;
-
-const ReviewScoreLayout = styled.div`
-	${Flex}
-	align-items: center;
 `;
 
 const ReviewScoreInner = styled.div<Partial<Type.Styled>>`
@@ -392,6 +360,13 @@ const ReviewPreviewImageItem = styled.img`
 	background-color: #f3f3f8;
 `;
 
+const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	height: 70px;
+	background-color: ${({ $bgColor, theme }) => $bgColor && theme.color[$bgColor]};
+	border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+`;
+
 export {
 	// 페이지
 	DetailOutline,
@@ -413,17 +388,14 @@ export {
 
 	// Info
 	DetailLeftOutLine,
-	DetailLeftShopInfoLayout,
-	DetailLeftBanner,
-	DetailLeftShopScoreOutline,
+	DetailInfoLayout,
+	DetailInfoInner,
 	ReviewCountTitleLayout,
 	ReviewCountTitleItem,
-	ReviewScoreLayout,
 	ReviewScoreInner,
 	ReviewScoreItem,
 	ReviewStarItem,
-	WrappingShopName,
-	WrappingShopAddress,
+	DetailScoreDiv,
 
 	// Review
 	DetailRightOutLine,

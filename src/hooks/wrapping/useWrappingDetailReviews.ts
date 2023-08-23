@@ -10,5 +10,5 @@ export const useWrappingDetailReviews = () => {
 		error: shopReviewError,
 		isFetching: shopReviewIsFetching,
 	} = RTK.useGetWrappingShopDetailReviewsQuery({ shopId, page: 1 });
-	return { shopReviewIsLoading, shopReviewData, shopReviewIsError, shopReviewError, shopReviewIsFetching };
+	return { shopReviewIsLoading, shopReviewData, shopReviewIsError, shopReviewError, shopReviewIsFetching, shopId };
 };

@@ -1,8 +1,7 @@
 import React from "react";
 import * as Type from "../../types";
 import * as SC from "../../components/css";
-import ReviewStarEmpty from "../../assets/ReviewStarEmpty.svg";
-import ReviewStarFull from "../../assets/ReviewStarFull.svg";
+import { ReviewStarFull, ReviewStarEmpty } from "../../assets/wrappingshop";
 import { styled } from "styled-components";
 
 export const DetailRightStarPointer: React.FC<Type.WrappingDetailStar> = ({ star, width, height, handleStarClick }) => {

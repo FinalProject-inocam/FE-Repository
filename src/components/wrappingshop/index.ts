@@ -2,10 +2,8 @@ export * from "./EditWrappingReview";
 export * from "./WraappingContent";
 
 // left side
-export * from "./DetailLeft";
-export * from "./DetailLeftMainBanner";
-export * from "./DetailLeftShopScore";
-export * from "./DetailLeftShopInfo";
+export * from "./DetailInfoArea";
+export * from "./DetailScore";
 
 // Right side
 export * from "./DetailRight";

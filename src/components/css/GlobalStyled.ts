@@ -68,6 +68,7 @@ const FlexBox = sc.styled.div<Partial<Styled>>`
 
 const GridBox = sc.styled.div<Partial<Styled>>`
   ${Grid}
+  width:100%;
   background-color:${({ $color }) => $color};
 `;
 
@@ -117,6 +118,21 @@ const RouterLayout = sc.styled.div<Partial<Styled>>`
   ${Flex};
 `;
 
+const CustomH1 = sc.styled.h1<Partial<Styled>>`
+	font-size: 1.25rem;
+	font-weight: bold;
+  color : ${({ $color, theme }) => $color && theme.color[$color]}
+`;
+
+const CustomH2 = sc.styled.div`
+	font-size: 1rem;
+	color: #999999;
+`;
+
+const CustomH3 = sc.styled.h3<Partial<Styled>>`
+	font-size: ${({ $size }) => `${$size}px`};
+`;
+
 export {
 	Flex,
 	Grid,
@@ -128,4 +144,7 @@ export {
 	Figure,
 	FigureObjectFit,
 	RouterLayout,
+	CustomH1,
+	CustomH2,
+	CustomH3,
 };
