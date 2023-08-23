@@ -46,7 +46,19 @@ const CommentButton: React.FC<Type.WrappingDetailStyled> = (props) => {
 	return <ButtonType {...props} $bgColor='#7C7CFC' $bColor='#828295' $color='#828295' />;
 };
 
-export const DetailButton = { PositiveButton, NegativeButton, SubmitButton, UploadButton, LikeButton, CommentButton };
+const LoginButton: React.FC<Type.WrappingDetailStyled> = (props) => {
+	return <ButtonType {...props} $bgColor='#828295' $color='#ffffff' />;
+};
+
+export const DetailButton = {
+	PositiveButton,
+	NegativeButton,
+	SubmitButton,
+	UploadButton,
+	LikeButton,
+	CommentButton,
+	LoginButton,
+};
 
 const StyledButton = styled.button<Partial<Type.Styled>>`
 	font-size: 16px;
@@ -108,6 +120,11 @@ const StyledButton = styled.button<Partial<Type.Styled>>`
 				return css`
 					height: 36px;
 					width: 82px;
+				`;
+			case "login":
+				return css`
+					height: 36px;
+					width: 101px;
 				`;
 			default:
 				return css`

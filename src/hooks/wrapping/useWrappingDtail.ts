@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import * as Type from "../../types";
+import { useParams } from "react-router-dom";
+import * as RTK from "../../redux";
 
-export const useWrappingMap = (data: Type.WrappingShop): Type.UseWrappingMap => {
+export const useWrappingDetail = () => {
+	// 로직...
+	const { id: shopId } = useParams<{ id: string }>();
+	const { isLoading, data, isError, error } = RTK.useGetWrappingShopDetailQuery(shopId);
+
 	const mapRef = useRef(null);
 	const kakaoMaps = window.kakao.maps;
 	const [getMaps, setMaps] = useState<any>(null);
@@ -61,5 +66,5 @@ export const useWrappingMap = (data: Type.WrappingShop): Type.UseWrappingMap => 
 		}
 	}, [getMaps, kakaoMaps.LatLng, data]);
 
-	return { mapRef };
+	return { mapRef, isLoading, data, isError, error };
 };

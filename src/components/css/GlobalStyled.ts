@@ -130,7 +130,9 @@ const CustomH2 = sc.styled.div`
 `;
 
 const CustomH3 = sc.styled.h3<Partial<Styled>>`
+
 	font-size: ${({ $size }) => `${$size}px`};
+  font-weight: 500;
 `;
 
 export {

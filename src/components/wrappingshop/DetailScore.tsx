@@ -5,7 +5,7 @@ import { WrappingDetailContext } from "../../pages";
 
 export const DetailScore: FC = () => {
 	const data = useContext(WrappingDetailContext);
-	if (data === null) return null;
+	if (!data) return null;
 	const { reviews, avgStar } = data;
 
 	return (

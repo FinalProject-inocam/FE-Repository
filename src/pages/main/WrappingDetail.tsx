@@ -1,19 +1,14 @@
 import React, { createContext } from "react";
-import { useParams } from "react-router-dom";
-import * as RTK from "../../redux";
 import * as Hooks from "../../hooks";
 import * as Type from "../../types";
 import * as SC from "../../components/css";
 import * as CP from "../../components/wrappingshop";
 
-export const WrappingDetailContext = createContext<Type.WrappingShopDetail | null>(null);
+export const WrappingDetailContext = createContext<Type.WrappingShopDetail | undefined | null>(null);
 
 export const WrappingDetail: React.FC = () => {
-	//
-	const { id: shopId } = useParams<{ id: string }>();
-	// RTK - 랩핑샵 GET
-	const { isLoading, data, isError, error } = RTK.useGetWrappingShopDetailQuery(shopId);
-	const { mapRef } = Hooks.useWrappingMap(data);
+	const { mapRef, isLoading, data, isError, error } = Hooks.useWrappingDetail();
+	console.log(data);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
@@ -30,14 +25,10 @@ export const WrappingDetail: React.FC = () => {
 					{/* DetailContent /-----------------------/ */}
 					<SC.DetailContent $gtc={"467px 1fr"} $gap={20}>
 						<CP.DetailInfoArea />
-						<div>테스트</div>
+						<CP.DetailReviewArea />
 					</SC.DetailContent>
 				</SC.DetailOutline>
 			</WrappingDetailContext.Provider>
 		);
 	}
 };
-
-// <CP.DetailLeft data={data} />
-// <CP.DetailRight data={data} />
-// const { shopDetailIsLoading, shopDetailData, shopDetailIsError, shopDetailError } = Hooks.useWrappingDetailInfo();

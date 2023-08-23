@@ -44,7 +44,7 @@ export interface WrappingDetailStyled {
 	$bgColor?: string;
 	$bColor?: string;
 	$color?: string;
-	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "default";
+	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "login" | "default";
 	$outlined?: boolean;
 	children?: React.ReactNode;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;

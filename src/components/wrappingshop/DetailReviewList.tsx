@@ -1,12 +1,12 @@
 import React from "react";
 import * as Type from "../../types";
-import * as SC from "../../components/css";
-import * as CP from "../../components";
+import * as SC from "../css";
+import * as CP from "..";
 import * as Hooks from "../../hooks";
 import * as RTK from "../../redux";
 import { ReviewStarFull, ReviewStarEmpty, ReviewLike, ReviewComment } from "../../assets/wrappingshop";
 
-export const DetailRightReview: React.FC<Type.WrappingDetailProps> = () => {
+export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
 	// get review api
 	const { shopReviewIsLoading, shopReviewData, shopReviewIsError, shopReviewError, shopId } =
 		Hooks.useWrappingDetailReviews();
@@ -33,7 +33,7 @@ export const DetailRightReview: React.FC<Type.WrappingDetailProps> = () => {
 	else if (shopReviewIsError) return <div>에러발생... {JSON.stringify(shopReviewError)}</div>;
 	else {
 		return (
-			<SC.DetailRightReviewsOutline>
+			<SC.ReviewsOutline>
 				{shopReviewData.content &&
 					shopReviewData.content.map(
 						(
@@ -50,11 +50,11 @@ export const DetailRightReview: React.FC<Type.WrappingDetailProps> = () => {
 						) => {
 							return (
 								<div key={reviewId} style={{ paddingTop: index > 0 ? "28px" : "0" }}>
-									<SC.DetailRightReviewOutline>
-										<SC.ReviewUpperLayout $jc='space-between'>
-											<SC.ReviewUserInner>
-												<SC.ReviewUserName>{nickname}</SC.ReviewUserName>
-												<SC.ReviewStarContainer>
+									<SC.ReviewLayout $fd='column' $jc='space-between' $ai='normal' $gap={20}>
+										<SC.FlexBox $jc='space-between'>
+											<SC.ReviewUserInner $jc='flex-start' $gap={20}>
+												<SC.ReviewUserName $jc='flex-start'>{nickname}</SC.ReviewUserName>
+												<SC.ReviewStar>
 													{Array.from({ length: 5 }).map((_, index) => (
 														<img
 															key={index}
@@ -64,12 +64,12 @@ export const DetailRightReview: React.FC<Type.WrappingDetailProps> = () => {
 														/>
 													))}
 													<SC.ReviewScore>({star})</SC.ReviewScore>
-												</SC.ReviewStarContainer>
+												</SC.ReviewStar>
 												<SC.ReviewRevisit>
 													{revisit && revisit ? "재방문의사" : ""}
 												</SC.ReviewRevisit>
 											</SC.ReviewUserInner>
-											<SC.ReviewMenuInner>
+											<SC.ReviewMenuInner $jc='flex-end' $gap={10}>
 												{currentUser === nickname && (
 													<CP.EditWrappingReview
 														reviewId={reviewId}
@@ -84,47 +84,41 @@ export const DetailRightReview: React.FC<Type.WrappingDetailProps> = () => {
 												)}
 												<p>{formatDate(createAt)}</p>
 											</SC.ReviewMenuInner>
-										</SC.ReviewUpperLayout>
-										<SC.ReviewContentsLayout>
-											<SC.ReviewContentsTextItem>{review}</SC.ReviewContentsTextItem>
-											<div style={{ display: "flex", justifyContent: "space-between" }}>
-												<SC.ReviewImageInner>
-													{imageUrls ? (
-														imageUrls.map((url, index) => (
-															<SC.ReviewImageWrapper key={index}>
-																<SC.ReviewCommentImg
-																	src={url}
-																	alt={`이미지-${index}`}
-																/>
-															</SC.ReviewImageWrapper>
-														))
-													) : (
-														<div></div>
-													)}
-												</SC.ReviewImageInner>
-												<div
-													style={{
-														display: "flex",
-														gap: "10px",
-														alignItems: "flex-end",
-													}}>
-													<CP.DetailButton.LikeButton
-														$buttonSize='like'
-														onClick={onReviewLikeHandler(reviewId)}>
-														<img src={ReviewLike} alt='reviewLike' />
-													</CP.DetailButton.LikeButton>
-													<CP.DetailButton.CommentButton $buttonSize='comment'>
-														<img src={ReviewComment} alt='reviewLike' />
-													</CP.DetailButton.CommentButton>
-												</div>
-											</div>
-										</SC.ReviewContentsLayout>
-									</SC.DetailRightReviewOutline>
+										</SC.FlexBox>
+										<SC.ReviewText>{review}</SC.ReviewText>
+										<SC.FlexBox $jc='space-between'>
+											<SC.ReviewImageInner $fd='row' $gap={10}>
+												{imageUrls ? (
+													imageUrls.map((url, index) => (
+														<SC.ReviewImage key={index}>
+															<img
+																style={{ width: "100%", height: "100%" }}
+																src={url}
+																alt={`이미지-${index}`}
+															/>
+														</SC.ReviewImage>
+													))
+												) : (
+													<div></div>
+												)}
+											</SC.ReviewImageInner>
+											<SC.FlexBox $ai='flex-end' $gap={10}>
+												<CP.DetailButton.LikeButton
+													$buttonSize='like'
+													onClick={onReviewLikeHandler(reviewId)}>
+													<img src={ReviewLike} alt='reviewLike' />
+												</CP.DetailButton.LikeButton>
+												<CP.DetailButton.CommentButton $buttonSize='comment'>
+													<img src={ReviewComment} alt='reviewLike' />
+												</CP.DetailButton.CommentButton>
+											</SC.FlexBox>
+										</SC.FlexBox>
+									</SC.ReviewLayout>
 								</div>
 							);
 						}
 					)}
-			</SC.DetailRightReviewsOutline>
+			</SC.ReviewsOutline>
 		);
 	}
 };

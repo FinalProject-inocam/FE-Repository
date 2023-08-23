@@ -1,14 +1,13 @@
 import React from "react";
 import * as Type from "../../types";
-import * as SC from "../../components/css";
+import * as SC from "../css";
 import { ReviewStarFull, ReviewStarEmpty } from "../../assets/wrappingshop";
-import { styled } from "styled-components";
 
-export const DetailRightStarPointer: React.FC<Type.WrappingDetailStar> = ({ star, width, height, handleStarClick }) => {
+export const ReviewStarPointer: React.FC<Type.WrappingDetailStar> = ({ star, width, height, handleStarClick }) => {
 	return (
-		<SC.ReviewStarContainer>
+		<SC.ReviewStar>
 			{Array.from({ length: 5 }).map((_, index) => (
-				<StarImageStyle
+				<SC.StarImageStyle
 					key={index}
 					width={width}
 					height={height}
@@ -17,11 +16,6 @@ export const DetailRightStarPointer: React.FC<Type.WrappingDetailStar> = ({ star
 					onClick={() => handleStarClick(index + 1)}
 				/>
 			))}
-		</SC.ReviewStarContainer>
+		</SC.ReviewStar>
 	);
 };
-
-const StarImageStyle = styled.img`
-	width: ${({ width }) => width};
-	height: ${({ height }) => height};
-`;

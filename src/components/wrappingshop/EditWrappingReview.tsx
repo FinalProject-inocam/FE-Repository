@@ -55,7 +55,7 @@ export const EditWrappingReview: React.FC<Type.EditWrappingShopReview> = ({ revi
 				<form onSubmit={onSubmitPatchComments}>
 					<input value={review} name='review' onChange={onChangeValue} />
 					<input type='checkbox' value='재방문의사' onChange={handleRevisitChange} />
-					<CP.DetailRightStarPointer
+					<CP.ReviewStarPointer
 						star={star}
 						width={`15px`}
 						height={`15px`}

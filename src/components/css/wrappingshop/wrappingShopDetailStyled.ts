@@ -63,22 +63,6 @@ const BannerItem = styled.div<Partial<Type.Styled>>`
 	border: 1px solid black;
 `;
 
-const BannerImage = styled.img`
-	width: 100%;
-	height: 100%;
-	inset: 0px;
-	display: block;
-	object-fit: cover;
-	opacity: 1;
-	transition: opacity 500ms ease-in-out 0s;
-	z-index: 1;
-
-	&:hover {
-		transform: scale(1.05);
-		border-color: rgba(249, 249, 249, 0.8);
-	}
-`;
-
 const BannerWrapper = styled.div<Partial<Type.Styled>>`
 	display: flex;
 	justify-content: space-between;
@@ -97,30 +81,7 @@ const RightBanner = styled.div<Partial<Type.Styled>>`
 	border-radius: 10px;
 `;
 
-const MoreButton = styled.button`
-	${cursor}
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.6);
-	border: none;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
-	font-size: 2.5rem;
-	font-weight: bold;
-`;
-
 // Info --------------------------------
-const DetailLeftOutLine = styled.div`
-	position: relative;
-`;
-
 const DetailInfoLayout = styled.div`
 	background-color: #ffffff;
 	border-radius: 10px 10px 0 0;
@@ -132,11 +93,6 @@ const DetailInfoInner = styled.div<Partial<Type.Styled>>`
 	width:100%;
 	padding: 30px 20px;
 	background-color: #ffffff;
-`;
-
-const ReviewCountTitleLayout = styled.div`
-	${Flex}
-	flex-direction: row;
 `;
 
 const ReviewCountTitleItem = styled.div<Partial<Type.Styled>>`
@@ -166,190 +122,98 @@ const ReviewStarItem = styled.div`
 	font-size: 30px;
 `;
 
-// Review --------------------------------
-const DetailRightOutLine = styled.div`
+const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	text-align: center;
+	height: 70px;
+	background-color: ${({ $bgColor, theme }) => $bgColor && theme.color[$bgColor]};
+	border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+`;
+
+// DetailReviewArea --------------------------------
+const DetailReviewOutLine = styled.div`
 	position: relative;
 `;
 
-const DetailRightBannerInner = styled.div`
+// DetailReviewBanner --------------------------------
+const ReviewBannerOutline = styled.div`
+	${Flex}
+	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		height: 50%;
+		background-color: #ffffff;
+		z-index: 1;
+	}
+`;
+
+const ReviewBannerLayout = styled.div`
 	overflow: hidden;
 	border-radius: 10px;
 	position: relative;
 `;
 
-const DetailRightFormOutLine = styled.div`
-	display: flex;
-	flex-direction: column;
-	background-color: #ffffff;
-	margin-top: 80px;
-`;
-
-const DetailRightFormLayout = styled.form`
-	margin-top: 8.4%;
-
-	padding-top: 30px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 30px;
-`;
-
-const DetailRightFormUpperInner = styled.div`
-	display: flex;
-	justify-content: space-between;
-`;
-
-const DetailRightFromUpperButtons = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	width: 442px;
-	margin-bottom: 10px;
-`;
-
-const DetailRightReviewsOutline = styled.div`
-	margin-top: 20px;
-	background-color: #ffffff;
-`;
-
-const DetailRightReviewOutline = styled.div`
-	padding-top: 22px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 30px;
-	display: flex;
-	flex-direction: column;
-	border-bottom: 3px solid #eee;
-`;
-
-const ReviewUpperLayout = styled.div<Partial<Type.Styled>>`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-`;
-
-const ReviewUserInner = styled.div`
-	display: flex;
-	/* justify-content: space-between; */
-	align-items: center;
-	width: 302.5px;
-	gap: 20px;
-`;
-
-const ReviewMenuInner = styled.div`
-	display: flex;
-
-	p {
-		font-size: 16px;
-		margin-left: 10px;
-		color: #828295;
-	}
-`;
-
-const ReviewUserName = styled.div`
-	display: flex;
-	max-width: 74px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	line-height: 1.25;
-	letter-spacing: -0.18px;
-	text-align: left;
-	flex: 1;
-`;
-
-const ReviewStarContainer = styled.div`
-	display: flex;
-	align-items: center;
-	margin-right: 5px;
-`;
-
-const ReviewStar = styled.div`
-	color: #4c4cff;
-`;
-const ReviewScore = styled.div`
-	line-height: 20px;
-	height: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-`;
-
-const ReviewImageInner = styled.div`
-	margin-top: 22px;
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
-`;
-
-const ReviewContentsLayout = styled.div`
-	padding-left: 93px;
-`;
-
-const ReviewImageWrapper = styled.div`
-	border: 1px solid #c7c7cb;
-	width: 101px;
-	height: 101px;
-	border-radius: 4px;
-	overflow: hidden;
-`;
-
-const ReviewRevisit = styled.div`
-	color: #4c4cff;
-`;
-
-const ReviewCommentImg = styled.img`
+const ReviewBannerButton = styled.button`
+	${Flex}
+	${cursor}
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	width: 100%;
 	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: none;
+
+	color: white;
+	font-size: 2.5rem;
+	font-weight: bold;
 `;
 
-const RightReviewOutline = styled.div`
-	height: calc(100vh - 490px);
-	padding-left: 20px;
-	padding-right: 20px;
-	overflow-y: scroll;
+// DetailReviewForm --------------------------------
+const ReviewFormOutLine = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	width: 100%;
+	background-color: #ffffff;
 `;
 
-const ReviewContentsTextItem = styled.div`
-	margin-top: 22px;
-	padding-right: 219px;
+const ReviewFormLayout = styled.form<Partial<Type.Styled>>`
+	${Flex}
+	padding: 30px 20px;
 `;
 
-const ReviewFromUserName = styled.div`
-	display: flex;
+const ReviewUserButtonInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	width: 442px;
+`;
+
+const ReviewFromUserName = styled.div<Partial<Type.Styled>>`
+	${Flex}
 	color: #555555;
 	flex: 1;
 `;
 
-const ReviewFormReviewInputInner = styled.div`
+const ReviewFormInputInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
 	padding-left: 100px;
-	margin-bottom: 10px;
 `;
 
-const ReviewFormReviewInput = styled.textarea`
+const ReviewFormInput = styled.textarea`
 	border: solid 1px #c7c7cb;
-	width: 812px;
 	height: 100px;
+	width: 100%;
 	padding: 20px 70px 20px 23px;
 	background-color: #f3f3f8;
 	font-size: 16px;
 `;
 
-const ReviewUploadImageButton = styled.label`
+const ReviewPreviewImageInner = styled.div<Partial<Type.Styled>>`
 	${Flex}
-	padding-left: 10px
-`;
-
-const ReviewPreviewImageLayout = styled.div`
-	display: flex;
-	flex-direction: row;
-`;
-
-const ReviewPreviewImageInner = styled.div`
 	padding-left: 100px;
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
 `;
 const ReviewPreviewImageItem = styled.img`
 	width: 101px;
@@ -360,11 +224,85 @@ const ReviewPreviewImageItem = styled.img`
 	background-color: #f3f3f8;
 `;
 
-const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
+// ReviewStarPointer --------------------------------
+const StarImageStyle = styled.img`
+	width: ${({ width }) => width};
+	height: ${({ height }) => height};
+`;
+
+// DetailReviewList --------------------------------
+const ReviewsOutline = styled.div`
+	margin-top: 20px;
+	background-color: #ffffff;
+`;
+
+const ReviewLayout = styled.div<Partial<Type.Styled>>`
 	${Flex}
-	height: 70px;
-	background-color: ${({ $bgColor, theme }) => $bgColor && theme.color[$bgColor]};
-	border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+	padding: 22px 20px 30px;
+	border-bottom: 3px solid #eee;
+`;
+
+const ReviewUserInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	/* width: 302.5px; */
+	width: 100%;
+`;
+
+const ReviewUserName = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	max-width: 74px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.25;
+	letter-spacing: -0.18px;
+	text-align: left;
+	flex: 1;
+`;
+
+const ReviewStar = styled.div`
+	${Flex}
+	margin-right: 5px;
+`;
+
+const ReviewScore = styled.div`
+	${Flex}
+	line-height: 20px;
+	height: 20px;
+	text-align: center;
+`;
+
+const ReviewRevisit = styled.div`
+	color: #4c4cff;
+`;
+
+const ReviewMenuInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	width: 100%;
+
+	p {
+		font-size: 16px;
+		margin-left: 10px;
+		color: #828295;
+	}
+`;
+
+const ReviewText = styled.div`
+	padding-left: 93px;
+	padding-right: 219px;
+`;
+
+const ReviewImageInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	padding-left: 93px;
+`;
+
+const ReviewImage = styled.div`
+	border: 1px solid #c7c7cb;
+	width: 101px;
+	height: 101px;
+	border-radius: 4px;
+	overflow: hidden;
 `;
 
 export {
@@ -381,50 +319,51 @@ export {
 	// Banner
 	BannerContainer,
 	BannerItem,
-	BannerImage,
 	BannerWrapper,
 	RightBanner,
-	MoreButton,
 
 	// Info
-	DetailLeftOutLine,
 	DetailInfoLayout,
 	DetailInfoInner,
-	ReviewCountTitleLayout,
 	ReviewCountTitleItem,
 	ReviewScoreInner,
 	ReviewScoreItem,
 	ReviewStarItem,
 	DetailScoreDiv,
 
-	// Review
-	DetailRightOutLine,
-	DetailRightBannerInner,
-	DetailRightFormOutLine,
-	DetailRightFormLayout,
-	DetailRightFormUpperInner,
-	DetailRightFromUpperButtons,
-	DetailRightReviewsOutline,
-	DetailRightReviewOutline,
-	RightReviewOutline,
-	ReviewUpperLayout,
-	ReviewUserInner,
-	ReviewMenuInner,
-	ReviewUserName,
-	ReviewContentsLayout,
-	ReviewContentsTextItem,
-	ReviewStarContainer,
-	ReviewStar,
-	ReviewScore,
-	ReviewImageInner,
-	ReviewImageWrapper,
-	ReviewRevisit,
-	ReviewCommentImg,
+	// DetailReviewArea
+	DetailReviewOutLine,
+
+	// DetailReviewBanner
+	ReviewBannerOutline,
+	ReviewBannerLayout,
+	ReviewBannerButton,
+
+	// DetailReviewForm
+	ReviewFormOutLine,
+	ReviewFormLayout,
+	ReviewUserButtonInner,
 	ReviewFromUserName,
-	ReviewFormReviewInputInner,
-	ReviewFormReviewInput,
-	ReviewUploadImageButton,
-	ReviewPreviewImageLayout,
+	ReviewFormInputInner,
+	ReviewFormInput,
 	ReviewPreviewImageInner,
 	ReviewPreviewImageItem,
+
+	// ReviewStarPointer
+	StarImageStyle,
+
+	// DetailReviewList
+	ReviewsOutline,
+	ReviewLayout,
+	ReviewUserInner,
+	ReviewUserName,
+	ReviewStar,
+	ReviewScore,
+	ReviewRevisit,
+	ReviewMenuInner,
+	ReviewText,
+	ReviewImageInner,
+	ReviewImage,
+
+	// EditWrappingReview
 };

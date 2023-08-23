@@ -6,11 +6,11 @@ import { WrappingDetailContext } from "../../pages";
 
 export const DetailInfoArea: FC = () => {
 	const data = useContext(WrappingDetailContext);
-	if (data === null) return null;
-	const { shopName, address, banner, reviews, avgStar } = data;
+	if (!data) return null;
+	const { shopName, address, banner, avgStar, reviewCount } = data;
 
 	return (
-		<SC.FlexBox $fd='column' $gap={5} style={{ position: "relative" }}>
+		<SC.FlexBox $fd='column' $gap={5} $jc={"flex-start"} style={{ position: "relative" }}>
 			{/* DetailInfo */}
 			<SC.DetailInfoLayout>
 				<FigureObjectFitImg width={`467px`} height={`300px`} src={banner[0]} alt='SomeImg' />
@@ -24,7 +24,7 @@ export const DetailInfoArea: FC = () => {
 			<SC.DetailInfoInner $fd='column' $ai='flex-start' $gap={20}>
 				<SC.FlexBox $gap={10}>
 					<SC.CustomH1 children='리뷰' />
-					{!!reviews.length && <SC.CustomH1 $color='blue' children={reviews.length} />}
+					{!!reviewCount && <SC.CustomH1 $color='blue' children={reviewCount} />}
 				</SC.FlexBox>
 				<SC.GridBox>
 					<SC.DetailScoreDiv $bgColor='gray' $bColor='gray' $gap={8}>

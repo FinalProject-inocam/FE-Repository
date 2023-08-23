@@ -1,16 +1,16 @@
 export * from "./EditWrappingReview";
-export * from "./WraappingContent";
+export * from "./WrappingContent";
 
 // left side
 export * from "./DetailInfoArea";
 export * from "./DetailScore";
 
 // Right side
-export * from "./DetailRight";
-export * from "./DetailRightBanner";
-export * from "./DetailRightInputForm";
-export * from "./DetailRightReview";
-export * from "./DetailRightStarPointer";
+export * from "./DetailReviewArea";
+export * from "./DetailReviewBanner";
+export * from "./DetailReviewForm";
+export * from "./DetailReviewList";
+export * from "./ReviewStarPointer";
 
 // Detail
 export * from "./DetailButton";
