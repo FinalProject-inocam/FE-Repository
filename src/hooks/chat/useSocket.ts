@@ -17,6 +17,13 @@ export const useSocket = () => {
     })
   }
 
+  const onLeaveRoom = () => {
+    socketRef.current && socketRef.current.emit("leaveRoom", {
+      room,
+      username
+    })
+  }
+
   useEffect(() => {
     socketRef.current = io(`${process.env.REACT_APP_SOCKET_API}`)
     if(socketRef.current) {
@@ -32,9 +39,12 @@ export const useSocket = () => {
       socketRef.current.on("readMsg", data => {
         console.log(data)
       })
+      socketRef.current.on("peerOut", data => {
+        console.log(data)
+      })
     }
     
   }, [username, room])
 
-  return onSendMsg
+  return {onSendMsg, onLeaveRoom}
 }

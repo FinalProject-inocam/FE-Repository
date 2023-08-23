@@ -26,7 +26,10 @@ const color = {
   darkGray:"#26252B",
   green: "#539B39",
   purple:"#362783",
-  white: "white"
+  white: "white",
+
+  headerBlue1 : "#4C4CFF",
+  headerBlue2 : "#2F2B3A"
 }
 
 /* About theme ---------------------------------------------- */
