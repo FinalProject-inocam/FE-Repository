@@ -25,7 +25,7 @@ export const useSocketList = () => {
   const socketRef = useRef<Socket>();
 
   useEffect(() => {
-    socketRef.current = io(`${process.env.REACT_APP_SOCKET_API}`)
+    socketRef.current = io(`${process.env.REACT_APP_SERVER_API}`)
     socketRef.current.on('connect_error', () => {
       setSocketErr(false)
     });

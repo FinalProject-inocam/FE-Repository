@@ -204,7 +204,7 @@ export const useSocket = () => {
   */
 
   useEffect(() => {
-    socketRef.current = io(`${process.env.REACT_APP_SOCKET_API}`, {
+    socketRef.current = io(`${process.env.REACT_APP_SERVER_API}`, {
       reconnectionAttempts :2,
       reconnectionDelay: 500
     })
