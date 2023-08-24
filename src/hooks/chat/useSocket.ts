@@ -61,15 +61,15 @@ export const useSocket = () => {
       08 streamRef : getUserMedia 사용자로부터 받아온 영상정보 상태 
   */
 
-  const [showWebRTC, setShowWebRTC] = useState<boolean>(false) 
-  const [mute, setMute] = useState<boolean>(false) 
+  const [showWebRTC, setShowWebRTC] = useState<boolean>(false)
+  const [mute, setMute] = useState<boolean>(false)
   const [camara, setCamara] = useState<boolean>(false)
   const [audioList, setAudioList] = useState<any>([])
-  const peerAVideoRef = useRef<HTMLVideoElement>(null); 
-  const peerBVideoRef = useRef<HTMLVideoElement>(null); 
-  const peerRef = useRef<RTCPeerConnection>(); 
+  const peerAVideoRef = useRef<HTMLVideoElement>(null);
+  const peerBVideoRef = useRef<HTMLVideoElement>(null);
+  const peerRef = useRef<RTCPeerConnection>();
   const streamRef = useRef<MediaStream | null>(null)
-  
+
   /*
     WecRTC 설정관련 함수 ------------------------------------------------------------------------  //
       01 onToggleWebRTC : WebRTC 화면을 onOff 하는 함수, 상태01 showWebRTC
@@ -87,6 +87,7 @@ export const useSocket = () => {
       10 Signaling (2) createAnswer
         - PeerA의 초대장을 받은, PeerB가 응답서신에 해당되는 패킷을 PeerA에게 emit 하는 함수 
         - PeerB에 대한 정보(누구인지, 어디에있는지 등)
+      11 makeConnection 추가 : peerRef.current.onicecandidate 
   */
 
   const onToggleWebRTC = () => {
@@ -125,15 +126,17 @@ export const useSocket = () => {
     try {
       streamRef.current = await navigator.mediaDevices
         .getUserMedia({ video: true, audio: true })
-      peerAVideoRef.current 
+      peerAVideoRef.current
         && (peerAVideoRef.current.srcObject = streamRef.current)
 
       await getAudio()
       streamRef.current
-        .getTracks().forEach((track) => { streamRef.current !== null 
-          && peerRef.current 
-            && peerRef.current
-              .addTrack(track, streamRef.current) });
+        .getTracks().forEach((track) => {
+          streamRef.current !== null
+          && peerRef.current
+          && peerRef.current
+            .addTrack(track, streamRef.current)
+        });
 
     } catch (e) {
       console.error(e);
@@ -150,26 +153,44 @@ export const useSocket = () => {
   const makeConnection = async () => {
     peerRef.current = new RTCPeerConnection();
     console.log("makeConnection", streamRef.current?.getTracks())
-    streamRef.current 
-      && await streamRef.current
-        .getTracks().forEach((track) => { streamRef.current && peerRef.current && peerRef.current
-          .addTrack(track, streamRef.current) });
+
+    if (peerRef.current) {
+      console.log(peerRef.current.iceConnectionState)
+      peerRef.current.onicecandidate = (e: any) => {
+        console.log("ICE 후보자: 등록하자... ", e, e.candidate);
+        socketRef.current && socketRef.current.emit("candidate", {candidate:e.candidate, room});
+      };
+
+      peerRef.current.ontrack = (e) => {
+        console.log("상대 영상정보", e.streams)
+        console.log("나의 영상정보", streamRef.current)
+        peerBVideoRef.current && (peerBVideoRef.current.srcObject = e.streams[0]) // 여기가 의문점
+      }
+    } 
+
+    streamRef.current
+    && await streamRef.current
+      .getTracks().forEach((track) => {
+        streamRef.current && peerRef.current && peerRef.current
+          .addTrack(track, streamRef.current)
+      });
   }
 
   const createOffer = async () => {
     const offer = peerRef.current && await peerRef.current.createOffer();
     console.log("createOffer", offer);
     peerRef.current && peerRef.current.setLocalDescription(offer);
-    socketRef.current && socketRef.current.emit("offer", {offer, room});
+    socketRef.current && socketRef.current.emit("offer", { offer, room });
   };
 
   const createAnswer = async (getoffer: RTCSessionDescription) => {
-    if(peerRef.current) {
-      peerRef.current.setRemoteDescription(getoffer);
+    if (peerRef.current) {
+      console.log("createAnswer", getoffer)
+      await peerRef.current.setRemoteDescription(getoffer);
       const answer = await peerRef.current.createAnswer();
       console.log(answer)
       peerRef.current.setLocalDescription(answer);
-      socketRef.current && socketRef.current.emit("answer", answer);
+      socketRef.current && socketRef.current.emit("answer", { answer, room });
     }
   };
 
@@ -183,21 +204,24 @@ export const useSocket = () => {
   */
 
   useEffect(() => {
-    socketRef.current = io(`${process.env.REACT_APP_SOCKET_API}`)
+    socketRef.current = io(`${process.env.REACT_APP_SOCKET_API}`, {
+      reconnectionAttempts :2,
+      reconnectionDelay: 500
+    })
     if (socketRef.current) {
-      
+
       socketRef.current.emit("joinRoom", {
         username, room
       })
-      
+
       socketRef.current.on("previousMsg", () => {
         // console.log(data)
       })
-      
+
       socketRef.current.on("readMsg", () => {
         // console.log(data)
       })
-      
+
       socketRef.current.on("peerOut", () => {
         // console.log(data)
       })
@@ -207,25 +231,27 @@ export const useSocket = () => {
 
   /* 
     useEffect 02 : WebRTC 관련 useEffect 부분 ----------------------------------------------------------------------
-      01 WebRTC 연결하기 : emit("joinRTC")
+      01 WebRTC 연결하기 : emit("joinRTC" -> room, username, state:true)
           - PeerA!PeerB => conat arr = {PeerA:false, PeerB: false}
           - PeerA - state true => {PeerA:true, PeerB: false}
           - PeerB - state true => {PeerA:true, PeerB: true} => B가 준비가 되었을 때 
           - PeerA.state && PeerB.state && emit => A한테 전달
-      02 WebRTC 준비확인, Signaling (1) : on("joinedRTC") -> 함수09 createOffer 실행
-      03 Signaling (2) : on("getOffer") -> 함수10 createAnswer 실행
+      02 Signaling (1, PeerA) : on("joinedRTC") -> 함수09 createOffer 실행, PeerA setLocalDescription
+      03 Signaling (2, PeerB) : on("getOffer") -> 함수10 createAnswer 실행, peerB setRemoteDescription, setLocalDescription
+      04 Signaling (3, PeerA) : on("getAnswer" -> PeerA setRemoteDescription
+      ---- Peer To Peer 생성, addICECandidate 준비상태 : 브라우저가 서로 소통할 수 있게 하는 방법(WebRTC 프로토콜)
   */
 
   useEffect(() => {
     if (showWebRTC) {
       getMedia()
       makeConnection()
-      if(socketRef.current) {
-        socketRef.current.emit("joinRTC", {room, username, state:true})
+      if (socketRef.current) {
+        socketRef.current.emit("joinRTC", { room, username })
 
         socketRef.current.on("joinedRTC", async (data) => {
-          console.log("Signaling - (2), 먼저 온 PeerA B의 입장소식을 듣고, offer(초대장 보냄)",data)
-          createOffer()
+          console.log("Signaling - (1), 먼저 온 PeerA B의 입장소식을 듣고, offer(초대장 보냄)", data)
+          streamRef.current && createOffer()  
         })
 
         socketRef.current.on("getOffer", getoffer => {
@@ -233,6 +259,15 @@ export const useSocket = () => {
           createAnswer(getoffer)
         })
 
+        socketRef.current.on("getAnswer", getanswer => {
+          console.log("Signaling - (3), Answer(응답소식)를 PeerA가 받음", getanswer)
+          peerRef.current && peerRef.current.setRemoteDescription(getanswer);
+        })
+
+        socketRef.current.on("getCandidate", getcandidata => {
+          console.log("Signaling - (4), Candidate(응답소식)를 PeerA-PeerB가 서로 주고받음", getcandidata)
+          peerRef.current && peerRef.current.addIceCandidate(getcandidata);
+        })
       }
     }
 
@@ -261,8 +296,6 @@ export const useSocket = () => {
     onChangeAudio
   }
 }
-
-
 
 /*
 먼저 PeerA는
