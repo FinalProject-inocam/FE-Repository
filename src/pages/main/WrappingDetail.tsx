@@ -8,7 +8,6 @@ export const WrappingDetailContext = createContext<Type.WrappingShopDetail | und
 
 export const WrappingDetail: React.FC = () => {
 	const { mapRef, isLoading, data, isError, error } = Hooks.useWrappingDetail();
-	console.log(data);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
