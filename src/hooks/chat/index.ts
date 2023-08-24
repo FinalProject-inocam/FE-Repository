@@ -1,2 +1,2 @@
-export * from './useSocket'
+export * from './useSocketRoom'
 export * from './useSocketList'
