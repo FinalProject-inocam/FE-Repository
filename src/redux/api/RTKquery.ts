@@ -299,25 +299,25 @@ export const inocamRTK = createApi({
 					method: "get",
 					types: "getData",
 				}),
-				serializeQueryArgs: ({ endpointName }) => {
-					// console.log("getWSDetailReviews-serializeQueryArgs", endpointName);
-					return endpointName;
-				},
-				merge: (currentCache, newItems) => {
-					// console.log("getWSDetailReviews-currentCache", currentCache.content, newItems.content);
-					currentCache.first = newItems.first;
-					currentCache.last = newItems.last;
-					currentCache.number = newItems.number;
-					currentCache.content.push(...newItems.content);
-				},
-				/*
-					serializeQueryArgs : 어떤 이유로 캐시키 생성을 변경해야하는 경우, 사용자 정의 기능을 허용
-					merge : 들어오는 응답 값을 현 캐시 데이터에 병합하기 위해 사용, RTKQ는 일반적으로 캐시 항목을 새 응답으로 대체하기에, 기존 캐시 항목을 유지하려면, serializeQueryArgs + forceRefetch 를 사용해야한다.
-				*/
-				forceRefetch({ currentArg, previousArg }) {
-					// console.log("getWSDetailReviews-forceRefetch", currentArg, previousArg);
-					return currentArg !== previousArg;
-				},
+				// serializeQueryArgs: ({ endpointName }) => {
+				// 	// console.log("getWSDetailReviews-serializeQueryArgs", endpointName);
+				// 	return endpointName;
+				// },
+				// merge: (currentCache, newItems) => {
+				// 	// console.log("getWSDetailReviews-currentCache", currentCache.content, newItems.content);
+				// 	currentCache.first = newItems.first;
+				// 	currentCache.last = newItems.last;
+				// 	currentCache.number = newItems.number;
+				// 	currentCache.content.push(...newItems.content);
+				// },
+				// /*
+				// 	serializeQueryArgs : 어떤 이유로 캐시키 생성을 변경해야하는 경우, 사용자 정의 기능을 허용
+				// 	merge : 들어오는 응답 값을 현 캐시 데이터에 병합하기 위해 사용, RTKQ는 일반적으로 캐시 항목을 새 응답으로 대체하기에, 기존 캐시 항목을 유지하려면, serializeQueryArgs + forceRefetch 를 사용해야한다.
+				// */
+				// forceRefetch({ currentArg, previousArg }) {
+				// 	// console.log("getWSDetailReviews-forceRefetch", currentArg, previousArg);
+				// 	return currentArg !== previousArg;
+				// },
 				providesTags: ["WRAPPINGSHOPD"],
 			}),
 

@@ -2,10 +2,10 @@ import { FC, useContext } from "react";
 import * as SC from "../css";
 import * as AS from "../../assets";
 import { FigureObjectFitImg } from "../atom";
-import { WrappingDetailContext } from "../../pages";
+import * as Hook from "../../hooks";
 
 export const DetailInfoArea: FC = () => {
-	const data = useContext(WrappingDetailContext);
+	const data = useContext(Hook.WrappingDetailContext);
 	if (!data) return null;
 	const { shopName, address, banner, avgStar, reviewCount } = data;
 

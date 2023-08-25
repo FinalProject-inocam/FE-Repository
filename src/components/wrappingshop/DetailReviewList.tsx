@@ -34,7 +34,6 @@ export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
 		shopId,
 		page,
 	});
-
 	// infinite scroll
 	const fetchNextRef = useRef<HTMLDivElement | null>(null);
 
@@ -53,7 +52,8 @@ export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
 		if (fetchNextRef.current) {
 			observer.observe(fetchNextRef.current); // 관찰대상 등록
 		}
-	}, [isFetching, page, data?.last]);
+		console.log("useGetWSDetailReviewsQuery", data);
+	}, [isFetching, page, data]);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;

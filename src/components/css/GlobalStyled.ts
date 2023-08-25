@@ -96,11 +96,18 @@ const Figure = sc.styled.figure<Partial<Styled>>`
 `;
 
 const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
-   position: relative;
+  position: relative;
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
-  overflow?: ${({ $overflow }) => $overflow};
-  border-radius?: ${({ $borderR }) => $borderR};
+
+  ${({ $types }) =>
+		$types === "reviewBanner" &&
+		sc.css`
+      z-index:2;
+      height : 159px;
+      overflow : hidden;
+      border-radius : 10px;
+    `}
 
   img {
     position: absolute;

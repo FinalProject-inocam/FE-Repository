@@ -118,10 +118,6 @@ const ReviewScoreItem = styled.div<Partial<Type.Styled>>`
 	color: ${(props) => (props.$highlight ? "#1d1d1f" : "#555555")};
 `;
 
-const ReviewStarItem = styled.div`
-	font-size: 30px;
-`;
-
 const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
 	${Flex}
 	text-align: center;
@@ -130,14 +126,9 @@ const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
 	border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
 `;
 
-// DetailReviewArea --------------------------------
-const DetailReviewOutLine = styled.div`
-	position: relative;
-`;
-
 // DetailReviewBanner --------------------------------
-const ReviewBannerOutline = styled.div`
-	${Flex}
+const ReviewBannerGridBox = styled.div<Partial<Type.Styled>>`
+	${Grid}
 	position: relative;
 	&::after {
 		content: "";
@@ -147,17 +138,10 @@ const ReviewBannerOutline = styled.div`
 		width: 100%;
 		height: 50%;
 		background-color: #ffffff;
-		z-index: 1;
 	}
 `;
 
-const ReviewBannerLayout = styled.div`
-	overflow: hidden;
-	border-radius: 10px;
-	position: relative;
-`;
-
-const ReviewBannerButton = styled.button`
+const ReviewBannerMoreBtn = styled.button`
 	${Flex}
 	${cursor}
 	position: absolute;
@@ -169,7 +153,7 @@ const ReviewBannerButton = styled.button`
 	background-color: rgba(0, 0, 0, 0.6);
 	border: none;
 
-	color: white;
+	color: #ffffff;
 	font-size: 2.5rem;
 	font-weight: bold;
 `;
@@ -328,16 +312,11 @@ export {
 	ReviewCountTitleItem,
 	ReviewScoreInner,
 	ReviewScoreItem,
-	ReviewStarItem,
 	DetailScoreDiv,
 
-	// DetailReviewArea
-	DetailReviewOutLine,
-
 	// DetailReviewBanner
-	ReviewBannerOutline,
-	ReviewBannerLayout,
-	ReviewBannerButton,
+	ReviewBannerGridBox,
+	ReviewBannerMoreBtn,
 
 	// DetailReviewForm
 	ReviewFormOutLine,

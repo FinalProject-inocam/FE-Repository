@@ -1,10 +1,10 @@
 import { FC, useContext } from "react";
 import * as SC from "../css";
 import * as AS from "../../assets";
-import { WrappingDetailContext } from "../../pages";
+import * as Hook from "../../hooks";
 
 export const DetailScore: FC = () => {
-	const data = useContext(WrappingDetailContext);
+	const data = useContext(Hook.WrappingDetailContext);
 	if (!data) return null;
 	const { reviews, avgStar } = data;
 

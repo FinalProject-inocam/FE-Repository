@@ -1,10 +1,7 @@
-import React, { createContext } from "react";
+import React from "react";
 import * as Hooks from "../../hooks";
-import * as Type from "../../types";
 import * as SC from "../../components/css";
 import * as CP from "../../components/wrappingshop";
-
-export const WrappingDetailContext = createContext<Type.WrappingShopDetail | undefined | null>(null);
 
 export const WrappingDetail: React.FC = () => {
 	const { mapRef, isLoading, data, isError, error } = Hooks.useWrappingDetail();
@@ -13,7 +10,7 @@ export const WrappingDetail: React.FC = () => {
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
 		return (
-			<WrappingDetailContext.Provider value={data}>
+			<Hooks.WrappingDetailContext.Provider value={data}>
 				<SC.DetailOutline $fd='column' $gap={30}>
 					{/* KakaoMaps /---------------------------/ */}
 					<SC.DetailKakaoMaps>
@@ -27,7 +24,7 @@ export const WrappingDetail: React.FC = () => {
 						<CP.DetailReviewArea />
 					</SC.DetailContent>
 				</SC.DetailOutline>
-			</WrappingDetailContext.Provider>
+			</Hooks.WrappingDetailContext.Provider>
 		);
 	}
 };

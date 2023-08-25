@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, ReactChild } from "react";
 import { AsyncHooksDefault } from "../hooks";
 
 export type SetState = Dispatch<SetStateAction<boolean>>;
@@ -13,8 +13,8 @@ export interface FigureImg {
 	alt: string;
 	width: string;
 	height?: string;
-	overflow?: string;
-	borderR?: string;
+	types?: string;
+	children?: ReactChild;
 }
 
 export interface EditComment {
