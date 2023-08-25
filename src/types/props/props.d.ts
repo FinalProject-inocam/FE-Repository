@@ -34,10 +34,7 @@ export interface WrappingDetailProps extends AsyncHooksDefault {
 }
 
 export interface WrappingDetailStar {
-	star: number;
-	width: string;
-	height: string;
-	handleStarClick: (starNumber: number) => void;
+	size: number;
 }
 
 export interface WrappingDetailStyled {

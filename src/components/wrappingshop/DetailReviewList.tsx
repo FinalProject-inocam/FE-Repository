@@ -3,14 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 import * as Type from "../../types";
 import * as SC from "../css";
 import * as CP from "..";
-import * as Hooks from "../../hooks";
 import * as RTK from "../../redux";
 import { ReviewStarFull, ReviewStarEmpty, ReviewLike, ReviewComment } from "../../assets/wrappingshop";
 import { useParams } from "react-router-dom";
 
 export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
 	// delete review api
-	const { onDeleteShopComment } = Hooks.useWrappingDetailInput();
+	const [onDeleteShopCommentRTK, queryDelete] = RTK.useDeleteWrappingCommentMutation();
+	console.log(queryDelete);
+	const onDeleteShopComment = (shopId: string | undefined, reviewId: number | undefined) => () => {
+		onDeleteShopCommentRTK({ shopId, reviewId });
+	};
 
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);

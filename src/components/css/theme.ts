@@ -23,7 +23,13 @@ const PretendardEB = css`
 const color = {
 	blackM: "#0E0D13",
 	blue: "#4c4cff",
+	lightblue: "#f2f2ff",
+	lightgray1: "#f3f3f8",
+	lightgray2: "#828293",
+	red: "#F2757A",
+	red2: "#FF162D",
 	green: "#539B39",
+	orange: "#FA8128",
 	purple: "#362783",
 	white: "white",
 	darkBlue: "#151565",
@@ -82,5 +88,15 @@ export const theme = {
 				color: ${color.blackM};
 			}
 		`,
+	},
+	btnSize: {
+		primary: css`
+			width: 118px;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+		`,
+		medium: css``,
+		large: css``,
 	},
 };

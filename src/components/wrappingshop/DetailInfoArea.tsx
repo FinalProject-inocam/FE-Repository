@@ -13,7 +13,7 @@ export const DetailInfoArea: FC = () => {
 		<SC.FlexBox $fd='column' $gap={5} $jc={"flex-start"} style={{ position: "relative" }}>
 			{/* DetailInfo */}
 			<SC.DetailInfoLayout>
-				<FigureObjectFitImg width={`467px`} height={`300px`} src={banner[0]} alt='SomeImg' />
+				<FigureObjectFitImg width={`100%`} height={`300px`} src={banner[0]} alt='SomeImg' />
 				<SC.DetailInfoInner $fd='column' $ai='flex-start' $gap={10}>
 					<SC.CustomH1 children={shopName} />
 					<SC.CustomH2 children={address} />

@@ -10,7 +10,9 @@ export * from "./DetailReviewArea";
 export * from "./DetailReviewBanner";
 export * from "./DetailReviewForm";
 export * from "./DetailReviewList";
-export * from "./ReviewStarPointer";
-
+export * from "./StarPointer";
+export * from "./RevisitRadio";
+export * from "./CommentTextArea";
+export * from "./PrevImage";
 // Detail
 export * from "./DetailButton";

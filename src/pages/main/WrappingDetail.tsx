@@ -5,6 +5,7 @@ import * as CP from "../../components/wrappingshop";
 
 export const WrappingDetail: React.FC = () => {
 	const { mapRef, isLoading, data, isError, error } = Hooks.useWrappingDetail();
+	console.log("WrappingDetail", data);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
@@ -19,7 +20,7 @@ export const WrappingDetail: React.FC = () => {
 					</SC.DetailKakaoMaps>
 
 					{/* DetailContent /-----------------------/ */}
-					<SC.DetailContent $gtc={"467px 1fr"} $gap={20}>
+					<SC.DetailContent $gap={20}>
 						<CP.DetailInfoArea />
 						<CP.DetailReviewArea />
 					</SC.DetailContent>

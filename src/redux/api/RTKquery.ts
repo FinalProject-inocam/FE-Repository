@@ -37,7 +37,6 @@ const axiosBaseQuery =
 							"Content-Type": "multipart/form-data",
 						},
 					});
-					console.log("이거임", data);
 					return { data: postMultipart.data };
 				case "getData":
 					const getData = await instance({ url, method });

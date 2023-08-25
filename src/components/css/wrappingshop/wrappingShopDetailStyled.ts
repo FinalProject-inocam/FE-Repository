@@ -13,13 +13,19 @@ const DetailOutline = styled.div<Partial<Type.Styled>>`
 const DetailKakaoMaps = styled.div`
 	position: relative;
 	width: 100%;
-	// padding-top: ${({ theme }) => theme.headerHeight.desktop};
-	min-height: 490px;
 
 	section {
 		width: 100%;
-		height: 100%;
 		min-height: 490px;
+		transition: all 0.1s linear;
+	}
+
+	@media (max-width: 1024px) {
+		min-height: 320px;
+		padding-top: ${({ theme }) => theme.headerHeight.mobile};
+		section {
+			min-height: 250px;
+		}
 	}
 `;
 
@@ -35,11 +41,15 @@ const MapFadeBottom = styled.div`
 // DetailContent ------------------------------------
 const DetailContent = styled.section<Partial<Type.Styled>>`
 	${Grid}
+	grid-template-columns: repeat(1, 1fr);
 	max-width: 1440px;
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
 	border: 1px dotted red;
+	@media (min-width: 1024px) {
+		grid-template-columns: 467px 1fr;
+	}
 `;
 
 // Banner --------------------------------
@@ -86,6 +96,7 @@ const DetailInfoLayout = styled.div`
 	background-color: #ffffff;
 	border-radius: 10px 10px 0 0;
 	overflow: hidden;
+	width: 100%;
 `;
 
 const DetailInfoInner = styled.div<Partial<Type.Styled>>`
@@ -129,6 +140,7 @@ const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
 // DetailReviewBanner --------------------------------
 const ReviewBannerGridBox = styled.div<Partial<Type.Styled>>`
 	${Grid}
+	grid-template-columns: repeat(1, 1fr);
 	position: relative;
 	&::after {
 		content: "";
@@ -138,6 +150,16 @@ const ReviewBannerGridBox = styled.div<Partial<Type.Styled>>`
 		width: 100%;
 		height: 50%;
 		background-color: #ffffff;
+	}
+
+	@media (min-width: 1024px) {
+		grid-template-columns: repeat(2, 222.5px);
+	}
+	@media (min-width: 1200px) {
+		grid-template-columns: repeat(3, 222.5px);
+	}
+	@media (min-width: 1440px) {
+		grid-template-columns: repeat(4, 222.5px);
 	}
 `;
 
@@ -158,60 +180,10 @@ const ReviewBannerMoreBtn = styled.button`
 	font-weight: bold;
 `;
 
-// DetailReviewForm --------------------------------
-const ReviewFormOutLine = styled.div<Partial<Type.Styled>>`
-	${Flex}
-	width: 100%;
-	background-color: #ffffff;
-`;
-
-const ReviewFormLayout = styled.form<Partial<Type.Styled>>`
-	${Flex}
-	padding: 30px 20px;
-`;
-
-const ReviewUserButtonInner = styled.div<Partial<Type.Styled>>`
-	${Flex}
-	width: 442px;
-`;
-
-const ReviewFromUserName = styled.div<Partial<Type.Styled>>`
-	${Flex}
-	color: #555555;
-	flex: 1;
-`;
-
-const ReviewFormInputInner = styled.div<Partial<Type.Styled>>`
-	${Flex}
-	padding-left: 100px;
-`;
-
-const ReviewFormInput = styled.textarea`
-	border: solid 1px #c7c7cb;
-	height: 100px;
-	width: 100%;
-	padding: 20px 70px 20px 23px;
-	background-color: #f3f3f8;
-	font-size: 16px;
-`;
-
-const ReviewPreviewImageInner = styled.div<Partial<Type.Styled>>`
-	${Flex}
-	padding-left: 100px;
-`;
-const ReviewPreviewImageItem = styled.img`
-	width: 101px;
-	height: 101px;
-	flex-grow: 0;
-	border-radius: 4px;
-	border: solid 1px #c7c7cb;
-	background-color: #f3f3f8;
-`;
-
 // ReviewStarPointer --------------------------------
-const StarImageStyle = styled.img`
-	width: ${({ width }) => width};
-	height: ${({ height }) => height};
+const StarImg = styled.img<Partial<Type.Styled>>`
+	width: ${({ $size }) => `${$size}px`};
+	height: ${({ $size }) => `${$size}px`};
 `;
 
 // DetailReviewList --------------------------------
@@ -289,6 +261,105 @@ const ReviewImage = styled.div`
 	overflow: hidden;
 `;
 
+// DeteailReviewForm
+const ReviewFormFlex = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	@media (max-width: 700px) {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+`;
+
+const SubmitInput = styled.input<Partial<Type.Styled>>`
+	${({ theme }) => theme.btnSize.primary}
+	${cursor}
+color : ${({ $color }) => $color};
+	border-radius: ${({ $borderR }) => $borderR};
+	border: 1px solid ${({ $bColor }) => $bColor};
+	${({ $bColor, theme }) =>
+		$bColor === "blue"
+			? css`
+					background-color: ${theme.color[$bColor]};
+					color: ${theme.color.white};
+			  `
+			: null}
+
+	${({ $types }) =>
+		$types === "reviewForm"
+			? css`
+					position: absolute;
+					top: 0;
+					right: 0;
+			  `
+			: null}
+`;
+
+const ReviewFormLayout = styled.form<Partial<Type.Styled>>`
+	${Grid}
+	background-color: #fff;
+	width: 100%;
+	height: 313px;
+	padding: 30px 20px;
+`;
+
+// RevisitRadio
+const RevisitRadioLabel = styled.label<Partial<Type.Styled>>`
+	${cursor}
+	display: block;
+	width: 105px;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	border: 1px solid ${({ theme }) => theme.color.lightgray2};
+	border-radius: 5px;
+	color: ${({ theme }) => theme.color.lightgray2};
+
+	${({ $state, theme }) =>
+		$state === 1
+			? css`
+					background-color: ${theme.color.lightblue};
+					color: ${theme.color.blue};
+					border-color: ${theme.color.blue};
+			  `
+			: $state === 2 &&
+			  css`
+					color: ${theme.color.red};
+					border-color: ${theme.color.red};
+			  `};
+`;
+
+const TextaAreaLayout = styled.div`
+	position: relative;
+	width: 100%;
+`;
+
+const TextArea = styled.textarea`
+	display: block;
+	width: 100%;
+	height: 100px;
+	resize: none;
+	padding: 10px;
+	border: 1px solid ${({ theme }) => theme.color.lightgray2};
+	background-color: ${({ theme }) => theme.color.lightgray1};
+`;
+
+// CommentTextaArea
+const TextaAreaCount = styled.div<Partial<Type.Styled>>`
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	font-size: 0.75rem;
+	color: ${({ $size, theme }) =>
+		($size as number) === 0
+			? theme.color.black
+			: ($size as number) <= 200
+			? theme.color.blue
+			: ($size as number) <= 250
+			? theme.color.orange
+			: theme.color.red2};
+`;
+
 export {
 	// 페이지
 	DetailOutline,
@@ -318,18 +389,22 @@ export {
 	ReviewBannerGridBox,
 	ReviewBannerMoreBtn,
 
-	// DetailReviewForm
-	ReviewFormOutLine,
-	ReviewFormLayout,
-	ReviewUserButtonInner,
-	ReviewFromUserName,
-	ReviewFormInputInner,
-	ReviewFormInput,
-	ReviewPreviewImageInner,
-	ReviewPreviewImageItem,
-
 	// ReviewStarPointer
-	StarImageStyle,
+	StarImg,
+
+	//DeteailReviewForm
+	ReviewFormFlex,
+	ReviewFormLayout,
+	SubmitInput,
+
+	// RevisitRadio
+	RevisitRadioLabel,
+
+	// CommentTextaArea
+	TextaAreaLayout,
+	TextArea,
+	TextaAreaCount,
+	// PrevImage
 
 	// DetailReviewList
 	ReviewsOutline,
