@@ -119,6 +119,7 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
       overflow : hidden;
       border-radius : 10px;
     `}
+
     ${({ $types }) =>
 		$types === "prevImage" &&
 		sc.css`
@@ -145,9 +146,9 @@ const RouterLayout = sc.styled.div<Partial<Styled>>`
 `;
 
 const CustomH1 = sc.styled.h1<Partial<Styled>>`
-	font-size: 1.25rem;
+	font-size: ${({$size}) => $size ? `${$size}REM` : "1.25rem" };
 	font-weight: bold;
-  color : ${({ $color, theme }) => $color && theme.color[$color]}
+  color : ${({ $color, theme }) => $color && theme.color[$color]};
 `;
 
 const CustomH2 = sc.styled.div`
@@ -193,6 +194,10 @@ const CustomBtn = sc.styled.div<Partial<Styled>>`
 			: null}
 `;
 
+const PositionRelavite = sc.styled.div`
+  position: relative;
+`
+
 export {
 	Flex,
 	Grid,
@@ -208,4 +213,5 @@ export {
 	CustomH2,
 	CustomH3,
 	CustomBtn,
+  PositionRelavite
 };

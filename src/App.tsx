@@ -2,8 +2,6 @@ import { GlobalStyled } from "./components";
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as Page from "./pages";
-import { ChatList } from "./pages/chat/ChatList";
-import { ChatRoom } from "./pages/chat/ChatRoom";
 
 const App: React.FC = () => {
 	return (
@@ -14,8 +12,11 @@ const App: React.FC = () => {
 				<Route path='/' element={<Page.MainRouter />}>
 					<Route index element={<Page.Home />} />
 					<Route path='innocar' element={<Page.InnoCar/>} />
-					<Route path='community' element={<Page.Community />} />
-					<Route path='community/:id' element={<Page.CommunityDetail />} />
+					<Route path='community' element={<Page.Community />}>
+						<Route index element={<Page.GetCommunity />}/>
+						<Route path=':id' element={<Page.CommunityDetail />} />
+					</Route>
+					
 					<Route path='wrapping' element={<Page.Wrapping />} />
 					<Route path='wrapping/:id' element={<Page.WrappingDetail />} />
 				</Route>
@@ -48,8 +49,8 @@ const App: React.FC = () => {
 
 				{/* 채팅 및 임시 라우터 :: Chat */}
 				<Route path="/chatlist" element={<Page.Chat />} />
-				<Route path="/chat" element={<ChatList />} />
-				<Route path="/chat/:id" element={<ChatRoom />} />
+				<Route path="/chat" element={<Page.ChatList />} />
+				<Route path="/chat/:id" element={<Page.ChatRoom />} />
 				<Route path="/webrtc" element={<Page.WebRTC />} />
 				<Route path="/threejs" element={<Suspense fallback={<div>Loading...</div>}><Page.LazyThreejs /></Suspense>} />
 
