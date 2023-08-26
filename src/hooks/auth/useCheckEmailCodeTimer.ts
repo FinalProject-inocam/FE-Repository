@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import * as Type from "../../types";
 
-export const useCheckEmailCodeTimer = (
-  state: boolean
-): Type.UseCheckEmailCodeTimer => {
-  const [time, setTime] = useState<number>(20);
+export const useCheckEmailCodeTimer = (state: boolean) => {
+  const [time, setTime] = useState<number>(180);
 
   const decreaseTime = () => {
     setInterval(() => {

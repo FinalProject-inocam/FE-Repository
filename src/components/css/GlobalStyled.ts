@@ -22,6 +22,15 @@ export const GlobalStyled = sc.createGlobalStyle`
     color: rgb(29, 29, 31);
     word-break: break-word;
 }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
 
   body {
     width: 100%;
@@ -74,9 +83,11 @@ const GridBox = sc.styled.div<Partial<Styled>>`
 
 const GridMergedSpace = sc.styled.div<Partial<Styled>>`
   grid-column-start: ${({ $mergedgcs }) => ($mergedgcs ? $mergedgcs : "auto")};
-  grid-column-end: ${({ $mergedgce }) => ($mergedgce ? $mergedgce : "auto")}; // span 2;
+  grid-column-end: ${({ $mergedgce }) =>
+    $mergedgce ? $mergedgce : "auto"}; // span 2;
   grid-row-start: ${({ $mergedgrs }) => ($mergedgrs ? $mergedgrs : "auto")};
-  grid-row-end: ${({ $mergedgre }) => ($mergedgre ? $mergedgre : "auto")}; // span 3;
+  grid-row-end: ${({ $mergedgre }) =>
+    $mergedgre ? $mergedgre : "auto"}; // span 3;
 `;
 
 const GridMergedSpaceFlex = sc.styled(GridMergedSpace)`

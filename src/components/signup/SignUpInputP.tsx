@@ -24,7 +24,7 @@ export const SignUpInputP: React.FC<Type.SignUpInputProps> = ({
 
   return (
     <>
-      <div style={{ position: "relative", width: "100%" }}>
+      <SC.EmailCodeDiv>
         <SC.AuthInput
           ref={inputRef}
           type={seePassword ? "text" : "password"}
@@ -34,14 +34,14 @@ export const SignUpInputP: React.FC<Type.SignUpInputProps> = ({
           maxLength={length}
           placeholder={placeholder}
         />
-        <div
-          onClick={onClickSeePassword}
-          style={{ position: "absolute", right: "0.5rem", top: "0" }}
-        >
-          {seePassword ? "text" : "password"}
-        </div>
-      </div>
-      <SC.ValidateInputMsg $signColor={getValidateMsg[1]} children={getValidateMsg[0]} />
+        <SC.SignUpTimerDiv onClick={onClickSeePassword}>
+          {seePassword ? "숨김" : "보기"}
+        </SC.SignUpTimerDiv>
+      </SC.EmailCodeDiv>
+      <SC.ValidateInputMsg
+        $signColor={getValidateMsg[1]}
+        children={getValidateMsg[0]}
+      />
     </>
   );
 };

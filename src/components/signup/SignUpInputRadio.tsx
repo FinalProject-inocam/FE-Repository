@@ -17,28 +17,36 @@ export const SignUpInputRadio: React.FC<Type.SignUpInputRadio> = ({ inputRef, su
 		setInput("");
 	}, [submitted]);
 
-	return (
-		<>
-			<input
-				type='radio'
-				id='genderM'
-				ref={inputRef}
-				name='gender'
-				value='male'
-				onChange={onChangeInput}
-				style={{ display: "none" }}
-			/>
-			<SC.SignupLabel htmlFor='genderM' children='남자' $state={input === "male"} />
-			<input
-				type='radio'
-				id='genderF'
-				ref={inputRef}
-				name='gender'
-				value='female'
-				onChange={onChangeInput}
-				style={{ display: "none" }}
-			/>
-			<SC.SignupLabel htmlFor='genderF' children='여자' $state={input === "female"} />
-		</>
-	);
+  return (
+    <SC.AuthInputsLayout>
+      <input
+        type="radio"
+        id="genderM"
+        ref={inputRef}
+        name="gender"
+        value="male"
+        onChange={onChangeInput}
+        style={{ display: "none" }}
+      />
+      <SC.SignupSexLabel
+        htmlFor="genderM"
+        children="남성"
+        $state={input === "male"}
+      />
+      <input
+        type="radio"
+        id="genderF"
+        ref={inputRef}
+        name="gender"
+        value="female"
+        onChange={onChangeInput}
+        style={{ display: "none" }}
+      />
+      <SC.SignupSexLabel
+        htmlFor="genderF"
+        children="여성"
+        $state={input === "female"}
+      />
+    </SC.AuthInputsLayout>
+  );
 };
