@@ -145,7 +145,7 @@ const AuthAreaNav = styled.div<Partial<Styled>>`
 	padding: 0 30px;
 	width: 100%;
 	height: ${({ theme }) => theme.headerHeight.mobile};
-	background-color: ${({ $color }) => $color};
+	background-color: ${({ $color, theme }) => theme.color[`${$color}`]};
 
 	p {
 		color: #ffffff;

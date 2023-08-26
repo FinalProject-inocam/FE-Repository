@@ -2,6 +2,7 @@ import React from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
 import * as COMP from "../../components/myPage";
+import { useRouter } from "../../hooks";
 
 export const MyPage: React.FC = () => {
   // 회원정보 조회
@@ -25,13 +26,15 @@ export const MyPage: React.FC = () => {
     onDeletePurchases(purchaseId);
   };
 
+  const {onNavigate} = useRouter()
+
   if (isLoading) return <div>Loadgin....g...</div>;
 
   console.log(UserData);
-
   return (
     <div>
       <h2>MyPage</h2>
+      <button onClick={onNavigate({url:'/chat'})}>채팅으로 이동하기</button>
       <div>
         <COMP.EditUser
           profileImg={UserData.profileImg}

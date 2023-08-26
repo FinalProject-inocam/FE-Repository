@@ -21,6 +21,7 @@ const PretendardEB = css`
 `;
 
 const color = {
+
 	blackM: "#0E0D13",
 	blue: "#4c4cff",
 	lightblue: "#f2f2ff",
@@ -36,6 +37,7 @@ const color = {
 	gray: "#eeee",
 	darkGray: "#26252B",
 };
+
 
 /* About theme ---------------------------------------------- */
 

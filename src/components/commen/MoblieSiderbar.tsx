@@ -22,7 +22,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
             <SC.MSideNav
               key={nav[0]}
               children={nav[0]}
-              onClick={onNaigateSidebarToggle({ url: nav[1] })}
+              onClick={onNaigateSidebarToggle({ url: nav[2] })}
             />
           ))}
         </SC.RoutesArea>
@@ -35,7 +35,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     idx={idx}
                     nav={nav}
                     onClick={onNaigateSidebarToggle({
-                      url: nav[1],
+                      url: nav[2],
                       opts: { state: pathname },
                     })}
                   />
@@ -45,7 +45,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     idx={idx}
                     nav={nav}
                     onClick={onNaigateSidebarToggle({
-                      url: nav[1],
+                      url: nav[2],
                       opts: { state: pathname },
                     })}
                   />
@@ -58,7 +58,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     key={idx}
                     idx={idx}
                     nav={nav}
-                    onClick={onNaigateSidebarToggle({ url: nav[1] })}
+                    onClick={onNaigateSidebarToggle({ url: nav[2] })}
                   />
                 ) : (
                   <AuthAreaInner
@@ -75,7 +75,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     key={idx}
                     idx={idx}
                     nav={nav}
-                    onClick={onNaigateSidebarToggle({ url: nav[1] })}
+                    onClick={onNaigateSidebarToggle({ url: nav[2] })}
                   />
                 ) : (
                   <AuthAreaInner
@@ -108,7 +108,7 @@ const AuthAreaInner: React.FC<{
 }> = ({ idx, nav: [kor, eng], onClick }) => {
   return (
     <SC.AuthAreaNav
-      $color={idx === 0 ? "#4C4CFF" : "#2F2B3A"}
+      $color={idx === 0 ? "headerBlue1" : "headerBlue2"}
       onClick={onClick}
     >
       <p>{kor}</p>
