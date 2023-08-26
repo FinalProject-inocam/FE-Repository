@@ -22,20 +22,26 @@ const PretendardEB = css`
 
 const color = {
 
-	blackM: "#0E0D13",
-	blue: "#4c4cff",
-	lightblue: "#f2f2ff",
-	lightgray1: "#f3f3f8",
-	lightgray2: "#828293",
+	// 일반색상
+	blue: "#4C4CFF",
 	red: "#F2757A",
 	red2: "#FF162D",
 	green: "#539B39",
 	orange: "#FA8128",
 	purple: "#362783",
 	white: "white",
-	darkBlue: "#151565",
 	gray: "#eeee",
+	blackM: "#0E0D13",
+
+	// 밝은색상
+	lightblue: "#f2f2ff",
+	lightgray1: "#f3f3f8",
+	lightgray2: "#828293",
+	
+	// 어두운색상
 	darkGray: "#26252B",
+	darkgray2:"2F2B3A",
+	darkBlue: "#151565",
 };
 
 

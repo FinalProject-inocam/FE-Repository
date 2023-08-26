@@ -20,7 +20,7 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
 
   const sideBarNav = [
     ["Models", "innocar"],
-    ["Order", "communitywrite"],
+    ["Order", "innocar/order"],
     ["Community", "community"],
     ["Wrapping Shop", "wrapping"],
   ];
@@ -50,7 +50,7 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
       onNavigate({ url, opts })();
       setState
         ? setState((pre: boolean) => !pre)
-        : setHanbagerToggle((pre: boolean) => !pre);
+        : setHanbagerToggle(false);
     };
 
   // SplashScreenRef 아후, 헤더 - setTimeout

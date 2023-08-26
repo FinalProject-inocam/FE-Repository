@@ -1,4 +1,4 @@
-# INNOCAM-Moters
+# INNO-Moters
 
 ## 리팩토링
 
@@ -517,6 +517,199 @@
 
 </details>
 
--- [Fix] Github 환경변수 설정(인식오류)...
--- [Fix] Github 환경변수 설정(인식오류)... KEY -> API 수정
- 
+
+<details>
+<summary> Three.js 빌드파일 에러 </summary>
+
+  ```bash
+  main.01a24249.js:2 Error: Minified React error #426; visit https://reactjs.org/docs/error-decoder.html?invariant=426 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+  ```
+
+  - 컴포넌트가 마운트되기 전에 비동기 작업이 완료되어 해당 컴포넌트가 언마운트(unmounted)된 후에도 상태(state)를 업데이트하려고 할 때 발생
+  
+</details>
+
+## 도전기술
+
+  1. CD(지속적배포) : GithubAction - S3 파이프라인구축, ClouDFront-Route53(가비아) 
+
+      <details>
+      <summary>내용 상세보기</summary>
+
+      1. AWS - S3에 빌드파일 올리기 
+      2. AWS - IAM 사용자 생성(S3 CIL)
+      - 위의 1~2번 과정 [19Edwin92-Githup](https://github.com/19Edwin92/FrentEnd-study/blob/main/CICD/03S3-IAM%20설정.md) 참고하기 
+      <hr/>
+
+      3. Github-WorkFlows yml파일 기록하기 
+
+          <details>
+          <summary>파일경로, main.yml 파일 생성하기</summary>
+
+          ```bash
+          # 루트폴더
+          📂 .github
+              ┗ 📂 workflows
+                    ┗ 🗿 main.yml
+          ```
+
+          
+          - main.yml 파일 기록하기 
+            - name : github에 등록되는 이름
+            - on : yml 파일 실행 명렁어, 실행설정 dev(branches) 변경 시
+            - jobs : 해당 yml 파일의 할일 목록을 나열 
+              - steps : 하단의 내용이 `name`순으로 실행된다. 
+                - `Checkout repository` : 해당 저장소에 있는 코드를 깃허브 리눅스 컴퓨터로 가져오는 동작을 실행한다. 
+                - `AWS IAM 사용자 설정` : 깃허브에서 제공하는 리눅스 컴퓨터에 앞에서 설정한 AWS IAM을 등록한다. 
+                - `Setting .env` : 보안적인 측면을 고려하여, 프로젝트 파일에서 .env 를 두는 것이 아니라, Github-Actions 환경변수에 등록하여 보다 안전하게 환경변수가 활용되도록 하였다. 
+                - `Build` : 가져온 파일의 빌드 파일을 생성한다. 
+                - `Deploy to S3 bucket` : 빌드된 파일을 S3로 업로드 함으로 지속적 배포를 실행한다.<br/><br/> 
+
+            ```yml
+            name: CI/CD inocam_client to AWS S3
+
+            on:
+              push:
+                branches:
+                  - dev
+
+            jobs:
+              deploy:
+                runs-on: ubuntu-latest
+                steps:
+                  - name: Checkout repository
+                    uses: actions/checkout@v3
+
+                  - name: AWS IAM 사용자 설정
+                    uses: aws-actions/configure-aws-credentials@v2
+                    with:
+                      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                      aws-region: ${{ secrets.AWS_REGION }}  
+
+                  - name: Setting .env
+                    run: |
+                      echo "REACT_APP_KAKAO_REST_API=${{ secrets.REACT_APP_KAKAO_REST_API }}" >> .env
+                      echo "REACT_APP_KAKAO_REDIRECT_URL=${{ secrets.REACT_APP_KAKAO_REDIRECT_URL }}" >> .env
+                      echo "REACT_APP_GOOGLE_REST_API=${{ secrets.REACT_APP_GOOGLE_REST_API }}" >> .env
+                      echo "REACT_APP_GOOGLE_REDIRECT_URL=${{ secrets.REACT_APP_GOOGLE_REDIRECT_URL }}" >> .env
+                      echo "REACT_APP_NAVER_REST_API=${{ secrets.REACT_APP_NAVER_REST_API }}" >> .env
+                      echo "REACT_APP_NAVER_REDIRECT_URL=${{ secrets.REACT_APP_NAVER_REDIRECT_URL }}" >> .env
+                      echo "REACT_APP_SERVER_API=${{ secrets.REACT_APP_SERVER_API }}" >> .env  
+                      echo "REACT_APP_SOCKET_API=${{ secrets.REACT_APP_SOCKET_API }}" >> .env  
+                      echo "GENERATE_SOURCEMAP=${{ secrets.GENERATE_SOURCEMAP }}" >> .env
+                      cat .env
+                      
+                  - name: Build
+                    run: |
+                      npm install -g yarn
+                      yarn install --immutable
+                      yarn build    
+                    
+                  - name: Deploy to S3 bucket
+                    run: |
+                      aws s3 sync build/ s3://inocamfinal    
+            ```
+          </details></br>
+
+      4. AWS - Route53(가비아 DNS) -> 네임서버 등록하기 
+
+          <details>
+          <summary>Route53(가비아 DNS)</summary>
+
+          - 첫째, AWS Route53으로 이동 
+            - (1) `가비아` : 도메인 구매, innomotors.co.kr
+            - (2) `호스팅 영역 생성` 클릭하기 
+              - 도메인 이름 : `가비아`에서 구매한 도메인 등록
+              - 유형 : `퍼블릭 호스팅 영역` 선택
+              - `호스팅 영역생성` 버튼 클릭 
+            - (3) `가비아 네임서버` 등록하기 
+              - 네임서버(DNS) : IP주소와 도메인을 연결하는 과정을 수행 
+              - Route53의 레코드에서 생성된 네임서버는 총 4개인데, 이를 전부 가비아 네임서버에 등록해주면 된다. 
+                - 이때, Route53 `값/트래픽 라우팅 대상`의 4개의 네임서버 마지막에 `"."` 구두점은 제외하고 기록한다. 
+                  - ns-0000.awsdns-00.org
+                  - ns-0000.awsdns-00.com
+                  - ns-0000.awsdns-00.net
+                  - ns-0000.awsdns-00.co.uk
+
+          </details><br/>
+      5. AWS - ACM을 통해서, SSL 인증서 발급받기 
+
+          <details>
+          <summary>SSL 인증서 발급받기, AWS Certificate Manager(ACM)</summary>
+
+          - 첫째, `인증서 요청` 
+            - `퍼블릭 인증서 요청` >> 다음
+              - 도메인 이름(가비아에서 구매한 도메인)에 대해서 두 종류로 입력 
+                - innomotors.co.kr
+                - *.innomotors.co.kr
+                - `요청` 버튼 클릭
+            - 일정 시간이 지나면 SSL이 발급된다. 대략 1~2시간 정도 소요된다.    
+
+          </details><br/>  
+
+      6. CloudFront 배포 생성하기 
+
+              Amazon CloudFront는 S3에 등록한 정적 및 동적 웹 콘텐츠를 사용자에게 배포하는 속도를 높여주는 웹 서비스의 일환이다. CloudFront는 엣지 로케이션이라고 하는 전 세계 데이터 센터 네트워크를 통해 콘텐츠를 제공하여, 사용자에게 가장 가까운 엣지 로케이션으로 라우팅되게 하여, 네트워크를 좀 더 빠르고 효율적으로 사용하도록 한다. 
+
+              이때 위에서 인증받은 SSL 인증서가 있으면, HTTPS로 배포가 가능하다. 
+
+          <details>
+          <summary>CloudFront 배포하기</summary>
+
+          - 첫째, `배포생성` 버큰 클릭하기 
+            - `원본 도메인` : 포커스를 두면, S3에서 배포한 사이트 주소를 확인할 수 있다. 그중에 해당 사이트를 클릭한다. 
+            - 클릭 한 후, 최근에는 버킷 엔드포인트 대신 S3 웹 사이트 엔드포인트를 사용하는 것이 좋다는 메시지를 볼 수 있는데, 해당 버튼을 클릭한다. `웹 사이트 엔드포인트 사용`
+            - `Origin Shield 활성화`를 예로 클릭하고, `Origin Shield 리전`을 아시아 태평양(서울)로 설정하였다. 
+            - 하단의 뷰어 프로토콜 정책을 `Redirect HTTP to HTTPS`로 변경함으로 https 사용을 설정했으며
+            - `웹 애플리케이션 방화벽`은 보안 보호 비활성화를
+            - `대체 도메인 이름(CNAME) - 선택 사항`에 위에서 발급받은 도메인 두 개를 넣어준다. 
+              - innomotors.co.kr
+              - www.innomotors.co.kr
+            - `사용자 정의 SSL 인증서 - 선택 사항`에서는 발급받은 인증서를 넣어주였다. 
+            - `기본값 루트 객체 - 선택 사항`가 중요한데, `index.html`을 입력해 준다. 
+            - 이후, `배포 생성` 버튼을 클릭하면 된다. 
+            
+          </details><br/>
+          
+      7. Route 53 호스팅 영역 레코드 추가하기 
+
+              CNAME(Canonical Name Record)
+              - 기능: 하나의 도메인 이름을 다른 도메인 이름으로 매핑한다.
+              - 용도: 주로 서브도메인을 메인 도메인 또는 다른 서비스로 리다이렉트 하는 데 사용된다.
+              - 제한사항: 루트 레벨이서는 사용할 수 없다.
+              - www.innomotors.co.kr -> innomotors.co.kr
+              - blog.innomotors.co.kr -> innomotors.co.kr
+              - DNS조회: 추가적인 DNS조회가 필요해 약간의 지연을 발생 시킬수 있습니다.
+
+              ALIAS
+              - 기능: 하나의 도메인 이름을 다른 도메인 이름 또는 AWS 리소스로 매팡한다.
+              - 용도: AWS 리소스 (ELB, CloudFront, S3 등)을 도메인에 매핑하는데 사용한다.
+              - 제한사항: ALIAS 레코드는 AWS Router53에서만 사용이 가능하고 루트 도메인에서도 사용할 수 있다.
+              - DNS조회: 내부적으로 최적화가 되어있어 DNS조회 없이 빠른 응답이 가능합니다.
+
+          <details>
+          <summary>레코드 등록하기</summary>
+
+              레코드 : 인터넷 리소스를 식별하는 역할
+
+          - 첫째, `호스팅 영역 생성` -> `레코드 생성` 버튼을 생성한다. 
+          - www.inno.... 
+            - 레코드이름 : www. 붙여주고
+            - 레코드유형 : CNAME - 다른 도메인 이름과 일부 AWS 리소스로 트래픽 라우팅
+            - 값 : 위에서 배포한 CloudFront 도메인을 기록한다. 
+            - `레코드 생성` 버튼 클릭
+          - 둘째, inno....
+            - 레코드 이름 : 빈칸
+            - 레코드 유형 : A-IPv4 주소 및 일부 AWS 리소스로 트래픽 라우팅
+            - 별칭 토글버튼 클릭 -> `CloudFront 배포에 대한 별칭` -> 해당 CloudFront 도메인을 설정
+            - `레코드 생성` 버튼 클릭
+            
+          </details><br/>          
+
+      </details><br/>
+
+
+
+
+

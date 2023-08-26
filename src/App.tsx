@@ -13,10 +13,10 @@ const App: React.FC = () => {
 				{/* 헤더에 따른 중첩라우터 :: MainRouter */}
 				<Route path='/' element={<Page.MainRouter />}>
 					<Route index element={<Page.Home />} />
-					<Route path='innocar' element={<Suspense fallback={<div>Loading...</div>}><Page.LazyInnoCar /></Suspense>} />
-					<Route path='community' element={<Suspense fallback={<div>Loading...</div>}><Page.LazyCommunity /></Suspense>} />
+					<Route path='innocar' element={<Page.InnoCar/>} />
+					<Route path='community' element={<Page.Community />} />
 					<Route path='community/:id' element={<Page.CommunityDetail />} />
-					<Route path='wrapping' element={<Suspense fallback={<div>Loading...</div>}><Page.LazyWrapping /></Suspense>} />
+					<Route path='wrapping' element={<Page.Wrapping />} />
 					<Route path='wrapping/:id' element={<Page.WrappingDetail />} />
 				</Route>
 

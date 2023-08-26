@@ -22,7 +22,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
             <SC.MSideNav
               key={nav[0]}
               children={nav[0]}
-              onClick={onNaigateSidebarToggle({ url: nav[2] })}
+              onClick={onNaigateSidebarToggle({ url: nav[1] })}
             />
           ))}
         </SC.RoutesArea>
@@ -75,7 +75,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     key={idx}
                     idx={idx}
                     nav={nav}
-                    onClick={onNaigateSidebarToggle({ url: nav[2] })}
+                    onClick={onNaigateSidebarToggle({ url: nav[1] })}
                   />
                 ) : (
                   <AuthAreaInner
@@ -108,7 +108,7 @@ const AuthAreaInner: React.FC<{
 }> = ({ idx, nav: [kor, eng], onClick }) => {
   return (
     <SC.AuthAreaNav
-      $color={idx === 0 ? "headerBlue1" : "headerBlue2"}
+      $color={idx === 0 ? "blue" : "darkgray"}
       onClick={onClick}
     >
       <p>{kor}</p>

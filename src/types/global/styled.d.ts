@@ -10,7 +10,7 @@ export interface Styled {
   $types: string;
   $size: number;
   $mSize: number;
-  $state: boolean;
+  $state: boolean | number;
   $font: string;
   $borderR: string;
   $borderTopRightR: string;

@@ -2,6 +2,8 @@ import React from "react";
 import * as SC from "../css";
 import * as CP from "../commen";
 import { useMainHeader } from "../../hooks";
+import { FigureObjectFitImg } from "../atom";
+import { mainLogo, mainLogoB } from "../../assets/logo";
 
 export const MainHeader: React.FC = () => {
   const {
@@ -20,7 +22,7 @@ export const MainHeader: React.FC = () => {
       <SC.HeaderOutLine $scrolly={scrolly}>
         <SC.HeaderLayout $scrolly={scrolly}>
           <SC.HeaderLogo onClick={onNaigateSidebarToggle({ url: "/" })}>
-            INNOCAM
+            <FigureObjectFitImg width={"179px"} height={"50px"} src={scrolly.scrolly <= scrolly.innerHeight ? mainLogo : mainLogoB} alt="mainLogo" />
           </SC.HeaderLogo>
           {/* DeskTop 네비바, 1024px 이상일 때 생성 */}
           <CP.DeskTopNavbar />
