@@ -24,10 +24,9 @@ export interface DetailCommunity extends TotalCommunity {
 	commentsList: CommunityComments[];
 }
 
-/* / WrappingShop 관련 타입 / -------------------------------------------------------- */
-export interface WrappingShop {
+/* / WrappingShop 관련 타입 / -------------------------------------------------------- */ export interface WrappingShop {
 	avgStar: number;
-	isLike: false;
+	isLike: boolean;
 	latitude: number;
 	likeCount?: number;
 	like_count?: number; // 나중에 삭제하기
@@ -42,6 +41,8 @@ export interface WrappingShopDetail extends WrappingShop {
 	address: string;
 	banner: string[];
 	reviews: Review[];
+	reviewImageSize: number;
+	reviewCount: number;
 }
 
 export interface TotalWrappingShopReview extends WrappingShopReview {

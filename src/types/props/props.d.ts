@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, ReactChild } from "react";
 import { AsyncHooksDefault } from "../hooks";
 
 export type SetState = Dispatch<SetStateAction<boolean>>;
@@ -13,8 +13,8 @@ export interface FigureImg {
 	alt: string;
 	width: string;
 	height?: string;
-	overflow?: string;
-	borderR?: string;
+	types?: string;
+	children?: ReactChild;
 }
 
 export interface EditComment {
@@ -34,17 +34,14 @@ export interface WrappingDetailProps extends AsyncHooksDefault {
 }
 
 export interface WrappingDetailStar {
-	star: number;
-	width: string;
-	height: string;
-	handleStarClick: (starNumber: number) => void;
+	size: number;
 }
 
 export interface WrappingDetailStyled {
 	$bgColor?: string;
 	$bColor?: string;
 	$color?: string;
-	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "default";
+	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "login" | "default";
 	$outlined?: boolean;
 	children?: React.ReactNode;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;

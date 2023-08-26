@@ -37,10 +37,10 @@ const axiosBaseQuery =
 							"Content-Type": "multipart/form-data",
 						},
 					});
-					console.log("이거임", data);
 					return { data: postMultipart.data };
 				case "getData":
 					const getData = await instance({ url, method });
+					// console.log(getData.data);
 					return { data: getData.data.data };
 				default:
 					const res = await instance({ url, method, data });
@@ -57,88 +57,88 @@ const axiosBaseQuery =
 	};
 
 export const inocamRTK = createApi({
-  baseQuery: axiosBaseQuery(),
-  tagTypes: [
-    "POSTS",
-    "POSTDETAIL",
-    "POSTCOMMENT",
-    "KAKAO",
-    "ICOCAR",
-    "PURCHASESCHAR",
-    "WRAPPINGSHOP",
-    "WRAPPINGSHOPCOMMENT",
-    "WRAPPINGSHOP_D",
-    "MYPAGE",
-    "PURCHASESCHARTY"
-  ],
-  endpoints(build) {
-    return {
-      /* / 01 Auth / -------------------------------------------------------- */
-      // loginRTK
-      postLogin: build.mutation({
-        query: (data) => ({
-          url: "/api/auth/login",
-          method: "post",
-          data,
-          types: "login",
-        }),
-      }),
-      // getLogout
-      getLogout: build.query({
-        query: () => ({
-          url: `/api/auth/logout`,
-          method: "get",
-          types: "logout",
-        }),
-      }),
-      // SNSLogin - kakao, google, naver
-      loginSNSRTK: build.query({
-        query: ({ types, code }) => ({
-          url: `/api/auth/login/${types}${code}`,
-          method: "get",
-        }),
-      }),
-      // Signup
-      postSignup: build.mutation({
-        query: (data) => ({
-          url: "/api/auth/signup",
-          method: "post",
-          data,
-          types: "signup",
-        }),
-      }),
-      // getEmailCheck
-      getEmailCheck: build.query({
-        query: (email) => ({
-          url: `/api/auth/email?email=${email}`,
-          method: "get",
-          types: "getCheck",
-        }),
-      }),
-      // getNickNameCheck
-      getNickCheck: build.query({
-        query: (nickname) => ({
-          url: `/api/auth/nickname?nickname=${nickname}`,
-          method: "get",
-          types: "getCheck",
-        }),
-      }),
-      // getCertificateCheck
-      getCertificateEmail: build.query({
-        query: (email) => ({
-          url: `/api/auth/verify?email=${email}`,
-          method: "get",
-          types: "getCheck",
-        }),
-      }),
-      // getCertificateCode
-      getCertificateCode: build.query({
-        query: ({ email, code }) => ({
-          url: `/api/auth/checkcode?email=${email}&code=${code}`,
-          method: "get",
-          types: "getCheck",
-        }),
-      }),
+	baseQuery: axiosBaseQuery(),
+	tagTypes: [
+		"POSTS",
+		"POSTDETAIL",
+		"POSTCOMMENT",
+		"KAKAO",
+		"ICOCAR",
+		"PURCHASESCHAR",
+		"WRAPPINGSHOP",
+		"WRAPPINGSHOPCOMMENT",
+		"WRAPPINGSHOPD",
+		"MYPAGE",
+		"PURCHASESCHARTY",
+	],
+	endpoints(build) {
+		return {
+			/* / 01 Auth / -------------------------------------------------------- */
+			// loginRTK
+			postLogin: build.mutation({
+				query: (data) => ({
+					url: "/api/auth/login",
+					method: "post",
+					data,
+					types: "login",
+				}),
+			}),
+			// getLogout
+			getLogout: build.query({
+				query: () => ({
+					url: `/api/auth/logout`,
+					method: "get",
+					types: "logout",
+				}),
+			}),
+			// SNSLogin - kakao, google, naver
+			loginSNSRTK: build.query({
+				query: ({ types, code }) => ({
+					url: `/api/auth/login/${types}${code}`,
+					method: "get",
+				}),
+			}),
+			// Signup
+			postSignup: build.mutation({
+				query: (data) => ({
+					url: "/api/auth/signup",
+					method: "post",
+					data,
+					types: "signup",
+				}),
+			}),
+			// getEmailCheck
+			getEmailCheck: build.query({
+				query: (email) => ({
+					url: `/api/auth/email?email=${email}`,
+					method: "get",
+					types: "getCheck",
+				}),
+			}),
+			// getNickNameCheck
+			getNickCheck: build.query({
+				query: (nickname) => ({
+					url: `/api/auth/nickname?nickname=${nickname}`,
+					method: "get",
+					types: "getCheck",
+				}),
+			}),
+			// getCertificateCheck
+			getCertificateEmail: build.query({
+				query: (email) => ({
+					url: `/api/auth/verify?email=${email}`,
+					method: "get",
+					types: "getCheck",
+				}),
+			}),
+			// getCertificateCode
+			getCertificateCode: build.query({
+				query: ({ email, code }) => ({
+					url: `/api/auth/checkcode?email=${email}&code=${code}`,
+					method: "get",
+					types: "getCheck",
+				}),
+			}),
 
 			/* / 02 Purchases 관련(Innocar, MyPage, AdminPage) / -------------------------------------------------------- */
 			// postPurchases - 차량신청 차량 출고 신청
@@ -288,17 +288,36 @@ export const inocamRTK = createApi({
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["WRAPPINGSHOP_D"],
+				providesTags: ["WRAPPINGSHOPD"],
 			}),
 
 			// getWrappingShop - 랩핑샵 리뷰 조회(re)
-			getWrappingShopDetailReviews: build.query({
-				query: ({ shopId }) => ({
-					url: `/api/shops/${shopId}/reviews?page=1&size=10`,
+			getWSDetailReviews: build.query({
+				query: ({ shopId, page }) => ({
+					url: `/api/shops/${shopId}/reviews?page=${page}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["WRAPPINGSHOP_D"],
+				// serializeQueryArgs: ({ endpointName }) => {
+				// 	// console.log("getWSDetailReviews-serializeQueryArgs", endpointName);
+				// 	return endpointName;
+				// },
+				// merge: (currentCache, newItems) => {
+				// 	// console.log("getWSDetailReviews-currentCache", currentCache.content, newItems.content);
+				// 	currentCache.first = newItems.first;
+				// 	currentCache.last = newItems.last;
+				// 	currentCache.number = newItems.number;
+				// 	currentCache.content.push(...newItems.content);
+				// },
+				// /*
+				// 	serializeQueryArgs : 어떤 이유로 캐시키 생성을 변경해야하는 경우, 사용자 정의 기능을 허용
+				// 	merge : 들어오는 응답 값을 현 캐시 데이터에 병합하기 위해 사용, RTKQ는 일반적으로 캐시 항목을 새 응답으로 대체하기에, 기존 캐시 항목을 유지하려면, serializeQueryArgs + forceRefetch 를 사용해야한다.
+				// */
+				// forceRefetch({ currentArg, previousArg }) {
+				// 	// console.log("getWSDetailReviews-forceRefetch", currentArg, previousArg);
+				// 	return currentArg !== previousArg;
+				// },
+				providesTags: ["WRAPPINGSHOPD"],
 			}),
 
 			// postWrappingShopComment - 래핑샵 댓글작성
@@ -309,7 +328,7 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOP_D"],
+				invalidatesTags: ["WRAPPINGSHOPD"],
 			}),
 
 			// DeleteWrappingShopComment - 래핑샵 댓글 삭제
@@ -318,10 +337,10 @@ export const inocamRTK = createApi({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
 					method: "delete",
 				}),
-				invalidatesTags: ["WRAPPINGSHOP_D"],
+				invalidatesTags: ["WRAPPINGSHOPD"],
 			}),
 
-			// pathWrappingShopComment - 차량출고 커뮤니티 댓글수정
+			// pathWrappingShopComment - 랩핑샵 댓글 수정
 			patchWrappingComment: build.mutation({
 				query: ({ shopId, reviewId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
@@ -329,7 +348,16 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOP_D"],
+				invalidatesTags: ["WRAPPINGSHOPD"],
+			}),
+
+			// pathWrappingShopComment - 랩핑샵 리뷰 좋아요
+			patchWrappingShopDetailLike: build.mutation({
+				query: ({ shopId, reviewId }) => ({
+					url: `/api/shops/${shopId}/reviews/${reviewId}/like`,
+					method: "patch",
+				}),
+				invalidatesTags: ["WRAPPINGSHOPD"],
 			}),
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			getMyPage: build.query({
@@ -350,20 +378,17 @@ export const inocamRTK = createApi({
 				}),
 				invalidatesTags: ["MYPAGE"],
 			}),
-			/* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */      
+			/* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */
 			getpurchasesChartY: build.query({
 				query: (year) => ({
 					url: `/api/admin/stats/purchases/year?cal=${year}`,
-          method: "get",
-          types: "getAdminData",
+					method: "get",
+					types: "getAdminData",
 				}),
 				providesTags: ["PURCHASESCHARTY"],
 			}),
 		};
 	},
-	
-
-
 });
 
 export const {
@@ -401,14 +426,15 @@ export const {
 	// WrappingShop 관련
 	useGetWrappingQuery,
 	useGetWrappingShopDetailQuery,
-	useGetWrappingShopDetailReviewsQuery,
+	useGetWSDetailReviewsQuery,
 	usePostWrappingCommentMutation,
 	useDeleteWrappingCommentMutation,
 	usePatchWrappingCommentMutation,
+	usePatchWrappingShopDetailLikeMutation,
 
 	// MyPage 관련
 	useGetMyPageQuery,
 	usePatchMyPageMutation,
-    // ADMIN
-  useGetpurchasesChartYQuery
+	// ADMIN
+	useGetpurchasesChartYQuery,
 } = inocamRTK;

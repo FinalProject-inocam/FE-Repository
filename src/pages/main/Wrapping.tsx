@@ -24,7 +24,7 @@ export const Wrapping: React.FC = () => {
 		<div>
 			<SC.Section $gtc='467px 1fr'>
 				{/* 1 랩핑샵 리스트  */}
-				<CP.WraappingContent
+				<CP.WrappingContent
 					isLoading={isLoading}
 					isSuccess={isSuccess}
 					isError={isError}
