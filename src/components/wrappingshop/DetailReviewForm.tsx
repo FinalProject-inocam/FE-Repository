@@ -9,12 +9,7 @@ export const DetailReviewForm: FC = () => {
 	return (
 		<SC.ReviewFormLayout onSubmit={onSubmitReview} $gtc='80px 1fr' $cgap={20}>
 			<SC.CustomH3 $types='revisit'>nickName</SC.CustomH3>
-			<SC.FlexBox
-				$fd='column'
-				$gap={10}
-				$ai='flex-start'
-				$jc='flex-start'
-				style={{ border: "1px solid red", position: "relative" }}>
+			<SC.FlexBox $fd='column' $gap={10} $ai='flex-start' $jc='flex-start' style={{ position: "relative" }}>
 				<SC.SubmitInput type='submit' value='리뷰작성하기' $bColor='blue' $borderR='5px' $types='reviewForm' />
 				<SC.ReviewFormFlex $gap={20}>
 					<CP.StarPointer size={20} />
