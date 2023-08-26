@@ -11,7 +11,7 @@ export const GlobalStyled = sc.createGlobalStyle`
   h1, h2, h3, h4, h5, h6,
   p, a, img, ol, ul, li, fieldset,
   form, label, legend, article,figure,
-  input,
+  input,textarea,
   figcaption, footer, header,nav, section {
     box-sizing: border-box;
     margin: 0;
@@ -77,6 +77,7 @@ const FlexBox = sc.styled.div<Partial<Styled>>`
 
 const GridBox = sc.styled.div<Partial<Styled>>`
   ${Grid}
+  width:100%;
   background-color:${({ $color }) => $color};
 `;
 
@@ -106,11 +107,26 @@ const Figure = sc.styled.figure<Partial<Styled>>`
 `;
 
 const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
-   position: relative;
+  position: relative;
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
-  overflow?: ${({ $overflow }) => $overflow};
-  border-radius?: ${({ $borderR }) => $borderR};
+
+  ${({ $types }) =>
+		$types === "reviewBanner" &&
+		sc.css`
+      z-index:2;
+      height : 159px;
+      overflow : hidden;
+      border-radius : 10px;
+    `}
+    ${({ $types }) =>
+		$types === "prevImage" &&
+		sc.css`
+      overflow : hidden;
+      border-radius : 4px;
+    `}
+
+
 
   img {
     position: absolute;
@@ -128,15 +144,68 @@ const RouterLayout = sc.styled.div<Partial<Styled>>`
   ${Flex};
 `;
 
+const CustomH1 = sc.styled.h1<Partial<Styled>>`
+	font-size: 1.25rem;
+	font-weight: bold;
+  color : ${({ $color, theme }) => $color && theme.color[$color]}
+`;
+
+const CustomH2 = sc.styled.div`
+	font-size: 1rem;
+	color: #999999;
+`;
+
+const CustomH3 = sc.styled.h3<Partial<Styled>>`
+
+	font-size: ${({ $size }) => `${$size}px`};
+  font-weight: 500;
+
+  ${({ $types }) =>
+		$types === "revisit" &&
+		sc.css`
+      width: 105px;
+      height: 36px;
+      line-height: 36px;
+   `}
+`;
+
+const CustomBtn = sc.styled.div<Partial<Styled>>`
+  ${({ theme }) => theme.btnSize.primary}
+  ${cursor}
+  color : ${({ $color }) => $color};
+  border-radius : ${({ $borderR }) => $borderR};
+  border: 1px solid ${({ $bColor }) => $bColor};
+  ${({ $bColor, theme }) =>
+		$bColor === "blue"
+			? sc.css`
+      background-color: ${theme.color[$bColor]};
+      color:${theme.color.white};
+    `
+			: null}
+
+  ${({ $types }) =>
+		$types === "reviewForm"
+			? sc.css`
+      position:absolute;
+      top: 0;
+      right:0;
+    `
+			: null}
+`;
+
 export {
-  Flex,
-  Grid,
-  cursor,
-  FlexBox,
-  GridBox,
-  GridMergedSpace,
-  GridMergedSpaceFlex,
-  Figure,
-  FigureObjectFit,
-  RouterLayout,
+	Flex,
+	Grid,
+	cursor,
+	FlexBox,
+	GridBox,
+	GridMergedSpace,
+	GridMergedSpaceFlex,
+	Figure,
+	FigureObjectFit,
+	RouterLayout,
+	CustomH1,
+	CustomH2,
+	CustomH3,
+	CustomBtn,
 };

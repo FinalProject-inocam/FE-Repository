@@ -7,21 +7,25 @@ const DetailOutline = styled.div<Partial<Type.Styled>>`
 	${Flex}
 	margin: 0 auto;
 	background-color: #efefef;
-	/* height: 100vh; */
 `;
 
 // Map ------------------------------------
 const DetailKakaoMaps = styled.div`
 	position: relative;
 	width: 100%;
-	padding-top: ${({ theme }) => theme.headerHeight.desktop};
-	min-height: 490px;
-	margin-bottom: 30px;
 
 	section {
 		width: 100%;
-		height: 100%;
 		min-height: 490px;
+		transition: all 0.1s linear;
+	}
+
+	@media (max-width: 1024px) {
+		min-height: 320px;
+		padding-top: ${({ theme }) => theme.headerHeight.mobile};
+		section {
+			min-height: 250px;
+		}
 	}
 `;
 
@@ -37,12 +41,15 @@ const MapFadeBottom = styled.div`
 // DetailContent ------------------------------------
 const DetailContent = styled.section<Partial<Type.Styled>>`
 	${Grid}
+	grid-template-columns: repeat(1, 1fr);
 	max-width: 1440px;
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
-	padding: 0 72px;
-	/* border: 1px dotted red; */
+	border: 1px dotted red;
+	@media (min-width: 1024px) {
+		grid-template-columns: 467px 1fr;
+	}
 `;
 
 // Banner --------------------------------
@@ -66,22 +73,6 @@ const BannerItem = styled.div<Partial<Type.Styled>>`
 	border: 1px solid black;
 `;
 
-const BannerImage = styled.img`
-	width: 100%;
-	height: 100%;
-	inset: 0px;
-	display: block;
-	object-fit: cover;
-	opacity: 1;
-	transition: opacity 500ms ease-in-out 0s;
-	z-index: 1;
-
-	&:hover {
-		transform: scale(1.05);
-		border-color: rgba(249, 249, 249, 0.8);
-	}
-`;
-
 const BannerWrapper = styled.div<Partial<Type.Styled>>`
 	display: flex;
 	justify-content: space-between;
@@ -100,70 +91,19 @@ const RightBanner = styled.div<Partial<Type.Styled>>`
 	border-radius: 10px;
 `;
 
-const MoreButton = styled.button`
-	${cursor}
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.6);
-	border: none;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
-	font-size: 2.5rem;
-	font-weight: bold;
-`;
-
 // Info --------------------------------
-const DetailLeftOutLine = styled.div`
-	position: relative;
-`;
-
-const DetailLeftShopInfoLayout = styled.div`
+const DetailInfoLayout = styled.div`
 	background-color: #ffffff;
-	padding-top: 30px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 30px;
-`;
-
-const DetailLeftBanner = styled.div`
+	border-radius: 10px 10px 0 0;
 	overflow: hidden;
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-	font-size: 20px;
-	font-weight: 600;
+	width: 100%;
 `;
 
-const WrappingShopName = styled.div`
-	font-size: 1.25rem;
-	font-weight: bold;
-	margin-bottom: 10px;
-`;
-
-const WrappingShopAddress = styled.div`
-	font-size: 1rem;
-	color: #999999;
-`;
-
-const DetailLeftShopScoreOutline = styled.div`
-	margin-top: 5px;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	padding-left: 20px;
-	padding-right: 20px;
-	background-color: #fff;
-`;
-
-const ReviewCountTitleLayout = styled.div`
-	margin-bottom: 20px;
-	display: flex;
-	flex-direction: row;
+const DetailInfoInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	width:100%;
+	padding: 30px 20px;
+	background-color: #ffffff;
 `;
 
 const ReviewCountTitleItem = styled.div<Partial<Type.Styled>>`
@@ -171,11 +111,6 @@ const ReviewCountTitleItem = styled.div<Partial<Type.Styled>>`
 	font-weight: 600;
 	margin-left: ${(props) => (props.$highlight ? "10px" : "0")};
 	color: ${(props) => (props.$highlight ? "#4c4cff" : "black")};
-`;
-
-const ReviewScoreLayout = styled.div`
-	${Flex}
-	align-items: center;
 `;
 
 const ReviewScoreInner = styled.div<Partial<Type.Styled>>`
@@ -194,91 +129,83 @@ const ReviewScoreItem = styled.div<Partial<Type.Styled>>`
 	color: ${(props) => (props.$highlight ? "#1d1d1f" : "#555555")};
 `;
 
-const ReviewStarItem = styled.div`
-	font-size: 30px;
+const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	text-align: center;
+	height: 70px;
+	background-color: ${({ $bgColor, theme }) => $bgColor && theme.color[$bgColor]};
+	border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
 `;
 
-// Review --------------------------------
-const DetailRightOutLine = styled.div`
+// DetailReviewBanner --------------------------------
+const ReviewBannerGridBox = styled.div<Partial<Type.Styled>>`
+	${Grid}
+	grid-template-columns: repeat(1, 1fr);
 	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		height: 50%;
+		background-color: #ffffff;
+	}
+
+	@media (min-width: 1024px) {
+		grid-template-columns: repeat(2, 222.5px);
+	}
+	@media (min-width: 1200px) {
+		grid-template-columns: repeat(3, 222.5px);
+	}
+	@media (min-width: 1440px) {
+		grid-template-columns: repeat(4, 222.5px);
+	}
 `;
 
-const DetailRightBannerInner = styled.div`
-	overflow: hidden;
-	border-radius: 10px;
-	position: relative;
+const ReviewBannerMoreBtn = styled.button`
+	${Flex}
+	${cursor}
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: none;
+
+	color: #ffffff;
+	font-size: 2.5rem;
+	font-weight: bold;
 `;
 
-const DetailRightFormOutLine = styled.div`
-	display: flex;
-	flex-direction: column;
-	background-color: #ffffff;
-	margin-top: 80px;
+// ReviewStarPointer --------------------------------
+const StarImg = styled.img<Partial<Type.Styled>>`
+	width: ${({ $size }) => `${$size}px`};
+	height: ${({ $size }) => `${$size}px`};
 `;
 
-const DetailRightFormLayout = styled.form`
-	margin-top: 8.4%;
-
-	padding-top: 30px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 30px;
-`;
-
-const DetailRightFormUpperInner = styled.div`
-	display: flex;
-	justify-content: space-between;
-`;
-
-const DetailRightFromUpperButtons = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	width: 442px;
-	margin-bottom: 10px;
-`;
-
-const DetailRightReviewsOutline = styled.div`
+// DetailReviewList --------------------------------
+const ReviewsOutline = styled.div`
 	margin-top: 20px;
 	background-color: #ffffff;
 `;
 
-const DetailRightReviewOutline = styled.div`
-	padding-top: 22px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 30px;
-	display: flex;
-	flex-direction: column;
+const ReviewLayout = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	padding: 22px 20px 30px;
 	border-bottom: 3px solid #eee;
 `;
 
-const ReviewUpperLayout = styled.div<Partial<Type.Styled>>`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+const ReviewUserInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	/* width: 302.5px; */
+	width: 100%;
 `;
 
-const ReviewUserInner = styled.div`
-	display: flex;
-	/* justify-content: space-between; */
-	align-items: center;
-	width: 302.5px;
-	gap: 20px;
-`;
-
-const ReviewMenuInner = styled.div`
-	display: flex;
-
-	p {
-		font-size: 16px;
-		margin-left: 10px;
-		color: #828295;
-	}
-`;
-
-const ReviewUserName = styled.div`
-	display: flex;
+const ReviewUserName = styled.div<Partial<Type.Styled>>`
+	${Flex}
 	max-width: 74px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -289,36 +216,44 @@ const ReviewUserName = styled.div`
 	flex: 1;
 `;
 
-const ReviewStarContainer = styled.div`
-	display: flex;
-	align-items: center;
+const ReviewStar = styled.div`
+	${Flex}
 	margin-right: 5px;
 `;
 
-const ReviewStar = styled.div`
-	color: #4c4cff;
-`;
 const ReviewScore = styled.div`
+	${Flex}
 	line-height: 20px;
 	height: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	text-align: center;
 `;
 
-const ReviewImageInner = styled.div`
-	margin-top: 22px;
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
+const ReviewRevisit = styled.div`
+	color: #4c4cff;
 `;
 
-const ReviewContentsLayout = styled.div`
+const ReviewMenuInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
+	width: 100%;
+
+	p {
+		font-size: 16px;
+		margin-left: 10px;
+		color: #828295;
+	}
+`;
+
+const ReviewText = styled.div`
+	padding-left: 93px;
+	padding-right: 219px;
+`;
+
+const ReviewImageInner = styled.div<Partial<Type.Styled>>`
+	${Flex}
 	padding-left: 93px;
 `;
 
-const ReviewImageWrapper = styled.div`
+const ReviewImage = styled.div`
 	border: 1px solid #c7c7cb;
 	width: 101px;
 	height: 101px;
@@ -326,70 +261,103 @@ const ReviewImageWrapper = styled.div`
 	overflow: hidden;
 `;
 
-const ReviewRevisit = styled.div`
-	color: #4c4cff;
-`;
-
-const ReviewCommentImg = styled.img`
-	width: 100%;
-	height: 100%;
-`;
-
-const RightReviewOutline = styled.div`
-	height: calc(100vh - 490px);
-	padding-left: 20px;
-	padding-right: 20px;
-	overflow-y: scroll;
-`;
-
-const ReviewContentsTextItem = styled.div`
-	margin-top: 22px;
-	padding-right: 219px;
-`;
-
-const ReviewFromUserName = styled.div`
-	display: flex;
-	color: #555555;
-	flex: 1;
-`;
-
-const ReviewFormReviewInputInner = styled.div`
-	padding-left: 100px;
-	margin-bottom: 10px;
-`;
-
-const ReviewFormReviewInput = styled.textarea`
-	border: solid 1px #c7c7cb;
-	width: 812px;
-	height: 100px;
-	padding: 20px 70px 20px 23px;
-	background-color: #f3f3f8;
-	font-size: 16px;
-`;
-
-const ReviewUploadImageButton = styled.label`
+// DeteailReviewForm
+const ReviewFormFlex = styled.div<Partial<Type.Styled>>`
 	${Flex}
-	padding-left: 10px
+	@media (max-width: 700px) {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
 `;
 
-const ReviewPreviewImageLayout = styled.div`
-	display: flex;
-	flex-direction: row;
+const SubmitInput = styled.input<Partial<Type.Styled>>`
+	${({ theme }) => theme.btnSize.primary}
+	${cursor}
+color : ${({ $color }) => $color};
+	border-radius: ${({ $borderR }) => $borderR};
+	border: 1px solid ${({ $bColor }) => $bColor};
+	${({ $bColor, theme }) =>
+		$bColor === "blue"
+			? css`
+					background-color: ${theme.color[$bColor]};
+					color: ${theme.color.white};
+			  `
+			: null}
+
+	${({ $types }) =>
+		$types === "reviewForm"
+			? css`
+					position: absolute;
+					top: 0;
+					right: 0;
+			  `
+			: null}
 `;
 
-const ReviewPreviewImageInner = styled.div`
-	padding-left: 100px;
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
+const ReviewFormLayout = styled.form<Partial<Type.Styled>>`
+	${Grid}
+	background-color: #fff;
+	width: 100%;
+	height: 313px;
+	padding: 30px 20px;
 `;
-const ReviewPreviewImageItem = styled.img`
-	width: 101px;
-	height: 101px;
-	flex-grow: 0;
-	border-radius: 4px;
-	border: solid 1px #c7c7cb;
-	background-color: #f3f3f8;
+
+// RevisitRadio
+const RevisitRadioLabel = styled.label<Partial<Type.Styled>>`
+	${cursor}
+	display: block;
+	width: 105px;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	border: 1px solid ${({ theme }) => theme.color.lightgray2};
+	border-radius: 5px;
+	color: ${({ theme }) => theme.color.lightgray2};
+
+	${({ $state, theme }) =>
+		$state === 1
+			? css`
+					background-color: ${theme.color.lightblue};
+					color: ${theme.color.blue};
+					border-color: ${theme.color.blue};
+			  `
+			: $state === 2 &&
+			  css`
+					color: ${theme.color.red};
+					border-color: ${theme.color.red};
+			  `};
+`;
+
+const TextaAreaLayout = styled.div`
+	position: relative;
+	width: 100%;
+`;
+
+const TextArea = styled.textarea`
+	display: block;
+	width: 100%;
+	height: 100px;
+	resize: none;
+	padding: 10px;
+	border: 1px solid ${({ theme }) => theme.color.lightgray2};
+	background-color: ${({ theme }) => theme.color.lightgray1};
+`;
+
+// CommentTextaArea
+const TextaAreaCount = styled.div<Partial<Type.Styled>>`
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	font-size: 0.75rem;
+	color: ${({ $size, theme }) =>
+		($size as number) === 0
+			? theme.color.black
+			: ($size as number) <= 200
+			? theme.color.blue
+			: ($size as number) <= 250
+			? theme.color.orange
+			: theme.color.red2};
 `;
 
 export {
@@ -406,53 +374,50 @@ export {
 	// Banner
 	BannerContainer,
 	BannerItem,
-	BannerImage,
 	BannerWrapper,
 	RightBanner,
-	MoreButton,
 
 	// Info
-	DetailLeftOutLine,
-	DetailLeftShopInfoLayout,
-	DetailLeftBanner,
-	DetailLeftShopScoreOutline,
-	ReviewCountTitleLayout,
+	DetailInfoLayout,
+	DetailInfoInner,
 	ReviewCountTitleItem,
-	ReviewScoreLayout,
 	ReviewScoreInner,
 	ReviewScoreItem,
-	ReviewStarItem,
-	WrappingShopName,
-	WrappingShopAddress,
+	DetailScoreDiv,
 
-	// Review
-	DetailRightOutLine,
-	DetailRightBannerInner,
-	DetailRightFormOutLine,
-	DetailRightFormLayout,
-	DetailRightFormUpperInner,
-	DetailRightFromUpperButtons,
-	DetailRightReviewsOutline,
-	DetailRightReviewOutline,
-	RightReviewOutline,
-	ReviewUpperLayout,
+	// DetailReviewBanner
+	ReviewBannerGridBox,
+	ReviewBannerMoreBtn,
+
+	// ReviewStarPointer
+	StarImg,
+
+	//DeteailReviewForm
+	ReviewFormFlex,
+	ReviewFormLayout,
+	SubmitInput,
+
+	// RevisitRadio
+	RevisitRadioLabel,
+
+	// CommentTextaArea
+	TextaAreaLayout,
+	TextArea,
+	TextaAreaCount,
+	// PrevImage
+
+	// DetailReviewList
+	ReviewsOutline,
+	ReviewLayout,
 	ReviewUserInner,
-	ReviewMenuInner,
 	ReviewUserName,
-	ReviewContentsLayout,
-	ReviewContentsTextItem,
-	ReviewStarContainer,
 	ReviewStar,
 	ReviewScore,
-	ReviewImageInner,
-	ReviewImageWrapper,
 	ReviewRevisit,
-	ReviewCommentImg,
-	ReviewFromUserName,
-	ReviewFormReviewInputInner,
-	ReviewFormReviewInput,
-	ReviewUploadImageButton,
-	ReviewPreviewImageLayout,
-	ReviewPreviewImageInner,
-	ReviewPreviewImageItem,
+	ReviewMenuInner,
+	ReviewText,
+	ReviewImageInner,
+	ReviewImage,
+
+	// EditWrappingReview
 };

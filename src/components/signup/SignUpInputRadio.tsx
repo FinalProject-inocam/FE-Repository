@@ -3,22 +3,19 @@ import * as RTK from "../../redux";
 import * as SC from "../css";
 import * as Type from "../../types";
 
-export const SignUpInputRadio: React.FC<Type.SignUpInputRadio> = ({
-  inputRef,
-  submitted,
-}) => {
-  const [input, setInput] = useState<string>("");
-  const dispatch = RTK.useAppDispatch();
-  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-  useEffect(() => {
-    !!input === true && dispatch(RTK.setSignupDate({ gender: input }));
-  }, [dispatch, input]);
+export const SignUpInputRadio: React.FC<Type.SignUpInputRadio> = ({ inputRef, submitted }) => {
+	const [input, setInput] = useState<string>("");
+	const dispatch = RTK.useAppDispatch();
+	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		setInput(e.target.value);
+	};
+	useEffect(() => {
+		!!input === true && dispatch(RTK.setSignupDate({ gender: input }));
+	}, [dispatch, input]);
 
-  useEffect(() => {
-    setInput("");
-  }, [submitted]);
+	useEffect(() => {
+		setInput("");
+	}, [submitted]);
 
   return (
     <SC.AuthInputsLayout>

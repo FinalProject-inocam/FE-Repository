@@ -116,8 +116,8 @@ const HandagerBTN = styled.div`
 const MSideBar = styled.div<Partial<Styled>>`
 	position: fixed;
 	top: 70px;
-	right: ${({ $state }) => ($state ? "0" : "-100vw")};
-	transition: all 0.25s linear;
+	right: ${({ $state }) => ($state ? "0" : "-120vw")};
+	transition: all 0.2s linear;
 	width: 100%;
 	height: 100vh;
 	background-color: rgba(29, 27, 34, 0.8);
@@ -145,7 +145,7 @@ const AuthAreaNav = styled.div<Partial<Styled>>`
 	padding: 0 30px;
 	width: 100%;
 	height: ${({ theme }) => theme.headerHeight.mobile};
-	background-color: ${({ $color }) => $color};
+	background-color: ${({ $color, theme }) => theme.color[`${$color}`]};
 
 	p {
 		color: #ffffff;
