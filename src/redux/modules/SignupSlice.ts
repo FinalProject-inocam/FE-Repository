@@ -6,7 +6,8 @@ interface SignupSliceType {
   password: string;
   phonNumber: string;
   gender: string;
-  birthdate: string;
+  birthYear: number;
+  checkCode: string;
 }
 
 const SignupSlice = createSlice({

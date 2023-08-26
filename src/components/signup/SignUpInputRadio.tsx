@@ -21,7 +21,7 @@ export const SignUpInputRadio: React.FC<Type.SignUpInputRadio> = ({
   }, [submitted]);
 
   return (
-    <>
+    <SC.AuthInputsLayout>
       <input
         type="radio"
         id="genderM"
@@ -31,9 +31,9 @@ export const SignUpInputRadio: React.FC<Type.SignUpInputRadio> = ({
         onChange={onChangeInput}
         style={{ display: "none" }}
       />
-      <SC.SignupLabel
+      <SC.SignupSexLabel
         htmlFor="genderM"
-        children="남자"
+        children="남성"
         $state={input === "male"}
       />
       <input
@@ -45,11 +45,11 @@ export const SignUpInputRadio: React.FC<Type.SignUpInputRadio> = ({
         onChange={onChangeInput}
         style={{ display: "none" }}
       />
-      <SC.SignupLabel
+      <SC.SignupSexLabel
         htmlFor="genderF"
-        children="여자"
+        children="여성"
         $state={input === "female"}
       />
-    </>
+    </SC.AuthInputsLayout>
   );
 };

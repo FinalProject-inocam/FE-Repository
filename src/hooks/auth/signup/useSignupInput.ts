@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import * as RTK from "../../../redux";
 
-export const useSignupInput = ({ name, submitted }: any):any => {
+export const useSignupInput = ({ name, submitted }: any): any => {
   const dispatch = RTK.useAppDispatch();
   const [input, setInput] = useState<string>("");
 
@@ -10,13 +10,12 @@ export const useSignupInput = ({ name, submitted }: any):any => {
   };
 
   const onBlurSignupDispatch = () => {
-      dispatch(RTK.setSignupDate({ [`${name}`]: input }));
-  }
+    dispatch(RTK.setSignupDate({ [`${name}`]: input }));
+  };
 
   useEffect(() => {
     setInput("");
   }, [submitted]);
 
-
-  return {input, onChangeInput, onBlurSignupDispatch}
-}
+  return { input, onChangeInput, onBlurSignupDispatch };
+};

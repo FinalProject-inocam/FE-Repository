@@ -5,11 +5,12 @@ import { useLoginSNSRTKQuery } from "../../redux";
 
 export const NaverRedirect: React.FC = () => {
   const { search } = useLocation();
+  const location = localStorage.getItem("location");
   const { onNavigate } = useRouter();
   const { isSuccess } = useLoginSNSRTKQuery({ types: "naver", code: search });
 
   useEffect(() => {
-    isSuccess && onNavigate({ url:"-1" })();
-  }, [isSuccess, onNavigate]);
+    isSuccess && onNavigate({ url: location })();
+  }, [isSuccess, location, onNavigate]);
   return <div />;
 };

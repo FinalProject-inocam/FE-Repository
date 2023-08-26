@@ -5,11 +5,12 @@ import { useLoginSNSRTKQuery } from "../../redux";
 
 export const GoogleRedirect: React.FC = () => {
   const { search } = useLocation();
+  const location = localStorage.getItem("location");
   const { onNavigate } = useRouter();
   const { isSuccess } = useLoginSNSRTKQuery({ types: "google", code: search });
 
   useEffect(() => {
-    isSuccess && console.log("무언가", window.history);
-  }, [isSuccess, onNavigate]);
+    isSuccess && onNavigate({ url: location })();
+  }, [isSuccess, location, onNavigate]);
   return <div />;
 };
