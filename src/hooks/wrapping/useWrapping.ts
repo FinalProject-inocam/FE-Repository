@@ -4,6 +4,7 @@ import * as Type from "../../types";
 
 export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 	console.log("useWrapping", data);
+	const dispatch = RTK.useAppDispatch();
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const geolocation: any = RTK.useAppSelector(RTK.selectgeoLocation);
 
@@ -14,12 +15,23 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 		if (geolocation?.lat) {
 			const options = {
 				center: new kakaoMaps.LatLng(geolocation.lat, geolocation.long),
-				level: 3,
+				level: 5,
 			};
 			const map = new kakaoMaps.Map(mapRef.current, options);
 			setMaps(map);
+
+			kakaoMaps.event.addListener(map, "dragend", () => {
+				const latlng = map.getCenter()
+				dispatch(
+					RTK.setGeoLocation({
+						lat: latlng.Ma,
+						long: latlng.La,
+					})
+				);
+			})
 		}
-	}, [geolocation, mapRef, kakaoMaps]);
+
+	}, [geolocation, mapRef, kakaoMaps, dispatch]);
 
 	useEffect(() => {
 		const imageSrc = require("../../assets/marker.png");
