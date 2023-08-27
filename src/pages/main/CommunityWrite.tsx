@@ -1,7 +1,7 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
 import { useCommunityWrite, useRouter } from '../../hooks';
 import { CustomP, FigureObjectFitImg, Flex, FlexBox, GridBox, PostList } from '../../components';
-import { SettingBtn } from './CommunityDetail';
+import { SettingBtn } from '../community/CommunityDetail';
 import { css, styled } from 'styled-components';
 import { Styled } from '../../types';
 import { plus } from '../../assets';
@@ -31,7 +31,7 @@ export const CommunityWrite: React.FC = () => {
   return (
 
     <FlexBox $fd="column" $ai="start" $jc="start" $gap={30}>
-      <SettingBtn onClick={onNavigate({ url: "/community" })}>
+      <SettingBtn onClick={onNavigate({ url: "/community/1" })}>
         <CustomP $height="47px" $bColor="white" $size={1.125}>목록으로</CustomP>
       </SettingBtn>
       <FlexBox as="form" $fd='column' $gap={20} style={{ width: "100%" }}>

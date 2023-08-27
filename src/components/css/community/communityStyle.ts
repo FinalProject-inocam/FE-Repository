@@ -13,8 +13,6 @@ const CommunityLayout = styled.section`
 const TopImgArticle = styled.article`
   position: relative;
   height: 500px;
-  border: 1px double red;
-  // TopImgArticle 공간 
 `
 
 const ArticleInner = styled.div` 
@@ -66,6 +64,15 @@ const RankNum = styled.div<Partial<Styled>>`
   width: 30px;
   border-radius: 5px;
   background-color: ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+
+  p {
+    position: relative;
+    top: calc(1.25*0.079rem);
+    line-height: ${({ $height }) => $height ? $height : "30px"};
+    text-align: ${({ $tAlign }) => $tAlign ? $tAlign : "center"};
+    font-size: ${({ $size }) => $size ? `${$size}rem` : "1.25rem"}; 
+    color: ${({ $bColor, theme }) => ($bColor === "darkBlue2" || $bColor === "blue") && theme.color["white"]};
+  }
 `
 
 const PostingText = styled.div<Partial<Styled>>`

@@ -12,10 +12,11 @@ interface IGLTF extends GLTF {
 
 export const Threejs: React.FC = () => {
 	const ContainRef = useRef<HTMLDivElement>(null);
-	const { nodes, materials } = useGLTF("/models/typeone/scene.gltf") as IGLTF;
+	const { nodes, materials } = useGLTF("/scene.gltf") as IGLTF;
 	const [spinning, setSpinning] = useState<boolean>(true);
 
-	const onDoubleToggle = (e:MouseEvent<HTMLDivElement>) => {
+
+	const onDoubleToggle = (e: MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()
 		setSpinning((pre) => !pre)
 	}
@@ -26,9 +27,11 @@ export const Threejs: React.FC = () => {
 		}
 	}, [ContainRef]);
 
-	console.log(!!nodes, !!materials, nodes, materials)
+// Three.js 렌더링 자원 정리
+	// console.log(!!nodes, !!materials, nodes, materials)
+
 	if (!!nodes !== true && !!materials !== true) {
-		return <div>로딩 중...</div>
+		return <div>로딩 중...</div>;
 	} else {
 		return (
 			<>
@@ -37,7 +40,7 @@ export const Threejs: React.FC = () => {
 						shadows
 						camera={{ position: [0, 0, 0], fov: 6.58 }}
 						onDoubleClick={onDoubleToggle}>
-						<Suspense fallback={null}>
+						<Suspense fallback={<div>로딩 중...</div>}>
 							<directionalLight intensity={5} position={[0, 10, 5]} />
 							<directionalLight intensity={5} position={[1, 5, 0]} />
 							{/* <ambientLight intensity={10} /> */}
@@ -175,9 +178,7 @@ export const Threejs: React.FC = () => {
 			</>
 		);
 	}
-
-	
-};
+}
 
 const Contain = styled.div`
 	position: absolute;

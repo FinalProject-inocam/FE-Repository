@@ -13,11 +13,11 @@ const App: React.FC = () => {
 					<Route index element={<Page.Home />} />
 					<Route path='innocar' element={<Page.InnoCar />} />
 					<Route path='community' element={<Page.Community />}>
-						<Route index element={<Page.GetCommunity />} />
-						<Route element={<Page.ProtectiveRouter />}>
+						<Route path=":id" element={<Page.GetCommunity />} />
+						{/* <Route element={<Page.ProtectiveRouter />}> */}
 							<Route path='write' element={<Page.CommunityWrite />} />
-						</Route>
-						<Route path=':id' element={<Page.CommunityDetail />} />
+						{/* </Route> */}
+						<Route path='review/:id' element={<Page.CommunityDetail />} />
 					</Route>
 
 					<Route path='wrapping' element={<Page.Wrapping />} />

@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 
 const PretendardL = css`
-	font-family: "Pretendard-Light";
+	font-family: "Pretendard";
 `;
 const PretendardR = css`
 	font-family: "Pretendard-Regular";

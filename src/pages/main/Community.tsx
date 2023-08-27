@@ -1,22 +1,11 @@
 import React from "react";
-import { useCommunity } from "../../hooks";
 import * as SC from "../../components";
 import { communityBanner, communityTopimg, mainLogo } from "../../assets";
 import { Outlet } from "react-router-dom";
 
 
 export const Community: React.FC = () => {
-  const { isLoading, data, isError, error } = useCommunity();
-  
 
-  console.log(isLoading, data, isError, error)
-
-  if (isLoading) return <div>... 로딩중</div>;
-  else if (isError)
-    return (
-      <div>에러발생... {JSON.stringify(error)}</div>
-    );
-  else {
     return (
       <SC.CommunityLayout>
 
@@ -34,16 +23,16 @@ export const Community: React.FC = () => {
 
           {/* 좌측 인기최근 게시물 공간  */}
           <div>
-            <SC.GridBox $gtc="repeat(1, 1fr)" $gtr="350px 350px 220px" style={{ position: "sticky", top: "0" }}>
+            <SC.GridBox $gtc="repeat(1, 1fr)" $gtr="350px 350px 220px" style={{ position: "sticky", top: "20px" }}>
               {["인기게시물", "최근게시물"].map(content => (
                 <SC.PostingList key={content}>
                   <SC.CustomH1 $size={1.5}>{content}</SC.CustomH1>
                   <SC.PostingBox>
                     {Array.from({ length: 5 }, (_, index: number) => index + 1).map(item => (
-                      <SC.GridBox key={item} $gtc="30px 1fr 82px" $cgap={25}>
+                      <SC.GridBox key={item} $gtc="30px 1fr 100px" $cgap={25}>
                         <SC.RankNum $bColor={item === 1 ? "blue" : "lightgray2"}><SC.CustomP $bColor={item === 1 ? "blue" : "lightgray2"}>{item}</SC.CustomP></SC.RankNum>
                         <SC.PostingText $color={item === 1 ? "lightgray3" : "lightgray2"}><p>일이삼사오육칠팔구십일이삼...</p></SC.PostingText>
-                        <SC.PostingText $color="lightgray2"><p>2023.08.25</p></SC.PostingText>
+                        <SC.PostingText $color="lightgray2" $tAlign="end"><p>2023.08.25</p></SC.PostingText>
                       </SC.GridBox>
                     ))}
                   </SC.PostingBox>
@@ -63,4 +52,3 @@ export const Community: React.FC = () => {
       </SC.CommunityLayout>
     );
   }
-};

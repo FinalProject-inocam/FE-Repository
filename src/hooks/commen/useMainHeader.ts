@@ -21,7 +21,7 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
   const sideBarNav = [
     ["Models", "innocar"],
     ["Order", "innocar/order"],
-    ["Community", "community"],
+    ["Community", "community/1"],
     ["Wrapping Shop", "wrapping"],
   ];
   const authNav = {

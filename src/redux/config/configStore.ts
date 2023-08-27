@@ -7,6 +7,7 @@ import {
 	ChatMsgReducer,
 	LocationReducer,
 	ReviewFormReducer,
+	ThreejsReducer
 } from "../modules";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
@@ -20,6 +21,7 @@ export const store = configureStore({
 		ChatMsgReducer,
 		LocationReducer,
 		ReviewFormReducer,
+		ThreejsReducer,
 		[inocamRTK.reducerPath]: inocamRTK.reducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(inocamRTK.middleware),

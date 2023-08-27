@@ -192,8 +192,8 @@ export const inocamRTK = createApi({
 			/* / 03 Community 관련 / -------------------------------------------------------- */
 			// getCommunity - 커뮤니티 게시글 요청
 			getCommunity: build.query({
-				query: () => ({
-					url: `/api/communities?page=1&size=10`,
+				query: ({getId}) => ({
+					url: `/api/communities?page=${getId}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
