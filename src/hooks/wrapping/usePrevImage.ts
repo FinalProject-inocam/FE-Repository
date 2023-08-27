@@ -1,7 +1,8 @@
 import imageCompression from "browser-image-compression";
 import { ChangeEvent } from "react";
+import * as Type from "../../types";
 
-export const usePrevImage = ({ setPreviewImg, setState, setCompressed }: any) => {
+export const usePrevImage = ({ setPreviewImg, setState, setCompressed }: Type.UsePrevImageProps) => {
 	const onActionImgResize = async (files: File): Promise<File | undefined> => {
 		const options = {
 			maxSizeMB: 1, // 1000000b === 1000kb === 1mb //
@@ -37,10 +38,12 @@ export const usePrevImage = ({ setPreviewImg, setState, setCompressed }: any) =>
 			}
 
 			// 화면 리사이징
-			const compressingImg = [];
+			const compressingImg: File[] = [];
 			for (let i = 0; i < e.target.files.length; i++) {
 				const compressed = await onActionImgResize(e.target.files[i]);
-				compressingImg.push(compressed);
+				if (compressed) {
+					compressingImg.push(compressed);
+				}
 				e.target.files.length === i + 1 && setCompressed(true);
 			}
 			setState(compressingImg);

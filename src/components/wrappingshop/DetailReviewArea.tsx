@@ -7,7 +7,7 @@ export const DetailReviewArea: FC = () => {
 		<section>
 			<CP.DetailReviewBanner />
 			<CP.DetailReviewForm />
-			{/* <CP.DetailReviewList /> */}
+			<CP.DetailReviewList />
 		</section>
 	);
 };

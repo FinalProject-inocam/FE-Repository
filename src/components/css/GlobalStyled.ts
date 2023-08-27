@@ -83,11 +83,9 @@ const GridBox = sc.styled.div<Partial<Styled>>`
 
 const GridMergedSpace = sc.styled.div<Partial<Styled>>`
   grid-column-start: ${({ $mergedgcs }) => ($mergedgcs ? $mergedgcs : "auto")};
-  grid-column-end: ${({ $mergedgce }) =>
-    $mergedgce ? $mergedgce : "auto"}; // span 2;
+  grid-column-end: ${({ $mergedgce }) => ($mergedgce ? $mergedgce : "auto")}; // span 2;
   grid-row-start: ${({ $mergedgrs }) => ($mergedgrs ? $mergedgrs : "auto")};
-  grid-row-end: ${({ $mergedgre }) =>
-    $mergedgre ? $mergedgre : "auto"}; // span 3;
+  grid-row-end: ${({ $mergedgre }) => ($mergedgre ? $mergedgre : "auto")}; // span 3;
 `;
 
 const GridMergedSpaceFlex = sc.styled(GridMergedSpace)`
@@ -182,7 +180,14 @@ const CustomH3 = sc.styled.h3<Partial<Styled>>`
       width: 105px;
       height: 36px;
       line-height: 36px;
-  `}
+   `}
+
+  ${({ $types }) =>
+		$types === "nickname" &&
+		sc.css`
+    width: 105px;
+    line-height: 22px;
+`}
 `;
 
 const CustomBtn = sc.styled.div<Partial<Styled>>`
