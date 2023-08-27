@@ -26,12 +26,12 @@ export const DetailInfoArea: FC = () => {
 					<SC.CustomH1 children='리뷰' />
 					{!!reviewCount && <SC.CustomH1 $color='blue' children={reviewCount} />}
 				</SC.FlexBox>
-				<SC.GridBox>
+				<SC.GridBox style={{ border: "1px solid #c7c7cb" }}>
 					<SC.DetailScoreDiv $bgColor='gray' $bColor='gray' $gap={8}>
 						<SC.CustomH3 $size={40} children={avgStar.toFixed(1)} />
 						<SC.CustomH3 $size={20} children='/5.0' />
 					</SC.DetailScoreDiv>
-					<SC.DetailScoreDiv $bColor='gray'>
+					<SC.DetailScoreDiv $bColor='none' $height='70px'>
 						{Array.from({ length: 5 }).map((_, index) => (
 							<img
 								key={index}

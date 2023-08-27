@@ -1,13 +1,16 @@
+import * as Type from "../../types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+const initialState: Partial<Type.ReviewSliceType> = {
+	revisit: 0,
+	review: "",
+};
 
 const reviewFormSlice = createSlice({
 	name: "reviewFormSlice",
-	initialState: {
-		revisit: 0,
-		review: "",
-	} as any | {},
+	initialState,
 	reducers: {
-		setReviewDate: (state, action: PayloadAction<Partial<any>>) => {
+		setReviewDate: (state, action: PayloadAction<Partial<Type.ReviewSliceType>>) => {
 			return { ...state, ...action.payload };
 		},
 		deleteReiewDate: () => {
@@ -17,8 +20,11 @@ const reviewFormSlice = createSlice({
 });
 
 export const ReviewFormReducer = reviewFormSlice.reducer;
-export const selectReviewForm = (state: any) => state.ReviewFormReducer;
-export const selectReviewFormStar = (state: any) => state.ReviewFormReducer.star;
-export const selectReviewFormRevisit = (state: any) => state.ReviewFormReducer.revisit;
-export const selectReviewFormReview = (state: any) => state.ReviewFormReducer.review;
+export const selectReviewForm = (state: { ReviewFormReducer: Type.ReviewSliceType }) => state.ReviewFormReducer;
+export const selectReviewFormStar = (state: { ReviewFormReducer: Type.ReviewSliceType }) =>
+	state.ReviewFormReducer.star;
+export const selectReviewFormRevisit = (state: { ReviewFormReducer: Type.ReviewSliceType }) =>
+	state.ReviewFormReducer.revisit;
+export const selectReviewFormReview = (state: { ReviewFormReducer: Type.ReviewSliceType }) =>
+	state.ReviewFormReducer.review;
 export const { setReviewDate, deleteReiewDate } = reviewFormSlice.actions;

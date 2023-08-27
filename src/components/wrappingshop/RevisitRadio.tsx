@@ -3,7 +3,7 @@ import * as SC from "../css";
 import { useRevisitRadio } from "../../hooks";
 
 export const RevisitRadio: FC = () => {
-	const { getReisit, onChangeRevisit } = useRevisitRadio();
+	const { getRevisit, onChangeRevisit } = useRevisitRadio();
 
 	return (
 		<SC.FlexBox $gap={10}>
@@ -15,7 +15,7 @@ export const RevisitRadio: FC = () => {
 				onChange={onChangeRevisit}
 				style={{ display: "none" }}
 			/>
-			<SC.RevisitRadioLabel htmlFor='reviewOn' $state={getReisit ? 1 : 0}>
+			<SC.RevisitRadioLabel htmlFor='reviewOn' $state={getRevisit ? 1 : 0}>
 				재방문 의사
 			</SC.RevisitRadioLabel>
 			<input
@@ -26,7 +26,7 @@ export const RevisitRadio: FC = () => {
 				onChange={onChangeRevisit}
 				style={{ display: "none" }}
 			/>
-			<SC.RevisitRadioLabel htmlFor='reviewOff' $state={!getReisit && getReisit !== 0 ? 2 : 0}>
+			<SC.RevisitRadioLabel htmlFor='reviewOff' $state={!getRevisit && getRevisit !== 0 ? 2 : 0}>
 				재방문 없음
 			</SC.RevisitRadioLabel>
 		</SC.FlexBox>

@@ -7,12 +7,12 @@ export const PrevImage: FC<any> = ({ previewImg, setPreviewImg, setState, compre
 	const onChangeFile = usePrevImage({ setPreviewImg, setState, setCompressed });
 
 	return (
-		<SC.FlexBox $jc='flex-start' $ai='center' $gap={10}>
+		<SC.FlexBox $jc='flex-start' $ai='center' $gap={10} style={{ height: "6rem" }}>
 			{previewImg.length < 1 ? null : !compressed ? (
 				<SC.CustomBtn $borderR='5px' $bColor='#828295' $color='#828295' children='이미지 등록 중...' />
 			) : (
 				previewImg.map((img: any, idx: number) => (
-					<CP.FigureObjectFitImg key={idx} src={img} width={"6vw"} height={"6vw"} alt='previewImg' />
+					<CP.FigureObjectFitImg key={idx} src={img} width={"6rem"} height={"6rem"} alt='previewImg' />
 				))
 			)}
 			<input
