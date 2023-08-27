@@ -3,7 +3,6 @@ import * as CP from "..";
 import * as SC from "../css";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
-
 import { useParams } from "react-router-dom";
 
 export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {

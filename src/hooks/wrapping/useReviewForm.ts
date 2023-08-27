@@ -1,13 +1,14 @@
 import { FormEvent, useState, useEffect } from "react";
 import * as RTK from "../../redux";
+import * as Type from "../../types";
 import { selectReviewForm, useAppSelector } from "../../redux";
 import { useParams } from "react-router-dom";
 
-export const useReviewForm = (): any => {
+export const useReviewForm = (): Type.UseReviewFormReturnType => {
 	const { id: shopId } = useParams<string>();
 	const getReviewData = useAppSelector(selectReviewForm);
 	const [compressed, setCompressed] = useState<boolean>(false);
-	const [compressedImg, setCompressedImg] = useState<any>(null);
+	const [compressedImg, setCompressedImg] = useState<File[] | null>(null);
 	const [previewImg, setPreviewImg] = useState<(string | ArrayBuffer | null)[]>([]);
 	const [onPostWSReviewRTK, queryInfo] = RTK.usePostWrappingCommentMutation();
 	const dispatch = RTK.useAppDispatch();
@@ -16,8 +17,10 @@ export const useReviewForm = (): any => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append("data", new Blob([JSON.stringify(getReviewData)], { type: "application/json" }));
-		for (let i = 0; i < compressedImg.length; i++) {
-			compressed && formData.append("images", compressedImg[i]);
+		if (compressedImg) {
+			for (let i = 0; i < compressedImg.length; i++) {
+				compressed && formData.append("images", compressedImg[i]);
+			}
 		}
 		onPostWSReviewRTK({ shopId, formData });
 		setCompressedImg(null);

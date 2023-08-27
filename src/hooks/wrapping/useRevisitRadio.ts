@@ -1,14 +1,21 @@
 import { useState, ChangeEvent } from "react";
-import { setReviewDate, useAppDispatch, useAppSelector, selectReviewFormRevisit } from "../../redux";
+import * as Type from "../../types";
+import * as RTK from "../../redux";
 
-export const useRevisitRadio = (): any => {
-	const [, setRevisit] = useState<number>(0);
-	const dispatch = useAppDispatch();
-	const getReisit = useAppSelector(selectReviewFormRevisit);
+export const useRevisitRadio = (): Type.ReviewRadioType => {
+	const [, setRevisit] = useState<number | null>(0);
+	const dispatch = RTK.useAppDispatch();
+	const getRevisit = RTK.useAppSelector(RTK.selectReviewFormRevisit);
 	const onChangeRevisit = (e: ChangeEvent<HTMLInputElement>) => {
-		setRevisit(e.target.value === "true" ? 1 : 2);
-		dispatch(setReviewDate({ revisit: e.target.value === "true" ? true : false }));
+		const value = e.target.value === "true" ? 1 : e.target.value === "false" ? 2 : 0;
+		setRevisit(value);
+		dispatch(RTK.setReviewDate({ revisit: value }));
 	};
 
-	return { getReisit, onChangeRevisit };
+	return { getRevisit, onChangeRevisit };
 };
+
+/*
+		setRevisit(e.target.value === "true" ? 1 : 2);
+		dispatch(setReviewDate({ revisit: e.target.value === "true" ? true : false }));
+*/

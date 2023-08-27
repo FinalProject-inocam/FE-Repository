@@ -7,3 +7,4 @@ export * from "./useStarPointer";
 export * from "./useRevisitRadio";
 export * from "./useCommentTextArea";
 export * from "./usePrevImage";
+export * from "./useReviewBar";
