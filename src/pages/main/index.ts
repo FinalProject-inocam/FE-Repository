@@ -1,5 +1,4 @@
 export * from "./Community";
-export * from "./CommunityDetail";
 export * from "./CommunityWrite";
 export * from "./Wrapping";
 export * from "./WrappingDetail";

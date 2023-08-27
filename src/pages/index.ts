@@ -4,6 +4,7 @@ export * from './auth';
 export * from './main';
 export * from './lazy';
 export * from './chat'
+export * from './community'
 // tsx 파일
 export * from './AdminRouter';
 export * from './AuthRouter';

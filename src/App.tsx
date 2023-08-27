@@ -2,8 +2,6 @@ import { GlobalStyled } from "./components";
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as Page from "./pages";
-import { ChatList } from "./pages/chat/ChatList";
-import { ChatRoom } from "./pages/chat/ChatRoom";
 
 const App: React.FC = () => {
 	return (
@@ -13,11 +11,26 @@ const App: React.FC = () => {
 				{/* 헤더에 따른 중첩라우터 :: MainRouter */}
 				<Route path='/' element={<Page.MainRouter />}>
 					<Route index element={<Page.Home />} />
-					<Route path='innocar' element={<Page.InnoCar/>} />
-					<Route path='community' element={<Page.Community />} />
-					<Route path='community/:id' element={<Page.CommunityDetail />} />
+					<Route path='innocar' element={<Page.InnoCar />} />
+					<Route path='community' element={<Page.Community />}>
+						<Route path=":id" element={<Page.GetCommunity />} />
+						{/* <Route element={<Page.ProtectiveRouter />}> */}
+							<Route path='write' element={<Page.CommunityWrite />} />
+						{/* </Route> */}
+						<Route path='review/:id' element={<Page.CommunityDetail />} />
+					</Route>
+
 					<Route path='wrapping' element={<Page.Wrapping />} />
 					<Route path='wrapping/:id' element={<Page.WrappingDetail />} />
+
+					{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
+					<Route element={<Page.ProtectiveRouter />}>
+						<Route path='innocar/order' element={<Page.InnoCarOrder />} />
+						<Route path='community/write' element={<Page.CommunityWrite />} />
+						<Route path='wrapping/write' element={<Page.DecorationWrite />} />
+						<Route path='/mypage' element={<Page.MyPage />} />
+					</Route>
+
 				</Route>
 
 				{/* 헤더에 따른 중첩라우터 :: AuthRouter */}
@@ -27,17 +40,9 @@ const App: React.FC = () => {
 					<Route path="login" element={<Page.Login />} />
 				</Route>
 
-				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
-				<Route element={<Page.ProtectiveRouter />}>
-					<Route path='innocar/order' element={<Page.InnoCarOrder />} />
-					<Route path='community/write' element={<Page.CommunityWrite />} />
-					<Route path='wrapping/write' element={<Page.DecorationWrite />} />
-					<Route path='/mypage' element={<Page.MyPage />} />
-				</Route>
-
 				<Route element={<Page.ProtectiveRouterA />}>
 					<Route path='/admin' element={<Page.AdminRouter />}>
-							<Route index element={<Page.AdminMain />} />
+						<Route index element={<Page.AdminMain />} />
 					</Route>
 				</Route>
 
@@ -48,8 +53,8 @@ const App: React.FC = () => {
 
 				{/* 채팅 및 임시 라우터 :: Chat */}
 				<Route path="/chatlist" element={<Page.Chat />} />
-				<Route path="/chat" element={<ChatList />} />
-				<Route path="/chat/:id" element={<ChatRoom />} />
+				<Route path="/chat" element={<Page.ChatList />} />
+				<Route path="/chat/:id" element={<Page.ChatRoom />} />
 				<Route path="/webrtc" element={<Page.WebRTC />} />
 				<Route path="/threejs" element={<Suspense fallback={<div>Loading...</div>}><Page.LazyThreejs /></Suspense>} />
 

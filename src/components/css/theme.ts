@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 
 const PretendardL = css`
-	font-family: "Pretendard-Light";
+	font-family: "Pretendard";
 `;
 const PretendardR = css`
 	font-family: "Pretendard-Regular";
@@ -28,6 +28,7 @@ const color = {
 	red2: "#FF162D",
 	green: "#539B39",
 	orange: "#FA8128",
+	orange2: "#FC4C4C",
 	purple: "#362783",
 	white: "white",
 	gray: "#eeee",
@@ -35,15 +36,17 @@ const color = {
 
 	// 밝은색상
 	lightblue: "#f2f2ff",
+	lightgray0:"#C7C7CB",
 	lightgray1: "#f3f3f8",
 	lightgray2: "#828293",
+	lightgray3: "#555555",
 	
 	// 어두운색상
 	darkGray: "#26252B",
 	darkgray2:"2F2B3A",
 	darkBlue: "#151565",
+	darkBlue2: "#1E0476",
 };
-
 
 /* About theme ---------------------------------------------- */
 

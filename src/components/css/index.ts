@@ -6,3 +6,4 @@ export * from "./authStyle";
 export * from "./commen";
 export * from "./home";
 export * from "./wrappingshop";
+export * from "./community"
