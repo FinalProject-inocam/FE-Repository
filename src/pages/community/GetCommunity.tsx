@@ -15,7 +15,7 @@ export const GetCommunity:FC = () => {
       <SC.CategoryBtn $bColor="white"><SC.CustomP $height="44px" $bColor="white">후기</SC.CustomP></SC.CategoryBtn>
     </SC.FlexBox>
 
-    <SC.PostList>
+    <SC.PostList  $gap={10}>
       <SC.PostInnerItem onClick={onNavigate({ url: '1' })}>
         <SC.FigureObjectFitImg width={"100%"} height={"150px"} src={communityBanner} alt="mainLogo" />
         <SC.PostInnerContext>

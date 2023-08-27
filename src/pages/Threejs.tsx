@@ -26,8 +26,8 @@ export const Threejs: React.FC = () => {
 		}
 	}, [ContainRef]);
 
-	console.log(!nodes, !materials, nodes, materials)
-	if (!nodes && !materials) {
+	console.log(!!nodes, !!materials, nodes, materials)
+	if (!!nodes !== true && !!materials !== true) {
 		return <div>로딩 중...</div>
 	} else {
 		return (

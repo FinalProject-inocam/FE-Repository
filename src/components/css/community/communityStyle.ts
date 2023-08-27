@@ -42,6 +42,7 @@ const ArticleGrid = styled.article<Partial<Styled>>`
   margin: 0 auto;
   margin-top: 50px;
   max-width: 1440px;
+  padding-bottom: 50px;
 `
 
 const PostingList = styled.div`
@@ -100,14 +101,13 @@ const CategoryBtn = styled.div<Partial<Styled>>`
   `}
 `
 
-const PostList = styled.article`
+const PostList = styled.article<Partial<Styled>>`
   ${SC.Flex}
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
   width: 100%;
   min-height: 210px;
-  max-height: 850px;
+  /* max-height: 850px; */
   border-radius: 20px;
   padding: 30px 24px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -131,6 +131,15 @@ const SettingsBtn = styled.div<Partial<Styled>>`
   font-size: 0.75rem;
   color:${({ theme }) => theme.color.white};
   background-color: ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+
+  ${({$types}) => $types==="postinnerSettingBtn1" ? css`
+    width : 129px;
+    padding: 0;
+  `
+  : $types==="postinnerSettingBtn2" && css`
+   width : 80px;
+   padding: 0;
+  ` }
 `
 
 const PostInnerItem = styled.div`
@@ -159,8 +168,10 @@ const CustomP = styled.p<Partial<Styled>>`
   top: calc(1.25*0.079rem);
   line-height: ${({ $height }) => $height ? $height : "30px"};
   text-align: ${({ $tAlign }) => $tAlign ? $tAlign : "center"};
-  font-size: 1.25rem; 
+  font-size: ${({ $size }) => $size ? `${$size}rem` : "1.25rem"}; 
   color: ${({ $bColor, theme }) => ($bColor === "darkBlue2" || $bColor === "blue") && theme.color["white"]};
 `
-export { CommunityLayout, TopImgArticle, ArticleInner, TopImgLogo, ArticleGrid, PostingList, PostingBox, RankNum, PostingText,
-  BannerText, CategoryBtn, PostList, SearchBar, SettingsBtn, PostInnerItem, PostInnerContext, CustomP }
+export {
+  CommunityLayout, TopImgArticle, ArticleInner, TopImgLogo, ArticleGrid, PostingList, PostingBox, RankNum, PostingText,
+  BannerText, CategoryBtn, PostList, SearchBar, SettingsBtn, PostInnerItem, PostInnerContext, CustomP
+}
