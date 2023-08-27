@@ -101,13 +101,13 @@ const CategoryBtn = styled.div<Partial<Styled>>`
   `}
 `
 
+
 const PostList = styled.article<Partial<Styled>>`
   ${SC.Flex}
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
   min-height: 210px;
-  /* max-height: 850px; */
   border-radius: 20px;
   padding: 30px 24px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

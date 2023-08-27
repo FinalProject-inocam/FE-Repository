@@ -69,7 +69,7 @@ export const GetCommunity:FC = () => {
       <SC.FlexBox $gap={10}>
         <SC.SettingsBtn $bColor="lightgray2">삭제(관리자)</SC.SettingsBtn>
         <SC.SettingsBtn $bColor="orange2">선택(관리자)</SC.SettingsBtn>
-        <SC.SettingsBtn $bColor="blue">글 작성하기</SC.SettingsBtn>
+        <SC.SettingsBtn onClick={onNavigate({ url: 'write' })} $bColor="blue">글 작성하기</SC.SettingsBtn>
       </SC.FlexBox>
     </SC.FlexBox>
     <SC.FlexBox $gap={30} style={{ margin: "0 auto" }}>

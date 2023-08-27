@@ -11,14 +11,26 @@ const App: React.FC = () => {
 				{/* 헤더에 따른 중첩라우터 :: MainRouter */}
 				<Route path='/' element={<Page.MainRouter />}>
 					<Route index element={<Page.Home />} />
-					<Route path='innocar' element={<Page.InnoCar/>} />
+					<Route path='innocar' element={<Page.InnoCar />} />
 					<Route path='community' element={<Page.Community />}>
-						<Route index element={<Page.GetCommunity />}/>
+						<Route index element={<Page.GetCommunity />} />
+						<Route element={<Page.ProtectiveRouter />}>
+							<Route path='write' element={<Page.CommunityWrite />} />
+						</Route>
 						<Route path=':id' element={<Page.CommunityDetail />} />
 					</Route>
-					
+
 					<Route path='wrapping' element={<Page.Wrapping />} />
 					<Route path='wrapping/:id' element={<Page.WrappingDetail />} />
+
+					{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
+					<Route element={<Page.ProtectiveRouter />}>
+						<Route path='innocar/order' element={<Page.InnoCarOrder />} />
+						<Route path='community/write' element={<Page.CommunityWrite />} />
+						<Route path='wrapping/write' element={<Page.DecorationWrite />} />
+						<Route path='/mypage' element={<Page.MyPage />} />
+					</Route>
+
 				</Route>
 
 				{/* 헤더에 따른 중첩라우터 :: AuthRouter */}
@@ -28,17 +40,9 @@ const App: React.FC = () => {
 					<Route path="login" element={<Page.Login />} />
 				</Route>
 
-				{/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
-				<Route element={<Page.ProtectiveRouter />}>
-					<Route path='innocar/order' element={<Page.InnoCarOrder />} />
-					<Route path='community/write' element={<Page.CommunityWrite />} />
-					<Route path='wrapping/write' element={<Page.DecorationWrite />} />
-					<Route path='/mypage' element={<Page.MyPage />} />
-				</Route>
-
 				<Route element={<Page.ProtectiveRouterA />}>
 					<Route path='/admin' element={<Page.AdminRouter />}>
-							<Route index element={<Page.AdminMain />} />
+						<Route index element={<Page.AdminMain />} />
 					</Route>
 				</Route>
 

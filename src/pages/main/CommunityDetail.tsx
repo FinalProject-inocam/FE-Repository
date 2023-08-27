@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCommunityDetail, useRouter } from "../../hooks";
-import { CustomH1, CustomP, FigureObjectFitImg, FlexBox, GridBox, PostList, SettingsBtn } from "../../components";
+import { CustomH1, CustomP, FigureObjectFitImg, FlexBox, GridBox, PostList, SettingsBtn, cursor } from "../../components";
 import { styled } from "styled-components";
 import { communityBanner, heart } from "../../assets";
 
@@ -18,11 +18,15 @@ export const CommunityDetail: React.FC = () => {
     onDeleteComment
   } = useCommunityDetail()
 
-  console.log(data, onDeletePost,
-    onSubmitPostComment,
-    commentInfo,
-    onChangeComment,
-    onDeleteComment)
+    useEffect(()=>{
+      console.log("동작")
+      window.scrollTo(0,500)
+      console.log(data, onDeletePost,
+        onSubmitPostComment,
+        commentInfo,
+        onChangeComment,
+        onDeleteComment)
+    },[])
 
   if (isLoading) return <div>... 로딩중</div>;
   else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
@@ -73,7 +77,8 @@ export const CommunityDetail: React.FC = () => {
   }
 };
 
-const SettingBtn = styled.div`
+export const SettingBtn = styled.div`
+  ${cursor}
   width: 142px;
   height: 47px;
   border-radius: 10px;
