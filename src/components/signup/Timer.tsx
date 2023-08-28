@@ -1,10 +1,14 @@
 import { useCheckEmailCodeTimer } from "../../hooks";
-import * as RTK from "../../redux";
 import * as SC from "../css";
 
-export const Timer: React.FC<{ state: boolean }> = ({ state }) => {
-  const { time, sec, min } = useCheckEmailCodeTimer(state);
-  const getValidateMsg = RTK.useAppSelector(RTK.selectValiditeECMsg);
+export const Timer: React.FC<{ state: boolean; reTimer: boolean }> = ({
+  state,
+  reTimer,
+}) => {
+  const { time, sec, min, getValidateMsg } = useCheckEmailCodeTimer(
+    state,
+    reTimer
+  );
 
   return (
     <>
