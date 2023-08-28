@@ -59,6 +59,21 @@ export interface WrappingDetailStyled {
   $clicked?: boolean;
 }
 
+export interface ReviewBarProps {
+	reviewId: number;
+	star: number;
+	revisit: boolean;
+	createAt: string;
+	nickname: string;
+	shopId: string | undefined;
+}
+
+export interface ReviewListProps {
+	imageUrls: string[];
+	shopId: string | undefined;
+	reviewId: number;
+}
+
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */
 export interface WrappingKakaomapsProps {
   ref: MutableRefObject<HTMLDivElement | null>;

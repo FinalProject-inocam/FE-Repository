@@ -46,7 +46,6 @@ const DetailContent = styled.section<Partial<Type.Styled>>`
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
-	border: 1px dotted red;
 	@media (min-width: 1024px) {
 		grid-template-columns: 467px 1fr;
 	}
@@ -132,10 +131,12 @@ const ReviewScoreItem = styled.div<Partial<Type.Styled>>`
 const DetailScoreDiv = styled.div<Partial<Type.Styled>>`
 	${Flex}
 	text-align: center;
-	height: 70px;
+	height: ${({ $height }) => $height};
 	background-color: ${({ $bgColor, theme }) => $bgColor && theme.color[$bgColor]};
-	border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+	/* border: 1px solid ${({ $bColor, theme }) => $bColor && theme.color[$bColor]}; */
 `;
+
+//DetailReviewArea
 
 // DetailReviewBanner --------------------------------
 const ReviewBannerGridBox = styled.div<Partial<Type.Styled>>`
@@ -229,7 +230,9 @@ const ReviewScore = styled.div`
 `;
 
 const ReviewRevisit = styled.div`
+	line-height: normal;
 	color: #4c4cff;
+	text-align: center;
 `;
 
 const ReviewMenuInner = styled.div<Partial<Type.Styled>>`
@@ -246,11 +249,6 @@ const ReviewMenuInner = styled.div<Partial<Type.Styled>>`
 const ReviewText = styled.div`
 	padding-left: 93px;
 	padding-right: 219px;
-`;
-
-const ReviewImageInner = styled.div<Partial<Type.Styled>>`
-	${Flex}
-	padding-left: 93px;
 `;
 
 const ReviewImage = styled.div`
@@ -300,7 +298,8 @@ const ReviewFormLayout = styled.form<Partial<Type.Styled>>`
 	background-color: #fff;
 	width: 100%;
 	height: 313px;
-	padding: 30px 20px;
+	padding: 30px 20px 26px;
+	margin-bottom: 20px;
 `;
 
 // RevisitRadio
@@ -360,6 +359,14 @@ const TextaAreaCount = styled.div<Partial<Type.Styled>>`
 			: theme.color.red2};
 `;
 
+// DetailReviewList
+const ReviewListLayout = styled.form<Partial<Type.Styled>>`
+	${Grid}
+	width: 100%;
+	padding-bottom: 30px;
+	border-bottom: 3px solid #eee;
+`;
+
 export {
 	// 페이지
 	DetailOutline,
@@ -385,6 +392,8 @@ export {
 	ReviewScoreItem,
 	DetailScoreDiv,
 
+	//DetailReviewArea
+
 	// DetailReviewBanner
 	ReviewBannerGridBox,
 	ReviewBannerMoreBtn,
@@ -407,6 +416,9 @@ export {
 	// PrevImage
 
 	// DetailReviewList
+	ReviewListLayout,
+
+	//
 	ReviewsOutline,
 	ReviewLayout,
 	ReviewUserInner,
@@ -416,7 +428,6 @@ export {
 	ReviewRevisit,
 	ReviewMenuInner,
 	ReviewText,
-	ReviewImageInner,
 	ReviewImage,
 
 	// EditWrappingReview

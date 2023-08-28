@@ -14,5 +14,8 @@ export * from "./StarPointer";
 export * from "./RevisitRadio";
 export * from "./CommentTextArea";
 export * from "./PrevImage";
+export * from "./ReviewBar";
+export * from "./ReviewList";
+
 // Detail
 export * from "./DetailButton";

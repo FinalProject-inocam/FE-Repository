@@ -1,7 +1,8 @@
 import { useState } from "react";
+import * as Type from "../../types";
 import { selectReviewFormStar, setReviewDate, useAppDispatch, useAppSelector } from "../../redux";
 
-export const useStarPointer = (): any => {
+export const useStarPointer = (): Type.UseStarPointer => {
 	const [, setStar] = useState<number>(0);
 	const dispatch = useAppDispatch();
 	const getStar = useAppSelector(selectReviewFormStar);
