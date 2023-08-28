@@ -8,7 +8,7 @@ import {
 	LocationReducer,
 	ReviewFormReducer,
 	ThreejsReducer,
-	CommunityFormReducer
+	CommunityFormReducer,
 	MergeWCDreviewReducer,
 } from "../modules";
 import { configureStore } from "@reduxjs/toolkit";
