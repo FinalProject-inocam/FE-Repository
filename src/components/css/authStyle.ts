@@ -30,7 +30,7 @@ ${Flex}
 const AuthInput = sc.styled.input<Partial<Styled>>`
   ${({ theme }) => theme.font.PretendardM}
   font-size: 16px;
-  color: ${({ theme }) => theme.color.darkgray3};
+  color: ${({ theme }) => theme.color.lightgray3};
   display: block;
   width: ${({ $width }) => ($width ? $width : "380px")};
   height: 56px;
@@ -83,7 +83,7 @@ ${CommonBoxStyles}
   margin-top: 4px;
   pointer-events: ${({ $state }) => ($state ? "auto" : "none")};
   background-color: ${({ $state, theme }) =>
-    $state ? theme.color.blue : theme.color.lightgray3};
+    $state ? theme.color.blue : theme.color.lightgray0};
 `;
 
 const SignUpCertificateEmailDiv = sc.styled.div<Partial<Styled>>`
