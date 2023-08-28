@@ -30,44 +30,44 @@ const HeaderOutLine = styled.header<Partial<Styled>>`
 	width: 100vw;
 	z-index: 1000;
 
-	${({ $scrolly, theme }) =>
+	${({ $scrolly, $state, theme }) =>
 		$scrolly !== undefined &&
-		($scrolly.isTop
+		($scrolly.isTop || $scrolly.scrolly <= 0
 			? css`
 					top: 0;
 					background-color: ${theme.color.blackM};
 			  `
 			: !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
-			? css`
+				? css`
 					top: -90px;
 					background-color: ${theme.color.blackM};
 			  `
-			: !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly > $scrolly.innerHeight
-			? css`
+				: !$scrolly.isTop && !$scrolly.preScrolly && $scrolly.scrolly > $scrolly.innerHeight
+					? css`
 					top: -90px;
-					background-color: ${theme.color.white};
+					background-color:  ${theme.color[$state ? "white" : "blackM"]};
 			  `
-			: !$scrolly.isTop && $scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
-			? css`
+					: !$scrolly.isTop && $scrolly.preScrolly && $scrolly.scrolly <= $scrolly.innerHeight
+						? css`
 					top: 0;
 					background-color: ${theme.color.blackM};
 			  `
-			: css`
+						: css`
 					top: 0;
-					background-color: ${theme.color.white};
+					background-color: ${theme.color[$state ? "white" : "blackM"]};
 			  `)}
 
 	@media (max-width: 1024px) {
 		top: 0;
-		${({ $scrolly, theme }) =>
-			// 스크롤 값이 있으면서,
-			// 1) isTop 이거나 $scrolly.preScrolly 값이 변경되었는데  $scrolly.innerHeight 같거나 작거나
-			$scrolly !== undefined && ($scrolly.isTop || $scrolly.scrolly <= $scrolly.innerHeight)
-				? css`
-						background-color: ${theme.color.blackM};
+		${({ $scrolly, $state,theme }) =>
+		// 스크롤 값이 있으면서,
+		// 1) isTop 이거나 $scrolly.preScrolly 값이 변경되었는데  $scrolly.innerHeight 같거나 작거나
+		$scrolly !== undefined && ($scrolly.isTop || $scrolly.scrolly <= $scrolly.innerHeight)
+			? css`
+						background-color: ${theme.color[$state ? "white" : "blackM"]};
 				  `
-				: css`
-						background-color: ${theme.color.white};
+			: css`
+						background-color: ${theme.color[$state ? "white" : "blackM"]};
 				  `}
 	}
 `;
@@ -80,10 +80,26 @@ const HeaderLayout = styled.div<Partial<Styled>>`
 	/* border: 1px solid blue; */
 	transition: all 0.15s linear;
 
-	${({ $scrolly, theme }) =>
+	${({ $scrolly, $state, theme }) =>
 		$scrolly !== undefined && ($scrolly.isTop || $scrolly.scrolly <= $scrolly.innerHeight)
-			? theme.headerType.Top
-			: theme.headerType.else}
+			? css`
+			background-color: ${theme.color.blackM};
+						color: ${theme.color.white};
+						h1,
+						div,
+						li {
+							color: ${theme.color.white};
+						}
+					`
+			: css`
+			background-color: background-color: ${theme.color[$state ? "white" : "blackM"]};;
+			color: background-color: ${theme.color[$state ? "blackM" : "white"]};
+			h1,
+			div,
+			li {
+				color: ${theme.color[$state ? "blackM" : "white"]};
+			}
+		`}
 
 	@media (max-width: 1024px) {
 		justify-content: space-between;

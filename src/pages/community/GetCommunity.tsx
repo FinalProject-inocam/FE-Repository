@@ -36,6 +36,8 @@ export const GetCommunity: FC = () => {
     }
   }, [getId])
 
+  data && console.log("GetCommunity", data)
+
   // darkBlue2 // white
   return (
     <SC.FlexBox $fd="column" $ai="start" $jc="start" $gap={30}>
@@ -95,14 +97,21 @@ export const GetCommunity: FC = () => {
         <SC.RankNum $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId - 1}` })} children={<p children={`<`} />} />
         <SC.FlexBox $gap={10}>
           {pageNum !== 1 && <SC.RankNum $bColor="lightgray2" onClick={onNavigate({ url: `/community/${pageNum - 4}` })} children={<p children="..." />} />}
-          {data && Array
+          {Array
+            .from({ length: 5 }, (_, idx) => idx)
+            .map(list => <SC.RankNum 
+                    key={list} 
+                    $bColor={getId === pageNum + list ? `blue` : 'lightgray2'} 
+                    onClick={onNavigate({ url: `/community/${pageNum + list}` })} 
+                    children={<p children={list === 4 ? "..." : `${pageNum + list}`} />} />)}
+          {/* {data && Array
             .from({ length: 5 }, (_, idx) => idx)
             .map(list => data.totalPages >= pageNum + list 
               && <SC.RankNum 
                     key={list} 
                     $bColor={getId === pageNum + list ? `blue` : 'lightgray2'} 
                     onClick={onNavigate({ url: `/community/${pageNum + list}` })} 
-                    children={<p children={list === 4 ? "..." : `${pageNum + list}`} />} />)}
+                    children={<p children={list === 4 ? "..." : `${pageNum + list}`} />} />)} */}
         </SC.FlexBox>
         <SC.RankNum $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId + 1}` })} children={<p children={`>`} />} />
       </SC.FlexBox>
