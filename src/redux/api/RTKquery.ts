@@ -60,6 +60,7 @@ export const inocamRTK = createApi({
 	baseQuery: axiosBaseQuery(),
 	tagTypes: [
 		"POSTS",
+		"POSTSLIST",
 		"POSTDETAIL",
 		"POSTCOMMENT",
 		"KAKAO",
@@ -192,14 +193,23 @@ export const inocamRTK = createApi({
 			/* / 03 Community 관련 / -------------------------------------------------------- */
 			// getCommunity - 커뮤니티 게시글 요청
 			getCommunity: build.query({
-				query: ({getId}) => ({
-					url: `/api/communities?page=${getId}&size=10`,
+				query: ({getId, category}) => ({
+					url: `/api/communities?category=${category}&page=${getId}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
 				providesTags: ["POSTS"],
 			}),
 
+			// /api/communites/list
+			getCommunitesList: build.query({
+				query: () => ({
+					url:`/api/communities/list`,
+					method:"get",
+					types: "getData",
+				}),
+				providesTags: ["POSTSLIST"],
+			}),
 			// postCommunity - 커뮤니티 게시글 작성
 			postCommunity: build.mutation({
 				query: (data) => ({
@@ -404,6 +414,7 @@ export const {
 
 	// Community 차량출고 커뮤니티 관련
 	useGetCommunityQuery,
+	useGetCommunitesListQuery,
 	usePostCommunityMutation,
 	useDeleteCommunityMutation,
 	usePatchCommunityMutation,

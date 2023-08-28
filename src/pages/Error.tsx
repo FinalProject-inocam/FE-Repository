@@ -13,7 +13,7 @@ export const Error: React.FC = () => {
       style.left = "0";
       style.backgroundColor = "black"
     }
-    window.location.reload()
+    // window.location.reload()
   },[])
   return <div ref={errRef} />
 };

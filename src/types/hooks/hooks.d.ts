@@ -67,8 +67,8 @@ export interface UseCommunityDetail extends AsyncHooksDefault {
 	data: Type.DetailCommunity;
 	commentInfo: string;
 	onDeletePost: (post_id: number | undefined) => () => void;
-	onSubmitPostComment: (post_id: number | undefined) => (e: FormEvent<HTMLFormElement>) => void;
-	onChangeComment: (e: ChangeEvent<HTMLInputElement>) => void;
+	onSubmitPostComment: (post_id: number | undefined) => (e: MouseEvent<HTMLDivElement>) => void;
+	onChangeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 	onDeleteComment: (post_id: number | undefined, comment_id: number | undefined) => () => void;
 }
 

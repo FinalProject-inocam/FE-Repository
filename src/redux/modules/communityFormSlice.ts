@@ -10,11 +10,11 @@ const communityFormSlice = createSlice({
 			return { ...state, ...action.payload };
 		},
 		deleteCommunityDate: () => {
-			return { revisit: 0, review: "" };
+			return { };
 		},
 	},
 });
 
 export const CommunityFormReducer = communityFormSlice.reducer;
-export const selectCommunityFormReducer = (state: { CommunityFormReducer: any }) => state.CommunityFormReducer;
+export const selectCommunityForm = (state: { CommunityFormReducer: any }) => state.CommunityFormReducer;
 export const { setCommunityDate, deleteCommunityDate } = communityFormSlice.actions;

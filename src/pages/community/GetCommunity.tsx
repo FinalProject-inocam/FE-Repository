@@ -1,22 +1,24 @@
-import { FC, MouseEvent, useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import * as SC from "../../components";
 import { communityBanner, heart, posting, searchIcon } from "../../assets";
 import { useCommunity, useRouter } from "../../hooks";
+import { useGetCommunitesListQuery } from "../../redux";
+import { PerDiv } from "./CommunityDetail";
 
 
 export const GetCommunity: FC = () => {
   const { getId, onNavigate } = useRouter();
-  const [category, setCategory] = useState("전체")
-  const { isLoading, isError, data, error } = useCommunity({ getId })
+  const [category, setCategory] = useState("total")
+  const { isLoading, isError, data, error } = useCommunity({ getId, category })
+  const query = useGetCommunitesListQuery({})
   const [pageNum, setPageNum] = useState<number>(1)
 
-  const onCategoryToggle = (e:MouseEvent) => {
-    const { innerText } = e.target as HTMLElement
-    setCategory(innerText)
+  const onCategoryToggle = (eng:string) => () => {
+    setCategory(eng)
   }
 
   console.log(category, setCategory)
-  const categoryList = ["전체", "공지", "자유", "후기"];
+  const categoryList = [["전체", "total"], ["공지", "notification"], ["자유", "free"], ["후기", "review"]];
 
   useEffect(() => {
     getId === 1 
@@ -37,18 +39,19 @@ export const GetCommunity: FC = () => {
   }, [getId])
 
   data && console.log("GetCommunity", data)
+  query.isSuccess && console.log(query)
 
   // darkBlue2 // white
   return (
     <SC.FlexBox $fd="column" $ai="start" $jc="start" $gap={30}>
       <SC.FlexBox $gap={10}>
-        {categoryList.map(list => {
-          const bColor = category === list ? "darkBlue2": "white";
+        {categoryList.map(([kor, eng]) => {
+          const bColor = category === eng ? "darkBlue2": "white";
           return (<SC.CategoryBtn 
-                      key={list} 
-                      onClick={onCategoryToggle} 
+                      key={eng} 
+                      onClick={onCategoryToggle(eng)} 
                       $bColor={bColor} 
-                      children={<SC.CustomP $height="44px" $bColor={bColor} children={list}/>} />)
+                      children={<SC.CustomP $height="44px" $bColor={bColor} children={kor}/>} />)
         })}
       </SC.FlexBox>
 
@@ -115,7 +118,7 @@ export const GetCommunity: FC = () => {
         </SC.FlexBox>
         <SC.RankNum $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId + 1}` })} children={<p children={`>`} />} />
       </SC.FlexBox>
-
+      {data && <PerDiv children={data.content[0].content}/>}
     </SC.FlexBox>
   )
 }

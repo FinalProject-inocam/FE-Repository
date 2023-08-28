@@ -5,7 +5,7 @@ import { SettingBtn } from '../community/CommunityDetail';
 import { css, styled } from 'styled-components';
 import { Styled } from '../../types';
 import { plus } from '../../assets';
-import { setCommunityDate, useAppDispatch } from '../../redux';
+import { selectCommunityForm, setCommunityDate, useAppDispatch, useAppSelector, usePostCommunityMutation } from '../../redux';
 import imageCompression from "browser-image-compression";
 
 
@@ -43,7 +43,7 @@ const CommunityFormTitle: React.FC = () => {
 }
 
 const CommunityFormTextArea: React.FC = () => {
-  const { value: comment, onChangeValue, onBlurValue } = useCommunityWrite("comment")
+  const { value: comment, onChangeValue, onBlurValue } = useCommunityWrite("content")
 
   return (
     <PositionRelavite style={{ width: "100%" }}>
@@ -84,8 +84,7 @@ const TextaAreaCount = styled.div<Partial<Styled>>`
 `;
 
 
-const CommunityFormImgs: React.FC = () => {
-  const [imgs, setImgs] = useState<any>([])
+const CommunityFormImgs: React.FC<any> = ({imgs,setImgs}) => {
   const [previewimg, setPreviewimg] = useState<any>([])
   const [resizing, setResizing] = useState<boolean>(false)
 
@@ -183,28 +182,44 @@ const CommunityFormImgs: React.FC = () => {
 
 export const CommunityWrite: React.FC = () => {
   const { onNavigate } = useRouter()
+  const [imgs, setImgs] = useState<any>([])
   const [postTagToggle, setPostTagToggle] = useState<boolean>(false)
   const [postTag, setPostTag] = useState<string>("후기")
+  const dispatch = useAppDispatch()
   // const { onChangePost, onChageFile, onSubmitPostPosts, postInfo } = useCommunityWrite()
 
   const onPostTagToggle = () => {
     setPostTagToggle(pre => !pre)
   }
 
-  const dispatch = useAppDispatch()
-  const onSetPostTag = (e: MouseEvent<HTMLElement>) => {
+ 
+  const onSetPostTag = (tag:string) => (e: MouseEvent<HTMLElement>) => {
     const { dataset: { value } } = e.target as HTMLElement
     value && setPostTag(value)
-    dispatch(setCommunityDate({ postTag }))
+    dispatch(setCommunityDate({ category:tag }))
     setPostTagToggle(pre => !pre)
   }
 
+  const getCommunityData = useAppSelector(selectCommunityForm)
+  const [onPostCommunity,query] = usePostCommunityMutation()
   const onSubmitReview = (e: FormEvent<HTMLFormElement> | MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
+    console.log(getCommunityData)
+    const formData = new FormData()
+    formData.append("data", new Blob([JSON.stringify(getCommunityData)], { type: "application/json" }));
+    if (imgs) {
+			for (let i = 0; i < imgs.length; i++) {
+				imgs && formData.append("images", imgs[i]);
+			}
+		}
+    onPostCommunity(formData)
   }
+  console.log(query)
 
   useEffect(() => {
     window.scrollTo(0, 500)
+    dispatch(setCommunityDate({ category:"review" }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -214,25 +229,25 @@ export const CommunityWrite: React.FC = () => {
         <CustomP $height="47px" $bColor="white" $size={1.125}>목록으로</CustomP>
       </SettingBtn>
 
-
       <FlexBox as="form" $fd='column' $gap={20} style={{ width: "100%" }} onSubmit={onSubmitReview}>
         <GridBox $gtc="144px 1fr" $cgap={20}>
           <div style={{ position: "relative" }}>
             <PostWriteTag onClick={onPostTagToggle}>{postTag}
               <CustomP $height='70px' $size={1.5} style={{ marginLeft: "20px" }}>▼</CustomP>
             </PostWriteTag>
-            {postTagToggle && (<PostTagSelector $fd='column' $gap={5} $size={50 * 2}>
-              <CustomP style={{ width: "100%" }} $height='50px' data-value="후기" onClick={onSetPostTag}>후기</CustomP>
-              <CustomP style={{ width: "100%" }} $height='50px' data-value="자유" onClick={onSetPostTag}>자유</CustomP>
+            {postTagToggle && (
+            <PostTagSelector $fd='column' $gap={5} $size={50 * 2}>
+              <CustomP style={{ width: "100%" }} $height='50px' data-value="후기" onClick={onSetPostTag("review")}>후기</CustomP>
+              <CustomP style={{ width: "100%" }} $height='50px' data-value="자유" onClick={onSetPostTag("free")}>자유</CustomP>
             </PostTagSelector>)}
           </div>
           <CommunityFormTitle />
         </GridBox>
         <PostList $jc="flex-start" $gap={20} >
           <CommunityFormTextArea />
-          <CommunityFormImgs />
+          <CommunityFormImgs imgs={imgs} setImgs={setImgs}/>
         </PostList>
-        <div onClick={onSubmitReview} style={{ width: "100%", height: "70px", backgroundColor: "blue", borderRadius: "10px" }}><CustomP $height="70px" $bColor="blue" $size={1.25}>작성</CustomP></div>
+        <input type='submit'  style={{ width: "100%", height: "70px", backgroundColor: "blue", borderRadius: "10px", color:"white", fontSize:"1.25rem" }} value="작성"/> 
       </FlexBox>
 
     </FlexBox>
