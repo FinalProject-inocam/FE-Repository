@@ -8,6 +8,7 @@ import {
 	LocationReducer,
 	ReviewFormReducer,
 	ThreejsReducer,
+	CommunityFormReducer
 	MergeWCDreviewReducer,
 } from "../modules";
 import { configureStore } from "@reduxjs/toolkit";
@@ -23,6 +24,7 @@ export const store = configureStore({
 		LocationReducer,
 		ReviewFormReducer,
 		ThreejsReducer,
+		CommunityFormReducer,
 		MergeWCDreviewReducer,
 		[inocamRTK.reducerPath]: inocamRTK.reducer,
 	},

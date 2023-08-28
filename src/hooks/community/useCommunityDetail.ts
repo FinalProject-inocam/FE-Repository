@@ -1,14 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import * as RTK from "../../redux";
 import { useRouter } from "../useRouter";
 import * as Type from "../../types";
 
 export const useCommunityDetail = (): Type.UseCommunityDetail => {
-  const { getId, onNavigate } = useRouter();
+  const { onNavigate } = useRouter(); // getId
 
   // RTK - 상세페이지 GET
   const { isLoading, data, isError, error } =
-    RTK.useGetCommunityDetailQuery(getId);
+    RTK.useGetCommunityDetailQuery(65);
 
   // RTK - 상세페이지 삭제
   const [
@@ -37,12 +37,12 @@ export const useCommunityDetail = (): Type.UseCommunityDetail => {
     //   error: commentError,
     // },
   ] = RTK.usePostCommunityCommentMutation();
-  const onChangeComment = (e: ChangeEvent<HTMLInputElement>): void => {
+  const onChangeComment = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setCommentInfo(e.target.value);
   };
   const onSubmitPostComment =
     (post_id: number | undefined) =>
-    (e: FormEvent<HTMLFormElement>): void => {
+    (e: MouseEvent<HTMLDivElement>): void => {
       e.preventDefault();
       onCommentPostRTK({ post_id, data: { comment: commentInfo } });
     };

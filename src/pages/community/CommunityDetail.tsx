@@ -28,6 +28,7 @@ export const CommunityDetail: React.FC = () => {
         onDeleteComment)
     },[])
 
+
   if (isLoading) return <div>... 로딩중</div>;
   else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
   else {
@@ -57,8 +58,13 @@ export const CommunityDetail: React.FC = () => {
             </FlexBox>
             <div style={{ width: "100%", position: "relative" }}>
               <CustomH1 $size={1.5}>댓글</CustomH1>
-              <textarea placeholder="댓글을 입력해주세요" style={{ marginTop: "20px", display: "block", width: "100%", height: "150px", borderRadius: "10px", resize: "none", border: "1px solid black", padding:"20px" }} />
-              <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "75px", height: "45px", backgroundColor: "blue", borderRadius: "10px" }}><CustomP $height="45px" $bColor="blue" $size={1.25}>작성</CustomP></div>
+              <textarea 
+                  value={commentInfo}
+                  onChange={onChangeComment}
+                  placeholder="댓글을 입력해주세요" style={{ marginTop: "20px", display: "block", width: "100%", height: "150px", borderRadius: "10px", resize: "none", border: "1px solid black", padding:"20px" }} />
+              <div
+                onClick={onSubmitPostComment(65)}
+                style={{ position: "absolute", bottom: "20px", right: "20px", width: "75px", height: "45px", backgroundColor: "blue", borderRadius: "10px" }}><CustomP $height="45px" $bColor="blue" $size={1.25}>작성</CustomP></div>
             </div>
             <div>댓글내용</div>
             <div>댓글내용</div>
@@ -85,7 +91,7 @@ export const SettingBtn = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 8px;
   background-color: ${({ theme }) => theme.color.white};
 `
-const PerDiv = styled.div`
+export const PerDiv = styled.div`
   width: 100%;
   text-align: justify;
   white-space: pre-line;
