@@ -7,3 +7,4 @@ export * from "./locationSlice";
 export * from "./reviewFormSlice";
 export * from "./threejsSlice";
 export * from "./communityFormSlice"
+export * from "./mergeWCDreviewSlice";

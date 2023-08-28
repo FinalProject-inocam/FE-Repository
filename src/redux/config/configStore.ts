@@ -9,6 +9,7 @@ import {
 	ReviewFormReducer,
 	ThreejsReducer,
 	CommunityFormReducer
+	MergeWCDreviewReducer,
 } from "../modules";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
@@ -24,6 +25,7 @@ export const store = configureStore({
 		ReviewFormReducer,
 		ThreejsReducer,
 		CommunityFormReducer,
+		MergeWCDreviewReducer,
 		[inocamRTK.reducerPath]: inocamRTK.reducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(inocamRTK.middleware),

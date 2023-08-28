@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 export const Error: React.FC = () => {
-  const errRef = useRef<HTMLDivElement | null>(null)
+	const errRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(()=> {
     if(errRef.current) {

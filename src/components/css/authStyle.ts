@@ -11,11 +11,6 @@ const SignupTitle = sc.styled.div<Partial<Styled>>`
   margin-bottom: 30px;
 `;
 
-//폼 가운데 배치
-const SignupFormLayout = sc.styled.div`
-  ${Flex}
-`;
-
 //폼
 const SignupForm = sc.styled.form<Partial<Styled>>`
   ${Grid}
@@ -27,20 +22,19 @@ const SignupForm = sc.styled.form<Partial<Styled>>`
   border-radius: 10px;
 `;
 
-const SignupSection = sc.styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+const SignUpCertificateLayout = sc.styled.div<Partial<Styled>>`
+${Flex}
+  margin-top: 4px;
 `;
 
 const AuthInput = sc.styled.input<Partial<Styled>>`
   ${({ theme }) => theme.font.PretendardM}
   font-size: 16px;
-  color: rgb(85, 85, 85);
+  color: ${({ theme }) => theme.color.lightgray3};
   display: block;
   width: ${({ $width }) => ($width ? $width : "380px")};
   height: 56px;
-  border: 1px solid rgb(214, 214, 214);
+  border: 1px solid ${({ theme }) => theme.color.lightgray4};
   border-radius: 4px;
   padding-left: 12px;
 
@@ -48,13 +42,8 @@ const AuthInput = sc.styled.input<Partial<Styled>>`
     ${({ theme }) => theme.font.PretendardB}
     font-weight: 600;
     outline: none;
-    border: 2px solid rgb(76,76,255)
+    border: 2px solid ${({ theme }) => theme.color.blue}
   }
-`;
-
-const AuthInputsLayout = sc.styled.div`
-  display: flex;
-  gap: 10px;
 `;
 
 const SignupLabel = sc.styled.div<Partial<Styled>>`
@@ -64,59 +53,55 @@ const SignupLabel = sc.styled.div<Partial<Styled>>`
 `;
 
 const ValidateInputMsg = sc.styled.div<Partial<Styled>>`
-  color : ${({ $signColor }) => ($signColor ? "rgb(76,76,255)" : "red")}
+  color : ${({ $signColor, theme }) =>
+    $signColor ? theme.color.blue : theme.color.red3}
 `;
 
-const SignupSexLabel = sc.styled.label<Partial<Styled>>`
-  ${Flex}
+const CommonBoxStyles = sc.css`
+${Flex}
+height: 56px;
+border-radius: 4px;
+`;
+
+const SignupGenderLabel = sc.styled.label<Partial<Styled>>`
+  ${CommonBoxStyles}
   ${({ theme }) => theme.font.PretendardSB}
   font-size: 18px;
   font-weight: 600;
   width: 185px;
-  height: 56px;
-  border-radius: 4px;
-  color: ${({ $state }) => ($state ? "white" : "rgb(76,76,255)")};
-  border: 1px solid ${({ $state }) => ($state ? "none" : "rgb(76,76,255)")};
-  background-color: ${({ $state }) => ($state ? "rgb(76,76,255)" : "white")};
+  color: ${({ $state, theme }) => ($state ? "white" : theme.color.blue)};
+  border: 1px solid ${({ $state, theme }) =>
+    $state ? "none" : theme.color.blue};
+  background-color: ${({ $state, theme }) =>
+    $state ? theme.color.blue : "white"};
 `;
 
-const SignUpCertificateEmailDiv = sc.styled.div`
-${Flex}
+//CommonAvailableStyles
+const CommonABStyles = sc.css<Partial<Styled>>`
+${CommonBoxStyles}
   width: 380px;
-  height: 56px;
-  border-radius: 4px;
   margin-top: 4px;
-  background-color: rgb(199,199,203);
+  pointer-events: ${({ $state }) => ($state ? "auto" : "none")};
+  background-color: ${({ $state, theme }) =>
+    $state ? theme.color.blue : theme.color.lightgray0};
 `;
 
-const SignUpSubmitInput = sc.styled.input`
-${Flex}
-  width: 380px;
-  height: 56px;
-  border-radius: 4px;
-  margin-top: 4px;
-  background-color: rgb(76, 76, 255);
+const SignUpCertificateEmailDiv = sc.styled.div<Partial<Styled>>`
+  ${CommonABStyles}
+`;
 
+const SignUpSubmitInput = sc.styled.input<Partial<Styled>>`
+  ${CommonABStyles}
   ${({ theme }) => theme.font.PretendardSB}
   font-size: 18px;
   font-weight: 600;
   color: white;
 `;
 
-//위의 두 개가 비슷 나중에 수정 필요
-
-const SignUpCertificateLayout = sc.styled.div`
-  margin-top: 4px;
-  display: flex;
-  gap: 4px;
-`;
-
 const SignUpReSendDiv = sc.styled.div`
-  ${Flex}
+${CommonBoxStyles}
   width: 75px;
-  height: 56px;
-  border: 1px solid rgb(130, 130, 149);
-  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.color.lightgray2};
   color: rgb(85, 85, 85);
 `;
 
@@ -130,26 +115,17 @@ const SignUpTimerDiv = sc.styled.div`
   right: 12px;
 `;
 
-//이름 바꾸기, 관리자회원가입에도 쓰고 있음, 위에도 있음..
-const LogoImgDiv = sc.styled.div`
- ${Flex}
-`;
-
 export {
   AuthInput,
-  SignupSection,
   ValidateInputMsg,
-  AuthInputsLayout,
   SignupLabel,
   SignupForm,
   SignupTitle,
-  SignupSexLabel,
-  SignupFormLayout,
+  SignupGenderLabel,
   SignUpCertificateEmailDiv,
   SignUpCertificateLayout,
   SignUpReSendDiv,
   EmailCodeDiv,
   SignUpTimerDiv,
   SignUpSubmitInput,
-  LogoImgDiv,
 };
