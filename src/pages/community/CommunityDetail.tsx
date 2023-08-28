@@ -85,7 +85,7 @@ export const SettingBtn = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 8px;
   background-color: ${({ theme }) => theme.color.white};
 `
-const PerDiv = styled.div`
+export const PerDiv = styled.div`
   width: 100%;
   text-align: justify;
   white-space: pre-line;
