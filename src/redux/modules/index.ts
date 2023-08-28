@@ -6,3 +6,4 @@ export * from "./chatMsgSlice";
 export * from "./locationSlice";
 export * from "./reviewFormSlice";
 export * from "./threejsSlice";
+export * from "./mergeWCDreviewSlice";

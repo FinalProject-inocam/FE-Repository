@@ -29,7 +29,7 @@ export const useReviewForm = (): Type.UseReviewFormReturnType => {
 		dispatch(RTK.deleteReiewDate());
 	};
 	useEffect(() => {
-		console.log(queryInfo);
+		// console.log(queryInfo);
 	}, [queryInfo]);
 	return { previewImg, setPreviewImg, setCompressedImg, compressed, setCompressed, onSubmitReview };
 };
