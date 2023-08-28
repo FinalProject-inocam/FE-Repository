@@ -1,8 +1,8 @@
 import * as RTK from "../../redux";
 
 export const useReviewBar = () => {
-	const [onDeleteShopCommentRTK, queryDelete] = RTK.useDeleteWrappingCommentMutation();
-	console.log(queryDelete);
+	const [onDeleteShopCommentRTK] = RTK.useDeleteWrappingCommentMutation();
+	// console.log(queryDelete);
 	const onDeleteShopComment = (shopId: string | undefined, reviewId: number | undefined) => () => {
 		onDeleteShopCommentRTK({ shopId, reviewId });
 	};
