@@ -4,69 +4,78 @@ import { AsyncHooksDefault } from "../hooks";
 export type SetState = Dispatch<SetStateAction<boolean>>;
 
 export interface EditWrappingShopReview {
-	shopId: string | undefined;
-	reviewId: number;
+  shopId: string | undefined;
+  reviewId: number;
 }
 
 export interface FigureImg {
-	src: string;
-	alt: string;
-	width: string;
-	height?: string;
-	types?: string;
-	children?: ReactChild;
+  src: string;
+  alt: string;
+  width: string;
+  height?: string;
+  types?: string;
+  children?: ReactChild;
 }
 
 export interface EditComment {
-	postId: number | undefined;
-	commentId: number;
-	comment: string;
+  postId: number | undefined;
+  commentId: number;
+  comment: string;
 }
 
 /* / WrappingShopDetail컴포넌트 / -------------------------------------------------------- */
 export interface WrappingShopBannerProps {
-	bannerNumber: number;
-	$bannerSize: "big" | "small";
+  bannerNumber: number;
+  $bannerSize: "big" | "small";
 }
 
 export interface WrappingDetailProps extends AsyncHooksDefault {
-	data?: WrappingShopDetail;
+  data?: WrappingShopDetail;
 }
 
 export interface WrappingDetailStar {
-	size: number;
+  size: number;
 }
 
 export interface WrappingDetailStyled {
-	$bgColor?: string;
-	$bColor?: string;
-	$color?: string;
-	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "login" | "default";
-	$outlined?: boolean;
-	children?: React.ReactNode;
-	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-	type?: "button" | "reset" | "submit";
-	value?: string;
-	$clicked?: boolean;
+  $bgColor?: string;
+  $bColor?: string;
+  $color?: string;
+  $buttonSize?:
+    | "revisit"
+    | "submit"
+    | "upload"
+    | "never"
+    | "upload"
+    | "like"
+    | "comment"
+    | "login"
+    | "default";
+  $outlined?: boolean;
+  children?: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  type?: "button" | "reset" | "submit";
+  value?: string;
+  $clicked?: boolean;
 }
 
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */
 export interface WrappingKakaomapsProps {
-	ref: MutableRefObject<HTMLDivElement | null>;
+  ref: MutableRefObject<HTMLDivElement | null>;
 }
 
 /* / SignUpInput컴포넌트 / -------------------------------------------------------- */
-export interface SignUpInputProps {
-	placeholder: string;
-	name: string;
-	length: number;
-	type?: string;
-	inputRef: LegacyRef<HTMLInputElement> | undefined;
-	submitted: boolean;
+export interface SignUpECProps {
+  inputRef: LegacyRef<HTMLInputElement> | undefined;
 }
 
-/* / SignUpInputRadio컴포넌트 / -------------------------------------------------------- */
-export interface SignUpInputRadio {
-	inputRef: LegacyRef<HTMLInputElement> | undefined;
-	submitted: boolean;
+export interface SignUpInputBirthProps extends SignUpECProps {
+  name: string;
+  submitted: boolean;
+}
+
+export interface SignUpInputProps extends SignUpInputBirthProps {
+  placeholder: string;
+  length: number;
+  type?: string;
 }

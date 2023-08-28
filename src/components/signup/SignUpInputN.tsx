@@ -3,13 +3,19 @@ import * as SC from "../css";
 import * as Type from "../../types";
 import { useSignupNickName } from "../../hooks";
 
-
 export const SignUpInputN: React.FC<Type.SignUpInputProps> = ({
-  placeholder, name, type, length, inputRef, submitted }) => {
-  const { input, getValidateMsg, onChangeInput, onBlurSignupDispatch } = useSignupNickName({
-    name,
-    submitted,
-  });
+  placeholder,
+  name,
+  type,
+  length,
+  inputRef,
+  submitted,
+}) => {
+  const { input, getValidateMsg, onChangeInput, onBlurSignupDispatch } =
+    useSignupNickName({
+      name,
+      submitted,
+    });
 
   return (
     <>

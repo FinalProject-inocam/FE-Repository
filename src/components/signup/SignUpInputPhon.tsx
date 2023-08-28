@@ -13,22 +13,47 @@ export const SignUpInputPhon: FC<SignUpInputPhonProps> = ({
   inputRef,
   submitted,
 }) => {
-  const { input, onChangeInput, onBlurSignupDispatch } = useSignupInput({
+  const {
+    input,
+    inputTwo,
+    inputThree,
+    onChangeInput,
+    onChangeInputTwo,
+    onChangeInputThree,
+    onBlurSignupDispatch,
+  } = useSignupInput({
     name,
     submitted,
   });
   return (
-    <SC.AuthInputsLayout ref={inputRef}>
+    <SC.FlexBox $gap={10}>
       <SC.AuthInput
         type="number"
         value={input}
         onBlur={onBlurSignupDispatch}
         onChange={onChangeInput}
         placeholder="010"
+        ref={inputRef}
         $width="120px"
       />
-      <SC.AuthInput type="number" placeholder="1111" $width="120px" />
-      <SC.AuthInput type="number" placeholder="1111" $width="120px" />
-    </SC.AuthInputsLayout>
+      <SC.AuthInput
+        type="number"
+        value={inputTwo}
+        onBlur={onBlurSignupDispatch}
+        onChange={onChangeInputTwo}
+        placeholder="1111"
+        ref={inputRef}
+        $width="120px"
+      />
+      <SC.AuthInput
+        type="number"
+        value={inputThree}
+        onBlur={onBlurSignupDispatch}
+        onChange={onChangeInputThree}
+        placeholder="1111"
+        ref={inputRef}
+        $width="120px"
+      />
+    </SC.FlexBox>
   );
 };
