@@ -3,8 +3,8 @@ import * as CP from "..";
 import * as SC from "../css";
 import { useReviewForm } from "../../hooks";
 
-export const DetailReviewForm: FC = () => {
-	const { previewImg, setPreviewImg, setCompressedImg, compressed, setCompressed, onSubmitReview } = useReviewForm();
+export const DetailReviewForm: FC<any> = ({setPage}) => {
+	const { previewImg, setPreviewImg, setCompressedImg, compressed, setCompressed, onSubmitReview } = useReviewForm(setPage);
 
 	return (
 		<SC.ReviewFormLayout onSubmit={onSubmitReview} $gtc='80px 1fr' $cgap={20}>

@@ -8,9 +8,12 @@ const mergeWCDreviewSlice = createSlice({
 			console.log(state);
 			return [...state, ...action.payload];
 		},
+		deleteData: () => {
+			return []
+		}
 	},
 });
 
 export const MergeWCDreviewReducer = mergeWCDreviewSlice.reducer;
 export const selectMergeWCDreview = (state: any) => state.MergeWCDreviewReducer;
-export const { setMergeDate } = mergeWCDreviewSlice.actions;
+export const { setMergeDate, deleteData } = mergeWCDreviewSlice.actions;

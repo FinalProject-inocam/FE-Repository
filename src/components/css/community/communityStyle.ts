@@ -159,11 +159,11 @@ height: 150px;
 overflow: hidden;
 border-radius: 10px;
 border: 2px solid ${({ theme }) => theme.color.lightgray1};
-background-color: azure;
 `
 
 const PostInnerContext = styled.div`
   ${SC.Grid}
+  width: 100%;
   position: relative;
   grid-template-columns: 68px 1fr;
   gap: 10px;

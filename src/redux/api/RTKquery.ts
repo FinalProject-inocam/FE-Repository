@@ -67,6 +67,7 @@ export const inocamRTK = createApi({
 		"ICOCAR",
 		"PURCHASESCHAR",
 		"WRAPPINGSHOP",
+		"WRAPPINGSHOPDREVIEW",
 		"WRAPPINGSHOPCOMMENT",
 		"WRAPPINGSHOPD",
 		"MYPAGE",
@@ -241,6 +242,14 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["POSTS", "POSTDETAIL"],
 			}),
 
+			// patchCommunityLiked 게시글 좋아요
+			patchCommunityLiked: build.mutation({
+				query: ({ postId }) => ({
+					url: `/api/communities/${postId}/like`,
+					method: "patch",
+				}),
+				invalidatesTags: ["POSTS", "POSTDETAIL"],
+			}),
 			// getCommunityDetail - 커뮤니티 게시글 요청
 			getCommunityDetail: build.query({
 				query: (postId) => ({
@@ -308,7 +317,7 @@ export const inocamRTK = createApi({
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["WRAPPINGSHOPD"],
+				providesTags: ["WRAPPINGSHOPDREVIEW"],
 			}),
 
 			// postWrappingShopComment - 래핑샵 댓글작성
@@ -319,7 +328,7 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPD"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
 			}),
 
 			// DeleteWrappingShopComment - 래핑샵 댓글 삭제
@@ -328,7 +337,7 @@ export const inocamRTK = createApi({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
 					method: "delete",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPD"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
 			}),
 
 			// pathWrappingShopComment - 랩핑샵 댓글 수정
@@ -339,7 +348,7 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPD"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
 			}),
 
 			// pathWrappingShopComment - 랩핑샵 리뷰 좋아요
@@ -348,7 +357,7 @@ export const inocamRTK = createApi({
 					url: `/api/shops/${shopId}/reviews/${reviewId}/like`,
 					method: "patch",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPD"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
 			}),
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			getMyPage: build.query({
@@ -405,6 +414,7 @@ export const {
 	usePostCommunityCommentMutation,
 	usePatchCommunityCommentMutation,
 	useDeleteCommunityCommentMutation,
+	usePatchCommunityLikedMutation,
 
 	// Posts 차량 신청 관련
 	usePostPurchasesMutation,
