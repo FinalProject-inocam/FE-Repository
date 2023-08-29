@@ -35,6 +35,7 @@ export const SignUpInputPhon: FC<SignUpInputPhonProps> = ({
         placeholder="010"
         ref={inputRef}
         $width="120px"
+        $state={true}
       />
       <SC.AuthInput
         type="number"
@@ -44,6 +45,7 @@ export const SignUpInputPhon: FC<SignUpInputPhonProps> = ({
         placeholder="1111"
         ref={inputRef}
         $width="120px"
+        $state={true}
       />
       <SC.AuthInput
         type="number"
@@ -53,6 +55,7 @@ export const SignUpInputPhon: FC<SignUpInputPhonProps> = ({
         placeholder="1111"
         ref={inputRef}
         $width="120px"
+        $state={true}
       />
     </SC.FlexBox>
   );

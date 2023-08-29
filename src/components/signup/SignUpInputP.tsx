@@ -33,10 +33,11 @@ export const SignUpInputP: React.FC<Type.SignUpInputProps> = ({
           onChange={onChangeInput}
           maxLength={length}
           placeholder={placeholder}
+          $state={true}
         />
-        <SC.SignUpTimerDiv onClick={onClickSeePassword}>
+        <SC.SignUpInputInnerDiv onClick={onClickSeePassword}>
           {seePassword ? "숨김" : "보기"}
-        </SC.SignUpTimerDiv>
+        </SC.SignUpInputInnerDiv>
       </SC.EmailCodeDiv>
       <SC.ValidateInputMsg
         $signColor={getValidateMsg[1]}

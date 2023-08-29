@@ -22,18 +22,21 @@ export const SignUpInputBirth: FC<Type.SignUpInputBirthProps> = ({
         placeholder="1990"
         ref={inputRef}
         $width="120px"
+        $state={true}
       />
       <SC.AuthInput
         type="number"
         placeholder="01"
         $width="120px"
         ref={inputRef}
+        $state={true}
       />
       <SC.AuthInput
         type="number"
         placeholder="01"
         $width="120px"
         ref={inputRef}
+        $state={true}
       />
     </SC.FlexBox>
   );

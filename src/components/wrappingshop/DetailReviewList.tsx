@@ -13,9 +13,27 @@ const ReviewInner: FC<{
 	reviews: { reviewId, nickname, star, revisit, createAt, shopId, review, imageUrls },
 }) => {
 
+	const RefetchThrottle = (callback: () => void, delay: number) => {
+		let timeId: NodeJS.Timeout | null = null;
+		return () => {
+			if (timeId) return;
+			timeId = setTimeout(() => {
+				callback();
+				timeId = null;
+			}, delay);
+		};
+	};
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const onNextPageCallback = useCallback(
+		RefetchThrottle(() => {
+			console.log("쓰로틀 시작");
+			setPage(page + 1);
+		}, 1000),
+		[]
+	);
 
 	return (
-		<SC.ReviewListLayout  $gtc='80px 1fr' $cgap={20}>
+		<SC.ReviewListLayout ref={fetchNextRef} $gtc='80px 1fr' $cgap={20}>
 			<SC.CustomH3 $types='nickname'>{nickname}</SC.CustomH3>
 			<SC.FlexBox
 				$fd='column'

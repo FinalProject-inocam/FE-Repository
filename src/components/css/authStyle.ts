@@ -1,9 +1,10 @@
 import * as sc from "styled-components";
 import { Styled } from "../../types";
 import { Flex, Grid } from "./GlobalStyled";
+import { cursor } from "./GlobalStyled";
 
 //타이틀 : 이노캠모터스에 오신걸 환영합니다
-const SignupTitle = sc.styled.div<Partial<Styled>>`
+const AuthTitle = sc.styled.div<Partial<Styled>>`
   ${Flex};
   ${({ theme }) => theme.font.PretendardM};
   font-size: 40px;
@@ -12,9 +13,9 @@ const SignupTitle = sc.styled.div<Partial<Styled>>`
 `;
 
 //폼
-const SignupForm = sc.styled.form<Partial<Styled>>`
+const AuthForm = sc.styled.form<Partial<Styled>>`
   ${Grid}
-  width: 920px;
+  width: ${({ $width }) => $width};
   padding: 40px;
   padding-top: 50px;
   background-color: ${({ theme }) => theme.color.white};
@@ -34,7 +35,8 @@ const AuthInput = sc.styled.input<Partial<Styled>>`
   display: block;
   width: ${({ $width }) => ($width ? $width : "380px")};
   height: 56px;
-  border: 1px solid ${({ theme }) => theme.color.lightgray4};
+  border: 1px solid ${({ $state, theme }) =>
+    $state ? theme.color.lightgray4 : "red"};
   border-radius: 4px;
   padding-left: 12px;
 
@@ -65,6 +67,7 @@ border-radius: 4px;
 
 const SignupGenderLabel = sc.styled.label<Partial<Styled>>`
   ${CommonBoxStyles}
+  ${cursor}
   ${({ theme }) => theme.font.PretendardSB}
   font-size: 18px;
   font-weight: 600;
@@ -81,51 +84,78 @@ const CommonABStyles = sc.css<Partial<Styled>>`
 ${CommonBoxStyles}
   width: 380px;
   margin-top: 4px;
+  cursor: ${({ $state }) => ($state ? "pointer" : "auto")};
   pointer-events: ${({ $state }) => ($state ? "auto" : "none")};
-  background-color: ${({ $state, theme }) =>
-    $state ? theme.color.blue : theme.color.lightgray0};
-`;
-
-const SignUpCertificateEmailDiv = sc.styled.div<Partial<Styled>>`
-  ${CommonABStyles}
-`;
-
-const SignUpSubmitInput = sc.styled.input<Partial<Styled>>`
-  ${CommonABStyles}
-  ${({ theme }) => theme.font.PretendardSB}
   font-size: 18px;
   font-weight: 600;
   color: white;
 `;
 
+const SignUpCertificateEmailDiv = sc.styled.div<Partial<Styled>>`
+  ${CommonABStyles}
+  background-color: ${({ $state, theme }) =>
+    $state ? theme.color.blue : theme.color.lightgray0};
+`;
+
+const AuthSubmitInput = sc.styled.input<Partial<Styled>>`
+  ${CommonABStyles}
+  ${({ theme }) => theme.font.PretendardSB}
+  background-color: ${({ $state, theme }) =>
+    $state ? theme.color.blue : theme.color.textColorSub};
+`;
+
 const SignUpReSendDiv = sc.styled.div`
 ${CommonBoxStyles}
   width: 75px;
-  border: 1px solid ${({ theme }) => theme.color.lightgray2};
-  color: rgb(85, 85, 85);
+  border: 1px solid ${({ theme }) => theme.color.blue};
+  color: ${({ theme }) => theme.color.blue};
 `;
 
 const EmailCodeDiv = sc.styled.div<Partial<Styled>>`
   position: relative;
   width: ${({ $width }) => ($width ? $width : "380px")};
 `;
-const SignUpTimerDiv = sc.styled.div`
+const SignUpInputInnerDiv = sc.styled.div<Partial<Styled>>`
   position: absolute;
   top: 16px;
   right: 12px;
+`;
+
+//Login: sns
+const LoginSnsButton = sc.styled.div<Partial<Styled>>`
+${CommonBoxStyles}
+  ${cursor}
+  ${({ theme }) => theme.font.PretendardM}
+  font-size: 16px;
+  width: 380px;
+  gap: 10px;
+  ${({ $types }) =>
+    $types === "kakao"
+      ? sc.css`background-color:#FEE500`
+      : $types === "naver"
+      ? sc.css`background-color:#03C75A; color:#FFFFFF`
+      : sc.css`background-color:#FFFFFF; border: 1px solid ${({ theme }) =>
+          theme.color.lightgray0}`}
+`;
+
+const LoginSignupButton = sc.styled.div`
+${cursor}
+  margin-top: 5px;
 `;
 
 export {
   AuthInput,
   ValidateInputMsg,
   SignupLabel,
-  SignupForm,
-  SignupTitle,
+  AuthForm,
+  AuthTitle,
   SignupGenderLabel,
   SignUpCertificateEmailDiv,
   SignUpCertificateLayout,
   SignUpReSendDiv,
   EmailCodeDiv,
-  SignUpTimerDiv,
-  SignUpSubmitInput,
+  SignUpInputInnerDiv,
+  AuthSubmitInput,
+  LoginSnsButton,
+  LoginSignupButton,
 };
