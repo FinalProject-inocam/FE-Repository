@@ -709,7 +709,209 @@
 
       </details><br/>
 
+2. 쓰로틀링(무한스크롤)과 디바운싱(버큰클릭)
 
+    <details>
+    <summary>무한스크롤 제어와 쓰로틀링</summary>
 
+    - 첫째, 무한스크롤을 쓰는 이유 : 한 번에 모든 데이터를 로드하지 않고 필요할 때만 작은 양의 데이터를 로드하므로 초기 로딩 속도가 빠릅니다.
+    - 둘째, 쓰로틀링과 spinner(IntersectionObserver) : 무한 스크롤 사용시 발생할 수 있는 과부화를 해결하고자 쓰로틀링을 사용하였다.
+    IntersectionObserver를 통해 불러온 요소들 중 마지막 요소를 관찰대상으로 등록하여, 마지막 요소가 감지 되었을 때 추가 api 요청을 보내는 방식으로 구현하였다. 이때, 무시되는 Delay 시간은 1초로 설정해놓았다. 
 
+      ```tsx
+      export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
+        // 로직부분 생략 
+        return (
+          <div
+            style={{
+              padding: "30px 20px 26px",
+              backgroundColor: "#fff",
+            }}>
+            {getMergeData.map((reviews: Type.TotalWrappingShopReview) =>
+              (
+                <ReviewInner
+                  reviews={reviews}
+                  key={reviews.reviewId}
+                />
+              )
+            )}
+            {data && !data.last && <div ref={fetchNextRef}/>} 
+          </div>
+        );
+      }
+      ```
+    
+    - 셋째, 이를 위해 무한스크롤을 구현한 코드는 아래와 같다. 
+      - (1) IntersectionObserver를 통해 받아온 요소들 중 마지막 요소를 ref로 등록해 관찰대상으로 설정한다.
+      - (2) 관찰대상이 감지되었을 때, 함수 onNextPageCallback가 실행된다.  
+      - (3) onNextPageCallback를 통해 다음 페이지의 데이터를 불러오며, 이때 쓰로틀링을 통해 api 과부화를 막는다.  
+      - (4) 페이지별로 불러오는 데이터들은 이전페이지에 대한 정보를 가지고 있지 않기에, 이를 전역상태로 관리하여, 화면에 누적되는 효과를 주었다. 
+      - (5) 불러온 요소들 중 마지막 요소가 전체 데이터의 마지막 요소일시 spinner를 화면에서 none 처라 하여, 전체 데이터를 불러온 뒤로는 무한 스크롤이 일어나지 않도록 한다. 
+            
+      <br/>
+
+      <details>
+      <summary>전체코드 살펴보기</summary>
+
+        ```tsx
+        import { useCallback, useEffect, useRef, MutableRefObject, Dispatch, SetStateAction } from "react";
+
+        export const useInfinityThrottle = (setPage: Dispatch<SetStateAction<number>>,isFetching:boolean): MutableRefObject<HTMLDivElement | null> => {
+          const fetchNextRef = useRef<HTMLDivElement | null>(null);
+          const RefetchThrottle = (callback: () => void, delay: number) => {
+            let timeId: NodeJS.Timeout | null = null;
+            return () => {
+              if (timeId) return;
+              callback();
+              timeId = setTimeout(() => {
+                timeId = null;
+              }, delay);
+            };
+          };
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          const onNextPageCallback = useCallback(
+            RefetchThrottle(() => {
+              console.log("쓰로틀 시작");
+              setPage((pre:number) => pre + 1);
+            }, 1000),
+            []
+          );
+
+          useEffect(() => {
+            const observer = new IntersectionObserver(
+              ([entry]) => {
+                if (entry.isIntersecting && !isFetching) {
+                  // 마지막 요소가 감지되었을 때, 추가요청을 보내면, 값이 오겠죠.
+                  console.log("Fetching more data...");
+                  onNextPageCallback();
+                }
+              },
+              { threshold: 0.1 } // 0~1, 0.1 뷰포트 요소(100px)의 10%(10px) 감지되었을 때, 동작한다.
+            );
+
+            if (fetchNextRef && fetchNextRef.current) {
+              observer.observe(fetchNextRef.current); // 관찰대상 등록
+            }
+          }, [isFetching, onNextPageCallback]);
+
+          return fetchNextRef
+        }
+        ```
+      </details><br/>
+
+    - 넷째, `문제발생` : POST, DELET, UPDATE, 캐시무효화가 동작되지 않는 문제
+      - (1) 비동기 통신의 문제였을까? 
+      - (2) 무엇이 문제였을까? 
+        - page를 관리하는 상태제어의 문제 
+        - 해결과정
+          - [1] 신규 리뷰 작성시 page상태(`url:"/api/shops/${shopId}/reviews?page=${page}&size=10"`)가 초기화가 되지않았고 리뷰가 refetch되지 않는 상태가 발생했다. 
+          - [2] 새로운 댓글이 작성되면서 초기화가 되어야하는 page상태코드가 형제 컴포넌트에 존재하고 있어서 적용되지 않고 있어, 부모 컴포넌트로 끌어올려서 props로 내려줌으로써 해결하였다.
+          - [3] 이를 구현하는 단계에, 만약 페이지가 1이면, 기존의 있던 전역상태의 데이터를 초기해 주어야, map() 동작시 동일 Key에 대한 에러를 방지할 수 있기에, 전역상태관리소를 비워주고, 새로 리패치된 내용들 다시 설정해주었다. 
+          
+            ```tsx
+            useEffect(() => {
+              data && console.log(`data-리패치 :${page}`, data);
+              if (isSuccess) {
+                // page 1
+                if (page === 1) {
+                  dispatch(RTK.deleteData()); // 기존에 있었던 상태 관리를 초기화 
+                  dispatch(RTK.setMergeDate(data.content)); // 새롭게 변경될 데이터를 받음 
+                } else {
+                  // page 2 일 때 
+                  dispatch(RTK.setMergeDate(data.content));
+                }
+                
+              }
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, [data]);
+            ```
+    </details>
+
+    <details>
+    <summary>광클 유저의 버큰제어와 디바운싱</summary>
+    <br/>
+    <img src="./src/assets/readme/Debounce.gif" width="100%">
+
+    - (1) 디바운싱이란?
+      - 실행 빈도를 제한하는 기술로, 사용자가 입력할 때마다 어떤 행위(api요청을 보내는 것)를 반복적으로 행하는 것은 비효율적이므로, 이런 경우 디바운싱을 사용하여 일정 시간 동안 추가 이벤트가 없을 때만 실제로 작업을 실행 하게 하여 반복 행위에 대한 반응을 줄일 수 있게 된다.
+    - (2) 기능구현
+      - 첫째, `프로젝트에서의 사례, (1) 좋아요 광클` : 사용자가 좋아요 버튼을 여러번 눌렀을때, 좋아요 값이 사용자가 누른 만큼 반복변경되므로 디바운싱을 적용시켜 설정시간보다 빠르게(0.5s) 연속된 동작이 끝난 후 한번만 적용되는 것으로 렌더링을 최소화 하였다.
+      - 둘째, 
+        - [1] 먼저 `e.stopPropagation()`을 선언을 통해, 부모 요소의 onClick 이벤트가 자녀 요소에 연쇄작용을 일으키는 이벤트 버블링을 막았다.
+        - [2] `clearTimeout`과 `setTimeout` : onClick이벤트가 일어났을 때 원래 실행되고 있던 timer가 있다면 이를 clearTimeout을 통해 삭제해주고, setTimeout을 통해 새로운 timer를 등록한다. 이를 통해 광클 사용자의 마지막 클릭을 인식, 마지막 클릭에 대해서만 원하는 동작(Ex.onPatchLiked({postId}))을 발생시킨다.
+        - [3] `useState`를 통한 `timerId 관리` : 이때 관건은 `timer` 관리하는 것이다. 고유한 타이머를 유지하지 못하면, 여러 개의 timer가 생성되고, 여러번의 동작을 수행하게 된다. 즉 디바운싱이 처리되지 않는다는 것이다. 이 과정을 위해서, 우리는 timer를 useState로 관리하여, 하나의 timer만 존재하도록 상황을 설정하여, 코드를 제어하였다. 
+
+    <br/>
+    
+    ```tsx
+    const LikeBox:FC<any> = ({postId, isLike, likeCount}) => {
+      const [timerId, setTimerId] = useState<any>(null);
+      const [onPatchLiked] = usePatchCommunityLikedMutation()
+      
+      const handleDebounce = () => { 
+        if (timerId) clearTimeout(timerId)
+        const newTimerId = setTimeout(() => {
+          console.log("디바운스 동작하지롱");
+          onPatchLiked({postId})
+        }, 500);
+        setTimerId(newTimerId);
+      };
+
+      const onDebounceLike = (e:MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation()
+        handleDebounce()
+      }
+      
+      return (
+      <div onClick={onDebounceLike}>
+        <SC.FigureObjectFitImg width={"18px"} height={"16px"} src={isLike ? heart : heartg} alt="heart" />
+        <p>{likeCount}</p>
+      </div>)
+    }
+    ```
+  </detils>
+
+3. 페이지 네이션과 데이터 관리
+
+    <details>
+    <summary>페이지 네이션과 데이터 관리</summary>
+
+    - 페이지네이션을 하는 이유 : 무한스크롤과 관리 많은 양의 데이터를 호율적으로 관리하여, 서버부하를 절감하고자 함에 있다.
+    - 기능구현 
+      - [1] 비동기 데이터를 받을 때 : 해당 페이지에 대한 판별 값을 요청, first(페이지판별): boolean, last(페이지판별): boolean, totalPages(총페이지수): number
+      - [2] 페이지 한칸뒤로가기(<), 페이지 한칸 앞으로가기(>) : 한칸뒤로가기는 `first`가 true가 아니면 보이도록, 한칸앞으로가기 `last`가 true가 아니면 보이도록 설정했다. 
+      - [3] 묶음페이지 이동 앞으로(4칸), 뒤로(4칸) : useState(pageNum)을 두어, `totalPages`와 비교하여 해당 값이 화면에 노출되도록 설정하였다. 
+      - [4] 페이지 숫자 노출 : `pageNum + 4 >= data.totalPages`을 비교하여 동적으로, 화면에 지정된 숫자가 노출되도록 구성하였다. <br/><br/>
+
+    ```tsx
+    // 비동기 데이터 first(페이지판별): boolean, last(페이지판별): boolean, totalPages(총페이지수): number
+    export const GetCommunity: FC = () => {
+    const [pageNum, setPageNum] = useState<number>(1)
+    return (
+      <SC.FlexBox $gap={30} style={{ margin: "0 auto" }}>
+          <SC.RankNum style={{ display: data.first ? "none" : "block" }} $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId - 1}` })} children={<p children={`<`} />} />
+          <SC.FlexBox $gap={10}>
+            <SC.RankNum style={{ display: pageNum === 1 ? "none" : "block" }} $bColor="lightgray2" onClick={onNavigate({ url: `/community/${pageNum - 4}` })} children={<p children="..." />} />
+            {data && pageNum + 4 >= data.totalPages
+              ? Array
+                .from({ length: data.totalPages - pageNum + 1 }, (_, idx) => idx)
+                .map(list => <SC.RankNum
+                  key={list}
+                  $bColor={getId === pageNum + list ? `blue` : 'lightgray2'}
+                  onClick={onNavigate({ url: `/community/${pageNum + list}` })}
+                  children={<p children={`${pageNum + list}`} />} />)
+              : Array
+                .from({ length: 5 }, (_, idx) => idx)
+                .map(list => <SC.RankNum
+                  key={list}
+                  $bColor={getId === pageNum + list ? `blue` : 'lightgray2'}
+                  onClick={onNavigate({ url: `/community/${pageNum + list}` })}
+                  children={<p children={list === 4 ? "..." : `${pageNum + list}`} />} />)}
+          </SC.FlexBox>
+          <SC.RankNum style={{ display: data.last ? "none" : "block" }} $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId + 1}` })} children={<p children={`>`} />} />
+        </SC.FlexBox>
+      )
+    }
+    ```
+    </details>
 
