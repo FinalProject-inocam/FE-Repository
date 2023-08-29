@@ -6,3 +6,4 @@ export * from "./signup";
 export * from "./wrappingshop";
 export * from "./commen";
 export * from "./home";
+export * from "./login";

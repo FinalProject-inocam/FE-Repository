@@ -78,10 +78,11 @@ export const SignUpEmailCheckCode: FC<any> = ({
             onChange={onChangeCheckCode}
             ref={inputRef}
             $width="301px"
+            $state={true}
           />
-          <SC.SignUpTimerDiv>
+          <SC.SignUpInputInnerDiv>
             <Timer state={validateCheckCode} reTimer={reTimer} />
-          </SC.SignUpTimerDiv>
+          </SC.SignUpInputInnerDiv>
         </SC.EmailCodeDiv>
 
         <SC.SignUpReSendDiv

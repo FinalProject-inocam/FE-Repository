@@ -19,7 +19,7 @@ export interface Styled {
   $bColor: string;
   $highlight: boolean;
   $bgColor: string;
-  $tAlign:string;
+  $tAlign: string;
 
   // Felx-Grid
   $gap: number;

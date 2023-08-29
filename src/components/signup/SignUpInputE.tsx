@@ -3,13 +3,19 @@ import * as SC from "../css";
 import * as Type from "../../types";
 import { useSignupEmail } from "../../hooks";
 
-
-export const SignUpInputE: React.FC<Type.SignUpInputProps> = ({ 
-  placeholder, name, type, length, inputRef, submitted }) => {
-  const { input, getValidateMsg, onChangeInput, onBlurSignupDispatch } = useSignupEmail({
-    name,
-    submitted,
-  });
+export const SignUpInputE: React.FC<Type.SignUpInputProps> = ({
+  placeholder,
+  name,
+  type,
+  length,
+  inputRef,
+  submitted,
+}) => {
+  const { input, getValidateMsg, onChangeInput, onBlurSignupDispatch } =
+    useSignupEmail({
+      name,
+      submitted,
+    });
 
   return (
     <>
@@ -21,6 +27,7 @@ export const SignUpInputE: React.FC<Type.SignUpInputProps> = ({
         onChange={onChangeInput}
         maxLength={length}
         placeholder={placeholder}
+        $state={true}
       />
       <SC.ValidateInputMsg
         $signColor={getValidateMsg[1]}

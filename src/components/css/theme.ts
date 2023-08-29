@@ -25,7 +25,7 @@ const color = {
   blue: "#4C4CFF",
   red: "#F2757A",
   red2: "#FF162D",
-  red3: "FC5555",
+  red3: "#FC5555",
   green: "#539B39",
   orange: "#FA8128",
   purple: "#362783",
@@ -46,6 +46,9 @@ const color = {
   darkgray2: "2F2B3A",
   darkBlue: "#151565",
   darkBlue2: "#1E0476",
+
+  //텍스트컬러
+  textColorSub: "#828295",
 };
 
 /* About theme ---------------------------------------------- */

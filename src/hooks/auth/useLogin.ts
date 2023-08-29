@@ -1,17 +1,34 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
+import { useRouter } from "../useRouter";
 
 export const useLogin = (state: string): Type.UseLogin => {
   console.log(state);
-  const [loginInfo, setLoginInfo] = useState<Type.User>({
-    email: "",
-    password: "",
-  });
+  const [submitted, setSubmitted] = useState<boolean>(true);
 
-  const onChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setLoginInfo({ ...loginInfo, [name]: value });
+  const [validiteMsgE, setValiditeMsgE] = useState<[string, boolean]>([
+    "",
+    true,
+  ]);
+
+  const [validiteMsgP, setValiditeMsgP] = useState<[string, boolean]>([
+    "",
+    true,
+  ]);
+
+  const dispatch = RTK.useAppDispatch();
+  const getLogin = RTK.useAppSelector(RTK.selectLogin);
+  const { onNavigate } = useRouter();
+
+  const inputRef1 = useRef<HTMLInputElement | null>(null);
+  const inputRef2 = useRef<HTMLInputElement | null>(null);
+
+  const emailRef = inputRef1.current?.value;
+  const passwordRef = inputRef2.current?.value;
+
+  const onSignupClick = (): void => {
+    onNavigate({ url: "/signup" })();
   };
 
   const [onpostLoginRTK, { isLoading, isSuccess, data, isError, error }] =
@@ -19,11 +36,26 @@ export const useLogin = (state: string): Type.UseLogin => {
 
   const onSubmitLogin = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    onpostLoginRTK(loginInfo);
+    if (!!emailRef && !!passwordRef) {
+      onpostLoginRTK(getLogin);
+      dispatch(RTK.deleteLoginDate());
+      setSubmitted((pre) => !pre);
+    } else {
+      !emailRef && setValiditeMsgE(["이메일을 입력해주세요.", false]);
+      !passwordRef && setValiditeMsgP(["비밀번호를 입력해주세요.", false]);
+    }
   };
 
+  useEffect(() => {
+    emailRef && setValiditeMsgE(["", true]);
+  }, [emailRef]);
+
+  useEffect(() => {
+    passwordRef && setValiditeMsgP(["", true]);
+  }, [passwordRef]);
+
   const onSnsLogin = (sns: string) => () => {
-    localStorage.setItem("location", state)
+    localStorage.setItem("location", state);
     switch (sns) {
       case "kakao":
         window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API}&redirect_uri=${window.location.origin}${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code`;
@@ -40,14 +72,18 @@ export const useLogin = (state: string): Type.UseLogin => {
   };
 
   return {
-    loginInfo,
     isLoading,
     isSuccess,
-    data,
     isError,
     error,
-    onChangeInput,
+    data,
+    submitted,
+    inputRef1,
+    inputRef2,
+    validiteMsgE,
+    validiteMsgP,
     onSubmitLogin,
     onSnsLogin,
+    onSignupClick,
   };
 };
