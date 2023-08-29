@@ -39,6 +39,10 @@ export const useSignup = (): Type.UseSignup => {
   };
 
   useEffect(() => {
+    dispatch(RTK.deleteValiditeMsg());
+  }, [dispatch]);
+
+  useEffect(() => {
     isSuccess && onNavigate({ url: "/login" })();
     isError && console.log(error);
     nAvailable &&

@@ -20,9 +20,9 @@ export const Signup: React.FC = () => {
 
   return (
     <>
-      <SC.SignupTitle>이노캠 모터스에 오신걸 환영합니다.</SC.SignupTitle>
+      <SC.AuthTitle>이노캠 모터스에 오신걸 환영합니다.</SC.AuthTitle>
       <SC.FlexBox>
-        <SC.SignupForm onSubmit={onSubmitSign} $gap={40}>
+        <SC.AuthForm onSubmit={onSubmitSign} $gap={40} $width={"920px"}>
           <SC.FlexBox $fd={"column"} $gap={20}>
             <SC.FlexBox>
               <img alt="Logo" src={SignupLogo} />
@@ -96,14 +96,15 @@ export const Signup: React.FC = () => {
             </div>
 
             <div>
-              <SC.SignUpSubmitInput
+              <SC.AuthSubmitInput
                 type="submit"
                 value="회원가입"
                 $state={check}
+                $bgColor={"theme.color.textColorSub"}
               />
             </div>
           </SC.FlexBox>
-        </SC.SignupForm>
+        </SC.AuthForm>
       </SC.FlexBox>
     </>
   );

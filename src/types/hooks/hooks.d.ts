@@ -156,11 +156,15 @@ export interface UseWrappingMap {
 }
 /* / 12 useLogin / -------------------------------------------------------- */
 export interface UseLogin extends AsyncHooksDefault {
-  loginInfo: Type.User;
   data: string;
-  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  submitted: boolean;
+  inputRef1: LegacyRef<HTMLInputElement> | undefined;
+  inputRef2: LegacyRef<HTMLInputElement> | undefined;
+  validiteMsgE: [string, boolean];
+  validiteMsgP: [string, boolean];
   onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void;
   onSnsLogin: (sns: string) => () => void;
+  onSignupClick: () => void;
 }
 
 /* / 13 useCheckEmailCodeTimer / -------------------------------------------------------- */
@@ -242,44 +246,51 @@ export interface WrappingShopDetailButtons {
 
 /* / 17 useRouter / -------------------------------------------------------- */
 interface ReviewSliceType {
-	revisit: number;
-	review: string;
-	star: number;
+  revisit: number;
+  review: string;
+  star: number;
 }
 
 /* / 18 useRevisitRadio / -------------------------------------------------------- */
 interface ReviewRadioType {
-	getRevisit: number | null;
-	onChangeRevisit: (e: ChangeEvent<HTMLInputElement>) => void;
+  getRevisit: number | null;
+  onChangeRevisit: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 /* / 19 useReviewForm / -------------------------------------------------------- */
 interface UseReviewFormReturnType {
-	compressed: boolean;
-	previewImg: (string | ArrayBuffer | null)[];
-	setPreviewImg: React.Dispatch<React.SetStateAction<(string | ArrayBuffer | null)[]>>;
-	setCompressedImg: React.Dispatch<React.SetStateAction<File[] | null>>;
+  compressed: boolean;
+  previewImg: (string | ArrayBuffer | null)[];
+  setPreviewImg: React.Dispatch<
+    React.SetStateAction<(string | ArrayBuffer | null)[]>
+  >;
+  setCompressedImg: React.Dispatch<React.SetStateAction<File[] | null>>;
 
-	setCompressed: React.Dispatch<React.SetStateAction<boolean>>;
-	onSubmitReview: (e: FormEvent<HTMLFormElement>) => void;
+  setCompressed: React.Dispatch<React.SetStateAction<boolean>>;
+  onSubmitReview: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 /* / 20 useReviewForm / -------------------------------------------------------- */
 interface UsePrevImageProps {
-	setPreviewImg: React.Dispatch<React.SetStateAction<(string | ArrayBuffer | null)[]>>;
-	setState: React.Dispatch<React.SetStateAction<File[] | null>>;
-	setCompressed: React.Dispatch<React.SetStateAction<boolean>>;
+  setPreviewImg: React.Dispatch<
+    React.SetStateAction<(string | ArrayBuffer | null)[]>
+  >;
+  setState: React.Dispatch<React.SetStateAction<File[] | null>>;
+  setCompressed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /* / 21 useStarPointer / -------------------------------------------------------- */
 interface UseStarPointer {
-	getStar: number;
-	onChangeStart: (count: number) => () => void;
+  getStar: number;
+  onChangeStart: (count: number) => () => void;
 }
 
 /* / 22 useReviewLike / -------------------------------------------------------- */
 interface UseReviewLike {
-	onDeleteShopComment: (shopId: string | undefined, reviewId: number | undefined) => void;
-	formatDate: (dateString: string) => string;
-	currentUser: string;
+  onDeleteShopComment: (
+    shopId: string | undefined,
+    reviewId: number | undefined
+  ) => void;
+  formatDate: (dateString: string) => string;
+  currentUser: string;
 }

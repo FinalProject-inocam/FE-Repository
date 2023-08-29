@@ -27,6 +27,7 @@ export const SignUpInputN: React.FC<Type.SignUpInputProps> = ({
         onChange={onChangeInput}
         maxLength={length}
         placeholder={placeholder}
+        $state={true}
       />
       <SC.ValidateInputMsg
         $signColor={getValidateMsg[1]}
