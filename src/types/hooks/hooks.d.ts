@@ -70,12 +70,17 @@ export interface UseCommunity extends AsyncHooksDefault {
 
 /* / 04 useCommunityDetail / -------------------------------------------------------- */
 export interface UseCommunityDetail extends AsyncHooksDefault {
-	data: Type.DetailCommunity;
-	commentInfo: string;
-	onDeletePost: (post_id: number | undefined) => () => void;
-	onSubmitPostComment: (post_id: number | undefined) => (e: MouseEvent<HTMLDivElement>) => void;
-	onChangeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-	onDeleteComment: (post_id: number | undefined, comment_id: number | undefined) => () => void;
+  data: Type.DetailCommunity;
+  commentInfo: string;
+  onDeletePost: (post_id: number | undefined) => () => void;
+  onSubmitPostComment: (
+    post_id: number | undefined
+  ) => (e: MouseEvent<HTMLDivElement>) => void;
+  onChangeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onDeleteComment: (
+    post_id: number | undefined,
+    comment_id: number | undefined
+  ) => () => void;
 }
 
 /* / 05 useCommunityWrite / -------------------------------------------------------- */
@@ -178,8 +183,11 @@ export interface UseSignup {
   inputRef5: LegacyRef<HTMLInputElement> | undefined;
   inputRef6: LegacyRef<HTMLInputElement> | undefined;
   inputRef7: LegacyRef<HTMLInputElement> | undefined;
+  inputRef8: LegacyRef<HTMLInputElement> | undefined;
+
   submitted: boolean;
   check: boolean;
+  adminCheck: boolean;
   onSubmitSign: (e: FormEvent<HTMLFormElement>) => void;
 }
 

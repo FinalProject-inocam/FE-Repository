@@ -8,6 +8,8 @@ interface SignupSliceType {
   gender: string;
   birthYear: number;
   checkCode: string;
+  adminToken?: string;
+  admin?: boolean;
 }
 
 const SignupSlice = createSlice({
