@@ -3,7 +3,7 @@ import * as Type from "../../types";
 import * as RTK from "../../redux";
 
 export const useRevisitRadio = (): Type.ReviewRadioType => {
-	const [, setRevisit] = useState<number | null>(0);
+	const [, setRevisit] = useState<number | null>(null);
 	const dispatch = RTK.useAppDispatch();
 	const getRevisit = RTK.useAppSelector(RTK.selectReviewFormRevisit);
 	const onChangeRevisit = (e: ChangeEvent<HTMLInputElement>) => {
@@ -14,8 +14,3 @@ export const useRevisitRadio = (): Type.ReviewRadioType => {
 
 	return { getRevisit, onChangeRevisit };
 };
-
-/*
-		setRevisit(e.target.value === "true" ? 1 : 2);
-		dispatch(setReviewDate({ revisit: e.target.value === "true" ? true : false }));
-*/

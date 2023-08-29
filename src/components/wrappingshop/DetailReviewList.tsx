@@ -35,7 +35,7 @@ const ReviewInner: FC<{
 		RefetchThrottle(() => {
 			console.log("쓰로틀 시작");
 			setPage(page + 1);
-		}, 2000),
+		}, 1000),
 		[]
 	);
 
@@ -58,7 +58,7 @@ const ReviewInner: FC<{
 
 	return (
 		<SC.ReviewListLayout ref={fetchNextRef} $gtc='80px 1fr' $cgap={20}>
-			<SC.CustomH3 $types='nickname'>{nickname}하하하</SC.CustomH3>
+			<SC.CustomH3 $types='nickname'>{nickname}</SC.CustomH3>
 			<SC.FlexBox
 				$fd='column'
 				$gap={20}

@@ -2,7 +2,6 @@ import * as RTK from "../../redux";
 
 export const useReviewBar = () => {
 	const [onDeleteShopCommentRTK] = RTK.useDeleteWrappingCommentMutation();
-	// console.log(queryDelete);
 	const onDeleteShopComment = (shopId: string | undefined, reviewId: number | undefined) => () => {
 		onDeleteShopCommentRTK({ shopId, reviewId });
 	};
@@ -19,10 +18,5 @@ export const useReviewBar = () => {
 	// nickname decode
 	const { nickname: currentUser } = RTK.useAppSelector(RTK.selectDecode);
 
-	// like
-	// const [patchWSReviewLikeRTK] = RTK.usePatchWrappingShopDetailLikeMutation();
-	// const onReviewLikeHandler = (reviewId: number) => () => {
-	// 	patchWSReviewLikeRTK({ shopId, reviewId });
-	// };;
 	return { onDeleteShopComment, formatDate, currentUser };
 };
