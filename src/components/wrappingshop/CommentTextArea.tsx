@@ -9,7 +9,6 @@ export const CommentTextArea: FC = () => {
 		<>
 			<SC.TextaAreaLayout>
 				<SC.TextArea maxLength={300} value={comment} onChange={onChangeComment} onBlur={onBlurComment} />{" "}
-				{/* onKeyPress={onKeyPress} */}
 				<SC.TextaAreaCount $size={comment.length} children={`${comment.length}/300`} />
 			</SC.TextaAreaLayout>
 		</>

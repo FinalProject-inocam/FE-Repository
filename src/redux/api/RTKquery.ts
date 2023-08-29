@@ -60,6 +60,7 @@ export const inocamRTK = createApi({
 	baseQuery: axiosBaseQuery(),
 	tagTypes: [
 		"POSTS",
+		"POSTSLIST",
 		"POSTDETAIL",
 		"POSTCOMMENT",
 		"KAKAO",
@@ -192,14 +193,23 @@ export const inocamRTK = createApi({
 			/* / 03 Community 관련 / -------------------------------------------------------- */
 			// getCommunity - 커뮤니티 게시글 요청
 			getCommunity: build.query({
-				query: ({getId}) => ({
-					url: `/api/communities?page=${getId}&size=10`,
+				query: ({getId, category}) => ({
+					url: `/api/communities?category=${category}&page=${getId}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
 				providesTags: ["POSTS"],
 			}),
 
+			// /api/communites/list
+			getCommunitesList: build.query({
+				query: () => ({
+					url:`/api/communities/list`,
+					method:"get",
+					types: "getData",
+				}),
+				providesTags: ["POSTSLIST"],
+			}),
 			// postCommunity - 커뮤니티 게시글 작성
 			postCommunity: build.mutation({
 				query: (data) => ({
@@ -298,25 +308,6 @@ export const inocamRTK = createApi({
 					method: "get",
 					types: "getData",
 				}),
-				serializeQueryArgs: ({ endpointName }) => {
-					// console.log("getWSDetailReviews-serializeQueryArgs", endpointName);
-					return endpointName;
-				},
-				merge: (currentCache, newItems) => {
-					// console.log("getWSDetailReviews-currentCache", currentCache.content, newItems.content);
-					currentCache.first = newItems.first;
-					currentCache.last = newItems.last;
-					currentCache.number = newItems.number;
-					currentCache.content.push(...newItems.content);
-				},
-				/*
-					serializeQueryArgs : 어떤 이유로 캐시키 생성을 변경해야하는 경우, 사용자 정의 기능을 허용
-					merge : 들어오는 응답 값을 현 캐시 데이터에 병합하기 위해 사용, RTKQ는 일반적으로 캐시 항목을 새 응답으로 대체하기에, 기존 캐시 항목을 유지하려면, serializeQueryArgs + forceRefetch 를 사용해야한다.
-				*/
-				forceRefetch({ currentArg, previousArg }) {
-					// console.log("getWSDetailReviews-forceRefetch", currentArg, previousArg);
-					return currentArg !== previousArg;
-				},
 				providesTags: ["WRAPPINGSHOPD"],
 			}),
 
@@ -404,6 +395,7 @@ export const {
 
 	// Community 차량출고 커뮤니티 관련
 	useGetCommunityQuery,
+	useGetCommunitesListQuery,
 	usePostCommunityMutation,
 	useDeleteCommunityMutation,
 	usePatchCommunityMutation,
@@ -438,3 +430,25 @@ export const {
 	// ADMIN
 	useGetpurchasesChartYQuery,
 } = inocamRTK;
+
+/*
+serializeQueryArgs: ({ endpointName }) => {
+					// console.log("getWSDetailReviews-serializeQueryArgs", endpointName);
+					return endpointName;
+				},
+				merge: (currentCache, newItems) => {
+					// console.log("getWSDetailReviews-currentCache", currentCache.content, newItems.content);
+					currentCache.first = newItems.first;
+					currentCache.last = newItems.last;
+					currentCache.number = newItems.number;
+					currentCache.content.push(...newItems.content);
+				},
+				forceRefetch({ currentArg, previousArg }) {
+					// console.log("getWSDetailReviews-forceRefetch", currentArg, previousArg);
+					return currentArg !== previousArg;
+				}
+*/
+/*
+					serializeQueryArgs : 어떤 이유로 캐시키 생성을 변경해야하는 경우, 사용자 정의 기능을 허용
+					merge : 들어오는 응답 값을 현 캐시 데이터에 병합하기 위해 사용, RTKQ는 일반적으로 캐시 항목을 새 응답으로 대체하기에, 기존 캐시 항목을 유지하려면, serializeQueryArgs + forceRefetch 를 사용해야한다.
+				*/
