@@ -1,14 +1,17 @@
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import * as RTK from "../../redux";
 import { useRouter } from "../useRouter";
 import * as Type from "../../types";
+import { useDebounce } from "../commen";
 
 export const useCommunityDetail = (): Type.UseCommunityDetail => {
-  const { onNavigate } = useRouter(); // getId
+  const { onNavigate, getId, pathname } = useRouter();
+  const [onPatchLiked] = RTK.usePatchCommunityLikedMutation()
+  const {nickname:decokenNickname} = RTK.useAppSelector(RTK.selectDecode)
 
   // RTK - 상세페이지 GET
   const { isLoading, data, isError, error } =
-    RTK.useGetCommunityDetailQuery(65);
+    RTK.useGetCommunityDetailQuery(getId);
 
   // RTK - 상세페이지 삭제
   const [
@@ -21,8 +24,9 @@ export const useCommunityDetail = (): Type.UseCommunityDetail => {
     // },
   ] = RTK.useDeleteCommunityMutation();
 
-  const onDeletePost = (post_id: number | undefined) => () => {
-    onDeletePostRTK(post_id);
+  const onDeletePost = (postId: number | undefined) => () => {
+    console.log(postId)
+    onDeletePostRTK(postId);
     onNavigate({ url: -1 })();
   };
 
@@ -44,7 +48,14 @@ export const useCommunityDetail = (): Type.UseCommunityDetail => {
     (post_id: number | undefined) =>
     (e: MouseEvent<HTMLDivElement>): void => {
       e.preventDefault();
+      if(!!decokenNickname === false) {
+        if (window.confirm("로그인 후 이동 가능합니다. 로그인 하시겠습니까?")) onNavigate({url:'/login', opts :{state:pathname}})()
+        else commentInfo && setCommentInfo("")
+        return 
+      }
+      if(!!commentInfo === false) return 
       onCommentPostRTK({ post_id, data: { comment: commentInfo } });
+      setCommentInfo("")
     };
 
   // RTK - 상세페페이지 댓글삭제(DELETE)
@@ -57,16 +68,27 @@ export const useCommunityDetail = (): Type.UseCommunityDetail => {
     //   error: commentDeleteError,
     // },
   ] = RTK.useDeleteCommunityCommentMutation();
+
   const onDeleteComment =
-    (post_id: number | undefined, comment_id: number | undefined) => () => {
-      onDeleteCommentRTK({ post_id, comment_id });
+    (postId: number | undefined, commentId: number | undefined) => () => {
+      onDeleteCommentRTK({ postId, commentId });
     };
+
+    const onDebounce = useDebounce()
+
+    useEffect(() => {
+      window.scrollTo(0, 500);
+    }, [])
 
   return {
     isLoading,
     isError,
     data,
     error,
+    onNavigate,
+    onDebounce,
+    onPatchLiked,
+    decokenNickname,
     onDeletePost,
     onSubmitPostComment,
     commentInfo,

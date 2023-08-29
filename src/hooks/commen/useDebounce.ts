@@ -1,8 +1,8 @@
-import { useState, MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 
-export const useDebounce = (callback:any, postId?:number) => {
+export const useDebounce = () => {
   const [timerId, setTimerId] = useState< NodeJS.Timeout | null>(null);
-  const handleDebounce = () => { 
+  const handleDebounce = (callback:any, postId:number) => { 
     if (timerId) clearTimeout(timerId)
     const newTimerId = setTimeout(() => {
       console.log("디바운스 동작하지롱");
@@ -11,9 +11,10 @@ export const useDebounce = (callback:any, postId?:number) => {
     setTimerId(newTimerId);
   };
 
-  const onDebounce = (e:MouseEvent<HTMLDivElement>) => {
+  const onDebounce = (callback:any, postId:number) => (e:MouseEvent<HTMLDivElement>) => {
     e.stopPropagation()
-    handleDebounce()
+    handleDebounce(callback, postId)
+    console.log(callback)
   }
   return onDebounce
 }

@@ -272,8 +272,8 @@ export const inocamRTK = createApi({
 
 			// deleteCommunityComment - 커뮤니티 댓글 삭제
 			deleteCommunityComment: build.mutation({
-				query: ({ post_id, comment_id }) => ({
-					url: `/api/communities/${post_id}/comments/${comment_id}`,
+				query: ({ postId, commentId }) => ({
+					url: `/api/communities/${postId}/comments/${commentId}`,
 					method: "delete",
 				}),
 				invalidatesTags: ["POSTS", "POSTDETAIL"],

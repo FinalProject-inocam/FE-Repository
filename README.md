@@ -875,5 +875,43 @@
 
     <details>
     <summary>페이지 네이션과 데이터 관리</summary>
+
+    - 페이지네이션을 하는 이유 : 무한스크롤과 관리 많은 양의 데이터를 호율적으로 관리하여, 서버부하를 절감하고자 함에 있다.
+    - 기능구현 
+      - [1] 비동기 데이터를 받을 때 : 해당 페이지에 대한 판별 값을 요청, first(페이지판별): boolean, last(페이지판별): boolean, totalPages(총페이지수): number
+      - [2] 페이지 한칸뒤로가기(<), 페이지 한칸 앞으로가기(>) : 한칸뒤로가기는 `first`가 true가 아니면 보이도록, 한칸앞으로가기 `last`가 true가 아니면 보이도록 설정했다. 
+      - [3] 묶음페이지 이동 앞으로(4칸), 뒤로(4칸) : useState(pageNum)을 두어, `totalPages`와 비교하여 해당 값이 화면에 노출되도록 설정하였다. 
+      - [4] 페이지 숫자 노출 : `pageNum + 4 >= data.totalPages`을 비교하여 동적으로, 화면에 지정된 숫자가 노출되도록 구성하였다. <br/><br/>
+
+    ```tsx
+    // 비동기 데이터 first(페이지판별): boolean, last(페이지판별): boolean, totalPages(총페이지수): number
+    export const GetCommunity: FC = () => {
+    const [pageNum, setPageNum] = useState<number>(1)
+    return (
+      <SC.FlexBox $gap={30} style={{ margin: "0 auto" }}>
+          <SC.RankNum style={{ display: data.first ? "none" : "block" }} $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId - 1}` })} children={<p children={`<`} />} />
+          <SC.FlexBox $gap={10}>
+            <SC.RankNum style={{ display: pageNum === 1 ? "none" : "block" }} $bColor="lightgray2" onClick={onNavigate({ url: `/community/${pageNum - 4}` })} children={<p children="..." />} />
+            {data && pageNum + 4 >= data.totalPages
+              ? Array
+                .from({ length: data.totalPages - pageNum + 1 }, (_, idx) => idx)
+                .map(list => <SC.RankNum
+                  key={list}
+                  $bColor={getId === pageNum + list ? `blue` : 'lightgray2'}
+                  onClick={onNavigate({ url: `/community/${pageNum + list}` })}
+                  children={<p children={`${pageNum + list}`} />} />)
+              : Array
+                .from({ length: 5 }, (_, idx) => idx)
+                .map(list => <SC.RankNum
+                  key={list}
+                  $bColor={getId === pageNum + list ? `blue` : 'lightgray2'}
+                  onClick={onNavigate({ url: `/community/${pageNum + list}` })}
+                  children={<p children={list === 4 ? "..." : `${pageNum + list}`} />} />)}
+          </SC.FlexBox>
+          <SC.RankNum style={{ display: data.last ? "none" : "block" }} $bColor="lightgray3" onClick={onNavigate({ url: `/community/${getId && getId + 1}` })} children={<p children={`>`} />} />
+        </SC.FlexBox>
+      )
+    }
+    ```
     </details>
 
