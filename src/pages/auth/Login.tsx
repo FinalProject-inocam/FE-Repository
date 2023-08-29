@@ -22,7 +22,12 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      onNavigate({ url: state })();
+      onNavigate({
+        url:
+          state === null || state === "/Signup" || state === "/Signup/admin"
+            ? "/"
+            : state,
+      })();
     }
     isError && console.log("query Err", error);
   }, [isSuccess, state, isError, error, onNavigate]);
