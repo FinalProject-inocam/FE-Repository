@@ -4,59 +4,55 @@ import { AsyncHooksDefault } from "../hooks";
 export type SetState = Dispatch<SetStateAction<boolean>>;
 
 export interface EditWrappingShopReview {
-  shopId: string | undefined;
-  reviewId: number;
+	shopId: string | undefined;
+	reviewId: number;
 }
 
 export interface FigureImg {
-  src: string;
-  alt: string;
-  width: string;
-  height?: string;
-  types?: string;
-  children?: ReactChild;
+	src: string;
+	alt: string;
+	width: string;
+	height?: string;
+	types?: string;
+	children?: ReactChild;
 }
 
 export interface EditComment {
-  postId: number | undefined;
-  commentId: number;
-  comment: string;
+	postId: number | undefined;
+	commentId: number;
+	comment: string;
+}
+
+/* / WrappingShop컴포넌트 / -------------------------------------------------------- */
+interface ShopBoxProps {
+	item: Type.WrappingShop;
 }
 
 /* / WrappingShopDetail컴포넌트 / -------------------------------------------------------- */
 export interface WrappingShopBannerProps {
-  bannerNumber: number;
-  $bannerSize: "big" | "small";
+	bannerNumber: number;
+	$bannerSize: "big" | "small";
 }
 
 export interface WrappingDetailProps extends AsyncHooksDefault {
-  data?: WrappingShopDetail;
+	data?: WrappingShopDetail;
 }
 
 export interface WrappingDetailStar {
-  size: number;
+	size: number;
 }
 
 export interface WrappingDetailStyled {
-  $bgColor?: string;
-  $bColor?: string;
-  $color?: string;
-  $buttonSize?:
-    | "revisit"
-    | "submit"
-    | "upload"
-    | "never"
-    | "upload"
-    | "like"
-    | "comment"
-    | "login"
-    | "default";
-  $outlined?: boolean;
-  children?: React.ReactNode;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: "button" | "reset" | "submit";
-  value?: string;
-  $clicked?: boolean;
+	$bgColor?: string;
+	$bColor?: string;
+	$color?: string;
+	$buttonSize?: "revisit" | "submit" | "upload" | "never" | "upload" | "like" | "comment" | "login" | "default";
+	$outlined?: boolean;
+	children?: React.ReactNode;
+	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	type?: "button" | "reset" | "submit";
+	value?: string;
+	$clicked?: boolean;
 }
 
 export interface ReviewBarProps {
@@ -76,12 +72,12 @@ export interface ReviewListProps {
 
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */
 export interface WrappingKakaomapsProps {
-  ref: MutableRefObject<HTMLDivElement | null>;
+	ref: MutableRefObject<HTMLDivElement | null>;
 }
 
 /* / SignUpInput컴포넌트 / -------------------------------------------------------- */
 export interface SignUpECProps {
-  inputRef: LegacyRef<HTMLInputElement> | undefined;
+	inputRef: LegacyRef<HTMLInputElement> | undefined;
 }
 
 export interface SignUpInputBasicProps extends SignUpECProps {

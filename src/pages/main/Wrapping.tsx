@@ -22,7 +22,7 @@ export const Wrapping: React.FC = () => {
 
 	return (
 		<div>
-			<SC.Section $gtc='467px 1fr'>
+			<SC.Section $gtc='460px 1fr'>
 				{/* 1 랩핑샵 리스트  */}
 				<CP.WrappingContent
 					isLoading={isLoading}
