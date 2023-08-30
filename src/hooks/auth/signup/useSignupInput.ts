@@ -23,7 +23,7 @@ export const useSignupInput = ({ name, submitted }: any): any => {
     dispatch(
       RTK.setSignupDate({
         [`${name}`]:
-          name === "phonNumber" ? input : input + inputTwo + inputThree,
+          name === "phonNumber" ? input + inputTwo + inputThree : input,
       })
     );
   };

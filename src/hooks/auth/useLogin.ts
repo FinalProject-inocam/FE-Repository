@@ -41,14 +41,10 @@ export const useLogin = (state: string): Type.UseLogin => {
       dispatch(RTK.deleteLoginDate());
       setSubmitted((pre) => !pre);
     } else {
-      !emailRef && setValiditeMsgE(["이메일을 입력해주세요.", false]);
+      !emailRef && setValiditeMsgE(["올바른 이메일 주소가 아닙니다.", false]);
       !passwordRef && setValiditeMsgP(["비밀번호를 입력해주세요.", false]);
     }
   };
-
-  useEffect(() => {
-    emailRef && setValiditeMsgE(["", true]);
-  }, [emailRef]);
 
   useEffect(() => {
     passwordRef && setValiditeMsgP(["", true]);
@@ -82,6 +78,8 @@ export const useLogin = (state: string): Type.UseLogin => {
     inputRef2,
     validiteMsgE,
     validiteMsgP,
+    setValiditeMsgE,
+    setValiditeMsgP,
     onSubmitLogin,
     onSnsLogin,
     onSignupClick,
