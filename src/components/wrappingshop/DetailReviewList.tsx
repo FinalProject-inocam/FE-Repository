@@ -1,63 +1,20 @@
-import { FC, useRef, useState, MutableRefObject, useEffect, useCallback } from "react";
+import { FC, useEffect } from "react";
 import * as CP from "..";
 import * as SC from "../css";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
 import { useParams } from "react-router-dom";
+import { useInfinityThrottle } from "../../hooks";
 
 const ReviewInner: FC<{
 	reviews: any;
-	fetchNextRef?: MutableRefObject<HTMLFormElement | null>;
-	isFetching?: boolean;
-	page?: any;
-	last?: boolean;
 	setPage?: any;
 }> = ({
-	reviews: { reviewId, nickname, star, revisit, createAt, shopId, review, imageUrls },
-	page,
-	last,
-	setPage,
-	fetchNextRef,
-	isFetching,
+	reviews: { reviewId, nickname, star, revisit, createAt, shopId, review, imageUrls }
 }) => {
-	const RefetchThrottle = (callback: () => void, delay: number) => {
-		let timeId: NodeJS.Timeout | null = null;
-		return () => {
-			if (timeId) return;
-			timeId = setTimeout(() => {
-				callback();
-				timeId = null;
-			}, delay);
-		};
-	};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const onNextPageCallback = useCallback(
-		RefetchThrottle(() => {
-			console.log("쓰로틀 시작");
-			setPage(page + 1);
-		}, 1000),
-		[]
-	);
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting && !isFetching && !last) {
-					// 마지막 요소가 감지되었을 때, 추가요청을 보내면, 값이 오겠죠.
-					console.log("Fetching more data...");
-					onNextPageCallback();
-				}
-			},
-			{ threshold: 0.1 } // 0~1, 0.1 뷰포트 요소(100px)의 10%(10px) 감지되었을 때, 동작한다.
-		);
-
-		if (fetchNextRef && fetchNextRef.current) {
-			observer.observe(fetchNextRef.current); // 관찰대상 등록
-		}
-	}, [isFetching, last, setPage, page, fetchNextRef, onNextPageCallback]);
 
 	return (
-		<SC.ReviewListLayout ref={fetchNextRef} $gtc='80px 1fr' $cgap={20}>
+		<SC.ReviewListLayout $gtc='80px 1fr' $cgap={20}>
 			<SC.CustomH3 $types='nickname'>{nickname}</SC.CustomH3>
 			<SC.FlexBox
 				$fd='column'
@@ -82,28 +39,37 @@ const ReviewInner: FC<{
 	);
 };
 
-export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
+export const DetailReviewList: React.FC<any> = ({page, setPage}) => {
 	// delete review api
 
 	const { id: shopId } = useParams<{ id: string }>();
-	const [page, setPage] = useState<number>(1);
 	const { isLoading, isSuccess, data, isError, error, isFetching } = RTK.useGetWSDetailReviewsQuery({
 		shopId,
 		page,
 	});
-	// infinite scroll
-	const fetchNextRef = useRef<HTMLFormElement | null>(null);
-	// console.log(setPage);
+	const fetchNextRef = useInfinityThrottle(setPage, isFetching)
 
 	const dispatch = RTK.useAppDispatch();
 	const getMergeData = RTK.useAppSelector(RTK.selectMergeWCDreview);
+
 	useEffect(() => {
 		data && console.log(`data-리패치 :${page}`, data);
-		isSuccess && dispatch(RTK.setMergeDate(data.content));
+		if (isSuccess) {
+			// page 1
+			if (page === 1) {
+				dispatch(RTK.deleteData()); // 기존에 있었던 상태 관리를 초기화 
+				dispatch(RTK.setMergeDate(data.content)); // 새롭게 변경될 데이터를 받음 
+			} else {
+				// page 2 일 때 
+				dispatch(RTK.setMergeDate(data.content));
+			}
+			
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
-	console.log("getMergeData", getMergeData);
+	console.log("data", data);
+	
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
@@ -113,21 +79,15 @@ export const DetailReviewList: React.FC<Type.WrappingDetailProps> = () => {
 					padding: "30px 20px 26px",
 					backgroundColor: "#fff",
 				}}>
-				{getMergeData.map((reviews: Type.TotalWrappingShopReview, index: number) =>
-					getMergeData.length === index + 1 ? (
+				{getMergeData.map((reviews: Type.TotalWrappingShopReview) =>
+					(
 						<ReviewInner
-							fetchNextRef={fetchNextRef}
 							reviews={reviews}
 							key={reviews.reviewId}
-							isFetching={isFetching}
-							last={data.last}
-							page={page}
-							setPage={setPage}
 						/>
-					) : (
-						<ReviewInner reviews={reviews} key={reviews.reviewId} />
 					)
 				)}
+				{data && !data.last && <div ref={fetchNextRef}/>} 
 			</div>
 		);
 	}
