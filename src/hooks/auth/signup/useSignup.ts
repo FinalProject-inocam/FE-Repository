@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 export const useSignup = (): Type.UseSignup => {
   const [submitted, setSubmitted] = useState<boolean>(true);
   const [check, setCheck] = useState<boolean>(false);
+  const [adminCheck, setAdminCheck] = useState<boolean>(false);
+  const pathName = window.location.pathname;
 
   const inputRef1 = useRef<HTMLInputElement | null>(null);
   const inputRef2 = useRef<HTMLInputElement | null>(null);
@@ -16,11 +18,15 @@ export const useSignup = (): Type.UseSignup => {
   const inputRef6 = useRef<HTMLInputElement | null>(null);
   const inputRef7 = useRef<HTMLInputElement | null>(null);
 
+  const inputRef8 = useRef<HTMLInputElement | null>(null);
+
   const { onNavigate } = useRouter();
   const getSignup = RTK.useAppSelector(RTK.selectSignup);
   const dispatch = RTK.useAppDispatch();
   const [onpostSignupRTK, { isSuccess, isError, error }] =
     RTK.usePostSignupMutation();
+
+  console.log(getSignup);
 
   const nAvailable = useSelector(RTK?.selectValiditeNMsg)[1];
   const birthYearValue = inputRef2.current?.value;
@@ -29,6 +35,7 @@ export const useSignup = (): Type.UseSignup => {
   const ecAvailable = useSelector(RTK?.selectValiditeECMsg)[1];
   const pAvailable = useSelector(RTK?.selectValiditePMsg)[1];
   const pcAvailable = useSelector(RTK?.selectValiditePWCMsg)[1];
+  const adminCodeValue = inputRef8.current?.value;
 
   const onSubmitSign = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,12 +46,19 @@ export const useSignup = (): Type.UseSignup => {
   };
 
   useEffect(() => {
+    dispatch(RTK.deleteSignupDate());
     dispatch(RTK.deleteValiditeMsg());
-  }, [dispatch]);
+    if (pathName.includes("admin")) {
+      setAdminCheck(true);
+      dispatch(RTK.setSignupDate({ [`admin`]: adminCheck }));
+    }
+  }, [pathName, dispatch, adminCheck]);
 
   useEffect(() => {
     isSuccess && onNavigate({ url: "/login" })();
     isError && console.log(error);
+
+    (pathName.includes("admin") ? adminCodeValue : true) &&
     nAvailable &&
     birthYearValue &&
     phonNumberValue &&
@@ -65,6 +79,8 @@ export const useSignup = (): Type.UseSignup => {
     ecAvailable,
     pAvailable,
     pcAvailable,
+    adminCodeValue,
+    pathName,
     onNavigate,
   ]);
 
@@ -76,8 +92,10 @@ export const useSignup = (): Type.UseSignup => {
     inputRef5,
     inputRef6,
     inputRef7,
+    inputRef8,
     submitted,
     check,
+    adminCheck,
     onSubmitSign,
   };
 };

@@ -3,7 +3,7 @@ import * as SC from "../css";
 import { useSignupInput } from "../../hooks";
 import * as Type from "../../types";
 
-export const SignUpInputBirth: FC<Type.SignUpInputBirthProps> = ({
+export const SignUpInputBirth: FC<Type.SignUpInputBasicProps> = ({
   name,
   inputRef,
   submitted,

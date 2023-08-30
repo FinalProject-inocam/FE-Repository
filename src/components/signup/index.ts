@@ -7,3 +7,4 @@ export * from "./SignUpInputBirth";
 export * from "./SignUpInputPhon";
 export * from "./SignUpEmailCheck";
 export * from "./SignUpEmailCheckCode";
+export * from "./SignupInputAdmin";
