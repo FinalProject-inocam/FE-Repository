@@ -15,6 +15,8 @@ export const Login: React.FC = () => {
     inputRef2,
     validiteMsgE,
     validiteMsgP,
+    setValiditeMsgE,
+    setValiditeMsgP,
     onSubmitLogin,
     onSnsLogin,
     onSignupClick,
@@ -51,6 +53,7 @@ export const Login: React.FC = () => {
                 submitted={submitted}
                 inputRef={inputRef1}
                 validiteMsg={validiteMsgE}
+                setValiditeMsg={setValiditeMsgE}
               />
             </div>
             <div>
@@ -62,6 +65,7 @@ export const Login: React.FC = () => {
                 submitted={submitted}
                 inputRef={inputRef2}
                 validiteMsg={validiteMsgP}
+                setValiditeMsg={setValiditeMsgP}
               />
             </div>
 

@@ -162,6 +162,8 @@ export interface UseLogin extends AsyncHooksDefault {
   inputRef2: LegacyRef<HTMLInputElement> | undefined;
   validiteMsgE: [string, boolean];
   validiteMsgP: [string, boolean];
+  setValiditeMsgE: Dispatch<React.SetStateAction<[string, boolean]>>;
+  setValiditeMsgP: Dispatch<React.SetStateAction<[string, boolean]>>;
   onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void;
   onSnsLogin: (sns: string) => () => void;
   onSignupClick: () => void;

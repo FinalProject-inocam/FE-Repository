@@ -1,29 +1,21 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import * as RTK from "../../redux";
+import { FC } from "react";
 import * as SC from "../css";
+import { useLoginInput } from "../../hooks";
 
 export const LoginInput: FC<any> = ({
   name,
   type,
   placeholder,
-  submitted,
   inputRef,
+  submitted,
   validiteMsg,
+  setValiditeMsg,
 }) => {
-  const [input, setInput] = useState<string>("");
-  const dispatch = RTK.useAppDispatch();
-
-  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-
-  const onBlurLoginDispatch = () => {
-    dispatch(RTK.setLoginDate({ [`${name}`]: input }));
-  };
-
-  useEffect(() => {
-    setInput("");
-  }, [submitted]);
+  const { input, onBlurLoginDispatch, onChangeInput } = useLoginInput({
+    name,
+    submitted,
+    setValiditeMsg,
+  });
 
   return (
     <>
