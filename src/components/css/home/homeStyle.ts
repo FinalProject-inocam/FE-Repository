@@ -62,7 +62,7 @@ const SectionOneVideo = styled.video`
 	}
 `;
 
-const SectionInner = styled.article`
+const SectionInner = styled.article<Partial<Styled>>`
 	position: relative;
 	${SC.Flex}
 	/* background-color: rgba(150,150,150,0.3); */

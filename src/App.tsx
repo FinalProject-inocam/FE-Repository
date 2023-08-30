@@ -14,9 +14,9 @@ const App: React.FC = () => {
 					<Route path='innocar' element={<Page.InnoCar />} />
 					<Route path='community' element={<Page.Community />}>
 						<Route path=":id" element={<Page.GetCommunity />} />
-						{/* <Route element={<Page.ProtectiveRouter />}> */}
+						<Route element={<Page.ProtectiveRouter />}>
 							<Route path='write' element={<Page.CommunityWrite />} />
-						{/* </Route> */}
+						</Route>
 						<Route path='review/:id' element={<Page.CommunityDetail />} />
 					</Route>
 

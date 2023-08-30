@@ -94,3 +94,12 @@ export interface SignUpInputProps extends SignUpInputBirthProps {
   length: number;
   type?: string;
 }
+
+/* / Innocar컴포넌트 / -------------------------------------------------------- */
+export interface TechnicalListInnerProps {
+  title:string;
+  technicalInfoCategory:string;
+  onToggle:(setState:Dispatch<React.SetStateAction<boolean>>)=> MouseEventHandler<HTMLDivElement> | undefined;
+  infoBoolean:boolean;
+  setInfoBoolean:any;
+}

@@ -7,3 +7,4 @@ export * from "./commen";
 export * from "./home";
 export * from "./wrappingshop";
 export * from "./community"
+export * from "./innocar"
