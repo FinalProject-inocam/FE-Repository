@@ -1,5 +1,6 @@
-export * from "./EditWrappingReview";
+// Wrapping Shop
 export * from "./WrappingContent";
+export * from "./ShopBox";
 
 // left side
 export * from "./DetailInfoArea";
@@ -16,6 +17,9 @@ export * from "./CommentTextArea";
 export * from "./PrevImage";
 export * from "./ReviewBar";
 export * from "./ReviewList";
+
+// Review
+export * from "./EditWrappingReview";
 
 // Detail
 export * from "./DetailButton";

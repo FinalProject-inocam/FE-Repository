@@ -35,6 +35,7 @@ export interface DetailCommunity extends TotalCommunity {
 	rdnmAdr?: string;
 	shopId: string;
 	shopName: string;
+	reviewCount: number;
 }
 
 export interface WrappingShopDetail extends WrappingShop {
@@ -43,6 +44,7 @@ export interface WrappingShopDetail extends WrappingShop {
 	reviews: Review[];
 	reviewImageSize: number;
 	reviewCount: number;
+	totalElements: number;
 }
 
 export interface TotalWrappingShopReview extends WrappingShopReview {
