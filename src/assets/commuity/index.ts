@@ -4,5 +4,6 @@ import searchIcon from './searchIcon.svg'
 import heart from './heart.svg'
 import posting from './posting.svg'
 import plus from './plus.svg'
+import heartg from './heartg.svg'
 
-export { communityBanner, communityTopimg, searchIcon, heart, posting, plus }
+export { communityBanner, communityTopimg, searchIcon, heart, heartg, posting, plus }

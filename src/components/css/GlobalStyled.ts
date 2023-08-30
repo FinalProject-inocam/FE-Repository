@@ -56,7 +56,6 @@ const Grid = sc.css<Partial<Styled>>`
   display: grid;
   grid-template-columns: ${({ $gtc }) => ($gtc ? $gtc : "repeat(2, 1fr)")};
   // repeat(7, 1fr) || repeat(auto-fill, minmax(20%, auto));
-  //  20%를 해서 5개의 item 이 필요한데, 4개가 오면 4개가 남은 공간을 더해서 25%씩 공간을 차지합니다.
   grid-template-rows: ${({ $gtr }) => ($gtr ? $gtr : "none")};
   // 구체적인 row를 알고 있을 때 // auto || repeat(3, minmax(100px, auto));
   grid-auto-rows: ${({ $gar }) => ($gar ? $gar : "none")};
@@ -129,10 +128,14 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   }
 
     ${({ $types }) =>
-    $types === "prevImage" &&
+    $types === "prevImage" ?
     sc.css`
       overflow : hidden;
       border-radius : 4px;
+    `
+    : $types === "communityNewCar" && sc.css`
+      overflow : hidden;
+      border-radius : 10px;
     `}
 
   img {
@@ -214,8 +217,10 @@ const CustomBtn = sc.styled.div<Partial<Styled>>`
       : null}
 `;
 
-const PositionRelavite = sc.styled.div`
+const PositionRelavite = sc.styled.div<Partial<Styled>>`
   position: relative;
+
+  ${({$types}) => $types === "cursor" && sc.css`${cursor}`}
 `
 
 export {

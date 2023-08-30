@@ -56,18 +56,18 @@ export interface WrappingDetailStyled {
 }
 
 export interface ReviewBarProps {
-	reviewId: number;
-	star: number;
-	revisit: boolean;
-	createAt: string;
-	nickname: string;
-	shopId: string | undefined;
+  reviewId: number;
+  star: number;
+  revisit: boolean;
+  createAt: string;
+  nickname: string;
+  shopId: string | undefined;
 }
 
 export interface ReviewListProps {
-	imageUrls: string[];
-	shopId: string | undefined;
-	reviewId: number;
+  imageUrls: string[];
+  shopId: string | undefined;
+  reviewId: number;
 }
 
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */
@@ -80,13 +80,13 @@ export interface SignUpECProps {
 	inputRef: LegacyRef<HTMLInputElement> | undefined;
 }
 
-export interface SignUpInputBirthProps extends SignUpECProps {
-	name: string;
-	submitted: boolean;
+export interface SignUpInputBasicProps extends SignUpECProps {
+  name: string;
+  submitted: boolean;
 }
 
-export interface SignUpInputProps extends SignUpInputBirthProps {
-	placeholder: string;
-	length: number;
-	type?: string;
+export interface SignUpInputProps extends SignUpInputBasicProps {
+  placeholder: string;
+  length: number;
+  type?: string;
 }

@@ -13,8 +13,10 @@ export const Signup: React.FC = () => {
     inputRef5,
     inputRef6,
     inputRef7,
+    inputRef8,
     submitted,
     check,
+    adminCheck,
     onSubmitSign,
   } = useSignup();
 
@@ -58,12 +60,22 @@ export const Signup: React.FC = () => {
                 submitted={submitted}
               />
             </div>
+            {adminCheck && (
+              <div>
+                <SC.SignupLabel>관리자코드</SC.SignupLabel>
+                <COMP.SignUpInputAdmin
+                  name="adminToken"
+                  inputRef={inputRef8}
+                  submitted={submitted}
+                />
+              </div>
+            )}
           </SC.FlexBox>
           <SC.FlexBox $fd={"column"} $gap={20}>
             <div>
               <SC.SignupLabel>이메일/아이디</SC.SignupLabel>
               <COMP.SignUpInputE
-                type="email"
+                type="text"
                 name="email"
                 length={30}
                 inputRef={inputRef4}

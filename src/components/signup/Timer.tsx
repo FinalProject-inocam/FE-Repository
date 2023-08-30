@@ -18,11 +18,11 @@ export const Timer: React.FC<{ state: boolean; reTimer: boolean }> = ({
           children={getValidateMsg[0]}
         />
       ) : time > 0 ? (
-        <>
+        <div style={{ color: "red" }}>
           {min} : {sec}
-        </>
+        </div>
       ) : (
-        <>0 : 00</>
+        <div style={{ color: "red" }}>0 : 00</div>
       )}
     </>
   );

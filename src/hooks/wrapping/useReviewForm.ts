@@ -4,7 +4,7 @@ import * as Type from "../../types";
 import { selectReviewForm, useAppSelector } from "../../redux";
 import { useParams } from "react-router-dom";
 
-export const useReviewForm = (): Type.UseReviewFormReturnType => {
+export const useReviewForm = (setPage:any): Type.UseReviewFormReturnType => {
 	const { id: shopId } = useParams<string>();
 	const getReviewData = useAppSelector(selectReviewForm);
 	const [compressed, setCompressed] = useState<boolean>(false);
@@ -26,10 +26,11 @@ export const useReviewForm = (): Type.UseReviewFormReturnType => {
 		setCompressedImg(null);
 		setCompressed(false);
 		setPreviewImg([]);
+		setPage(1)
 		dispatch(RTK.deleteReiewDate());
 	};
 	useEffect(() => {
-		// console.log(queryInfo);
+		console.log("queryInfo : ", queryInfo);
 	}, [queryInfo]);
 	return { previewImg, setPreviewImg, setCompressedImg, compressed, setCompressed, onSubmitReview };
 };

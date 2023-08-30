@@ -76,6 +76,9 @@ export interface UseCommunityDetail extends AsyncHooksDefault {
 	onSubmitPostComment: (post_id: number | undefined) => (e: MouseEvent<HTMLDivElement>) => void;
 	onChangeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 	onDeleteComment: (post_id: number | undefined, comment_id: number | undefined) => () => void;
+  onDebounce: any;
+  onPatchLiked : any;
+  decokenNickname:string;
 }
 
 /* / 05 useCommunityWrite / -------------------------------------------------------- */
@@ -157,6 +160,8 @@ export interface UseLogin extends AsyncHooksDefault {
   inputRef2: LegacyRef<HTMLInputElement> | undefined;
   validiteMsgE: [string, boolean];
   validiteMsgP: [string, boolean];
+  setValiditeMsgE: Dispatch<React.SetStateAction<[string, boolean]>>;
+  setValiditeMsgP: Dispatch<React.SetStateAction<[string, boolean]>>;
   onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void;
   onSnsLogin: (sns: string) => () => void;
   onSignupClick: () => void;
@@ -178,8 +183,11 @@ export interface UseSignup {
   inputRef5: LegacyRef<HTMLInputElement> | undefined;
   inputRef6: LegacyRef<HTMLInputElement> | undefined;
   inputRef7: LegacyRef<HTMLInputElement> | undefined;
+  inputRef8: LegacyRef<HTMLInputElement> | undefined;
+
   submitted: boolean;
   check: boolean;
+  adminCheck: boolean;
   onSubmitSign: (e: FormEvent<HTMLFormElement>) => void;
 }
 
@@ -288,4 +296,12 @@ interface UseReviewLike {
   ) => void;
   formatDate: (dateString: string) => string;
   currentUser: string;
+}
+
+
+/* / 23 useCommunityWrite / -------------------------------------------------------- */
+export interface useCommunityWrite {
+  value: string;
+  onChangeValue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlurValue: () => void;
 }

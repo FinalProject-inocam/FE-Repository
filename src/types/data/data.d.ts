@@ -21,6 +21,7 @@ export interface CommunityComments {
 
 export interface DetailCommunity extends TotalCommunity {
 	imageUrls: string[];
+	nickname?:string;
 	commentsList: CommunityComments[];
 }
 
