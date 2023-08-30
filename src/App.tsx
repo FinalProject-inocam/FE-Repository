@@ -4,22 +4,21 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as Page from "./pages";
 
 const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <GlobalStyled />
-      <Routes>
-        {/* 헤더에 따른 중첩라우터 :: MainRouter */}
-        <Route path="/" element={<Page.MainRouter />}>
-          <Route index element={<Page.Home />} />
-          <Route path="innocar" element={<Page.InnoCar />} />
-          <Route path="community" element={<Page.Community />}>
-            <Route path=":id" element={<Page.GetCommunity />} />
-            {/* <Route element={<Page.ProtectiveRouter />}> */}
-            <Route path="write" element={<Page.CommunityWrite />} />
-            {/* </Route> */}
-            <Route path="review/:id" element={<Page.CommunityDetail />} />
-          </Route>
-
+	return (
+		<BrowserRouter>
+			<GlobalStyled />
+			<Routes>
+				{/* 헤더에 따른 중첩라우터 :: MainRouter */}
+				<Route path='/' element={<Page.MainRouter />}>
+					<Route index element={<Page.Home />} />
+					<Route path='innocar' element={<Page.InnoCar />} />
+					<Route path='community' element={<Page.Community />}>
+						<Route path=":id" element={<Page.GetCommunity />} />
+						<Route element={<Page.ProtectiveRouter />}>
+							<Route path='write' element={<Page.CommunityWrite />} />
+						</Route>
+						<Route path='review/:id' element={<Page.CommunityDetail />} />
+					</Route>
           <Route path="wrapping" element={<Page.Wrapping />} />
           <Route path="wrapping/:id" element={<Page.WrappingDetail />} />
 
