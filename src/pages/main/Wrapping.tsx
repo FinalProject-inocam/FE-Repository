@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useWrapping } from "../../hooks";
 import * as SC from "../../components/css";
 import * as CP from "../../components/wrappingshop";
 import * as RTK from "../../redux";
 import * as Hooks from "../../hooks";
 
-export const Wrapping: React.FC = () => {
+export const Wrapping: FC = () => {
 	Hooks.useGeolocation();
 	const geolocation: any = RTK.useAppSelector(RTK.selectgeoLocation);
-
+	const [page, setPage] = useState<number>(1);
 	const [checkGeolocation, setCheckGeolocation] = useState<boolean>(true);
-	const { isLoading, data, isSuccess, isError, error } = RTK.useGetWrappingQuery(geolocation, {
-		skip: checkGeolocation,
-	});
+	const { isLoading, data, isSuccess, isFetching, isError, error } = RTK.useGetWrappingQuery(
+		{ geolocation, page },
+		{
+			skip: checkGeolocation,
+		}
+	);
 
 	const { mapRef } = useWrapping({ data });
 
@@ -27,9 +30,12 @@ export const Wrapping: React.FC = () => {
 				<CP.WrappingContent
 					isLoading={isLoading}
 					isSuccess={isSuccess}
+					isFetching={isFetching}
 					isError={isError}
 					error={error}
 					data={data}
+					page={page}
+					setPage={setPage}
 				/>
 				{/* 지도부분 */}
 				<SC.KakaoMapFigure>
