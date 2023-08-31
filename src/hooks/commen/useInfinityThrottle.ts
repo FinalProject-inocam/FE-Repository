@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useRef, MutableRefObject, Dispatch, SetStateAction } from "react";
 
-export const useInfinityThrottle = (setPage: Dispatch<SetStateAction<number>>,isFetching:boolean): MutableRefObject<HTMLDivElement | null> => {
-  const fetchNextRef = useRef<HTMLDivElement | null>(null);
-  const RefetchThrottle = (callback: () => void, delay: number) => {
+export const useInfinityThrottle = (
+	setPage: Dispatch<SetStateAction<number>> | undefined,
+	isFetching: boolean | undefined
+): MutableRefObject<HTMLDivElement | null> => {
+	const fetchNextRef = useRef<HTMLDivElement | null>(null);
+	const RefetchThrottle = (callback: () => void, delay: number) => {
 		let timeId: NodeJS.Timeout | null = null;
 		return () => {
 			if (timeId) return;
@@ -16,7 +19,9 @@ export const useInfinityThrottle = (setPage: Dispatch<SetStateAction<number>>,is
 	const onNextPageCallback = useCallback(
 		RefetchThrottle(() => {
 			console.log("쓰로틀 시작");
-			setPage((pre:number) => pre + 1);
+			if (setPage) {
+				setPage((pre: number) => pre + 1);
+			}
 		}, 500),
 		[]
 	);
@@ -38,5 +43,5 @@ export const useInfinityThrottle = (setPage: Dispatch<SetStateAction<number>>,is
 		}
 	}, [isFetching, onNextPageCallback]);
 
-  return fetchNextRef
-}
+	return fetchNextRef;
+};

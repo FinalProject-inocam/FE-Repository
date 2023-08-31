@@ -194,7 +194,7 @@ export const inocamRTK = createApi({
 			/* / 03 Community 관련 / -------------------------------------------------------- */
 			// getCommunity - 커뮤니티 게시글 요청
 			getCommunity: build.query({
-				query: ({getId, category}) => ({
+				query: ({ getId, category }) => ({
 					url: `/api/communities?category=${category}&page=${getId}&size=10`,
 					method: "get",
 					types: "getData",
@@ -205,8 +205,8 @@ export const inocamRTK = createApi({
 			// /api/communites/list
 			getCommunitesList: build.query({
 				query: () => ({
-					url:`/api/communities/list`,
-					method:"get",
+					url: `/api/communities/list`,
+					method: "get",
 					types: "getData",
 				}),
 				providesTags: ["POSTSLIST"],
@@ -292,8 +292,8 @@ export const inocamRTK = createApi({
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			// getWrappingShop - 랩핑샵 조회
 			getWrapping: build.query({
-				query: (geolocation) => ({
-					url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=1&size=10`,
+				query: ({ geolocation, page }) => ({
+					url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=${page}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
@@ -307,7 +307,7 @@ export const inocamRTK = createApi({
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["WRAPPINGSHOPD"],
+				providesTags: ["WRAPPINGSHOPDREVIEW"],
 			}),
 
 			// getWrappingShop - 랩핑샵 리뷰 조회(re)

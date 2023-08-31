@@ -6,7 +6,7 @@ export * from "./chatMsgSlice";
 export * from "./locationSlice";
 export * from "./reviewFormSlice";
 export * from "./threejsSlice";
-export * from "./communityFormSlice"
+export * from "./communityFormSlice";
 export * from "./mergeWCDreviewSlice";
 export * from "./LoginSlice";
-
+export * from "./wrappingShopListSlice";
