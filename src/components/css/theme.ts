@@ -31,6 +31,7 @@ const color = {
 	purple: "#362783",
 	white: "white",
 	gray: "#eeee",
+	gray2:"#BBBBC9",
 	blackM: "#0E0D13",
 
 	// 밝은색상
@@ -44,7 +45,8 @@ const color = {
 
 	// 어두운색상
 	darkGray: "#26252B",
-	darkgray2: "2F2B3A",
+	darkgray2: "#2F2B3A",
+	adminNav:"#333333",
 	darkBlue: "#151565",
 	darkBlue2: "#1E0476",
 
