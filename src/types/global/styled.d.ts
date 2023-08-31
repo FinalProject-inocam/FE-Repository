@@ -20,6 +20,7 @@ export interface Styled {
   $highlight: boolean;
   $bgColor: string;
   $tAlign: string;
+  $rotate:number;
 
   // Felx-Grid
   $gap: number;
@@ -63,4 +64,12 @@ export interface Styled {
     | "comment"
     | "default";
   $clicked?: boolean;
+
+  //Inncor
+  $top: number;
+  $left: number;
+  $right: number;
+  $Mtop: number;
+  $Mleft: number;
+  $Mright: number;
 }

@@ -138,7 +138,7 @@
 
 ## 트러블슈팅
 
-1.  ### 성능최적화 :  Form 태그의 input 태그들의 리렌더링 제어 및, 입력에 따른 조건부 상태메시지
+### 1. 성능최적화 :  Form 태그의 input 태그들의 리렌더링 제어 및, 입력에 따른 조건부 상태메시지
 
 - 상황 : inputValue에 따른 조건부 메시지 노출과 관련하여, onChange, onBlur 이벤트에 대응하며, input.name에 따라 각각 동작하는 상태메시지가 요구됨
 
@@ -517,17 +517,99 @@
 
 </details>
 
+### 2. props로 전달받은 string 으로 객체의 key에 접근하기 
 
-<details>
-<summary> Three.js 빌드파일 에러 </summary>
+  - 상황 : 부모로부터 props로 전달받은 `string` 타입으로 객체에 있는 값을 불어와 중복코드를 개선하고자 하였다. 동일한 컴포넌트가 title과 technicalInfoCategory 값만 다를 뿐 동일하게 동작하는 부분이었기 때문이다. 
+    - [1] Index Signature : JSX에서는 문제가 되지 않았지만, TSX에서는 객체 프로퍼티에 접근할 때 기본적으로 stirng 으로 접근이 어렵다. JS에서는 이를 "계산된  프로퍼티"라고 하여 슆게 사용했으며, 스타일드컴포넌트에서도 theme에 설정된 색상에 접근할 때 이러한 방법으로 활용한 부분이 있었다. 그러나 컴포넌트 사이에서는 에러가 발생했다. 
+    - [2] 이는 TSX가 기본적으로 string 타입의 key 사용을 허용하지 않기 때문이다. 
+    - [3] 이를 위해서 사용할 수 있는 방법이 Index Signature 이다. 아래와 같이 기록했던 타입을 수정해 주면 간단하다. 이렇게 함으로 props로 전달받은 string으로 객체 프로퍼티에 접근이 가능해진 것이다. 
 
-  ```bash
-  main.01a24249.js:2 Error: Minified React error #426; visit https://reactjs.org/docs/error-decoder.html?invariant=426 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
-  ```
+      ```tsx
+      // 수정 전
+      interface useModelOneType {
+        technicalInfo: {
+            powerUnit: string[][]; 
+            performance: string[][]; 
+        };
+      }
+      // 수정 후 
+      interface useModelOneType {
+        technicalInfo: {
+            [key:string]: string[][]; 
+        };
+      }
+      ```
 
-  - 컴포넌트가 마운트되기 전에 비동기 작업이 완료되어 해당 컴포넌트가 언마운트(unmounted)된 후에도 상태(state)를 업데이트하려고 할 때 발생
-  
-</details>
+    <br/>
+    <details>
+    <summary>코드살펴보기</summary>
+
+    ```tsx
+    // 사용하려는 객체
+    const technicalInfo = {
+      powerUnit : 
+        [
+          ["Number of cylinders", "6"],
+          ["Bore", "91.0mm"],
+          ["Stroke", "76.4 mm"],
+          ["Displacement", "2,981 cc"],
+          ["Max. Power (PS)", "392 PS"],
+          ["Max. Power (kW) - only relevant for Korea", "288 kW"],
+          ["RPM point maximum power", "6,500 r/min"],
+          ["Maximum engine speed", "7,500 r/min"],
+          ["Max. torque", "45.9 kg·m"],
+          ["RPM range maximum torque", "1,950 - 5,000 r/min"],
+       ],
+
+      performance : 
+        [
+          ["Top speed","293 km/h"],
+          ["Acceleration 0 - 100 km/h","4.2 s"],
+          ["Acceleration 0 - 100 km/h with Sport Chrono Package","4.0 s"],
+          ["Acceleration 0 - 160 km/h","9.3 s"],
+          ["Acceleration 0 - 160 km/h with Sport Chrono Package","9.0 s"],
+          ["Acceleration 0 - 200 km/h","14.5 s"],
+          ["Acceleration 0 - 200 km/h with Sport Chrono Package","14.2 s"],
+          ["In-gear acceleration (80-120km/h) (50-75 mph)","2.6 s"],
+       ]
+    }
+
+    // 자녀컴포넌트에서 사용하기
+    const TechnicalListInner:FC<TechnicalListInnerProps> = ({title, technicalInfoCategory, onToggle, infoBoolean, setInfoBoolean}) => {
+      const { technicalInfo } = useModelOne();
+      return (
+        <FlexBox $fd='column' style={{ borderBottom: "1px solid lightgray" }}>
+          <FlexBox $jc='space-between' style={{ width: "100%", height: "60px" }} onClick={onToggle(setInfoBoolean)}>
+            <CustomH1>{title}</CustomH1>
+            <div >토글버튼</div>
+          </FlexBox>
+          {infoBoolean && technicalInfo[technicalInfoCategory].map((list:string[]) => (
+            <GridBox key={list[0]} $gtc='200px 1fr' style={{ width: "100%", borderBottom: "1px solid lightgray", minHeight: "3rem" }}>
+              <FlexBox $jc='flex-start' children={<CustomH2 children={list[0]} />} />
+              <CustomH3 style={{ lineHeight: "50px" }} children={list[1]} />
+            </GridBox>
+          ))}
+        </FlexBox>
+      )
+    }
+    ```
+    </details>
+
+
+### 3. Three.js의 GLFT 파일을 로드하는 useGlft() 훅의 새로고침시의 렌더오류 
+
+  - 상황 : threejs 를 포함하고 있는 루트라우트를 벗어나 다른 라우터로 이동한 다음, 새로고침하면 useGlft() 훅으로 불러오는 glft 로드의 에러가 발생되며, `ErrorBoundary FallbackComponent={Error}`에 따라 error 에러 페이지로 이동되는 문제. 
+
+    <details>
+    <summary> Three.js 빌드파일 에러 </summary>
+
+      ```bash
+      main.01a24249.js:2 Error: Minified React error #426; visit https://reactjs.org/docs/error-decoder.html?invariant=426 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+      ```
+
+      - 컴포넌트가 마운트되기 전에 비동기 작업이 완료되어 해당 컴포넌트가 언마운트(unmounted)된 후에도 상태(state)를 업데이트하려고 할 때 발생
+      
+    </details>
 
 ## 도전기술
 

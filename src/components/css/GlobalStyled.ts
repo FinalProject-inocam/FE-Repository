@@ -101,6 +101,17 @@ const Figure = sc.styled.figure<Partial<Styled>>`
     display: block;
     width: 100%;
   }
+
+  ${({$types}) => $types === "innocar" && sc.css`
+    transition: all 0.3m linear;
+
+    @media (max-width: 1100px) {
+      transform: rotate(90deg);
+      img {
+        width: 80%;
+      }
+    }
+  `}
 `;
 
 const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
