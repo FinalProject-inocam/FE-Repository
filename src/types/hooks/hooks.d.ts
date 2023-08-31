@@ -331,9 +331,7 @@ export interface useInnoCarRefType {
   sectionRef2 : MutableRefObject<HTMLDivElement | null>;
   sectionRef3 : MutableRefObject<HTMLDivElement | null>;
   sectionRef4 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef5 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef6 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef7 : MutableRefObject<HTMLDivElement | null>;
+	sectionRef1ImgRef :  MutableRefObject<HTMLDivElement | null>;
   innocarCharacterRef : MutableRefObject<HTMLDivElement | null>;
   sectionRef3InnerRef : MutableRefObject<HTMLDivElement | null>;
   sectionRef3FlexRef : MutableRefObject<HTMLDivElement | null>;
