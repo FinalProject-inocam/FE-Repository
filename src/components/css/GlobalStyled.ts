@@ -149,6 +149,8 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
       border-radius : 10px;
     `}
 
+  ${({ $types }) => $types === "cursor" && sc.css`${cursor}`}
+
   img {
     position: absolute;
     top: 50%;
@@ -185,8 +187,9 @@ const CustomH2 = sc.styled.div`
 
 const CustomH3 = sc.styled.h3<Partial<Styled>>`
 
-	font-size: ${({ $size }) => `${$size}px`};
+	font-size: ${({ $size }) => $size ? `${$size}rem` : "1rem"};
   font-weight: 500;
+  color : ${({ $color, theme }) => $color && theme.color[$color]};
 
   ${({ $types }) =>
     $types === "revisit" &&

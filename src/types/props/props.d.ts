@@ -15,6 +15,7 @@ export interface FigureImg {
 	height?: string;
 	types?: string;
 	children?: ReactChild;
+	onClick?:()=>void;
 }
 
 export interface EditComment {

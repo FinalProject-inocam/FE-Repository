@@ -31,6 +31,7 @@ const color = {
 	purple: "#362783",
 	white: "white",
 	gray: "#eeee",
+	gray2:"#BBBBC9",
 	blackM: "#0E0D13",
 
 	// 밝은색상
@@ -41,16 +42,27 @@ const color = {
 	lightgray2: "#828293",
 	lightgray3: "#555555",
 	lightgray4: "#d6d6d6",
+	lightgray5: "#DEDEE0",
 
 	// 어두운색상
 	darkGray: "#26252B",
-	darkgray2: "2F2B3A",
+	darkgray2: "#2F2B3A",
+	adminNav:"#333333",
 	darkBlue: "#151565",
 	darkBlue2: "#1E0476",
+	darkBlue3:"#050583",
 
 	//텍스트컬러
 	textColorSub: "#828295",
 	textColor2: "#0e0d13",
+
+	// 그래프관련 컬러
+	chartBlue :"#3737C2",
+	chartSkyblue : "#6161F5",
+	chartGreen : "#29CC6A",
+	chartYellow : "#F2D124",
+  chartOrange : "#FFA11F",
+	chartRed : "#FC5555"
 };
 
 /* About theme ---------------------------------------------- */

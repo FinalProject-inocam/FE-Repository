@@ -341,4 +341,10 @@ export interface useInnoCarRefType {
   onToggleTechnic : (setState: Dispatch<React.SetStateAction<boolean>>) => void;
 }
 
-// sectionRef1: MutableRefObject<HTMLDivElement | null>;
+/* / 26 useInnoCarRef / -------------------------------------------------------- */
+
+export interface useAdminType {
+  onNavigate: (Native) => () => void;
+  currentPage:string | undefined;
+  AdminNaList:string[][];
+}
