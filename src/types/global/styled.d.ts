@@ -1,26 +1,27 @@
 import { UseHeadScroll } from "../hooks";
 
 export interface Styled {
-	// commen
-	$color: string;
-	$width: string;
-	$height: string;
-	$imgUrl: string;
-	$position: string;
-	$types: string;
-	$size: number;
-	$mSize: number;
-	$state: boolean | number;
-	$font: string;
-	$borderR: string;
-	$borderTopRightR: string;
-	$borderTopLeftR: string;
-	$overflow: string;
-	$bColor: string;
-	$highlight: boolean;
-	$bgColor: string;
-	$tAlign: string;
-	$rotate: number;
+  // commen
+  $color: string;
+  $width: string;
+  $height: string;
+  $imgUrl: string;
+  $position: string;
+  $types: string;
+  $size: number;
+  $mSize: number;
+  $state: boolean | number;
+  $font: string;
+  $borderR: string;
+  $borderTopRightR: string;
+  $borderTopLeftR: string;
+  $overflow: string;
+  $bColor: string;
+  $highlight: boolean;
+  $bgColor: string;
+  $tAlign: string;
+  $rotate:number;
+  $padding:string;
 
 	// Felx-Grid
 	$gap: number;

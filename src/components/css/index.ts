@@ -8,3 +8,4 @@ export * from "./home";
 export * from "./wrappingshop";
 export * from "./community"
 export * from "./innocar"
+export * from './admin'

@@ -28,8 +28,8 @@ export const DetailInfoArea: FC = () => {
 				</SC.FlexBox>
 				<SC.GridBox style={{ border: "1px solid #c7c7cb" }}>
 					<SC.DetailScoreDiv $bgColor='gray' $bColor='gray' $gap={8}>
-						<SC.CustomH3 $size={40} children={avgStar.toFixed(1)} />
-						<SC.CustomH3 $size={20} children='/5.0' />
+						<SC.CustomH3 $size={2.5} children={avgStar.toFixed(1)} />
+						<SC.CustomH3 $size={1.25} children='/5.0' />
 					</SC.DetailScoreDiv>
 					<SC.DetailScoreDiv $bColor='none' $height='70px'>
 						{Array.from({ length: 5 }).map((_, index) => (

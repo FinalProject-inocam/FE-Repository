@@ -38,11 +38,13 @@ const App: React.FC = () => {
           <Route path="login" element={<Page.Login />} />
         </Route>
 
-        <Route element={<Page.ProtectiveRouterA />}>
+        {/* <Route element={<Page.ProtectiveRouterA />}> */}
           <Route path="/admin" element={<Page.AdminRouter />}>
-            <Route index element={<Page.AdminMain />} />
+            <Route index element={<Page.AdminDeshboard />} />
+            <Route path="deliverymanagement" element={<Page.DeliveryManagement/>}/>
+            <Route path="civilcomplaintmanagement" element={<Page.CivilComplaintManagement />}/>
           </Route>
-        </Route>
+        {/* </Route> */}
 
         {/* Redirect 페이지 */}
         <Route path="/api/auth/login/kakao" element={<Page.KakaoRedirect />} />

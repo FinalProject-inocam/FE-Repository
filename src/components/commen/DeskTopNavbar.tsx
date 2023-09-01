@@ -39,7 +39,7 @@ export const DeskTopNavbar: React.FC = () => {
 					  )
 					: authNav.admin.map((nav: string[], idx: number) =>
 							idx === 0 ? (
-								<SC.CustomLi key={nav[1]} children={nav[1]} onClick={onNavigate({ url: nav[1] })} />
+								<SC.CustomLi key={nav[1]} children={nav[1]} onClick={onNavigate({ url: nav[2] })} />
 							) : (
 								<SC.CustomLi key={nav[1]} children={nav[1]} onClick={onLogout} />
 							)
