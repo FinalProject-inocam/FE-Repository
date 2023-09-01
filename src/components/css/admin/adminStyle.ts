@@ -1,6 +1,7 @@
 import * as SC from "../GlobalStyled"
 import { Styled } from "../../../types"
-import { styled } from "styled-components"
+import { css, styled } from "styled-components"
+import { Bar } from "react-chartjs-2"
 
 const AdminNav = styled.nav`
   height:100vh;
@@ -58,9 +59,101 @@ const AdminNavInnerFlex = styled.div`
   margin-left : auto;
   position : relative;
 `
+const DeshboardGrid = styled.section<Partial<Styled>>`
+  ${SC.Grid}
+  background-color: ${({ theme }) => theme.color.lightgray1};
+`
+
+const ChartLayout = styled.div<Partial<Styled>>`
+  height: 100%;
+  padding: ${({ $padding }) => $padding};
+  background-color: ${({ $bColor, theme }) => theme.color[`${$bColor}`]};
+`
+
+
+const ChartInner = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+
+  ${({ $types }) => $types === "left" && css`
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;  
+  `}
+`
+
+const RatioBox = styled.div<Partial<Styled>>`
+  width: ${({ $size }) => `${$size}px`};
+  height: ${({ $size }) => `${$size}px`};
+  background-color: ${({ $bColor, theme }) => theme.color[`${$bColor}`]};
+`
+const DataTypeSelect = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  ${SC.cursor}
+  width: 100px;
+  height: 42px;
+  position: relative;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.color.white};
+  border: 1px solid ${({ theme }) => theme.color.lightgray5};
+`
+
+const DataTypeOptions = styled.div`
+  position: absolute;
+  bottom: ${-42 * 3 - 10}px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.color.white};
+  border: 1px solid ${({ theme }) => theme.color.lightgray5};
+
+  div {
+    ${SC.Flex}
+    height: 42px;
+  }
+`
+
+const DateShowPeriod = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  width: 270px;
+  border-radius: 5px;
+  height: 42px;
+  padding: 0 20px;
+  background-color: ${({ theme }) => theme.color.white};
+  border: 1px solid ${({ theme }) => theme.color.lightgray5};
+`
+
+const PurchaseSecondRowInner = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  border: 1px solid #DEDEE0;
+  border-radius: 10px;
+  padding: 15px 20px;
+`
+
+const CustomBar = styled(Bar)`
+  width:100%;
+  height: 100%;
+  max-width:800px;
+  max-height:180px;  
+  transition: all 0.3s linear;
+  @media (max-width: 1440px) {
+  max-height:120px;  
+}
+`
+
 
 export {
   AdminNav,
   AdminNavLayout,
-  AdminNavInnerFlex
+  AdminNavInnerFlex,
+
+  // 대시보드
+  DeshboardGrid,
+  ChartLayout,
+  ChartInner,
+  RatioBox,
+  DataTypeSelect,
+  DataTypeOptions,
+  DateShowPeriod,
+  PurchaseSecondRowInner,
+  CustomBar
 }

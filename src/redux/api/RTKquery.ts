@@ -397,7 +397,7 @@ export const inocamRTK = createApi({
 			/* / 05 ADMINPAGE 관련 : 회원통계 -------------------------------------------------------- */
 			getUserChart: build.query({
 				query: (year) => ({
-					url: `/api/admin/stats/users/year?year=${year}`,
+					url: `/api/admin/stats/users/year?cal=${year}`,
 					method: "get",
 					types: "getAdminUserData",
 				}),

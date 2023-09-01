@@ -149,6 +149,8 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
       border-radius : 10px;
     `}
 
+  ${({ $types }) => $types === "cursor" && sc.css`${cursor}`}
+
   img {
     position: absolute;
     top: 50%;
