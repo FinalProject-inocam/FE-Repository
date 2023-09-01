@@ -31,7 +31,7 @@ export const useInfinityThrottle = (
 			([entry]) => {
 				if (entry.isIntersecting && !isFetching) {
 					// 마지막 요소가 감지되었을 때, 추가요청을 보내면, 값이 오겠죠.
-					// console.log("Fetching more data...");
+					console.log("Fetching more data...");
 					onNextPageCallback();
 				}
 			},
