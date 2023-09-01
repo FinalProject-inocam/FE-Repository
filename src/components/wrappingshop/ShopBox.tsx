@@ -3,7 +3,7 @@ import * as SC from "../css";
 import * as Type from "../../types";
 import * as Hooks from "../../hooks";
 
-export const ShopBox: FC<{ item: Type.WrappingShop }> = ({ item }) => {
+export const ShopBox: FC<{ item: Type.ShopList }> = ({ item }) => {
 	const { onNavigate } = Hooks.useRouter();
 	return (
 		<SC.ShopBoxLayout
@@ -19,7 +19,7 @@ export const ShopBox: FC<{ item: Type.WrappingShop }> = ({ item }) => {
 					{Array.from({ length: 5 }).map((_, index) => (
 						<span key={index}>{index < item.avgStar ? "★" : "☆"}</span>
 					))}
-					<span style={{ fontWeight: "500", lineHeight: "1.5" }}>{item.avgStar.toFixed(2)}</span>
+					<span style={{ fontWeight: "500", lineHeight: "1.5" }}>{item.avgStar?.toFixed(2)}</span>
 				</div>
 				<div>리뷰 {item.reviewCount} 개</div>
 				<div>010-0000-0000</div>

@@ -31,6 +31,8 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 						long: latlng.getLng(),
 					})
 				);
+				dispatch(RTK.deleteShopList());
+				dispatch(RTK.mergeShopList(data?.shopList ?? []));
 			});
 
 			return () => {
@@ -39,6 +41,7 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 				}
 			};
 		}
+		// eslint-disable-next-line
 	}, [geolocation]);
 
 	// Update center when geolocation changes
@@ -48,6 +51,7 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 			getMaps.setCenter(newCenter);
 			getMaps.relayout();
 		}
+		// eslint-disable-next-line
 	}, [geolocation, getMaps]);
 
 	// Add Markers and Overlays
@@ -55,7 +59,7 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 		const imageSrc = require("../../assets/marker.png");
 
 		if (data && getMaps) {
-			data.forEach((setMarker: Type.WrappingShop) => {
+			data.shopList.forEach((setMarker: Type.ShopList) => {
 				const imgSize = new kakaoMaps.Size(60, 60);
 				const markerImage = new kakaoMaps.MarkerImage(imageSrc, imgSize);
 				const marker = new kakaoMaps.Marker({

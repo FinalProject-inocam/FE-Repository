@@ -5,12 +5,11 @@ const mergeWCDreviewSlice = createSlice({
 	initialState: [] as any | [],
 	reducers: {
 		setMergeDate: (state, action: PayloadAction<any>) => {
-			console.log(state);
 			return [...state, ...action.payload];
 		},
 		deleteData: () => {
-			return []
-		}
+			return [];
+		},
 	},
 });
 

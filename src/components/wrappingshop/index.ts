@@ -17,6 +17,7 @@ export * from "./CommentTextArea";
 export * from "./PrevImage";
 export * from "./ReviewBar";
 export * from "./ReviewList";
+export * from "./ReviewInner";
 
 // Review
 export * from "./EditWrappingReview";

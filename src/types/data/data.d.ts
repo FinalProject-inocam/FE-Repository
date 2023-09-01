@@ -21,17 +21,27 @@ export interface CommunityComments {
 
 export interface DetailCommunity extends TotalCommunity {
 	imageUrls: string[];
-	nickname?:string;
+	nickname?: string;
 	commentsList: CommunityComments[];
 }
 
-/* / WrappingShop 관련 타입 / -------------------------------------------------------- */ export interface WrappingShop {
+/* / WrappingShop 관련 타입 / -------------------------------------------------------- */
+export interface WrappingShop {
+	currentPage: number;
+	first: boolean;
+	last: boolean;
+	shopList: ShopList[];
+	size: number;
+	totalCount: number;
+	totalElements: number;
+	totalPages: number;
+}
+
+export interface ShopList {
 	avgStar: number;
 	isLike: boolean;
 	latitude: number;
 	likeCount?: number;
-	like_count?: number; // 나중에 삭제하기
-	lnoAdr: string;
 	longitude: number;
 	rdnmAdr?: string;
 	shopId: string;
@@ -39,7 +49,7 @@ export interface DetailCommunity extends TotalCommunity {
 	reviewCount: number;
 }
 
-export interface WrappingShopDetail extends WrappingShop {
+export interface WrappingShopDetail extends ShopList {
 	address: string;
 	banner: string[];
 	reviews: Review[];
