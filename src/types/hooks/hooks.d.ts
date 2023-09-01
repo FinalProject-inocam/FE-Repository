@@ -74,6 +74,8 @@ export interface UseCommunityDetail extends AsyncHooksDefault {
 	onDebounce: any;
 	onPatchLiked: any;
 	decokenNickname: string;
+	// page: number;
+	// setPage: Dispatch<SetStateAction<number>>;
 }
 
 /* / 05 useCommunityWrite / -------------------------------------------------------- */
@@ -287,58 +289,56 @@ interface UseReviewLike {
 
 /* / 23 useCommunityWrite / -------------------------------------------------------- */
 export interface useCommunityWrite {
-  value: string;
-  onChangeValue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onBlurValue: () => void;
+	value: string;
+	onChangeValue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+	onBlurValue: () => void;
 }
 
 /* / 24 useModelOne / -------------------------------------------------------- */
 interface TechnicalLists {
-  title:string,
-  technicalInfoCategory:string,
-  infoBoolean:boolean,
-  setInfoBoolean:Dispatch<React.SetStateAction<boolean>>,
+	title: string;
+	technicalInfoCategory: string;
+	infoBoolean: boolean;
+	setInfoBoolean: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface innoCarImgText {
-  title : string ;
-  content : string ;
-  top ?: number ;
-  left ?: number;
-  right ?:number;
-  mTop ?: number;
-  mRight ?: number;
-  types ?: string;
-  tAlign ?: string;
+	title: string;
+	content: string;
+	top?: number;
+	left?: number;
+	right?: number;
+	mTop?: number;
+	mRight?: number;
+	types?: string;
+	tAlign?: string;
 }
 
 export interface useModelOneType {
-  M1CharacterTitle:string[][];
-  technicalInfo: {
-      [key:string]: string[][]; 
-  };
-  TechnicalLists: TechnicalLists[]
-  innoCarImgText: innoCarImgText[]
+	M1CharacterTitle: string[][];
+	technicalInfo: {
+		[key: string]: string[][];
+	};
+	TechnicalLists: TechnicalLists[];
+	innoCarImgText: innoCarImgText[];
 }
-
-
 
 /* / 25 useInnoCarRef / -------------------------------------------------------- */
 
 export interface useInnoCarRefType {
-  Sections3ScrollGridText : string[];
-  sectionRef1 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef2 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef3 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef4 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef5 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef6 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef7 : MutableRefObject<HTMLDivElement | null>;
-  innocarCharacterRef : MutableRefObject<HTMLDivElement | null>;
-  sectionRef3InnerRef : MutableRefObject<HTMLDivElement | null>;
-  sectionRef3FlexRef : MutableRefObject<HTMLDivElement | null>;
-  onToggleCarCharacter: (e: MouseEvent<HTMLDivElement>) => void;
-  onToggleTechnic : (setState: Dispatch<React.SetStateAction<boolean>>) => void;
+	Sections3ScrollGridText: string[];
+	sectionRef1: MutableRefObject<HTMLDivElement | null>;
+	sectionRef2: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3: MutableRefObject<HTMLDivElement | null>;
+	sectionRef4: MutableRefObject<HTMLDivElement | null>;
+	sectionRef5: MutableRefObject<HTMLDivElement | null>;
+	sectionRef6: MutableRefObject<HTMLDivElement | null>;
+	sectionRef7: MutableRefObject<HTMLDivElement | null>;
+	innocarCharacterRef: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3InnerRef: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3FlexRef: MutableRefObject<HTMLDivElement | null>;
+	onToggleCarCharacter: (e: MouseEvent<HTMLDivElement>) => void;
+	onToggleTechnic: (setState: Dispatch<React.SetStateAction<boolean>>) => void;
 }
 
 /* / 26 useInnoCarRef / -------------------------------------------------------- */

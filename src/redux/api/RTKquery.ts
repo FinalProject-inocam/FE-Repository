@@ -47,6 +47,7 @@ const axiosBaseQuery =
 				default:
 					const res = await instance({ url, method, data });
 					// console.log(res);
+          
 					return { data: res.data.msg };
 			}
 		} catch (axiosError) {
@@ -67,6 +68,7 @@ export const inocamRTK = createApi({
 		"POSTSLIST",
 		"POSTDETAIL",
 		"POSTCOMMENT",
+		"COMMUNITDCOMMENT",
 		"KAKAO",
 		"ICOCAR",
 		"PURCHASESCHAR",
@@ -76,7 +78,9 @@ export const inocamRTK = createApi({
 		"WRAPPINGSHOPD",
 		"MYPAGE",
 		"PURCHASESCHARTY",
+		"COMMUNITD",
 		"GETUSERCHART",
+
 	],
 	endpoints(build) {
 		return {
@@ -197,7 +201,7 @@ export const inocamRTK = createApi({
 			}),
 
 			/* / 03 Community 관련 / -------------------------------------------------------- */
-			// getCommunity - 커뮤니티 게시글 요청
+			// getCommunity - 커뮤니티페이지 페이지네이션 부분
 			getCommunity: build.query({
 				query: ({ getId, category }) => ({
 					url: `/api/communities?category=${category}&page=${getId}&size=10`,
@@ -207,7 +211,7 @@ export const inocamRTK = createApi({
 				providesTags: ["POSTS"],
 			}),
 
-			// /api/communites/list
+			// /api/communites/list 인기/최근게시물
 			getCommunitesList: build.query({
 				query: () => ({
 					url: `/api/communities/list`,
@@ -236,6 +240,16 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["POSTS"],
 			}),
 
+			// getCommunityDetail - 커뮤니티 게시글 요청
+			getCommunityDetail: build.query({
+				query: (postId) => ({
+					url: `/api/communities/${postId}`,
+					method: "get",
+					types: "getData",
+				}),
+				providesTags: ["COMMUNITD"],
+			}),
+
 			// patchCommunity - 커뮤니티 게시글 수정
 			patchCommunity: build.mutation({
 				query: ({ post_id, formData }) => ({
@@ -244,7 +258,7 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
+				invalidatesTags: ["POSTS", "COMMUNITD"],
 			}),
 
 			// patchCommunityLiked 게시글 좋아요
@@ -253,16 +267,17 @@ export const inocamRTK = createApi({
 					url: `/api/communities/${postId}/like`,
 					method: "patch",
 				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
+				invalidatesTags: ["POSTS", "COMMUNITD"],
 			}),
-			// getCommunityDetail - 커뮤니티 게시글 요청
-			getCommunityDetail: build.query({
-				query: (postId) => ({
-					url: `/api/communities/${postId}`,
+
+			// getCommunityComment - 커뮤니티 댓글불러오기
+			getCommunityComment: build.query({
+				query: ({ postId, page }) => ({
+					url: `/api/communities/${postId}/comments?page=${page}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["POSTDETAIL"],
+				providesTags: ["COMMUNITDCOMMENT"],
 			}),
 
 			// postCommunityComment - 커뮤니티 댓글 작성
@@ -272,7 +287,7 @@ export const inocamRTK = createApi({
 					method: "post",
 					data,
 				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
+				invalidatesTags: ["POSTS", "COMMUNITD", "COMMUNITDCOMMENT"],
 			}),
 
 			// deleteCommunityComment - 커뮤니티 댓글 삭제
@@ -281,7 +296,7 @@ export const inocamRTK = createApi({
 					url: `/api/communities/${postId}/comments/${commentId}`,
 					method: "delete",
 				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
+				invalidatesTags: ["POSTS", "COMMUNITD", "COMMUNITDCOMMENT"],
 			}),
 
 			// patchCommunityComment - 커뮤니티 댓글 수정
@@ -291,7 +306,7 @@ export const inocamRTK = createApi({
 					method: "patch",
 					data: data,
 				}),
-				invalidatesTags: ["POSTS", "POSTDETAIL"],
+				invalidatesTags: ["POSTS", "COMMUNITD", "COMMUNITDCOMMENT"],
 			}),
 
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
@@ -427,6 +442,7 @@ export const {
 	useGetCommunityDetailQuery,
 
 	// CommunityComment 차량출고 커뮤니티 댓글 관련
+	useGetCommunityCommentQuery,
 	usePostCommunityCommentMutation,
 	usePatchCommunityCommentMutation,
 	useDeleteCommunityCommentMutation,
