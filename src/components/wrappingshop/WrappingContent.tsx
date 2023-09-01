@@ -61,7 +61,9 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 						) : isError ? (
 							<div>{JSON.stringify(error)}</div>
 						) : isSuccess && data?.shopList ? ( // Make sure data is an array
-							getMergeData.shopList.map((item: Type.ShopList) => <CP.ShopBox item={item} />)
+							getMergeData.shopList.map((item: Type.ShopList, idx: number) => (
+								<CP.ShopBox key={idx} item={item} />
+							))
 						) : (
 							<div>데이터가 없습니다.</div>
 						)}

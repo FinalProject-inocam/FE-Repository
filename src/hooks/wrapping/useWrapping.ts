@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
 
-export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
+export const useWrapping = ({ data, setPage }: any): Type.UseWrappingMap => {
 	const dispatch = RTK.useAppDispatch();
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const geolocation: any = RTK.useAppSelector(RTK.selectgeoLocation);
@@ -32,7 +32,7 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 					})
 				);
 				dispatch(RTK.deleteShopList());
-				dispatch(RTK.mergeShopList(data?.shopList ?? []));
+				setPage(1);
 			});
 
 			return () => {

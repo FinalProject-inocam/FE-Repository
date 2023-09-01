@@ -17,7 +17,7 @@ export const Wrapping: FC = () => {
 		}
 	);
 
-	const { mapRef } = useWrapping({ data });
+	const { mapRef } = useWrapping({ data, setPage });
 
 	useEffect(() => {
 		geolocation && geolocation.lat && setCheckGeolocation(false);
