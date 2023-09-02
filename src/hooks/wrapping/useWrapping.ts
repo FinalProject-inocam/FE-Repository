@@ -31,7 +31,6 @@ export const useWrapping = ({ data, setPage }: any): Type.UseWrappingMap => {
 						long: latlng.getLng(),
 					})
 				);
-				dispatch(RTK.deleteShopList());
 				setPage(1);
 			});
 
@@ -41,6 +40,10 @@ export const useWrapping = ({ data, setPage }: any): Type.UseWrappingMap => {
 				}
 			};
 		}
+		markers.current.forEach((marker) => marker.setMap(null));
+		overlays.current.forEach((overlay) => overlay.setMap(null));
+		markers.current = [];
+		overlays.current = [];
 		// eslint-disable-next-line
 	}, [geolocation]);
 
@@ -96,12 +99,12 @@ export const useWrapping = ({ data, setPage }: any): Type.UseWrappingMap => {
 			});
 		}
 
-		return () => {
-			markers.current.forEach((marker) => marker.setMap(null));
-			overlays.current.forEach((overlay) => overlay.setMap(null));
-			markers.current = [];
-			overlays.current = [];
-		};
+		// return () => {
+		// 	markers.current.forEach((marker) => marker.setMap(null));
+		// 	overlays.current.forEach((overlay) => overlay.setMap(null));
+		// markers.current = [];
+		// overlays.current = [];
+		// };
 	}, [data, getMaps, kakaoMaps]);
 
 	// Handle window resizing
