@@ -39,8 +39,10 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 		<SC.ContentArea $ai='flex-start'>
 			<SC.ContentLayout $fd='column' $jc='flex-start'>
 				<SC.FlexBox $fd='column' $jc='space-between' $gap={50} style={{ paddingTop: "50px" }}>
-					<div>
-						<SC.WrappingTitle>내 주변에 총 {data && data?.shopList.length}개의 </SC.WrappingTitle>
+					<div style={{ width: "100%" }}>
+						<SC.WrappingTitle>
+							내 주변에 총 {getMergeData && getMergeData?.shopList.length}개의{" "}
+						</SC.WrappingTitle>
 						<SC.WrappingTitle>랩핑샵을 찾았어요!</SC.WrappingTitle>
 					</div>
 
@@ -61,7 +63,9 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 						) : isError ? (
 							<div>{JSON.stringify(error)}</div>
 						) : isSuccess && data?.shopList ? ( // Make sure data is an array
-							getMergeData.shopList.map((item: Type.ShopList) => <CP.ShopBox item={item} />)
+							getMergeData.shopList.map((item: Type.ShopList, idx: number) => (
+								<CP.ShopBox key={idx} item={item} />
+							))
 						) : (
 							<div>데이터가 없습니다.</div>
 						)}

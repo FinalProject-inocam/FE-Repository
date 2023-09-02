@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
 
-export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
+export const useWrapping = ({ data, setPage }: any): Type.UseWrappingMap => {
 	const dispatch = RTK.useAppDispatch();
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const geolocation: any = RTK.useAppSelector(RTK.selectgeoLocation);
@@ -31,8 +31,7 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 						long: latlng.getLng(),
 					})
 				);
-				dispatch(RTK.deleteShopList());
-				dispatch(RTK.mergeShopList(data?.shopList ?? []));
+				setPage(1);
 			});
 
 			return () => {
@@ -41,6 +40,10 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 				}
 			};
 		}
+		markers.current.forEach((marker) => marker.setMap(null));
+		overlays.current.forEach((overlay) => overlay.setMap(null));
+		markers.current = [];
+		overlays.current = [];
 		// eslint-disable-next-line
 	}, [geolocation]);
 
@@ -96,12 +99,12 @@ export const useWrapping = ({ data }: any): Type.UseWrappingMap => {
 			});
 		}
 
-		return () => {
-			markers.current.forEach((marker) => marker.setMap(null));
-			overlays.current.forEach((overlay) => overlay.setMap(null));
-			markers.current = [];
-			overlays.current = [];
-		};
+		// return () => {
+		// 	markers.current.forEach((marker) => marker.setMap(null));
+		// 	overlays.current.forEach((overlay) => overlay.setMap(null));
+		// markers.current = [];
+		// overlays.current = [];
+		// };
 	}, [data, getMaps, kakaoMaps]);
 
 	// Handle window resizing

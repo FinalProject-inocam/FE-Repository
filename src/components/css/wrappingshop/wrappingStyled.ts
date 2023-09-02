@@ -39,7 +39,7 @@ const ContentLayout = styled.div<Partial<Type.Styled>>`
 const WrappingTitle = styled.div`
 	${({ theme }) => theme.font.PretendardM};
 	${({ theme }) => theme.color.blackM};
-	font-size: 44px;
+	font-size: 40px;
 	font-weight: 500;
 	font-stretch: normal;
 	font-style: normal;
