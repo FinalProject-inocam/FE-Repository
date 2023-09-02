@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ErrorBoundary } from "react-error-boundary";
 // Provider 관련
 import { store } from "./redux";
-import { theme } from "./components";
+import { theme } from "./-";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 // 컴포넌트 관련

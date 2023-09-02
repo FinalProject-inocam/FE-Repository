@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Flex, Grid, theme } from "../../css";
+import { Flex, Grid, theme } from "..";
 import * as Type from "../../../types";
 
 // Wrapping
@@ -93,6 +93,19 @@ const WrappingSortList = styled.div`
 	width: 350px;
 	height: 571.5px;
 	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		height: 30%;
+		background: ${({ theme }) => theme.color.blackM};
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: rgba(33, 122, 244, 0.1);
+	}
 
 	@media (min-height: 1050px) {
 		height: 714.5px;

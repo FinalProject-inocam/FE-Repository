@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import * as Type from "../../types";
 import * as SC from "../css";
 import * as AS from "../../assets";
-import * as CP from "../../components/wrappingshop";
+import * as CP from ".";
 import * as Hooks from "../../hooks";
 import * as RTK from "../../redux";
 
@@ -45,7 +45,6 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 						</SC.WrappingTitle>
 						<SC.WrappingTitle>랩핑샵을 찾았어요!</SC.WrappingTitle>
 					</div>
-
 					<SC.WrappingSearchBox $fd='space between'>
 						<SC.WrappingSearchInput />
 						<SC.SearchIcon src={AS.searchIcon} alt='serchIcon' />
@@ -62,7 +61,7 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 							<div>로딩중</div>
 						) : isError ? (
 							<div>{JSON.stringify(error)}</div>
-						) : isSuccess && data?.shopList ? ( // Make sure data is an array
+						) : isSuccess && data?.shopList ? (
 							getMergeData.shopList.map((item: Type.ShopList, idx: number) => (
 								<CP.ShopBox key={idx} item={item} />
 							))

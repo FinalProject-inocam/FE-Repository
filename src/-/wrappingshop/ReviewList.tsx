@@ -5,9 +5,10 @@ import * as SC from "../css";
 import * as CP from "..";
 import { ReviewListProps } from "../../types";
 
-export const ReviewList: FC<ReviewListProps> = ({ imageUrls, shopId, reviewId }) => {
+export const ReviewList: FC<ReviewListProps> = ({ imageUrls, shopId, reviewId, isLike, likeCount }) => {
 	const [patchWSReviewLikeRTK] = RTK.usePatchWrappingShopDetailLikeMutation();
-	const onReviewLikeHandler = (reviewId: number) => () => {
+	const onReviewLikeHandler = (reviewId: number) => async (event: React.MouseEvent) => {
+		event.preventDefault();
 		patchWSReviewLikeRTK({ shopId, reviewId });
 	};
 	return (
@@ -24,9 +25,10 @@ export const ReviewList: FC<ReviewListProps> = ({ imageUrls, shopId, reviewId })
 				)}
 			</SC.FlexBox>
 			<SC.FlexBox $ai='flex-end' $gap={10}>
-				<CP.DetailButton.LikeButton $buttonSize='like' onClick={onReviewLikeHandler(reviewId)}>
-					<img src={AS.ReviewLike} alt='reviewLike' />
-				</CP.DetailButton.LikeButton>
+				<SC.Likebutton $isLike={isLike} onClick={onReviewLikeHandler(reviewId)}>
+					<img src={isLike ? AS.ReviewUnlike : AS.ReviewLike} alt='reviewLike' />
+					<span>{likeCount}</span>
+				</SC.Likebutton>
 				<CP.DetailButton.CommentButton $buttonSize='comment'>
 					<img src={AS.ReviewComment} alt='reviewLike' />
 				</CP.DetailButton.CommentButton>

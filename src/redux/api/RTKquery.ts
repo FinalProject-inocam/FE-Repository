@@ -43,18 +43,18 @@ const axiosBaseQuery =
 					return { data: getData.data.data };
 				case "getAdminUserData":
 					const getAdminData = await instance({ url, method });
-					return {data : getAdminData.data.data.total}	
+					return { data: getAdminData.data.data.total };
 				default:
 					const res = await instance({ url, method, data });
 					// console.log(res);
-          
+
 					return { data: res.data.msg };
 			}
 		} catch (axiosError) {
 			const err = axiosError as Type.CustomAxiosError<Type.ErrorType["data"]>; // 타입단언
 			if (err.response.status === 404) {
-        throw new Error('User not found');
-      }
+				throw new Error("User not found");
+			}
 			return {
 				error: err.response?.data.msg,
 			};
@@ -73,14 +73,15 @@ export const inocamRTK = createApi({
 		"ICOCAR",
 		"PURCHASESCHAR",
 		"WRAPPINGSHOP",
+		"WRAPPINGSHOPINFO",
 		"WRAPPINGSHOPDREVIEW",
 		"WRAPPINGSHOPCOMMENT",
+		"REVIEWS",
 		"WRAPPINGSHOPD",
 		"MYPAGE",
 		"PURCHASESCHARTY",
 		"COMMUNITD",
 		"GETUSERCHART",
-
 	],
 	endpoints(build) {
 		return {
@@ -327,7 +328,7 @@ export const inocamRTK = createApi({
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["WRAPPINGSHOPDREVIEW"],
+				providesTags: ["WRAPPINGSHOPINFO"],
 			}),
 
 			// getWrappingShop - 랩핑샵 리뷰 조회(re)
@@ -348,7 +349,7 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
 			}),
 
 			// DeleteWrappingShopComment - 래핑샵 댓글 삭제
@@ -357,7 +358,7 @@ export const inocamRTK = createApi({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
 					method: "delete",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
 			}),
 
 			// pathWrappingShopComment - 랩핑샵 댓글 수정
@@ -368,7 +369,7 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
 			}),
 
 			// pathWrappingShopComment - 랩핑샵 리뷰 좋아요
@@ -377,7 +378,7 @@ export const inocamRTK = createApi({
 					url: `/api/shops/${shopId}/reviews/${reviewId}/like`,
 					method: "patch",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW"],
+				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
 			}),
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			getMyPage: build.query({
@@ -399,10 +400,10 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["MYPAGE"],
 			}),
 			/* / 05 ADMINPAGE 관련 / -------------------------------------------------------- */
-				///
+			///
 
-			getPurchaseChart : build.query({
-				query: ({type, period}) => ({
+			getPurchaseChart: build.query({
+				query: ({ type, period }) => ({
 					url: `/api/admin/stats/purchases/${type}?cal=${period}`,
 					method: "get",
 					types: "getAdminUserData",

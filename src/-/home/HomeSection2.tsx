@@ -1,5 +1,5 @@
 import React from "react";
-import * as SC from "../../components";
+import * as SC from "..";
 import { Threejs } from "../../pages";
 import * as Type from "../../types";
 
