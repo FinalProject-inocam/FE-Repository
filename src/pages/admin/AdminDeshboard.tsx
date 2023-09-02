@@ -412,7 +412,7 @@ export const AdminDeshboard: React.FC = () => {
 								</SC.FlexBox>
 							</SC.PurchaseSecondRowInner>
 							<SC.PurchaseSecondRowInner $fd='column' $jc='flex-start' $ai='flex-start' $gap={10}>
-								<SC.CustomH1 $size={1.125} children='신청 성별 그래프' />
+								<SC.CustomH1 $size={1.125} children='신청 연령대별 그래프' />
 								<SC.FlexBox style={{ height: "90%", margin: "0 auto" }} $gap={10}>
 									<div style={{ width: "120px", height: "120px" }}>
 										<Doughnut options={dataRatioOpts} data={purchaseAgeDonutData} />
