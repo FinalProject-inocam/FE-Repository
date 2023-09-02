@@ -1,6 +1,6 @@
 import React from "react";
 import { useHome } from "../../hooks";
-import * as CP from "../../components";
+import * as CP from "../../-";
 
 export const Home: React.FC = () => {
 	const { sectionRef1, sectionRef2, sectionRef3, sectionRef4, sectionRef5 } = useHome();

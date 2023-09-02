@@ -24,14 +24,21 @@ export const DetailReviewBanner: FC = () => {
 		};
 	}, []);
 
-	if (!data) return null;
-	const { reviewImageSize: imgCount, banner } = data;
-	const bannerEdit = banner.slice(0, bannerNum);
+	useEffect(() => {
+		if (data) {
+			console.log(data.banner);
+		}
+	}, [data]);
 
+	if (!data) return null;
+
+	const { reviewImageSize: imgCount, banner } = data;
+
+	const bannerEdit = banner.slice(0, bannerNum);
 	return (
 		<SC.ReviewBannerGridBox $cgap={20}>
 			{bannerEdit.map((img: string, idx: number) =>
-				idx < bannerNum - 1 ? (
+				idx !== bannerNum - 1 ? (
 					<FigureObjectFitImg
 						key={img}
 						src={img}
@@ -39,18 +46,23 @@ export const DetailReviewBanner: FC = () => {
 						types='reviewBanner'
 						alt={`Review Banner img ${idx + 1}`}
 					/>
-				) : (
+				) : imgCount > 4 ? (
 					<FigureObjectFitImg
 						key={img}
 						src={img}
 						width='100%'
 						types='reviewBanner'
 						alt={`Review Banner img ${idx + 1}`}>
-						<SC.ReviewBannerMoreBtn
-							onClick={() => console.log("모든이미지 보여주기 준비..")}
-							children={`+${imgCount - bannerNum}`}
-						/>
+						<SC.ReviewBannerMoreBtn children={`+${imgCount - bannerNum}`} />
 					</FigureObjectFitImg>
+				) : (
+					<FigureObjectFitImg
+						key={img}
+						src={img}
+						width='100%'
+						types='reviewBanner'
+						alt={`Review Banner img ${idx + 1}`}
+					/>
 				)
 			)}
 		</SC.ReviewBannerGridBox>
