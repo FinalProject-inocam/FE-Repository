@@ -1,7 +1,7 @@
 import React from "react";
 import * as Hooks from "../../hooks";
-import * as SC from "../../components/css";
-import * as CP from "../../components/wrappingshop";
+import * as SC from "../../-/css";
+import * as CP from "../../-/wrappingshop";
 
 export const WrappingDetail: React.FC = () => {
 	const { mapRef, isLoading, data, isError, error } = Hooks.useWrappingDetail();

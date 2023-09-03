@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useWrapping } from "../../hooks";
-import * as SC from "../../components/css";
-import * as CP from "../../components/wrappingshop";
+import * as SC from "../../-/css";
+import * as CP from "../../-/wrappingshop";
 import * as RTK from "../../redux";
 import * as Hooks from "../../hooks";
 
@@ -17,7 +17,7 @@ export const Wrapping: FC = () => {
 		}
 	);
 
-	const { mapRef } = useWrapping({ data });
+	const { mapRef } = useWrapping({ data, setPage });
 
 	useEffect(() => {
 		geolocation && geolocation.lat && setCheckGeolocation(false);

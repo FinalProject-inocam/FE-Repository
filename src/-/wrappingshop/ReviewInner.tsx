@@ -5,7 +5,7 @@ import * as SC from "../css";
 export const ReviewInner: FC<{
 	reviews: any;
 	setPage?: any;
-}> = ({ reviews: { reviewId, nickname, star, revisit, createAt, shopId, review, imageUrls } }) => {
+}> = ({ reviews: { reviewId, nickname, star, revisit, createAt, shopId, review, imageUrls, likeCount, isLike } }) => {
 	return (
 		<SC.ReviewListLayout $gtc='80px 1fr' $cgap={20}>
 			<SC.CustomH3 $types='nickname'>{nickname}</SC.CustomH3>
@@ -26,7 +26,13 @@ export const ReviewInner: FC<{
 					shopId={shopId}
 				/>
 				<div>{review}</div>
-				<CP.ReviewList imageUrls={imageUrls} shopId={shopId} reviewId={reviewId} />
+				<CP.ReviewList
+					imageUrls={imageUrls}
+					shopId={shopId}
+					reviewId={reviewId}
+					likeCount={likeCount}
+					isLike={isLike}
+				/>
 			</SC.FlexBox>
 		</SC.ReviewListLayout>
 	);

@@ -293,13 +293,25 @@ color : ${({ $color }) => $color};
 			: null}
 `;
 
+const Likebutton = styled.button<Partial<Type.Styled>>`
+	${Flex}
+	${cursor}
+	gap: 10px;
+	background-color: #fff;
+	height: 36px;
+	width: 99px;
+	border: 1px solid ${({ theme }) => theme.color.blue};
+	border-radius: 5px;
+	background-color: ${({ theme, $isLike }) => ($isLike ? theme.color.lightblue : theme.color.white)};
+`;
+
 const ReviewFormLayout = styled.form<Partial<Type.Styled>>`
 	${Grid}
-	background-color: #fff;
 	width: 100%;
 	height: 313px;
 	padding: 30px 20px 26px;
 	margin-bottom: 20px;
+	background-color: #fff;
 `;
 
 // RevisitRadio
@@ -431,4 +443,6 @@ export {
 	ReviewImage,
 
 	// EditWrappingReview
+	// ReviewList
+	Likebutton,
 };
