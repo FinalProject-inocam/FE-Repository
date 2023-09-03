@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { useRouter, useSocketRoom } from "../../hooks"
 import * as SC from "../../components"
-import { adminChatArrow, adminPlus, cameraOff, cameraOn, closeBTN, exited, mikeOff, mikeOn, sendBtn, webRTCBtc,  } from "../../assets" // exited, sendBtn, webRTCBtc, cameraOn, cameraOff, mikeOn, mikeOff
+import { adminChatArrow, adminPlus, cameraOff, cameraOn, closeBTN, exited, innoLogo, loadingInnoLogo, mikeOff, mikeOn, sendBtn, webRTCBtc,  } from "../../assets" // exited, sendBtn, webRTCBtc, cameraOn, cameraOff, mikeOn, mikeOff
 import { css, styled } from "styled-components"
 import * as Type from "../../types"
 
@@ -14,6 +14,7 @@ export const AdminChatting: FC = () => {
     sendMsg,
     getChatMsg,
     userInfoState,
+    userInfoMemo,
     onChangeTextArea,
     onBlurTextArea,
     onChangeInput,
@@ -26,6 +27,7 @@ export const AdminChatting: FC = () => {
     peerBVideoRef,
     mute,
     camera,
+    peerStream,
     onToggleWebRTC,
     onMute,
     onCamera,
@@ -38,39 +40,19 @@ export const AdminChatting: FC = () => {
     onSocketDate
   } = useSocketRoom()
 
-  // const [infoShow, setInfoShow] = useState<boolean>(false) // 사용자 Info
-  // const onInfoShow = () => { 
-  //   setInfoShow(pre => !pre)
-  // }
-
-  // const [settingBox, setSettingBox] = useState<boolean>(false) // 하단 설정박스 
-  // const onSettingBtn = () => {
-  //   setSettingBox(pre => !pre)
-  // }
-
-
-  // const onSocketDate = (data:number) => {
-  //   return dayjs(data).format("a hh:mm")
-  // }
-
-  // useEffect (() => {
-  //   setInfoShow(false)
-  //   setSettingBox(false)
-  //   setShowWebRTC(false)
-  // }, [getChatRoom])
-
-
-  if (!getChatRoom) return <div>채팅방 대기</div>
+  if (!getChatRoom) return <SC.FlexBox children={<img width="90%" src={innoLogo} alt="innoLogo"/>}/>
   else return (
     <SC.GridBox $gtc={infoShow ? "minmax(500px, 1fr) 330px" : "minmax(500px, 1fr)"} $gtr="1fr">
-      <ChattingLayout $gtc="1fr" $gtr={showWebRTC ? "200px 1fr 40px" : "1fr 40px"}>
+      <ChattingLayout $gtc="1fr" $gtr={showWebRTC ? "300px 1fr 40px" : "1fr 40px"}>
         {showWebRTC && 
           <SC.GridBox $gtc="1fr 2fr" $gtr="1fr" style={{position:"relative"}}>
           <Video ref={peerAVideoRef} autoPlay/>
-          {peerBVideoRef.current && peerBVideoRef.current.srcObject 
-          ? <Video ref={peerBVideoRef} autoPlay/>
-          : <div style={{backgroundColor:"#fff"}} >접속 중...</div>
-          }
+          <div style={{position:"relative", overflow:"hidden"}}>
+          {!peerStream && <LoadingImg src={loadingInnoLogo} alt="chattingLoading"/>}
+          <Video ref={peerBVideoRef} autoPlay/>
+          </div>
+          
+          
           <SC.FlexBox style={{position:"absolute", bottom:"10px", left:"10px"}} $gap={10}>
             <WebRTCStateBTN 
               onClick={onMute} 
@@ -84,23 +66,23 @@ export const AdminChatting: FC = () => {
           <WebRTCStateBTN 
               $types="closeBTN"
               style={{position:"absolute", top:"10px", right:"10px"}} 
-              onClick={onMute} 
+              onClick={onToggleWebRTC} 
               children={<img 
                 alt="closeBTN" src={closeBTN} />} />
           </SC.GridBox>}
         {/* 채팅공간 */}
-        <ChattingArea ref={scrollRef} $height={showWebRTC ? `${chatListHeight-200}px` : `${chatListHeight}px`}>
+        <ChattingArea ref={scrollRef} $height={showWebRTC ? `${chatListHeight-300}px` : `${chatListHeight}px`}>
           {getChatMsg.map((chat:any) => 
           chat.username === "date"
           ? <DateLine key={chat.id} style={{margin:"20px 0"}} children={chat.content} />
           : chat.username === "admin"
             ? <SC.FlexBox key={chat.id} $gap={5} $ai="flex-end" $jc="flex-end" style={{ width:"95%"}}>
-            <ChattingDate>{onSocketDate(chat.createdAt)}</ChattingDate>
+            <ChattingDate>{onSocketDate(chat.createdAt, "a hh:mm")}</ChattingDate>
             <ChattingMsg $types="admin">{chat.content}</ChattingMsg>
           </SC.FlexBox>
-            : <SC.FlexBox key={chat.id} $gap={5} $ai="flex-end" $jc="flex-start" style={{  width:"95%"}}>
+            : <SC.FlexBox key={chat.id} $gap={5} $ai="flex-end" $jc="flex-start" style={{ width:"95%"}}>
             <ChattingMsg>{chat.content}</ChattingMsg>
-            <ChattingDate>{onSocketDate(chat.createdAt)}</ChattingDate>
+            <ChattingDate>{onSocketDate(chat.createdAt, "a hh:mm")}</ChattingDate>
           </SC.FlexBox>
           )}
         </ChattingArea>
@@ -153,7 +135,7 @@ export const AdminChatting: FC = () => {
         </ChattingBottomBox>
         {/* 상담관련 기록공간 Toggle */}
         <InfoShowBTN
-          $top={showWebRTC ? 230 : 30}
+          $top={showWebRTC ? 330 : 30}
           children={<SC.FigureObjectFitImg
             width="30px"
             height="50px"
@@ -172,7 +154,7 @@ export const AdminChatting: FC = () => {
               <h3>닉네임</h3>
               <div>{userInfoState && userInfoState.userInfo.nickname}</div>
               <h3>이메일</h3>
-              <div>exam@exam.com</div>
+              <div>{userInfoState && userInfoState.userInfo.email}</div>
               <h3>생년월일/성별</h3>
               <div>{userInfoState && userInfoState.userInfo.birthYear}, {userInfoState && userInfoState.userInfo.gender}</div>
               <h3>연락처</h3>
@@ -182,20 +164,22 @@ export const AdminChatting: FC = () => {
           <UserInfoInner>
             <SC.CustomH1>신청정보</SC.CustomH1>
             <UserInfoInnerBox $gtc="100px 1fr" $rgap={10}>
-              <h3>브랜드</h3>
-              <div>브랜드</div>
-              <h3>차종</h3>
-              <div>모델3/전기</div>
-              <h3>옵션</h3>
-              <div>색상 W</div>
-              <h3>특이사항</h3>
-              <div>....</div>
+             {userInfoState && (<>
+              <h3>모델(주문번호)</h3>
+              <div>{`${userInfoState.userPurchaseList[0].type}${userInfoState.userPurchaseList[0].trim}(주문번호 : ${userInfoState.userPurchaseList[0].purchaseId})`}</div>
+              <h3>색상</h3>
+              <div>{userInfoState.userPurchaseList[0].color}</div>
+              <h3>예정출고일</h3>
+              <div>{userInfoState.userPurchaseList[0].deliveryDate !== "null" ? onSocketDate(userInfoState.userPurchaseList[0].deliveryDate, "YYYY-MM-DD, dddd") : "미정"}</div>
+              <h3>요청사항</h3>
+              <div>{userInfoState.userPurchaseList[0].content}</div>
+             </>)} 
             </UserInfoInnerBox>
           </UserInfoInner>
           <UserInfoInner>
             <SC.CustomH1>메모</SC.CustomH1>
             <TextArea
-              value={userInfoState && userInfoState.userInfoMemo}
+              value={userInfoMemo}
               onChange={onChangeTextArea}
               onBlur={onBlurTextArea}
               placeholder="메모는 여기에 입력해주세요." />
@@ -206,13 +190,64 @@ export const AdminChatting: FC = () => {
   )
 }
 
+/*
+userPurchaseList
+addressName
+: 
+"경상북도 포항시 북구"
+alarm
+: 
+true
+color
+: 
+"white"
+createdAt
+: 
+"2017-01-09T00:00"
+modifiedAt
+: 
+"2017-01-09T00:00"
+phoneNumber
+: 
+""
+price
+: 
+400000000
+purchaseId
+: 
+137
+trim
+: 
+"전기차"
+type
+: 
+"k5"
+zoneNo
+: 
+"456"
+*/
+
+
 const Video = styled.video`
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
-  background-color: black;
   transform: scaleX(-1);
 `
+const LoadingImg = styled.img`
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`
+
 
 const UserInfoGrid = styled.div<Partial<Type.Styled>>`
   ${SC.Grid} 
@@ -316,9 +351,10 @@ const ChattingArea = styled.section<Partial<Type.Styled>>`
   height: ${({ $height }) => $height};
   overflow: auto;
   padding-bottom: 30px;
+  background: linear-gradient(180deg, #E8E8FB 0%, #F3F3F8 27.08%);
   &::-webkit-scrollbar {
-     /* Chrome에서 스크롤바 숨기기 */
-    /* display: none; */
+    display: none;
+    /* Chrome에서 스크롤바 숨기기 */
   }
 `
 

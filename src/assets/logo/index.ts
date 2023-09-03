@@ -1,5 +1,6 @@
 import mainLogo from './mainLogo.svg'
 import mainLogoB from './mainLogoB.svg'
 import mainLogoRow from './mainLogoRow.svg'
+import innoLogo from './innoLogo.png'
 
-export { mainLogo, mainLogoB, mainLogoRow };
+export { mainLogo, mainLogoB, mainLogoRow, innoLogo };
