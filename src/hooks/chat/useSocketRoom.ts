@@ -1,12 +1,14 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import { ChangeEvent, FormEvent, useEffect, useRef, useState, MouseEvent } from "react"
 import { Socket, io } from "socket.io-client"
 import { useRouter } from "../useRouter"
+import * as RTK from "../../redux"
+import dayjs from "dayjs"
 
 export const useSocketRoom = () => {
-  const { onNavigate } = useRouter();
-  const { id } = useParams();
-
+  const { onNavigate, getChatRoom } = useRouter();
+  const { nickname } = RTK.useAppSelector(RTK.selectDecode)
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [chatListHeight, setChatListHeight] = useState<number>(650)
   /*
     Chatting 관련 상태부 ------------------------------------------------------------------------  //
       01 room : useParams에서 받아온, room 정보
@@ -15,10 +17,11 @@ export const useSocketRoom = () => {
       04 sendMsg : 채팅메시지 관련 상태 
   */
 
-  const room = id;
-  const username = id?.split('!')[1];
+  const room = getChatRoom;
   const socketRef = useRef<Socket>();
   const [sendMsg, setSendMsg] = useState<string>("")
+  const [userInfoState, setUserInfoState] = useState<any>("")
+  const getChatMsg = RTK.useAppSelector(RTK.selectchatMsg)
 
   /*
     WecRTC 관련 상태부 ------------------------------------------------------------------------  //
@@ -33,12 +36,21 @@ export const useSocketRoom = () => {
 
   const [showWebRTC, setShowWebRTC] = useState<boolean>(false)
   const [mute, setMute] = useState<boolean>(false)
-  const [camara, setCamara] = useState<boolean>(false)
+  const [camera, setCamara] = useState<boolean>(false)
   const peerAVideoRef = useRef<HTMLVideoElement>(null);
   const peerBVideoRef = useRef<HTMLVideoElement>(null);
   const peerRef = useRef<RTCPeerConnection>();
   const streamRef = useRef<MediaStream | null>(null)
 
+
+  /*
+    설정박스 관련 상태부 ------------------------------------------------------------------------  //
+      01 infoShow : 사용자 정보에 대한 우측 패널 제어 상태
+      02 settingBox : 화상채팅 등에 대한 우측 패널 제어 상태
+  */
+
+  const [infoShow, setInfoShow] = useState<boolean>(false) // 사용자 Info
+  const [settingBox, setSettingBox] = useState<boolean>(false) // 하단 설정박스 
 
   /*
     Chatting 관련 함수부 ------------------------------------------------------------------------  //
@@ -50,24 +62,55 @@ export const useSocketRoom = () => {
       const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setSendMsg(e.target.value)
       }
-    
-      const onSendMsg = (e: FormEvent<HTMLFormElement>) => {
+      const onSendMsg = (e: FormEvent<HTMLFormElement> | MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
+        const newChat = [{
+          content: sendMsg,
+          createdDateTime: Date.now(),
+          id: Date.now(),
+          room,
+          username:nickname
+        }]
+        dispatch(RTK.setChatMsg([...newChat]))
         socketRef.current && socketRef.current.emit("sendMsg", {
           content: sendMsg,
           room,
-          username
+          username:nickname
         })
         setSendMsg("")
       }
     
+      const onChangeTextArea = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        setUserInfoState(e.target.value)
+      }
+
+      const onBlurTextArea = () => {
+        socketRef.current && socketRef.current.emit("saveMemo", {
+          content: userInfoState,
+          room,
+          username:nickname
+        })
+      }
+
       const onLeaveRoom = () => {
+        onBlurTextArea()
+        setUserInfoState("")
+        dispatch(RTK.deleteChatMsg())
+        onNavigate({ url: '/admin/civilcomplaintmanagement' })()
+      }
+      
+      const onEndRoom = () => {
         socketRef.current && socketRef.current.emit("leaveRoom", {
           room,
-          username
+          username:nickname
         })
-        onNavigate({ url: '/chat' })()
+        onBlurTextArea()
+        setUserInfoState("")
+        dispatch(RTK.deleteChatMsg())
+        onNavigate({ url: '/admin/civilcomplaintmanagement' })()
       }
+
+
 
   /*
     WebRTC 관련 함수부 ------------------------------------------------------------------------  //
@@ -90,6 +133,7 @@ export const useSocketRoom = () => {
 
   const onToggleWebRTC = () => {
     setShowWebRTC(pre => !pre)
+    setSettingBox(false)
   }
 
   const onMute = () => {
@@ -162,6 +206,26 @@ export const useSocketRoom = () => {
     }
   };
 
+  /*
+     설정박스 관련 함수부 ------------------------------------------------------------------------  //
+      01 onInfoShow : 사용자 정보 우측패널에 대한 토글함수
+      02 onSettingBtn : 하단 설정버튼에 대한 토글함수 
+      03 onSocketDate : 날짜관련 제어 함수 
+  */
+
+    const onInfoShow = () => { 
+      setInfoShow(pre => !pre)
+    }
+  
+    
+    const onSettingBtn = () => {
+      setSettingBox(pre => !pre)
+    }
+  
+    const onSocketDate = (data:number) => {
+      return dayjs(data).format("a hh:mm")
+    }
+
   /* 
     Chatting 관련 useEffect 부 (1) ----------------------------------------------------------------------
       01 소켓연결하기 : socketRef.current = io
@@ -171,23 +235,28 @@ export const useSocketRoom = () => {
       05 상대의 채팅방 종료메시지 : on("peerOut")
   */
 
+  const dispatch = RTK.useAppDispatch()
   useEffect(() => {
     socketRef.current = io(`${process.env.REACT_APP_SERVER_API}`, {
       reconnectionAttempts: 2,
       reconnectionDelay: 500
     })
     if (socketRef.current) {
-
       socketRef.current.emit("joinRoom", {
-        username, room
+        username:nickname, room
       })
 
-      socketRef.current.on("previousMsg", () => {
-        // console.log(data)
+      socketRef.current.on("previousMsg", (data) => {
+        console.log("previousMsg",data)
+        dispatch(RTK.setChatMsg(data))
       })
 
-      socketRef.current.on("readMsg", () => {
-        // console.log(data)
+      socketRef.current.on("roomInfo", (data) => {
+        data && setUserInfoState(data)
+      })
+
+      socketRef.current.on("readMsg", (data) => {
+        dispatch(RTK.setChatMsg(data))
       })
 
       socketRef.current.on("peerOut", () => {
@@ -195,7 +264,15 @@ export const useSocketRoom = () => {
       })
     }
 
-  }, [username, room])
+  }, [nickname, room, dispatch])
+
+  const scrollToBottom = () => {
+    scrollRef.current && (scrollRef.current.scrollTop = scrollRef.current.scrollHeight)
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [getChatMsg]);
 
   /* 
     WebRTC 관련 useEffect 부 (2) ----------------------------------------------------------------------
@@ -215,7 +292,7 @@ export const useSocketRoom = () => {
       getMedia()
       makeConnection()
       if (socketRef.current) {
-        socketRef.current.emit("joinRTC", { room, username })
+        socketRef.current.emit("joinRTC", { room, username:nickname })
 
         socketRef.current.on("joinedRTC", async () => {
           streamRef.current && createOffer()
@@ -243,20 +320,61 @@ export const useSocketRoom = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showWebRTC])
 
+  //  onChangeChatListHeight 관련 useEffect 부 (3) ------
+  useEffect(() => {
+    const onChangeChatListHeight = () => {
+      setChatListHeight(window.innerHeight - 40)
+    }
+    onChangeChatListHeight()
+    window.addEventListener("resize", onChangeChatListHeight)
+    return () => {
+      window.removeEventListener("resize", onChangeChatListHeight)
+    }
+  }, [])
+
+  /* 
+    설정박스 관련 useEffect 부 (2) ----------------------------------------------------------------------
+    getChatRoom 변경에 따른 상태 초기화 
+  */
+
+
+  useEffect (() => {
+    setInfoShow(false)
+    setSettingBox(false)
+    setShowWebRTC(false)
+  }, [getChatRoom])
+
+
+
   return {
     // 채팅부분
+    scrollRef,
+    chatListHeight,
     sendMsg, 
+    getChatMsg,
+    userInfoState,
+    onChangeTextArea,
+    onBlurTextArea,
     onChangeInput, 
     onSendMsg, 
     onLeaveRoom,
+    onEndRoom,
+  
     // WecRTC 부분
     showWebRTC,
     peerAVideoRef,
     peerBVideoRef,
     mute,
-    camara,
+    camera,
     onToggleWebRTC,
     onMute,
     onCamera,
+
+    // 설정박스 부분
+    infoShow,
+    settingBox,
+    onInfoShow,
+    onSettingBtn,
+    onSocketDate
   }
 }

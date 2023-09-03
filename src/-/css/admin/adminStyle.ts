@@ -140,6 +140,60 @@ const CustomBar = styled(Bar)`
 }
 `
 
+const CivilComplaintLists = styled.div<Partial<Styled>>`
+  ${SC.Grid}
+  border-right: 1px solid #DEDEDE;
+`
+
+const ChatNumber = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  width: 100%;
+  height: 25px;
+  font-size: 0.875rem;
+  border-radius: 30px;
+  ${({ $bColor, theme }) => $bColor === 'blue'
+    ? css`
+      background-color: ${theme.color[$bColor]};
+      color: white;
+    `
+    : css`
+      border: 1px solid #DEDEDE;
+    `
+  }
+`
+
+const ChatRoomOutLine = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  height: ${({$height}) => $height}; 
+  overflow: auto ;
+  padding: 0 30px ;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: ${({theme}) => theme.color.blue};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1);
+  }
+`
+
+const ChatRoomList = styled.div<Partial<Styled>>`
+  ${SC.cursor}
+  ${SC.Flex}
+  width: 100%;
+  height: 104px;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #DEDEE0;
+  background: ${({ $bColor, theme }) => $bColor ? theme.color[$bColor] : "#FFF"} 
+`
+
 
 export {
   AdminNav,
@@ -155,5 +209,12 @@ export {
   DataTypeOptions,
   DateShowPeriod,
   PurchaseSecondRowInner,
-  CustomBar
+  CustomBar,
+
+  // 민원상담관련
+  CivilComplaintLists,
+  ChatNumber,
+  ChatRoomOutLine,
+  ChatRoomList,
+
 }

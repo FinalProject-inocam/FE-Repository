@@ -1,2 +1,2 @@
 export * from './useSocketRoom'
-export * from './useSocketList'
+export * from './useChatRoomList'
