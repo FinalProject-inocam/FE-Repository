@@ -1,7 +1,7 @@
 import React from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
-import * as COMP from "../../-/myPage";
+import * as COMP from "../../components/myPage";
 import { useRouter } from "../../hooks";
 
 export const MyPage: React.FC = () => {

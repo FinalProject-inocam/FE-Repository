@@ -1,7 +1,7 @@
 import { FC } from "react";
 import * as Hook from "../../hooks";
 import * as ASS from "../../assets";
-import * as SC from "../../-";
+import * as SC from "../../components";
 
 export const GetCommunity: FC = () => {
 	const {

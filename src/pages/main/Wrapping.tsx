@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useWrapping } from "../../hooks";
-import * as SC from "../../-/css";
-import * as CP from "../../-/wrappingshop";
+import * as SC from "../../components/css";
+import * as CP from "../../components/wrappingshop";
 import * as RTK from "../../redux";
 import * as Hooks from "../../hooks";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useCommunityWrite } from "../../hooks";
-import * as SC from "../../-";
+import * as SC from "../../components";
 
 export const CommunityWrite: React.FC = () => {
 	const {

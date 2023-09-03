@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { FlexBox, GridBox, GridMergedSpaceFlex } from "../-";
+import { FlexBox, GridBox, GridMergedSpaceFlex } from "../components";
 
 export const NotFound: React.FC = () => {
 	return (

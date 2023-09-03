@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useLogin, useRouter } from "../../hooks";
-import * as SC from "../../-";
-import * as COMP from "../../-";
 import { kakaoIcon, naverIcon, googleIcon } from "../../assets";
+import * as SC from "../../components";
 
 export const Login: React.FC = () => {
 	const { onNavigate, state } = useRouter();
@@ -39,7 +38,7 @@ export const Login: React.FC = () => {
 					<SC.FlexBox $gap={12} $fd={"column"}>
 						<div>
 							<SC.SignupLabel>이메일</SC.SignupLabel>
-							<COMP.LoginInput
+							<SC.LoginInput
 								name={"email"}
 								type={"text"}
 								placeholder={"example@innocam.com"}
@@ -51,7 +50,7 @@ export const Login: React.FC = () => {
 						</div>
 						<div>
 							<SC.SignupLabel>비밀번호</SC.SignupLabel>
-							<COMP.LoginInput
+							<SC.LoginInput
 								name={"password"}
 								type={"password"}
 								placeholder={"비밀번호를 입력해주세요"}

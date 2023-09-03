@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"; // useEffect, useRef,
 import { useCommunityDetail, useInfinityThrottle } from "../../hooks";
-import * as SC from "../../-";
+import * as SC from "../../components";
 import * as RTK from "../../redux";
 // import * as Type from "../../types";
 // import * as AS from "../../assets";

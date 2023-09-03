@@ -1,5 +1,5 @@
 import React from "react";
-import * as SC from "../../-";
+import * as SC from "../../components";
 import * as Hook from "../../hooks";
 
 export const InnoCar: React.FC = () => {

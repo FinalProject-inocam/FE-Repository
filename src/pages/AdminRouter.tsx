@@ -1,5 +1,5 @@
 import React from "react";
-import * as SC from "../-";
+import * as SC from "../components";
 import { mainLogoRow } from "../assets";
 import { useAdmin } from "../hooks/admin";
 import { Outlet } from "react-router-dom";
