@@ -5,11 +5,12 @@ export const useRouter = (): Type.UseRouter => {
   const { id } = useParams();
   const { pathname, state } = useLocation();
   const getId: number | undefined = id ? +id : undefined;
+  const getChatRoom : string | undefined = id ? id : undefined
   const navigate = useNavigate();
   const onNavigate =
     ({ url, opts }: Type.Native) =>
     () => {
       navigate(url, opts);
     };
-  return { getId, pathname, state, onNavigate };
+  return { getId, getChatRoom, pathname, state, onNavigate };
 };

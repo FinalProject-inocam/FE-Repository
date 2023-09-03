@@ -1,18 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-
 const chatMsgSlice = createSlice({
   name: 'chatMsg',
-  initialState: [] as any | [],
+  initialState: [] as any[],
   reducers: {
     setChatMsg: (state, action: PayloadAction<any>) => { 
-      console.log(action.payload);
-      
-      return [...state, action.payload]
+      return [...state, ...action.payload]
     },
+    deleteChatMsg: () => { 
+      console.log("deleteChatMsg 동작해야지")
+      return []
+    }
   },
 });
 
 export const ChatMsgReducer = chatMsgSlice.reducer;
 export const selectchatMsg = (state: any) => state.ChatMsgReducer;
-export const { setChatMsg } = chatMsgSlice.actions;
+export const { setChatMsg, deleteChatMsg } = chatMsgSlice.actions;

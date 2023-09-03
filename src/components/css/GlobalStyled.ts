@@ -123,7 +123,6 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
 
-
   ${({ $types }) =>
 		$types === "reviewBanner"
 			? sc.css`

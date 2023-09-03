@@ -100,3 +100,13 @@ export interface TechnicalListInnerProps {
   infoBoolean:boolean;
   setInfoBoolean:any;
 }
+
+/* / ChatRoomLayoutProps 컴포넌트 / -------------------------------------------------------- */
+export interface ChatRoomLayoutProps {
+  msg : string;
+  type : string;
+  peer : string ;
+  room : string;
+  bColor ?: string;
+  color ?: string;
+}

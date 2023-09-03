@@ -231,6 +231,7 @@ export interface UseMainHeader {
 /* / 17 useRouter / -------------------------------------------------------- */
 export interface UseRouter {
 	getId: number | undefined;
+	getChatRoom : string | undefined;
 	pathname: string;
 	state: string;
 	onNavigate: (Native) => () => void;

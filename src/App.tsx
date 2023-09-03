@@ -2,6 +2,7 @@ import { GlobalStyled } from "./components";
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as Page from "./pages";
+import { AdminChatting } from "./pages/admin/AdminChatting";
 
 const App: React.FC = () => {
 	return (
@@ -11,15 +12,15 @@ const App: React.FC = () => {
 				{/* 헤더에 따른 중첩라우터 :: MainRouter */}
 				<Route path='/' element={<Page.MainRouter />}>
 					<Route index element={<Page.Home />} />
-					<Route path='innocar' element={<Page.InnoCar />} />
-					<Route path='community' element={<Page.Community />}>
+					<Route path='innocar' element={<Suspense fallback={<div>Loading...</div>} children={<Page.LazyInnoCar/>} />} />
+					<Route path='community' element={<Suspense fallback={<div>Loading...</div>} children={<Page.LazyCommunity/>} />}>
 						<Route path=":id" element={<Page.GetCommunity />} />
 						<Route element={<Page.ProtectiveRouter />}>
 							<Route path='write' element={<Page.CommunityWrite />} />
 						</Route>
 						<Route path='review/:id' element={<Page.CommunityDetail />} />
 					</Route>
-          <Route path="wrapping" element={<Page.Wrapping />} />
+          <Route path="wrapping" element={<Suspense fallback={<div>Loading...</div>} children={<Page.LazyWrapping/>} />} />
           <Route path="wrapping/:id" element={<Page.WrappingDetail />} />
 
           {/* 헤더에 따른 중첩라우터 :: 프로텍티드 라우터(ProtectiveRouter, Token.sub === E001 ) */}
@@ -39,10 +40,13 @@ const App: React.FC = () => {
         </Route>
 
         {/* <Route element={<Page.ProtectiveRouterA />}> */}
-          <Route path="/admin" element={<Page.AdminRouter />}>
+          <Route path="/admin" element={<Suspense fallback={<div>Loading...</div>} children={<Page.LazyAdmin/>} />}>
             <Route index element={<Page.AdminDeshboard />} />
             <Route path="deliverymanagement" element={<Page.DeliveryManagement/>}/>
-            <Route path="civilcomplaintmanagement" element={<Page.CivilComplaintManagement />}/>
+            <Route path="civilcomplaintmanagement" element={<Page.CivilComplaintManagement />}>
+              <Route index element={<AdminChatting />}/>
+              <Route path=":id" element={<AdminChatting />}/>
+            </Route>
           </Route>
         {/* </Route> */}
 
@@ -53,20 +57,6 @@ const App: React.FC = () => {
           element={<Page.GoogleRedirect />}
         />
         <Route path="/api/auth/login/naver" element={<Page.NaverRedirect />} />
-
-        {/* 채팅 및 임시 라우터 :: Chat */}
-        <Route path="/chatlist" element={<Page.Chat />} />
-        <Route path="/chat" element={<Page.ChatList />} />
-        <Route path="/chat/:id" element={<Page.ChatRoom />} />
-        <Route path="/webrtc" element={<Page.WebRTC />} />
-        <Route
-          path="/threejs"
-          element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <Page.LazyThreejs />
-            </Suspense>
-          }
-        />
 
         {/* 소셜로그인을 위한 Redirect 경로 */}
         <Route path="/api/auth/login/kakao" element={<Page.KakaoRedirect />} />
@@ -81,3 +71,6 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+//  
