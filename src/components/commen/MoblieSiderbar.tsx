@@ -75,7 +75,7 @@ export const MoblieSiderbar: React.FC<{ state: boolean; setState: any }> = ({
                     key={idx}
                     idx={idx}
                     nav={nav}
-                    onClick={onNaigateSidebarToggle({ url: nav[1] })}
+                    onClick={onNaigateSidebarToggle({ url: nav[2] })}
                   />
                 ) : (
                   <AuthAreaInner

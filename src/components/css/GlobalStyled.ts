@@ -27,6 +27,8 @@ export const GlobalStyled = sc.createGlobalStyle`
     font-size: 16px;
     color: rgb(29, 29, 31);
     word-break: break-word;
+    line-height: 1.25;
+    letter-spacing: -0.18px;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -108,7 +110,9 @@ const Figure = sc.styled.figure<Partial<Styled>>`
     width: 100%;
   }
 
-  ${({$types}) => $types === "innocar" && sc.css`
+  ${({ $types }) =>
+		$types === "innocar" &&
+		sc.css`
     transition: all 0.3m linear;
 
     @media (max-width: 1100px) {
@@ -126,14 +130,15 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   height: ${({ $height }) => $height};
 
   ${({ $types }) =>
-    $types === "reviewBanner" ?
-    sc.css`
+		$types === "reviewBanner"
+			? sc.css`
       z-index:2;
       height : 159px;
       overflow : hidden;
       border-radius : 10px;
     `
-    : $types === "postInnerImg" && sc.css`
+			: $types === "postInnerImg" &&
+			  sc.css`
       overflow : hidden;
       height: 11.18vw;
       border-radius : 10px;
@@ -141,19 +146,21 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
       @media (min-width: 1440px) {
         height: 161px;
       }
-    `
-  }
+    `}
 
     ${({ $types }) =>
-    $types === "prevImage" ?
-    sc.css`
+		$types === "prevImage"
+			? sc.css`
       overflow : hidden;
       border-radius : 4px;
     `
-    : $types === "communityNewCar" && sc.css`
+			: $types === "communityNewCar" &&
+			  sc.css`
       overflow : hidden;
       border-radius : 10px;
     `}
+
+  ${({ $types }) => $types === "cursor" && sc.css`${cursor}`}
 
   img {
     position: absolute;
@@ -185,15 +192,17 @@ const RouterLayout = sc.styled.div<Partial<Styled>>`
 `;
 
 const CustomH1 = sc.styled.h1<Partial<Styled>>`
-	font-size: ${({ $size }) => $size ? `${$size}rem` : "1.25rem"};
+	font-size: ${({ $size }) => ($size ? `${$size}rem` : "1.25rem")};
 	font-weight: bold;
-  line-height: ${({$height}) => $height};
+  line-height: ${({ $height }) => $height};
   color : ${({ $color, theme }) => $color && theme.color[$color]};
 
-  ${({$types}) => $types === "bottomLine" && sc.css`
+  ${({ $types }) =>
+		$types === "bottomLine" &&
+		sc.css`
       width: 100%;
       text-align: center;
-      border-bottom: 1px solid ${({theme}) => theme.color.blackM};
+      border-bottom: 1px solid ${({ theme }) => theme.color.blackM};
   `}
 `;
 
@@ -204,12 +213,13 @@ const CustomH2 = sc.styled.div`
 
 const CustomH3 = sc.styled.h3<Partial<Styled>>`
 
-	font-size: ${({ $size }) => `${$size}px`};
+	font-size: ${({ $size }) => $size ? `${$size}rem` : "1rem"};
   font-weight: 500;
+  color : ${({ $color, theme }) => $color && theme.color[$color]};
 
   ${({ $types }) =>
-    $types === "revisit" &&
-    sc.css`
+		$types === "revisit" &&
+		sc.css`
       width: 105px;
       height: 36px;
       line-height: 36px;
@@ -230,43 +240,43 @@ const CustomBtn = sc.styled.div<Partial<Styled>>`
   border-radius : ${({ $borderR }) => $borderR};
   border: 1px solid ${({ $bColor }) => $bColor};
   ${({ $bColor, theme }) =>
-    $bColor === "blue"
-      ? sc.css`
+		$bColor === "blue"
+			? sc.css`
       background-color: ${theme.color[$bColor]};
       color:${theme.color.white};
     `
-      : null}
+			: null}
 
   ${({ $types }) =>
-    $types === "reviewForm"
-      ? sc.css`
+		$types === "reviewForm"
+			? sc.css`
       position:absolute;
       top: 0;
       right:0;
     `
-      : null}
+			: null}
 `;
 
 const PositionRelavite = sc.styled.div<Partial<Styled>>`
   position: relative;
 
-  ${({$types}) => $types === "cursor" && sc.css`${cursor}`}
-`
+  ${({ $types }) => $types === "cursor" && sc.css`${cursor}`}
+`;
 
 export {
-  Flex,
-  Grid,
-  cursor,
-  FlexBox,
-  GridBox,
-  GridMergedSpace,
-  GridMergedSpaceFlex,
-  Figure,
-  FigureObjectFit,
-  RouterLayout,
-  CustomH1,
-  CustomH2,
-  CustomH3,
-  CustomBtn,
-  PositionRelavite
+	Flex,
+	Grid,
+	cursor,
+	FlexBox,
+	GridBox,
+	GridMergedSpace,
+	GridMergedSpaceFlex,
+	Figure,
+	FigureObjectFit,
+	RouterLayout,
+	CustomH1,
+	CustomH2,
+	CustomH3,
+	CustomBtn,
+	PositionRelavite,
 };

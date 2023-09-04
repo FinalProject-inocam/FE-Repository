@@ -74,6 +74,8 @@ export interface UseCommunityDetail extends AsyncHooksDefault {
 	onDebounce: any;
 	onPatchLiked: any;
 	decokenNickname: string;
+	// page: number;
+	// setPage: Dispatch<SetStateAction<number>>;
 }
 
 /* / 05 useCommunityWrite / -------------------------------------------------------- */
@@ -229,6 +231,7 @@ export interface UseMainHeader {
 /* / 17 useRouter / -------------------------------------------------------- */
 export interface UseRouter {
 	getId: number | undefined;
+	getChatRoom : string | undefined;
 	pathname: string;
 	state: string;
 	onNavigate: (Native) => () => void;
@@ -287,41 +290,39 @@ interface UseReviewLike {
 
 /* / 23 useCommunityWrite / -------------------------------------------------------- */
 export interface useCommunityWrite {
-  value: string;
-  onChangeValue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onBlurValue: () => void;
+	value: string;
+	onChangeValue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+	onBlurValue: () => void;
 }
 
 /* / 24 useModelOne / -------------------------------------------------------- */
 interface TechnicalLists {
-  title:string,
-  technicalInfoCategory:string,
-  infoBoolean:boolean,
-  setInfoBoolean:Dispatch<React.SetStateAction<boolean>>,
+	title: string;
+	technicalInfoCategory: string;
+	infoBoolean: boolean;
+	setInfoBoolean: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface innoCarImgText {
-  title : string ;
-  content : string ;
-  top ?: number ;
-  left ?: number;
-  right ?:number;
-  mTop ?: number;
-  mRight ?: number;
-  types ?: string;
-  tAlign ?: string;
+	title: string;
+	content: string;
+	top?: number;
+	left?: number;
+	right?: number;
+	mTop?: number;
+	mRight?: number;
+	types?: string;
+	tAlign?: string;
 }
 
 export interface useModelOneType {
-  M1CharacterTitle:string[][];
-  technicalInfo: {
-      [key:string]: string[][]; 
-  };
-  TechnicalLists: TechnicalLists[]
-  innoCarImgText: innoCarImgText[]
+	M1CharacterTitle: string[][];
+	technicalInfo: {
+		[key: string]: string[][];
+	};
+	TechnicalLists: TechnicalLists[];
+	innoCarImgText: innoCarImgText[];
 }
-
-
 
 /* / 25 useInnoCarRef / -------------------------------------------------------- */
 
@@ -339,4 +340,11 @@ export interface useInnoCarRefType {
   onToggleTechnic : (setState: Dispatch<React.SetStateAction<boolean>>) => void;
 }
 
-// sectionRef1: MutableRefObject<HTMLDivElement | null>;
+/* / 26 useInnoCarRef / -------------------------------------------------------- */
+
+export interface useAdminType {
+  onNavigate: (Native) => () => void;
+  currentPage:string | undefined;
+  AdminNaList:string[][];
+}
+

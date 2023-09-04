@@ -24,7 +24,34 @@ export interface DetailCommunity extends TotalCommunity {
 	nickname?: string;
 	commentsList: CommunityComments[];
 }
+export interface Comment {
+	comment: string;
+	commentId: number;
+	createdAt: string;
+	isLike: boolean;
+	likeCount: number;
+	modifiedAt: string;
+	nickname: string;
+}
 
+export interface CommentData {
+	content: Comment[];
+	currentPage: number;
+	first: boolean;
+	last: boolean;
+	size: number;
+	totalElements: number;
+	totalPages: number;
+}
+export interface commentType {
+	comment: string;
+	commentId: number;
+	createdAt: string;
+	isLike: boolean;
+	likeCount: number;
+	modifiedAt: string;
+	nickname: string;
+}
 /* / WrappingShop 관련 타입 / -------------------------------------------------------- */
 export interface WrappingShop {
 	currentPage: number;

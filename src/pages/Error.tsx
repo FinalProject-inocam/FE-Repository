@@ -13,7 +13,8 @@ export const Error: React.FC = () => {
       style.left = "0";
       style.backgroundColor = "black"
     }
-    // window.location.reload()
+    // Three.js 관련 다른 라우터에서 새로고침후, 홈으로 이동했을 때 useGlft 로드 문제
+    window.location.pathname === '/' && window.location.reload()
   },[])
   return <div ref={errRef} />
 };
