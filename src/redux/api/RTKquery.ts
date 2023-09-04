@@ -154,54 +154,54 @@ export const inocamRTK = createApi({
 				}),
 			}),
 
-			/* / 02 Purchases 관련(Innocar, MyPage, AdminPage) / -------------------------------------------------------- */
-			// postPurchases - 차량신청 차량 출고 신청
-			postPurchases: build.mutation({
-				query: (data) => ({
-					url: `/api/purchases`,
-					method: "post",
-					data,
-				}),
-				invalidatesTags: ["ICOCAR"],
-			}),
+      /* / 02 Purchases 관련(Innocar, MyPage, AdminPage) / -------------------------------------------------------- */
+      // postPurchases - 차량신청 차량 출고 신청
+      postPurchases: build.mutation({
+        query: (data) => ({
+          url: `/api/purchases`,
+          method: "post",
+          data,
+        }),
+        invalidatesTags: ["ICOCAR"],
+      }),
 
-			// getPurchases - 마이페이지 신청 차량 정보 조회
-			getPurchases: build.query({
-				query: () => ({
-					url: `/api/purchases`,
-					method: "get",
-					types: "getData",
-				}),
-				providesTags: ["ICOCAR"],
-			}),
+      // getPurchases - 마이페이지 신청 차량 정보 조회
+      getPurchases: build.query({
+        query: () => ({
+          url: `/api/purchases`,
+          method: "get",
+          types: "getData",
+        }),
+        providesTags: ["ICOCAR"],
+      }),
 
-			// deletePurchases - 마이 페이지 신청 차량 삭제
-			deletePurchases: build.mutation({
-				query: (purchaseId) => ({
-					url: `/api/purchases/${purchaseId}`,
-					method: "delete",
-				}),
-				invalidatesTags: ["ICOCAR"],
-			}),
+      // deletePurchases - 마이 페이지 신청 차량 삭제
+      deletePurchases: build.mutation({
+        query: (purchaseId) => ({
+          url: `/api/purchases/${purchaseId}`,
+          method: "delete",
+        }),
+        invalidatesTags: ["ICOCAR"],
+      }),
 
-			// patchPurchases - 마이 페이지 신청 차량 정보 수정
-			patchPurchases: build.mutation({
-				query: ({ purchaseId, data }) => ({
-					url: `/api/purchases/${purchaseId}`,
-					method: "patch",
-					data: data,
-				}),
-				invalidatesTags: ["ICOCAR"],
-			}),
-			// getPurchasesChar - 차량 통계 데이터
-			getPurchasesChar: build.query({
-				query: (term) => ({
-					url: `/api/stat/purchases/chart?cal=2023-08-08&term=${term}`,
-					method: "get",
-					types: "getData",
-				}),
-				providesTags: ["PURCHASESCHAR"],
-			}),
+      // patchPurchases - 마이 페이지 신청 차량 정보 수정
+      patchPurchases: build.mutation({
+        query: ({ purchaseId, data }) => ({
+          url: `/api/purchases/${purchaseId}`,
+          method: "patch",
+          data: data,
+        }),
+        invalidatesTags: ["ICOCAR"],
+      }),
+      // getPurchasesChar - 차량 통계 데이터
+      getPurchasesChar: build.query({
+        query: (term) => ({
+          url: `/api/stat/purchases/chart?cal=2023-08-08&term=${term}`,
+          method: "get",
+          types: "getData",
+        }),
+        providesTags: ["PURCHASESCHAR"],
+      }),
 
 			/* / 03 Community 관련 / -------------------------------------------------------- */
 			// getCommunity - 커뮤니티페이지 페이지네이션 부분
@@ -234,14 +234,14 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["POSTS"],
 			}),
 
-			// DeleteCommunity - 커뮤니티 게시글 삭제
-			DeleteCommunity: build.mutation({
-				query: (postId) => ({
-					url: `/api/communities/${postId}`,
-					method: "delete",
-				}),
-				invalidatesTags: ["POSTS"],
-			}),
+      // DeleteCommunity - 커뮤니티 게시글 삭제
+      DeleteCommunity: build.mutation({
+        query: (postId) => ({
+          url: `/api/communities/${postId}`,
+          method: "delete",
+        }),
+        invalidatesTags: ["POSTS"],
+      }),
 
 			// getCommunityDetail - 커뮤니티 게시글 요청
 			getCommunityDetail: build.query({
@@ -312,16 +312,16 @@ export const inocamRTK = createApi({
 				invalidatesTags: ["POSTS", "COMMUNITD", "COMMUNITDCOMMENT"],
 			}),
 
-			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
-			// getWrappingShop - 랩핑샵 조회
-			getWrapping: build.query({
-				query: ({ geolocation, page }) => ({
-					url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=${page}&size=10`,
-					method: "get",
-					types: "getData",
-				}),
-				providesTags: ["WRAPPINGSHOP"],
-			}),
+      /* / 04 WrappingShop 관련 / -------------------------------------------------------- */
+      // getWrappingShop - 랩핑샵 조회
+      getWrapping: build.query({
+        query: ({ geolocation, page }) => ({
+          url: `/api/shops?latitude=${geolocation.lat}&longitude=${geolocation.long}&page=${page}&size=10`,
+          method: "get",
+          types: "getData",
+        }),
+        providesTags: ["WRAPPINGSHOP"],
+      }),
 
 			// getWrappingShop - 랩핑샵 상세조회(review - info)
 			getWrappingShopDetail: build.query({
@@ -439,23 +439,23 @@ export const inocamRTK = createApi({
 });
 
 export const {
-	// Auth
-	useGetLogoutQuery,
-	usePostLoginMutation,
-	usePostSignupMutation,
-	useGetEmailCheckQuery,
-	useGetNickCheckQuery,
-	useGetCertificateEmailQuery,
-	useGetCertificateCodeQuery,
-	useLoginSNSRTKQuery,
+  // Auth
+  useGetLogoutQuery,
+  usePostLoginMutation,
+  usePostSignupMutation,
+  useGetEmailCheckQuery,
+  useGetNickCheckQuery,
+  useGetCertificateEmailQuery,
+  useGetCertificateCodeQuery,
+  useLoginSNSRTKQuery,
 
-	// Community 차량출고 커뮤니티 관련
-	useGetCommunityQuery,
-	useGetCommunitesListQuery,
-	usePostCommunityMutation,
-	useDeleteCommunityMutation,
-	usePatchCommunityMutation,
-	useGetCommunityDetailQuery,
+  // Community 차량출고 커뮤니티 관련
+  useGetCommunityQuery,
+  useGetCommunitesListQuery,
+  usePostCommunityMutation,
+  useDeleteCommunityMutation,
+  usePatchCommunityMutation,
+  useGetCommunityDetailQuery,
 
 	// CommunityComment 차량출고 커뮤니티 댓글 관련
 	useGetCommunityCommentQuery,
@@ -464,23 +464,23 @@ export const {
 	useDeleteCommunityCommentMutation,
 	usePatchCommunityLikedMutation,
 
-	// Posts 차량 신청 관련
-	usePostPurchasesMutation,
-	useGetPurchasesQuery,
-	useDeletePurchasesMutation,
-	usePatchPurchasesMutation,
+  // Posts 차량 신청 관련
+  usePostPurchasesMutation,
+  useGetPurchasesQuery,
+  useDeletePurchasesMutation,
+  usePatchPurchasesMutation,
 
-	// Get 차량 통계 데이터 관련
-	useGetPurchasesCharQuery,
+  // Get 차량 통계 데이터 관련
+  useGetPurchasesCharQuery,
 
-	// WrappingShop 관련
-	useGetWrappingQuery,
-	useGetWrappingShopDetailQuery,
-	useGetWSDetailReviewsQuery,
-	usePostWrappingCommentMutation,
-	useDeleteWrappingCommentMutation,
-	usePatchWrappingCommentMutation,
-	usePatchWrappingShopDetailLikeMutation,
+  // WrappingShop 관련
+  useGetWrappingQuery,
+  useGetWrappingShopDetailQuery,
+  useGetWSDetailReviewsQuery,
+  usePostWrappingCommentMutation,
+  useDeleteWrappingCommentMutation,
+  usePatchWrappingCommentMutation,
+  usePatchWrappingShopDetailLikeMutation,
 
 	// MyPage 관련
 	useGetMyPageQuery,

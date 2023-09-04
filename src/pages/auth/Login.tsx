@@ -68,22 +68,22 @@ export const Login: React.FC = () => {
 						<SC.LoginSignupButton onClick={onSignupClick}>회원가입하기</SC.LoginSignupButton>
 					</SC.FlexBox>
 
-					<SC.FlexBox $gap={10} $fd={"column"}>
-						<SC.LoginSnsButton onClick={onSnsLogin("kakao")} $types={"kakao"}>
-							<img src={kakaoIcon} alt='kakaoIcon' />
-							카카오로 로그인하기
-						</SC.LoginSnsButton>
-						<SC.LoginSnsButton onClick={onSnsLogin("naver")} $types={"naver"}>
-							<img src={naverIcon} alt='naverIcon' />
-							이메일로 로그인하기
-						</SC.LoginSnsButton>
-						<SC.LoginSnsButton onClick={onSnsLogin("google")} $types={"google"}>
-							<img src={googleIcon} alt='googleIcon' />
-							이메일로 로그인하기
-						</SC.LoginSnsButton>
-					</SC.FlexBox>
-				</SC.AuthForm>
-			</SC.FlexBox>
-		</>
-	);
+          <SC.FlexBox $gap={10} $fd={"column"}>
+            <SC.LoginSnsButton onClick={onSnsLogin("kakao")} $types={"kakao"}>
+              <img src={kakaoIcon} alt="kakaoIcon" />
+              카카오로 로그인하기
+            </SC.LoginSnsButton>
+            <SC.LoginSnsButton onClick={onSnsLogin("naver")} $types={"naver"}>
+              <img src={naverIcon} alt="naverIcon" />
+              네이버로 로그인하기
+            </SC.LoginSnsButton>
+            <SC.LoginSnsButton onClick={onSnsLogin("google")} $types={"google"}>
+              <img src={googleIcon} alt="googleIcon" />
+              구글로 로그인하기
+            </SC.LoginSnsButton>
+          </SC.FlexBox>
+        </SC.AuthForm>
+      </SC.FlexBox>
+    </>
+  );
 };

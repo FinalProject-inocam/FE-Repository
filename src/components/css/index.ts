@@ -6,6 +6,8 @@ export * from "./authStyle";
 export * from "./commen";
 export * from "./home";
 export * from "./wrappingshop";
-export * from "./community"
-export * from "./innocar"
+export * from "./community";
+export * from "./innocar";
+export * from "../innocarorder";
 export * from './admin'
+

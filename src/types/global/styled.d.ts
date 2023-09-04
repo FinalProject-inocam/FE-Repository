@@ -71,4 +71,8 @@ export interface Styled {
 	$Mright: number;
 
 	$onClick?: () => void;
+  
+    //InnocarOrder
+  $direction: string;
+  $color: string;
 }
