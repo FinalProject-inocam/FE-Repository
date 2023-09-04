@@ -85,7 +85,7 @@ const Sections3ScrollInnerFlex = styled.div<Partial<Styled>>`
   display: none;
   position: absolute;
   z-index: 10;
-  top: 93%;
+  bottom: -70px;
   width: 90%;
   transition: all 0.3s linear;
 `

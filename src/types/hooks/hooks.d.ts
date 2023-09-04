@@ -327,19 +327,17 @@ export interface useModelOneType {
 /* / 25 useInnoCarRef / -------------------------------------------------------- */
 
 export interface useInnoCarRefType {
-	Sections3ScrollGridText: string[];
-	sectionRef1: MutableRefObject<HTMLDivElement | null>;
-	sectionRef2: MutableRefObject<HTMLDivElement | null>;
-	sectionRef3: MutableRefObject<HTMLDivElement | null>;
-	sectionRef4: MutableRefObject<HTMLDivElement | null>;
-	sectionRef5: MutableRefObject<HTMLDivElement | null>;
-	sectionRef6: MutableRefObject<HTMLDivElement | null>;
-	sectionRef7: MutableRefObject<HTMLDivElement | null>;
-	innocarCharacterRef: MutableRefObject<HTMLDivElement | null>;
-	sectionRef3InnerRef: MutableRefObject<HTMLDivElement | null>;
-	sectionRef3FlexRef: MutableRefObject<HTMLDivElement | null>;
-	onToggleCarCharacter: (e: MouseEvent<HTMLDivElement>) => void;
-	onToggleTechnic: (setState: Dispatch<React.SetStateAction<boolean>>) => void;
+  Sections3ScrollGridText : string[];
+  sectionRef1 : MutableRefObject<HTMLDivElement | null>;
+  sectionRef2 : MutableRefObject<HTMLDivElement | null>;
+  sectionRef3 : MutableRefObject<HTMLDivElement | null>;
+  sectionRef4 : MutableRefObject<HTMLDivElement | null>;
+	sectionRef1ImgRef :  MutableRefObject<HTMLDivElement | null>;
+  innocarCharacterRef : MutableRefObject<HTMLDivElement | null>;
+  sectionRef3InnerRef : MutableRefObject<HTMLDivElement | null>;
+  sectionRef3FlexRef : MutableRefObject<HTMLDivElement | null>;
+  onToggleCarCharacter: (e: MouseEvent<HTMLDivElement>) => void;
+  onToggleTechnic : (setState: Dispatch<React.SetStateAction<boolean>>) => void;
 }
 
 /* / 26 useInnoCarRef / -------------------------------------------------------- */
@@ -349,3 +347,4 @@ export interface useAdminType {
   currentPage:string | undefined;
   AdminNaList:string[][];
 }
+
