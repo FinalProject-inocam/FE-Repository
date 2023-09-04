@@ -20,7 +20,7 @@ export interface Styled {
   $highlight: boolean;
   $bgColor: string;
   $tAlign: string;
-  $rotate:number;
+  $rotate: number;
 
   // Felx-Grid
   $gap: number;
@@ -72,4 +72,8 @@ export interface Styled {
   $Mtop: number;
   $Mleft: number;
   $Mright: number;
+
+  //InnocarOrder
+  $direction: string;
+  $color: string;
 }

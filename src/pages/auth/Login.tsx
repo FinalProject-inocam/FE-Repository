@@ -89,11 +89,11 @@ export const Login: React.FC = () => {
             </SC.LoginSnsButton>
             <SC.LoginSnsButton onClick={onSnsLogin("naver")} $types={"naver"}>
               <img src={naverIcon} alt="naverIcon" />
-              이메일로 로그인하기
+              네이버로 로그인하기
             </SC.LoginSnsButton>
             <SC.LoginSnsButton onClick={onSnsLogin("google")} $types={"google"}>
               <img src={googleIcon} alt="googleIcon" />
-              이메일로 로그인하기
+              구글로 로그인하기
             </SC.LoginSnsButton>
           </SC.FlexBox>
         </SC.AuthForm>

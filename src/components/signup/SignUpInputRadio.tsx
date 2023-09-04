@@ -3,7 +3,7 @@ import * as RTK from "../../redux";
 import * as SC from "../css";
 
 export const SignUpInputRadio: React.FC = () => {
-  const [input, setInput] = useState<string>("male");
+  const [input, setInput] = useState<string>("MALE");
   const dispatch = RTK.useAppDispatch();
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -18,27 +18,27 @@ export const SignUpInputRadio: React.FC = () => {
         type="radio"
         id="genderM"
         name="gender"
-        value="male"
+        value="MALE"
         onChange={onChangeInput}
         style={{ display: "none" }}
       />
       <SC.SignupGenderLabel
         htmlFor="genderM"
         children="남성"
-        $state={input === "male"}
+        $state={input === "MALE"}
       />
       <input
         type="radio"
         id="genderF"
         name="gender"
-        value="female"
+        value="FEMALE"
         onChange={onChangeInput}
         style={{ display: "none" }}
       />
       <SC.SignupGenderLabel
         htmlFor="genderF"
         children="여성"
-        $state={input === "female"}
+        $state={input === "FEMALE"}
       />
     </SC.FlexBox>
   );

@@ -26,7 +26,7 @@ export const MyPage: React.FC = () => {
     onDeletePurchases(purchaseId);
   };
 
-  const {onNavigate} = useRouter()
+  const { onNavigate } = useRouter();
 
   if (isLoading) return <div>Loadgin....g...</div>;
 
@@ -34,12 +34,12 @@ export const MyPage: React.FC = () => {
   return (
     <div>
       <h2>MyPage</h2>
-      <button onClick={onNavigate({url:'/chat'})}>채팅으로 이동하기</button>
+      <button onClick={onNavigate({ url: "/chat" })}>채팅으로 이동하기</button>
       <div>
         <COMP.EditUser
-          profileImg={UserData.profileImg}
-          nickname={UserData.nickname}
-          phoneNumber={UserData.phoneNumber}
+          profileImg={UserData?.profileImg}
+          nickname={UserData?.nickname}
+          phoneNumber={UserData?.phoneNumber}
         />
         {data &&
           data.map(

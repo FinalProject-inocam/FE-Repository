@@ -10,3 +10,4 @@ export * from "./communityFormSlice";
 export * from "./mergeWCDreviewSlice";
 export * from "./LoginSlice";
 export * from "./wrappingShopListSlice";
+export * from "./innoCarOrderSlice";
