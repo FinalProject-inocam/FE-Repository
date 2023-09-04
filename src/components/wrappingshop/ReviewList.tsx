@@ -2,7 +2,6 @@ import { FC } from "react";
 import * as RTK from "../../redux";
 import * as AS from "../../assets";
 import * as SC from "../css";
-import * as CP from "..";
 import { ReviewListProps } from "../../types";
 
 export const ReviewList: FC<ReviewListProps> = ({ imageUrls, shopId, reviewId, isLike, likeCount }) => {
@@ -29,9 +28,9 @@ export const ReviewList: FC<ReviewListProps> = ({ imageUrls, shopId, reviewId, i
 					<img src={isLike ? AS.ReviewUnlike : AS.ReviewLike} alt='reviewLike' />
 					<span>{likeCount}</span>
 				</SC.Likebutton>
-				<CP.DetailButton.CommentButton $buttonSize='comment'>
+				{/* <CP.DetailButton.CommentButton $buttonSize='comment'>
 					<img src={AS.ReviewComment} alt='reviewLike' />
-				</CP.DetailButton.CommentButton>
+				</CP.DetailButton.CommentButton> */}
 			</SC.FlexBox>
 		</SC.FlexBox>
 	);

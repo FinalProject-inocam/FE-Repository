@@ -7,7 +7,7 @@ import * as Hook from "../../hooks";
 export const DetailInfoArea: FC = () => {
 	const data = useContext(Hook.WrappingDetailContext);
 	if (!data) return null;
-	const { shopName, address, banner, avgStar, reviewCount } = data;
+	const { shopName, address, banner, avgStar, reviewCount, bussinessDay, bussinessHour, phoneNumber, detail } = data;
 
 	return (
 		<SC.FlexBox $fd='column' $gap={5} $jc={"flex-start"} style={{ position: "relative" }}>
@@ -17,6 +17,26 @@ export const DetailInfoArea: FC = () => {
 				<SC.DetailInfoInner $fd='column' $ai='flex-start' $gap={10}>
 					<SC.CustomH1 children={shopName} />
 					<SC.CustomH2 children={address} />
+					<SC.FlexBox $jc='space-between' style={{ width: "100%", height: "85px", padding: "10px 0" }}>
+						<SC.GridBox $gtc='repeat(3, 1fr)'>
+							<SC.FlexBox $fd='column' $gap={10}>
+								<span style={{ fontWeight: "bold" }}>영업시간</span>
+								<span>{bussinessHour}</span>
+							</SC.FlexBox>
+							<SC.FlexBox
+								$fd='column'
+								$gap={10}
+								style={{ borderRight: "1px solid #c7c7cb", borderLeft: "1px solid #c7c7cb" }}>
+								<span style={{ fontWeight: "bold" }}>전화번호</span>
+								<span>{phoneNumber}</span>
+							</SC.FlexBox>
+							<SC.FlexBox $fd='column' $gap={10}>
+								<div style={{ fontWeight: "bold" }}>영업일</div>
+								<div>{bussinessDay}</div>
+							</SC.FlexBox>
+						</SC.GridBox>
+					</SC.FlexBox>
+					<div style={{ color: "#9b9b9b" }}>{detail}</div>
 				</SC.DetailInfoInner>
 			</SC.DetailInfoLayout>
 

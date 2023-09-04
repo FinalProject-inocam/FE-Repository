@@ -22,6 +22,7 @@ export interface Styled {
 	$tAlign: string;
 	$rotate: number;
 	$padding: string;
+	$shadow: string;
   $spans:number[];
 
 	// Felx-Grid

@@ -1,7 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
+import * as CP from "..";
+import * as SC from "../css";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
-import * as CP from "..";
 import { useParams } from "react-router-dom";
 import { useInfinityThrottle } from "../../hooks";
 
@@ -18,37 +19,43 @@ export const DetailReviewList: FC<any> = ({ page, setPage }) => {
 	const dispatch = RTK.useAppDispatch();
 	const getMergeData = RTK.useAppSelector(RTK.selectMergeWCDreview);
 
+	const [loadingPage, setLoadingPage] = useState(null);
+
 	useEffect(() => {
-		data && console.log(`data-리패치 :${page}`, data);
-		if (isSuccess) {
-			// page 1
+		if (isSuccess && loadingPage === page) {
 			if (page === 1) {
-				dispatch(RTK.deleteData()); // 기존에 있었던 상태 관리를 초기화
-				dispatch(RTK.setMergeDate(data.content)); // 새롭게 변경될 데이터를 받음
-			} else {
-				// page 2 일 때
-				dispatch(RTK.setMergeDate(data.content));
+				dispatch(RTK.deleteData());
 			}
+			dispatch(RTK.setMergeDate(data.content));
+			// setLoadingPage(null);
+			console.log("Merged Data:", getMergeData);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data]);
+	}, [data, isSuccess]);
 
-	console.log("data", data);
+	useEffect(() => {
+		if (isFetching) {
+			setLoadingPage(page);
+		}
+	}, [isFetching, page]);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
 		return (
-			<div
+			<SC.FlexBox
+				$fd='column'
+				$gap={30}
 				style={{
 					padding: "30px 20px 26px",
 					backgroundColor: "#fff",
 				}}>
-				{getMergeData.map((reviews: Type.TotalWrappingShopReview) => (
-					<CP.ReviewInner reviews={reviews} key={reviews.reviewId} />
-				))}
+				{getMergeData &&
+					getMergeData.map((reviews: Type.TotalWrappingShopReview) => (
+						<CP.ReviewInner reviews={reviews} key={reviews.reviewId} shopId={shopId} />
+					))}
 				{data && !data.last && <div ref={fetchNextRef} />}
-			</div>
+			</SC.FlexBox>
 		);
 	}
 };

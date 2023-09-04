@@ -47,7 +47,7 @@ const DetailContent = styled.section<Partial<Type.Styled>>`
 	height: 100%;
 	margin: 0 auto;
 	@media (min-width: 1024px) {
-		grid-template-columns: 467px 1fr;
+		grid-template-columns: 469px 1fr;
 	}
 `;
 
@@ -175,6 +175,7 @@ const ReviewBannerMoreBtn = styled.button`
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.6);
 	border: none;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.35);
 
 	color: #ffffff;
 	font-size: 2.5rem;

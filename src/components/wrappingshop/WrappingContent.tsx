@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import * as Type from "../../types";
 import * as SC from "../css";
-import * as AS from "../../assets";
+// import * as AS from "../../assets";
 import * as CP from ".";
 import * as Hooks from "../../hooks";
 import * as RTK from "../../redux";
@@ -37,7 +37,7 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 
 	return (
 		<SC.ContentArea $ai='flex-start'>
-			<SC.ContentLayout $fd='column' $jc='flex-start'>
+			<SC.ContentLayout $fd='column' $jc='flex-start' $gap={50}>
 				<SC.FlexBox $fd='column' $jc='space-between' $gap={50} style={{ paddingTop: "50px" }}>
 					<div style={{ width: "100%" }}>
 						<SC.WrappingTitle>
@@ -45,14 +45,14 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 						</SC.WrappingTitle>
 						<SC.WrappingTitle>랩핑샵을 찾았어요!</SC.WrappingTitle>
 					</div>
-					<SC.WrappingSearchBox $fd='space between'>
+					{/* <SC.WrappingSearchBox $fd='space between'>
 						<SC.WrappingSearchInput />
 						<SC.SearchIcon src={AS.searchIcon} alt='serchIcon' />
-					</SC.WrappingSearchBox>
-					<SC.WrappingSort>
+					</SC.WrappingSearchBox> */}
+					{/* <SC.WrappingSort>
 						<SC.WrappingSortItem>인기순</SC.WrappingSortItem>
 						<SC.WrappingSortItem>거리순</SC.WrappingSortItem>
-					</SC.WrappingSort>
+					</SC.WrappingSort> */}
 				</SC.FlexBox>
 
 				<div>

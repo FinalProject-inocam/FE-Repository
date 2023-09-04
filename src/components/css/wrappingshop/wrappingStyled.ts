@@ -108,7 +108,7 @@ const WrappingSortList = styled.div`
 	}
 
 	@media (min-height: 1050px) {
-		height: 714.5px;
+		height: 857.5px;
 	}
 `;
 

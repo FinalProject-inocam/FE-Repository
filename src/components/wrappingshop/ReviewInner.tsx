@@ -5,7 +5,8 @@ import * as SC from "../css";
 export const ReviewInner: FC<{
 	reviews: any;
 	setPage?: any;
-}> = ({ reviews: { reviewId, nickname, star, revisit, createAt, shopId, review, imageUrls, likeCount, isLike } }) => {
+	shopId?: string;
+}> = ({ reviews: { reviewId, nickname, star, revisit, createAt, review, imageUrls, likeCount, isLike }, shopId }) => {
 	return (
 		<SC.ReviewListLayout $gtc='80px 1fr' $cgap={20}>
 			<SC.CustomH3 $types='nickname'>{nickname}</SC.CustomH3>

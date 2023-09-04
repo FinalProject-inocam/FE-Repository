@@ -74,9 +74,11 @@ export const inocamRTK = createApi({
 		"PURCHASESCHAR",
 		"WRAPPINGSHOP",
 		"WRAPPINGSHOPINFO",
+		"WRAPPINGSHOPD",
 		"WRAPPINGSHOPDREVIEW",
 		"WRAPPINGSHOPCOMMENT",
 		"REVIEWS",
+		"REVIEW_LIKE",
 		"WRAPPINGSHOPD",
 		"MYPAGE",
 		"PURCHASESCHARTY",
@@ -321,7 +323,7 @@ export const inocamRTK = createApi({
 				providesTags: ["WRAPPINGSHOP"],
 			}),
 
-			// getWrappingShop - 랩핑샵 상세조회(info)
+			// getWrappingShop - 랩핑샵 상세조회(review - info)
 			getWrappingShopDetail: build.query({
 				query: (shopId) => ({
 					url: `/api/shops/${shopId}`,
@@ -331,17 +333,38 @@ export const inocamRTK = createApi({
 				providesTags: ["WRAPPINGSHOPINFO"],
 			}),
 
-			// getWrappingShop - 랩핑샵 리뷰 조회(re)
+			// getWrappingShop - 랩핑샵 리뷰 조회(get comment - infinity)
 			getWSDetailReviews: build.query({
 				query: ({ shopId, page }) => ({
 					url: `/api/shops/${shopId}/reviews?page=${page}&size=10`,
 					method: "get",
 					types: "getData",
 				}),
-				providesTags: ["WRAPPINGSHOPDREVIEW"],
+				providesTags: ["REVIEWS"],
 			}),
 
-			// postWrappingShopComment - 래핑샵 댓글작성
+			// pathWrappingShopComment - 랩핑샵 리뷰 좋아요(comment - like)
+			patchWrappingShopDetailLike: build.mutation({
+				query: ({ shopId, reviewId }) => ({
+					url: `/api/shops/${shopId}/reviews/${reviewId}/like`,
+					method: "patch",
+				}),
+				invalidatesTags: ["REVIEWS", "WRAPPINGSHOPINFO"],
+			}),
+
+			// patchWrappingShopDetailLike: build.mutation({
+			// 	query: ({ shopId, reviewId }) => ({
+			// 		url: `/api/shops/${shopId}/reviews/${reviewId}/like`,
+			// 		method: "patch",
+			// 	}),
+			// 	invalidatesTags: ({ reviewId }) => [
+			// 		"REVIEWS",
+			// 		"WRAPPINGSHOPINFO",
+			// 		{ type: "REVIEW_LIKE", id: reviewId },
+			// 	],
+			// }),
+
+			// postWrappingShopComment - 래핑샵 댓글작성(write-comment)
 			postWrappingComment: build.mutation({
 				query: ({ shopId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews`,
@@ -349,19 +372,19 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
+				invalidatesTags: ["REVIEWS", "WRAPPINGSHOPINFO"],
 			}),
 
-			// DeleteWrappingShopComment - 래핑샵 댓글 삭제
+			// DeleteWrappingShopComment - 래핑샵 댓글 삭제(delete-comment)
 			deleteWrappingComment: build.mutation({
 				query: ({ shopId, reviewId }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
 					method: "delete",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
+				invalidatesTags: ["REVIEWS", "WRAPPINGSHOPINFO"],
 			}),
 
-			// pathWrappingShopComment - 랩핑샵 댓글 수정
+			// pathWrappingShopComment - 랩핑샵 댓글 수정(patch-comment)
 			patchWrappingComment: build.mutation({
 				query: ({ shopId, reviewId, formData }) => ({
 					url: `/api/shops/${shopId}/reviews/${reviewId}`,
@@ -369,17 +392,9 @@ export const inocamRTK = createApi({
 					data: formData,
 					types: "multipart",
 				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
+				invalidatesTags: ["REVIEWS", "WRAPPINGSHOPINFO"],
 			}),
 
-			// pathWrappingShopComment - 랩핑샵 리뷰 좋아요
-			patchWrappingShopDetailLike: build.mutation({
-				query: ({ shopId, reviewId }) => ({
-					url: `/api/shops/${shopId}/reviews/${reviewId}/like`,
-					method: "patch",
-				}),
-				invalidatesTags: ["WRAPPINGSHOPDREVIEW", "REVIEWS"],
-			}),
 			/* / 04 WrappingShop 관련 / -------------------------------------------------------- */
 			getMyPage: build.query({
 				query: () => ({
