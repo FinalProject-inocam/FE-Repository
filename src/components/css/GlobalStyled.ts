@@ -122,6 +122,7 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   position: relative;
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
+  box-shadow: ${({ $shadow }) => $shadow};
 
   ${({ $types }) =>
 		$types === "reviewBanner"
@@ -194,7 +195,7 @@ const CustomH2 = sc.styled.div`
 
 const CustomH3 = sc.styled.h3<Partial<Styled>>`
 
-	font-size: ${({ $size }) => $size ? `${$size}rem` : "1rem"};
+	font-size: ${({ $size }) => ($size ? `${$size}rem` : "1rem")};
   font-weight: 500;
   color : ${({ $color, theme }) => $color && theme.color[$color]};
 

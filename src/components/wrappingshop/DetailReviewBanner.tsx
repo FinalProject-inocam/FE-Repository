@@ -5,7 +5,7 @@ import { FigureObjectFitImg } from "../atom";
 
 export const DetailReviewBanner: FC = () => {
 	const data = useContext(Hook.WrappingDetailContext);
-	const [bannerNum, setBannerNum] = useState<number>(0);
+	const [bannerNum, setBannerNum] = useState<number>(1);
 
 	useEffect(() => {
 		const onBannerNum = () => {
@@ -24,17 +24,11 @@ export const DetailReviewBanner: FC = () => {
 		};
 	}, []);
 
-	useEffect(() => {
-		if (data) {
-			console.log(data.banner);
-		}
-	}, [data]);
-
 	if (!data) return null;
 
 	const { reviewImageSize: imgCount, banner } = data;
 
-	const bannerEdit = banner.slice(0, bannerNum);
+	const bannerEdit = banner.slice(1, bannerNum + 1);
 	return (
 		<SC.ReviewBannerGridBox $cgap={20}>
 			{bannerEdit.map((img: string, idx: number) =>
@@ -44,7 +38,8 @@ export const DetailReviewBanner: FC = () => {
 						src={img}
 						width='100%'
 						types='reviewBanner'
-						alt={`Review Banner img ${idx + 1}`}
+						alt={`Review Banner img ${idx + 2}`}
+						shadow='0px 4px 8px rgba(0, 0, 0, 0.35)'
 					/>
 				) : imgCount > 4 ? (
 					<FigureObjectFitImg
@@ -52,7 +47,8 @@ export const DetailReviewBanner: FC = () => {
 						src={img}
 						width='100%'
 						types='reviewBanner'
-						alt={`Review Banner img ${idx + 1}`}>
+						alt={`Review Banner img ${idx + 2}`}
+						shadow='0px 4px 8px rgba(0, 0, 0, 0.35)'>
 						<SC.ReviewBannerMoreBtn children={`+${imgCount - bannerNum}`} />
 					</FigureObjectFitImg>
 				) : (
@@ -61,7 +57,8 @@ export const DetailReviewBanner: FC = () => {
 						src={img}
 						width='100%'
 						types='reviewBanner'
-						alt={`Review Banner img ${idx + 1}`}
+						alt={`Review Banner img ${idx + 2}`}
+						shadow='0px 4px 8px rgba(0, 0, 0, 0.35)'
 					/>
 				)
 			)}

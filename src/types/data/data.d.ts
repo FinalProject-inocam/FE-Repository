@@ -83,6 +83,10 @@ export interface WrappingShopDetail extends ShopList {
 	reviewImageSize: number;
 	reviewCount: number;
 	totalElements: number;
+	bussinessDay: string;
+	bussinessHour: string;
+	phoneNumber: string;
+	detail: string;
 }
 
 export interface TotalWrappingShopReview extends WrappingShopReview {
@@ -94,6 +98,7 @@ export interface TotalWrappingShopReview extends WrappingShopReview {
 	revisit: boolean;
 	star: number;
 	review: string;
+	shopId: string | undefined;
 }
 
 /* / DecodeToken 관련 타입 : Redux 및 ??  / -------------------------------------------------------- */

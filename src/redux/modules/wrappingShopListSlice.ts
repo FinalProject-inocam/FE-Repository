@@ -4,7 +4,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface Shop {
 	shopId: string;
 	shopName: string;
-	// other fields...
 }
 
 interface ShopListState {
