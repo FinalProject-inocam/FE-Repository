@@ -12,6 +12,7 @@ export interface Styled {
 	$mSize: number;
 	$state: boolean | number;
 	$font: string;
+	$fontW: number;
 	$borderR: string;
 	$borderTopRightR: string;
 	$borderTopLeftR: string;
@@ -23,7 +24,7 @@ export interface Styled {
 	$rotate: number;
 	$padding: string;
 	$shadow: string;
-  $spans:number[];
+	$spans: number[];
 
 	// Felx-Grid
 	$gap: number;
@@ -71,8 +72,8 @@ export interface Styled {
 	$Mright: number;
 
 	$onClick?: () => void;
-  
-    //InnocarOrder
-  $direction: string;
-  $color: string;
+
+	//InnocarOrder
+	$direction: string;
+	$color: string;
 }

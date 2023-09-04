@@ -231,7 +231,7 @@ export interface UseMainHeader {
 /* / 17 useRouter / -------------------------------------------------------- */
 export interface UseRouter {
 	getId: number | undefined;
-	getChatRoom : string | undefined;
+	getChatRoom: string | undefined;
 	pathname: string;
 	state: string;
 	onNavigate: (Native) => () => void;
@@ -327,24 +327,26 @@ export interface useModelOneType {
 /* / 25 useInnoCarRef / -------------------------------------------------------- */
 
 export interface useInnoCarRefType {
-  Sections3ScrollGridText : string[];
-  sectionRef1 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef2 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef3 : MutableRefObject<HTMLDivElement | null>;
-  sectionRef4 : MutableRefObject<HTMLDivElement | null>;
-	sectionRef1ImgRef :  MutableRefObject<HTMLDivElement | null>;
-  innocarCharacterRef : MutableRefObject<HTMLDivElement | null>;
-  sectionRef3InnerRef : MutableRefObject<HTMLDivElement | null>;
-  sectionRef3FlexRef : MutableRefObject<HTMLDivElement | null>;
-  onToggleCarCharacter: (e: MouseEvent<HTMLDivElement>) => void;
-  onToggleTechnic : (setState: Dispatch<React.SetStateAction<boolean>>) => void;
+	Sections3ScrollGridText: string[];
+	sectionRef1: MutableRefObject<HTMLDivElement | null>;
+	sectionRef2: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3: MutableRefObject<HTMLDivElement | null>;
+	sectionRef4: MutableRefObject<HTMLDivElement | null>;
+	sectionRef1ImgRef: MutableRefObject<HTMLDivElement | null>;
+	innocarCharacterRef: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3InnerRef: MutableRefObject<HTMLDivElement | null>;
+	sectionRef3FlexRef: MutableRefObject<HTMLDivElement | null>;
+	onToggleCarCharacter: (e: MouseEvent<HTMLDivElement>) => void;
+	onToggleTechnic: (setState: Dispatch<React.SetStateAction<boolean>>) => void;
 }
 
 /* / 26 useInnoCarRef / -------------------------------------------------------- */
 
 export interface useAdminType {
-  onNavigate: (Native) => () => void;
-  currentPage:string | undefined;
-  AdminNaList:string[][];
+	onNavigate: (Native) => () => void;
+	currentPage: string | undefined;
+	AdminNaList: string[][];
 }
 
+/* / 27 usePostingTime / -------------------------------------------------------- */
+export type UsePostingTime = (createdAt: string) => string | undefined;
