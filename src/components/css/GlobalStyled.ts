@@ -5,6 +5,12 @@ import { Styled } from "../../types";
 /* About createGlobalStyle ---------------------------------------------- */
 export const GlobalStyled = sc.createGlobalStyle`
   // 글꼴은 여기에 입력해주세요.
+  @font-face {
+    font-family: 'Giants-Inline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
   // 전역 스타일링 리셋 CSS
   html, body, div, span,
@@ -167,6 +173,19 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
     object-fit: cover;
     object-position: center;
   }
+
+  ${({ $types }) =>
+  $types === "innoCarSection1Img" && sc.css`
+    margin: 0 auto;
+    @media (max-width: 1024px) {
+      width : 100%;
+
+      img {
+        /* width: 90%; */
+        height: 60%;
+      }
+    }
+`}
 `;
 
 const RouterLayout = sc.styled.div<Partial<Styled>>`

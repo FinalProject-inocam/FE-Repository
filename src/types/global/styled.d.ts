@@ -23,6 +23,7 @@ export interface Styled {
 	$rotate: number;
 	$padding: string;
 	$shadow: string;
+  $spans:number[];
 
 	// Felx-Grid
 	$gap: number;

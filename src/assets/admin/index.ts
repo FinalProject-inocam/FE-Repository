@@ -16,10 +16,12 @@ import cameraOff from './cameraOff.svg'
 import mikeOn from './mikeOn.svg'
 import mikeOff from './mikeOff.svg'
 import closeBTN from './closeBTN.svg'
+import chattingLoading from './chattingLoading.gif'
+import loadingInnoLogo from './loadingInnoLogo.gif'
 
 export {
   calendar, underArrow,
   leftArrowB, leftArrowG, rigthArrowB, rigthArrowG,
   adminChatArrow, exited, sendBtn, webRTCBtc, NewChat, user, adminPlus,
-  cameraOn, cameraOff, mikeOn, mikeOff, closeBTN
+  cameraOn, cameraOff, mikeOn, mikeOff, closeBTN, chattingLoading, loadingInnoLogo
 }

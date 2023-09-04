@@ -20,7 +20,8 @@ export const useSocketRoom = () => {
   const room = getChatRoom;
   const socketRef = useRef<Socket>();
   const [sendMsg, setSendMsg] = useState<string>("")
-  const [userInfoState, setUserInfoState] = useState<any>("")
+  const [userInfoState, setUserInfoState] = useState<any>({})
+  const [userInfoMemo, getUserInfoMemo] = useState<string>("")
   const getChatMsg = RTK.useAppSelector(RTK.selectchatMsg)
 
   /*
@@ -37,6 +38,7 @@ export const useSocketRoom = () => {
   const [showWebRTC, setShowWebRTC] = useState<boolean>(false)
   const [mute, setMute] = useState<boolean>(false)
   const [camera, setCamara] = useState<boolean>(false)
+  const [peerStream, getPeerStream] = useState<boolean>(false)
   const peerAVideoRef = useRef<HTMLVideoElement>(null);
   const peerBVideoRef = useRef<HTMLVideoElement>(null);
   const peerRef = useRef<RTCPeerConnection>();
@@ -59,56 +61,60 @@ export const useSocketRoom = () => {
       03 onLeaveRoom : 채팅방 나가기
   */
 
-      const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setSendMsg(e.target.value)
-      }
-      const onSendMsg = (e: FormEvent<HTMLFormElement> | MouseEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        const newChat = [{
-          content: sendMsg,
-          createdDateTime: Date.now(),
-          id: Date.now(),
-          room,
-          username:nickname
-        }]
-        dispatch(RTK.setChatMsg([...newChat]))
-        socketRef.current && socketRef.current.emit("sendMsg", {
-          content: sendMsg,
-          room,
-          username:nickname
-        })
-        setSendMsg("")
-      }
-    
-      const onChangeTextArea = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        setUserInfoState(e.target.value)
-      }
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSendMsg(e.target.value)
+  }
+  const onSendMsg = (e: FormEvent<HTMLFormElement> | MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    if (sendMsg) {
+      const newChat = [{
+        content: sendMsg,
+        createdDateTime: Date.now(),
+        id: Date.now(),
+        room,
+        username: nickname
+      }]
+      dispatch(RTK.setChatMsg([...newChat]))
+      socketRef.current && socketRef.current.emit("sendMsg", {
+        content: sendMsg,
+        room,
+        username: nickname
+      })
+      setSendMsg("")
+    }
+  }
 
-      const onBlurTextArea = () => {
-        socketRef.current && socketRef.current.emit("saveMemo", {
-          content: userInfoState,
-          room,
-          username:nickname
-        })
-      }
+  const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    getUserInfoMemo(e.target.value)
+  }
 
-      const onLeaveRoom = () => {
-        onBlurTextArea()
-        setUserInfoState("")
-        dispatch(RTK.deleteChatMsg())
-        onNavigate({ url: '/admin/civilcomplaintmanagement' })()
-      }
-      
-      const onEndRoom = () => {
-        socketRef.current && socketRef.current.emit("leaveRoom", {
-          room,
-          username:nickname
-        })
-        onBlurTextArea()
-        setUserInfoState("")
-        dispatch(RTK.deleteChatMsg())
-        onNavigate({ url: '/admin/civilcomplaintmanagement' })()
-      }
+  const onBlurTextArea = () => {
+    socketRef.current && socketRef.current.emit("saveMemo", {
+      content: userInfoMemo,
+      room,
+      username: nickname
+    })
+  }
+
+  const onLeaveRoom = () => {
+    onBlurTextArea()
+    setUserInfoState({})
+    getUserInfoMemo("")
+    dispatch(RTK.deleteChatMsg())
+    onNavigate({ url: '/admin/civilcomplaintmanagement' })()
+  }
+
+  const onEndRoom = () => {
+    socketRef.current && socketRef.current.emit("leaveRoom", {
+      room,
+      username: nickname
+    })
+    onBlurTextArea()
+    setUserInfoState({})
+    getUserInfoMemo("")
+    dispatch(RTK.deleteChatMsg())
+    onNavigate({ url: '/admin/civilcomplaintmanagement' })()
+  }
 
 
 
@@ -134,6 +140,9 @@ export const useSocketRoom = () => {
   const onToggleWebRTC = () => {
     setShowWebRTC(pre => !pre)
     setSettingBox(false)
+    setMute(false)
+    setCamara(false)
+    getPeerStream(false)
   }
 
   const onMute = () => {
@@ -163,15 +172,8 @@ export const useSocketRoom = () => {
     }
   }
 
-  const stopMedia = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
-    }
-  }
-
   const makeConnection = async () => {
-    peerRef.current = new RTCPeerConnection();
+    peerRef.current = await new RTCPeerConnection();
 
     if (peerRef.current) {
       peerRef.current.onicecandidate = (e: any) => {
@@ -179,7 +181,8 @@ export const useSocketRoom = () => {
       };
 
       peerRef.current.ontrack = (e) => {
-        peerBVideoRef.current && (peerBVideoRef.current.srcObject = e.streams[0]) 
+        getPeerStream(true)
+        peerBVideoRef.current && (peerBVideoRef.current.srcObject = e.streams[0])
       }
     }
 
@@ -191,9 +194,19 @@ export const useSocketRoom = () => {
         });
   }
 
+
+  const stopMedia = () => {
+    if (streamRef.current) {
+      getPeerStream(false)
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+  }
+
   const createOffer = async () => {
     const offer = peerRef.current && await peerRef.current.createOffer();
     peerRef.current && peerRef.current.setLocalDescription(offer);
+    // console.log("createOffer", offer, peerRef.current && peerRef.current.addIceCandidate)
     socketRef.current && socketRef.current.emit("offer", { offer, room });
   };
 
@@ -213,18 +226,18 @@ export const useSocketRoom = () => {
       03 onSocketDate : 날짜관련 제어 함수 
   */
 
-    const onInfoShow = () => { 
-      setInfoShow(pre => !pre)
-    }
-  
-    
-    const onSettingBtn = () => {
-      setSettingBox(pre => !pre)
-    }
-  
-    const onSocketDate = (data:number) => {
-      return dayjs(data).format("a hh:mm")
-    }
+  const onInfoShow = () => {
+    setInfoShow(pre => !pre)
+  }
+
+
+  const onSettingBtn = () => {
+    setSettingBox(pre => !pre)
+  }
+
+  const onSocketDate = (data: number, format: string) => {
+    return dayjs(data).format(format)
+  }
 
   /* 
     Chatting 관련 useEffect 부 (1) ----------------------------------------------------------------------
@@ -243,24 +256,36 @@ export const useSocketRoom = () => {
     })
     if (socketRef.current) {
       socketRef.current.emit("joinRoom", {
-        username:nickname, room
+        username: nickname, room
       })
 
       socketRef.current.on("previousMsg", (data) => {
-        console.log("previousMsg",data)
+        console.log("previousMsg", data)
         dispatch(RTK.setChatMsg(data))
       })
 
       socketRef.current.on("roomInfo", (data) => {
-        data && setUserInfoState(data)
+        console.log(data)
+        setUserInfoState(data)
+        getUserInfoMemo(data.memo)
       })
 
       socketRef.current.on("readMsg", (data) => {
-        dispatch(RTK.setChatMsg(data))
+        dispatch(RTK.setChatMsg([data]))
       })
 
       socketRef.current.on("peerOut", () => {
         // console.log(data)
+      })
+    }
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+      socketRef.current && socketRef.current.emit("saveMemo", {
+        content: userInfoMemo,
+        room,
+        username: nickname
       })
     }
 
@@ -291,11 +316,14 @@ export const useSocketRoom = () => {
     if (showWebRTC) {
       getMedia()
       makeConnection()
+
       if (socketRef.current) {
-        socketRef.current.emit("joinRTC", { room, username:nickname })
+        socketRef.current.emit("joinRTC", { room, username: nickname })
 
         socketRef.current.on("joinedRTC", async () => {
-          streamRef.current && createOffer()
+          setTimeout(() => {
+            streamRef.current && createOffer()
+          }, 3000)
         })
 
         socketRef.current.on("getOffer", getoffer => {
@@ -317,7 +345,7 @@ export const useSocketRoom = () => {
     return () => {
       stopMedia()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showWebRTC])
 
   //  onChangeChatListHeight 관련 useEffect 부 (3) ------
@@ -338,10 +366,15 @@ export const useSocketRoom = () => {
   */
 
 
-  useEffect (() => {
-    setInfoShow(false)
-    setSettingBox(false)
-    setShowWebRTC(false)
+  useEffect(() => {
+    return () => {
+      setInfoShow(false)
+      setSettingBox(false)
+      setShowWebRTC(false)
+      setMute(false)
+      setCamara(false)
+      getPeerStream(false)
+    }
   }, [getChatRoom])
 
 
@@ -350,22 +383,24 @@ export const useSocketRoom = () => {
     // 채팅부분
     scrollRef,
     chatListHeight,
-    sendMsg, 
+    sendMsg,
     getChatMsg,
     userInfoState,
+    userInfoMemo,
     onChangeTextArea,
     onBlurTextArea,
-    onChangeInput, 
-    onSendMsg, 
+    onChangeInput,
+    onSendMsg,
     onLeaveRoom,
     onEndRoom,
-  
+
     // WecRTC 부분
     showWebRTC,
     peerAVideoRef,
     peerBVideoRef,
     mute,
     camera,
+    peerStream,
     onToggleWebRTC,
     onMute,
     onCamera,
