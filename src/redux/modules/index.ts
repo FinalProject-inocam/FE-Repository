@@ -11,3 +11,5 @@ export * from "./mergeWCDreviewSlice";
 export * from "./LoginSlice";
 export * from "./wrappingShopListSlice";
 export * from "./innoCarOrderSlice";
+export * from "./communityCommentSlice";
+

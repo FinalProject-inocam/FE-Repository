@@ -3,7 +3,6 @@ export * from './admin';
 export * from './auth';
 export * from './main';
 export * from './lazy';
-export * from './chat'
 export * from './community'
 // tsx 파일
 export * from './AdminRouter';
@@ -12,7 +11,6 @@ export * from './Error';
 export * from './NotFound';
 export * from './MainRouter';
 export * from './MyPageRouter';
-export * from './chat/Chat'
 export * from './WebRTC'
 export * from './Threejs'
 // ProtectiveRouter

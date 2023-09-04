@@ -13,6 +13,7 @@ import {
   ShopListReducer,
   LoginReducer,
   innoCarOrderReducer,
+  CommunityCommentReducer,
 } from "../modules";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
@@ -32,6 +33,7 @@ export const store = configureStore({
     ShopListReducer,
     LoginReducer,
     innoCarOrderReducer,
+  CommunityCommentReducer,
     [inocamRTK.reducerPath]: inocamRTK.reducer,
   },
   middleware: (getDefaultMiddleware) =>

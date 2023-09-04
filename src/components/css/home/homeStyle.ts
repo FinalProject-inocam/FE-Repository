@@ -6,7 +6,6 @@ const SectionFlex = styled.section<Partial<Styled>>`
 	${SC.Flex}
 	width: 100%;
 	height: 650px;
-	border-bottom: 3px dotted ${({ $color }) => $color};
 	overflow: hidden;
 	position: relative;
 	background-color: ${({ $bColor, theme }) => theme.color[`${$bColor}`]};

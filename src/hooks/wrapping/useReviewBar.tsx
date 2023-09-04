@@ -4,6 +4,7 @@ export const useReviewBar = () => {
 	const [onDeleteShopCommentRTK] = RTK.useDeleteWrappingCommentMutation();
 	const onDeleteShopComment = (shopId: string | undefined, reviewId: number | undefined) => () => {
 		onDeleteShopCommentRTK({ shopId, reviewId });
+		console.log(shopId, reviewId);
 	};
 
 	const formatDate = (dateString: string) => {

@@ -5,7 +5,7 @@ import { FigureObjectFitImg } from "../atom";
 
 export const DetailReviewBanner: FC = () => {
 	const data = useContext(Hook.WrappingDetailContext);
-	const [bannerNum, setBannerNum] = useState<number>(0);
+	const [bannerNum, setBannerNum] = useState<number>(1);
 
 	useEffect(() => {
 		const onBannerNum = () => {
@@ -25,32 +25,41 @@ export const DetailReviewBanner: FC = () => {
 	}, []);
 
 	if (!data) return null;
-	const { reviewImageSize: imgCount, banner } = data;
-	const bannerEdit = banner.slice(0, bannerNum);
 
+	const { reviewImageSize: imgCount, banner } = data;
+
+	const bannerEdit = banner.slice(1, bannerNum + 1);
 	return (
 		<SC.ReviewBannerGridBox $cgap={20}>
 			{bannerEdit.map((img: string, idx: number) =>
-				idx < bannerNum - 1 ? (
+				idx !== bannerNum - 1 ? (
 					<FigureObjectFitImg
 						key={img}
 						src={img}
 						width='100%'
 						types='reviewBanner'
-						alt={`Review Banner img ${idx + 1}`}
+						alt={`Review Banner img ${idx + 2}`}
+						shadow='0px 4px 8px rgba(0, 0, 0, 0.35)'
 					/>
+				) : imgCount > 4 ? (
+					<FigureObjectFitImg
+						key={img}
+						src={img}
+						width='100%'
+						types='reviewBanner'
+						alt={`Review Banner img ${idx + 2}`}
+						shadow='0px 4px 8px rgba(0, 0, 0, 0.35)'>
+						<SC.ReviewBannerMoreBtn children={`+${imgCount - bannerNum}`} />
+					</FigureObjectFitImg>
 				) : (
 					<FigureObjectFitImg
 						key={img}
 						src={img}
 						width='100%'
 						types='reviewBanner'
-						alt={`Review Banner img ${idx + 1}`}>
-						<SC.ReviewBannerMoreBtn
-							onClick={() => console.log("모든이미지 보여주기 준비..")}
-							children={`+${imgCount - bannerNum}`}
-						/>
-					</FigureObjectFitImg>
+						alt={`Review Banner img ${idx + 2}`}
+						shadow='0px 4px 8px rgba(0, 0, 0, 0.35)'
+					/>
 				)
 			)}
 		</SC.ReviewBannerGridBox>

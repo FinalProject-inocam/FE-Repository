@@ -24,7 +24,34 @@ export interface DetailCommunity extends TotalCommunity {
 	nickname?: string;
 	commentsList: CommunityComments[];
 }
+export interface Comment {
+	comment: string;
+	commentId: number;
+	createdAt: string;
+	isLike: boolean;
+	likeCount: number;
+	modifiedAt: string;
+	nickname: string;
+}
 
+export interface CommentData {
+	content: Comment[];
+	currentPage: number;
+	first: boolean;
+	last: boolean;
+	size: number;
+	totalElements: number;
+	totalPages: number;
+}
+export interface commentType {
+	comment: string;
+	commentId: number;
+	createdAt: string;
+	isLike: boolean;
+	likeCount: number;
+	modifiedAt: string;
+	nickname: string;
+}
 /* / WrappingShop 관련 타입 / -------------------------------------------------------- */
 export interface WrappingShop {
 	currentPage: number;
@@ -56,6 +83,10 @@ export interface WrappingShopDetail extends ShopList {
 	reviewImageSize: number;
 	reviewCount: number;
 	totalElements: number;
+	bussinessDay: string;
+	bussinessHour: string;
+	phoneNumber: string;
+	detail: string;
 }
 
 export interface TotalWrappingShopReview extends WrappingShopReview {
@@ -67,6 +98,7 @@ export interface TotalWrappingShopReview extends WrappingShopReview {
 	revisit: boolean;
 	star: number;
 	review: string;
+	shopId: string | undefined;
 }
 
 /* / DecodeToken 관련 타입 : Redux 및 ??  / -------------------------------------------------------- */

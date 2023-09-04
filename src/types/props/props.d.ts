@@ -15,6 +15,8 @@ export interface FigureImg {
 	height?: string;
 	types?: string;
 	children?: ReactChild;
+	shadow?: string;
+	onClick?: () => void;
 }
 
 export interface EditComment {
@@ -56,18 +58,20 @@ export interface WrappingDetailStyled {
 }
 
 export interface ReviewBarProps {
-  reviewId: number;
-  star: number;
-  revisit: boolean;
-  createAt: string;
-  nickname: string;
-  shopId: string | undefined;
+	reviewId: number;
+	star: number;
+	revisit: boolean;
+	createAt: string;
+	nickname: string;
+	shopId: string | undefined;
 }
 
 export interface ReviewListProps {
-  imageUrls: string[];
-  shopId: string | undefined;
-  reviewId: number;
+	imageUrls: string[];
+	shopId: string | undefined;
+	reviewId: number;
+	likeCount: number;
+	isLike: boolean;
 }
 
 /* / WrappingKakaomapsProps컴포넌트 / -------------------------------------------------------- */
@@ -81,21 +85,31 @@ export interface SignUpECProps {
 }
 
 export interface SignUpInputBasicProps extends SignUpECProps {
-  name: string;
-  submitted: boolean;
+	name: string;
+	submitted: boolean;
 }
 
 export interface SignUpInputProps extends SignUpInputBasicProps {
-  placeholder: string;
-  length: number;
-  type?: string;
+	placeholder: string;
+	length: number;
+	type?: string;
 }
 
 /* / Innocar컴포넌트 / -------------------------------------------------------- */
 export interface TechnicalListInnerProps {
-  title:string;
-  technicalInfoCategory:string;
-  onToggle:(setState:Dispatch<React.SetStateAction<boolean>>)=> MouseEventHandler<HTMLDivElement> | undefined;
-  infoBoolean:boolean;
-  setInfoBoolean:any;
+	title: string;
+	technicalInfoCategory: string;
+	onToggle: (setState: Dispatch<React.SetStateAction<boolean>>) => MouseEventHandler<HTMLDivElement> | undefined;
+	infoBoolean: boolean;
+	setInfoBoolean: any;
+}
+
+/* / ChatRoomLayoutProps 컴포넌트 / -------------------------------------------------------- */
+export interface ChatRoomLayoutProps {
+  msg : string;
+  type : string;
+  peer : string ;
+  room : string;
+  bColor ?: string;
+  color ?: string;
 }

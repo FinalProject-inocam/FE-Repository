@@ -1,6 +1,6 @@
 import React from "react";
 import * as Type from "../../types";
-import * as SC from "../../components";
+import * as SC from "..";
 
 export const HomeSection4: React.FC<Partial<Type.UseHome>> = ({ sectionRef4 }) => {
 	return (

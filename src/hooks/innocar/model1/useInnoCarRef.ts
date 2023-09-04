@@ -8,30 +8,27 @@ export const useInnoCarRef = ():useInnoCarRefType => {
   const sectionRef2 = useRef<HTMLDivElement | null>(null);
   const sectionRef3 = useRef<HTMLDivElement | null>(null);
   const sectionRef4 = useRef<HTMLDivElement | null>(null);
-  const sectionRef5 = useRef<HTMLDivElement | null>(null);
-  const sectionRef6 = useRef<HTMLDivElement | null>(null);
-  const sectionRef7 = useRef<HTMLDivElement | null>(null);
 
   const sectionRefs = [
     { ref: sectionRef1, setHeight: 1 },
     { ref: sectionRef2, setHeight: 1 },
     { ref: sectionRef3, setHeight: 1 },
     { ref: sectionRef4, setHeight: 1 },
-    { ref: sectionRef5, setHeight: 1 },
-    { ref: sectionRef6, setHeight: 1 },
-    { ref: sectionRef7, setHeight: 1 },
   ];
+
+
+  const setSectionHeight = () => {
+    sectionRefs.forEach(
+      (setHeight) =>
+        setHeight.ref.current &&
+        window.innerHeight > 650 &&
+        (setHeight.ref.current.style.height = `${window.innerHeight * setHeight.setHeight}px`)
+    );
+  }
 
   useEffect(() => {
     /* -- setSectionHeight ------------------------------------------------------- */
-    const setSectionHeight = () => {
-      sectionRefs.forEach(
-        (setHeight) =>
-          setHeight.ref.current &&
-          window.innerHeight > 650 &&
-          (setHeight.ref.current.style.height = `${window.innerHeight * setHeight.setHeight}px`)
-      );
-    }
+
     setSectionHeight();
     window.addEventListener("resize", setSectionHeight)
     return () => {
@@ -90,9 +87,21 @@ export const useInnoCarRef = ():useInnoCarRefType => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carCharacter])
 
+  /* -- SectionRef1:Scroll ------------------------------------------------------- */
+  const sectionRef1ImgRef = useRef<HTMLDivElement | null>(null);
   const onToggleTechnic = (setState: Dispatch<React.SetStateAction<boolean>>) => () => {
     setState((pre: boolean) => !pre)
   }
+
+  useEffect(()=> {
+    setTimeout(()=>{
+        if(sectionRef1ImgRef.current) {
+        sectionRef1ImgRef.current.style.opacity = "1";
+        sectionRef1ImgRef.current.style.transform = "scale(1)"
+      }
+    }, 300)
+  }, [])
+
   /* -- SectionRef3:Scroll ------------------------------------------------------- */
   const sectionRef3InnerRef = useRef<HTMLDivElement | null>(null);
   const sectionRef3FlexRef = useRef<HTMLDivElement | null>(null);
@@ -106,7 +115,7 @@ export const useInnoCarRef = ():useInnoCarRefType => {
             sectionRef3FlexRef.current.style.display = "flex"
             setTimeout(() => {
               if (sectionRef3FlexRef.current) {
-                sectionRef3FlexRef.current.style.top = "60%"
+                sectionRef3FlexRef.current.style.bottom = "100px"
               }
             }, 300)
           }
@@ -116,7 +125,7 @@ export const useInnoCarRef = ():useInnoCarRefType => {
             // sectionRef3FlexRef.current.style.display = "none"
             setTimeout(() => {
               if (sectionRef3FlexRef.current) {
-                sectionRef3FlexRef.current.style.top = "93%"
+                sectionRef3FlexRef.current.style.bottom = "-70px"
               }
             }, 10)
 
@@ -139,9 +148,7 @@ export const useInnoCarRef = ():useInnoCarRefType => {
     sectionRef2,
     sectionRef3,
     sectionRef4,
-    sectionRef5,
-    sectionRef6,
-    sectionRef7,
+    sectionRef1ImgRef,
     innocarCharacterRef,
     sectionRef3InnerRef,
     sectionRef3FlexRef,
