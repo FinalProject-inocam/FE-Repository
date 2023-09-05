@@ -1,5 +1,6 @@
 import React from "react";
 import * as SC from "../../components";
+import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi'
 import {
 	Chart as ChartJS,
 	BarElement,
@@ -11,13 +12,11 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
 import * as ASS from "../../assets";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { useAdminDeshboard } from "../../hooks/admin";
 import { DeshboardUser } from "../../components/admin/DeshboardUser";
-import { styled } from "styled-components";
 dayjs.locale("ko");
 ChartJS.register(
 	ArcElement,
@@ -61,7 +60,7 @@ export const AdminDeshboard: React.FC = () => {
 		purchaseAgeDonutData
 	} = useAdminDeshboard();
 
-	console.log("purchaseData.age", purchaseData)
+	console.log("purchaseData", purchaseData)
 
 	return (
 		<SC.DeshboardGrid $gtc='1fr 380px' $gtr={`${window.innerHeight}px`} style={{ width: "100%" }}>
@@ -123,7 +122,7 @@ export const AdminDeshboard: React.FC = () => {
 					<SC.GridBox $gap={10}>
 						<SC.ChartInner $fd='column' $ai='flex-start' $gap={10} $types='left'>
 							<SC.CustomH1 $size={1.125} children='주간요약' />
-							<SC.GridBox $gtc='repeat(3, 1fr)' style={{ height: "100%" }} $gap={4}>
+							<SC.GridBox $gtc='repeat(3, 1fr)' style={{ height: "100%", minWidth: "350px" }} $gap={4}>
 								{userLoading ? (
 									<div>로딩 중... </div>
 								) : userIsError ? (
@@ -139,17 +138,25 @@ export const AdminDeshboard: React.FC = () => {
 												border: "1px solid #DEDEE0",
 												borderRadius: "10px",
 											}}>
-											<SC.CustomH3 $size={0.75} $color='textColorSub' children='출고현황' />
+											<SC.CustomH3 $size={0.75} $color='textColorSub' children='출고신청' />
 											<SC.CustomH3
-												$size={1.5}
+												$size={1}
 												children={
 													<>
-														13
+														{!!purchaseData && onReduce(purchaseData.purchase.values)}
 														<span children='건' />
+														{!!purchaseData && onReduce(purchaseData.purchase.values) - purchaseData.prePurchase < 0
+															? <span style={{ fontSize: "10px", marginLeft: "5px", color:"red" }} 
+																	children={<><BiSolidDownArrow /> {!!purchaseData && onReduce(purchaseData.purchase.values) - purchaseData.prePurchase}건</>} />
+															: !!purchaseData && onReduce(purchaseData.purchase.values) - purchaseData.prePurchase > 0
+															&& <span style={{ fontSize: "10px", marginLeft: "5px", color:"blue"  }} 
+																	children={<><BiSolidUpArrow/> {!!purchaseData && onReduce(purchaseData.purchase.values) - purchaseData.prePurchase}건</>} />
+														}
+
 													</>
 												}
 											/>
-											<SC.CustomH3 $size={0.75} $color='textColorSub' children={`전주, 7명`} />
+											<SC.CustomH3 $size={0.5} $color='textColorSub' children={`${getType[0] === "주간" ? "전주" : getType[0] === "월간" ? "지난달" : "작년"} ${!!purchaseData && purchaseData.prePurchase} 건`} />
 										</SC.FlexBox>
 										<SC.FlexBox
 											$gap={3}
@@ -162,17 +169,22 @@ export const AdminDeshboard: React.FC = () => {
 											}}>
 											<SC.CustomH3 $size={0.75} $color='textColorSub' children='출고승인' />
 											<SC.CustomH3
-												$size={1.5}
+												$size={1}
 												children={
 													<>
-														5<span children='건' />
+														{!!purchaseData && onReduce(purchaseData.approve.values)}
+														<span children='건' />
+														{!!purchaseData && onReduce(purchaseData.approve.values) - purchaseData.preApprove < 0
+															? <span style={{ fontSize: "10px", marginLeft: "5px", color:"red" }} 
+																	children={<><BiSolidDownArrow /> {!!purchaseData && onReduce(purchaseData.approve.values) - purchaseData.preApprove}건</>} />
+															: !!purchaseData && onReduce(purchaseData.approve.values) - purchaseData.preApprove > 0
+															&& <span style={{ fontSize: "10px", marginLeft: "5px", color:"blue"  }} 
+																	children={<><BiSolidUpArrow/> {!!purchaseData && onReduce(purchaseData.approve.values) - purchaseData.preApprove}건</>} />
+														}
 													</>
 												}
 											/>
-											<SC.CustomH3
-												$size={0.75}
-												style={{ visibility: "visible", height: "15px" }}
-											/>
+											<SC.CustomH3 $size={0.5} $color='textColorSub' children={`${getType[0] === "주간" ? "전주" : getType[0] === "월간" ? "지난달" : "작년"} ${!!purchaseData && purchaseData.preApprove} 건`} />
 										</SC.FlexBox>
 										<SC.FlexBox
 											$gap={3}
@@ -185,25 +197,42 @@ export const AdminDeshboard: React.FC = () => {
 											}}>
 											<SC.CustomH3 $size={0.75} $color='textColorSub' children='츨고취소' />
 											<SC.CustomH3
-												$size={1.5}
+												$size={1}
 												children={
 													<>
-														5<span children='건' />
+														{!!purchaseData && onReduce(purchaseData.cancel.values)}
+														<span children='건' />
+														{!!purchaseData && onReduce(purchaseData.cancel.values) - purchaseData.preApprove < 0
+															? <span style={{ fontSize: "10px", marginLeft: "5px", color:"red" }} 
+																	children={<><BiSolidDownArrow /> {!!purchaseData && onReduce(purchaseData.cancel.values) - purchaseData.preCancel}건</>} />
+															: !!purchaseData && onReduce(purchaseData.cancel.values) - purchaseData.preCancel > 0
+															&& <span style={{ fontSize: "10px", marginLeft: "5px", color:"blue"  }} 
+																	children={<><BiSolidUpArrow/> {!!purchaseData && onReduce(purchaseData.cancel.values) - purchaseData.preCancel}건</>} />
+														}
 													</>
 												}
 											/>
-											<SC.CustomH3
-												$size={0.75}
-												style={{ visibility: "visible", height: "15px" }}
-											/>
+											<SC.CustomH3 $size={0.5} $color='textColorSub' children={`${getType[0] === "주간" ? "전주" : getType[0] === "월간" ? "지난달" : "작년"} ${!!purchaseData && purchaseData.preCancel} 건`} />
 										</SC.FlexBox>
 									</>
 								)}
 							</SC.GridBox>
 						</SC.ChartInner>
 						<SC.ChartInner $fd='column' $ai='flex-start' $gap={10} $types='left'>
-							<SC.CustomH1 $size={1.125} children='금일 출고 현황' />
-							<SC.GridBox $gtc='repeat(3, 1fr)' style={{ height: "100%" }} $gap={4}>
+							{/* 
+							
+												여기 조건이 더 들어가야.....
+												...
+												.
+												.
+												.
+												
+							
+							
+							
+							*/}
+							<SC.CustomH1 $size={1.125} children={`${getType[0] === "주간" ? "금일" : getType[0] === "월간" ? "이번주" : "이번달"} 출고 현황`} />
+							<SC.GridBox $gtc='repeat(3, 1fr)' style={{ height: "100%", minWidth: "350px" }} $gap={4}>
 								{userLoading ? (
 									<div>로딩 중... </div>
 								) : userIsError ? (
@@ -219,18 +248,18 @@ export const AdminDeshboard: React.FC = () => {
 												border: "1px solid #DEDEE0",
 												borderRadius: "10px",
 											}}>
-											<SC.CustomH3 $size={0.75} $color='textColorSub' children='출고현황' />
+											<SC.CustomH3 $size={0.75} $color='textColorSub' children='출고신청' />
 											<SC.CustomH3
-												$size={1.5}
+												$size={1}
 												children={
 													<>
-														13
+														{!!purchaseData && purchaseData.purchase.values[dayjs().day()]}
 														<span children='건' />
 													</>
 												}
 											/>
-											<SC.CustomH3 $size={0.75} $color='textColorSub' children={`전주, 7명`} />
 										</SC.FlexBox>
+
 										<SC.FlexBox
 											$gap={3}
 											$fd='column'
@@ -242,10 +271,11 @@ export const AdminDeshboard: React.FC = () => {
 											}}>
 											<SC.CustomH3 $size={0.75} $color='textColorSub' children='출고승인' />
 											<SC.CustomH3
-												$size={1.5}
+												$size={1}
 												children={
 													<>
-														5<span children='건' />
+														{!!purchaseData && purchaseData.approve.values[dayjs().day()]}
+														<span children='건' />
 													</>
 												}
 											/>
@@ -265,10 +295,11 @@ export const AdminDeshboard: React.FC = () => {
 											}}>
 											<SC.CustomH3 $size={0.75} $color='textColorSub' children='츨고취소' />
 											<SC.CustomH3
-												$size={1.5}
+												$size={1}
 												children={
 													<>
-														5<span children='건' />
+														{!!purchaseData && purchaseData.cancel.values[dayjs().day()]}
+														<span children='건' />
 													</>
 												}
 											/>
@@ -291,7 +322,7 @@ export const AdminDeshboard: React.FC = () => {
 								<SC.CustomH1 $size={1.125} children='전체 출고현황 그래프' />
 								<SC.GridBox $cgap={5} style={{ height: "100%", width: "100%" }}>
 									<SC.FlexBox style={{ width: "100%", height: "100%" }}>
-										<CustomDoughnut options={dataRatioOpts} data={purchaseRatio} />
+										<SC.CustomDoughnut options={dataRatioOpts} data={purchaseRatio} />
 									</SC.FlexBox>
 									<SC.FlexBox $fd='column' $gap={17} $ai='flex-start'>
 										{userLoading ? (
@@ -347,7 +378,7 @@ export const AdminDeshboard: React.FC = () => {
 								<SC.CustomH1 $size={1.125} children='신청 성별 그래프' />
 								<SC.GridBox $cgap={5} style={{ height: "100%", width: "100%" }}>
 									<SC.FlexBox style={{ width: "100%", height: "100%" }}>
-										<CustomDoughnut options={dataRatioOpts} data={purchaseGenderDonutData} />
+										<SC.CustomDoughnut options={dataRatioOpts} data={purchaseGenderDonutData} />
 									</SC.FlexBox>
 									<SC.FlexBox $fd='column' $gap={17} $ai='flex-start'>
 										{purchaseLoading ? (
@@ -378,7 +409,7 @@ export const AdminDeshboard: React.FC = () => {
 								<SC.CustomH1 $size={1.125} children='신청 연령대별 그래프' />
 								<SC.GridBox $gtc="1fr 200px" $gtr="1fr" style={{ width: "100%", height: "100%" }} >
 									<SC.FlexBox style={{ width: "100%", height: "100%" }}>
-									<SC.CustomLine options={barChartOpts} data={purchaseAgeDonutData} />
+										<SC.CustomLine options={barChartOpts} data={purchaseAgeDonutData} />
 									</SC.FlexBox>
 									<SC.FlexBox $gap={5} style={{ width: "100%", height: "100%" }}>
 
@@ -439,100 +470,3 @@ export const AdminDeshboard: React.FC = () => {
 		</SC.DeshboardGrid>
 	);
 };
-
-
-const CustomDoughnut = styled(Doughnut)`
-	max-height:95%;
-	max-width:95%;
-`
-
-
-
-/* <SC.CustomH1 $size={1.125} children='신청 연령대별 그래프' />
-								<SC.FlexBox style={{ height: "90%", margin: "0 auto" }} $gap={10}>
-									<div style={{ width: "120px", height: "120px" }}>
-										<Doughnut options={dataRatioOpts} data={purchaseAgeDonutData} />
-									</div>
-									<SC.FlexBox $fd='column' $gap={17} $ai='flex-start'>
-										{purchaseLoading ? (
-											<div>로딩 중... </div>
-										) : purchaseIsError ? (
-											<div>Error...{JSON.stringify(purchaseError)}</div>
-										) : (
-											<>
-												<SC.FlexBox $gap={5}>
-													<SC.RatioBox $size={14} $bColor='chartBlue' />
-													<SC.CustomH3 $size={0.875} $color='chartBlue' children='10~20대' />
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.values[0]}건`}
-													/>
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.ratios[0]}%`}
-													/>
-												</SC.FlexBox>
-												<SC.FlexBox $gap={5}>
-													<SC.RatioBox $size={14} $bColor='chartSkyblue' />
-													<SC.CustomH3 $size={0.875} $color='chartSkyblue' children='30대' />
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.values[1]}건`}
-													/>
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.ratios[1]}%`}
-													/>
-												</SC.FlexBox>
-												<SC.FlexBox $gap={5}>
-													<SC.RatioBox $size={14} $bColor='chartGreen' />
-													<SC.CustomH3 $size={0.875} $color='chartGreen' children='40대' />
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.values[2]}건`}
-													/>
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.ratios[2]}%`}
-													/>
-												</SC.FlexBox>
-												<SC.FlexBox $gap={5}>
-													<SC.RatioBox $size={14} $bColor='chartYellow' />
-													<SC.CustomH3 $size={0.875} $color='chartYellow' children='50대' />
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.values[3]}건`}
-													/>
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.ratios[3]}%`}
-													/>
-												</SC.FlexBox>
-												<SC.FlexBox $gap={5}>
-													<SC.RatioBox $size={14} $bColor='chartOrange' />
-													<SC.CustomH3 $size={0.875} $color='chartOrange' children='60대' />
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.values[4]}건`}
-													/>
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.ratios[4]}%`}
-													/>
-												</SC.FlexBox>
-												<SC.FlexBox $gap={5}>
-													<SC.RatioBox $size={14} $bColor='chartRed' />
-													<SC.CustomH3 $size={0.875} $color='chartRed' children='70대 이상' />
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.values[5]}건`}
-													/>
-													<SC.CustomH3
-														$size={0.875}
-														children={`${purchaseData.age.ratios[5]}%`}
-													/>
-												</SC.FlexBox>
-											</>
-										)}
-									</SC.FlexBox>
-								</SC.FlexBox> */

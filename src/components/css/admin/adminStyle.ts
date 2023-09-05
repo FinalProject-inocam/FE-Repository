@@ -1,7 +1,7 @@
 import * as SC from "../GlobalStyled"
 import { Styled } from "../../../types"
 import { css, styled } from "styled-components"
-import { Bar, Line } from "react-chartjs-2"
+import { Bar, Doughnut, Line } from "react-chartjs-2"
 
 const AdminNav = styled.nav`
   height:100vh;
@@ -137,7 +137,6 @@ const CustomBar = styled(Bar)`
   
 `
 
-
 const CustomLine = styled(Line)`
   width: 100%;
   max-height: 90%;
@@ -198,6 +197,196 @@ const ChatRoomList = styled.div<Partial<Styled>>`
   border: 1px solid #DEDEE0;
   background: ${({ $bColor, theme }) => $bColor ? theme.color[$bColor] : "#FFF"} 
 `
+const CustomDoughnut = styled(Doughnut)`
+	max-height:95%;
+	max-width:95%;
+`
+
+const Video = styled.video`
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transform: scaleX(-1);
+`
+const LoadingImg = styled.img`
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`
+
+
+const UserInfoGrid = styled.div<Partial<Styled>>`
+  ${SC.Grid} 
+  width:100%;
+  height: 100%;
+`
+
+const UserInfoInner = styled.section<Partial<Styled>>`
+  ${SC.Flex}
+  position: relative;
+  flex-direction: column;
+  gap: 10px;
+  padding: 30px 20px;
+  background-color: white;
+
+  h1 {
+    width: 100%;
+  }
+`
+
+const UserInfoInnerBox = styled.div<Partial<Styled>>`
+    ${SC.Grid}
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    padding: 20px;
+    border: 1px solid #DEDEE0;
+    background: #F3F3F8;
+
+    div, h3 {
+      font-size: 0.875rem;
+    }
+`
+const ChatTextArea = styled.textarea`
+  display: block;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  font-size: 0.875rem;
+  padding: 9px 20px;
+  border-radius: 5px;
+  border: 1px solid #DEDEE0;
+`
+
+const InfoShowBTN = styled.div<Partial<Styled>>`
+  position: absolute;
+  top: ${({ $top }) => `${$top}px`};
+  right: 0;
+`
+
+const ChattingLayout = styled.div<Partial<Styled>>`
+  ${SC.Grid}
+  position : relative;
+`
+
+const ChattingBottomBox = styled.div<Partial<Styled>>`
+  ${SC.Grid}
+  position: relative;
+`
+
+const ChattingSettingBtn = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  ${SC.cursor}
+  width: ${({ $width }) => `${$width}px`};
+  height: ${({ $width, $height }) => $height ? $height : $width};
+  background-color : ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+`
+
+const ChattingBtnBox = styled.div`
+  ${SC.Flex}
+  position: absolute;
+  height: 50px;
+  top: -50px;
+`
+
+const ChattingBtn = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  ${SC.cursor}
+  width: 60px;
+  height: 40px;
+  background-color : ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
+`
+
+
+const ChatInput = styled.input`
+  display: block;
+  padding: 9px 20px;
+  width: 100%;
+  height: 40px;
+  border-top : 1px solid #C7C7CB;
+  border-bottom : 1px solid #C7C7CB;
+`
+
+const ChattingArea = styled.section<Partial<Styled>>`
+  ${SC.Flex}
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  grid-template-columns: 1fr;
+  position: relative;
+  height: ${({ $height }) => $height};
+  overflow: auto;
+  padding-bottom: 30px;
+  background: linear-gradient(180deg, #E8E8FB 0%, #F3F3F8 27.08%);
+  &::-webkit-scrollbar {
+    display: none;
+    /* Chrome에서 스크롤바 숨기기 */
+  }
+`
+
+const ChattingMsg = styled.p<Partial<Styled>>`
+  ${SC.Flex}
+  max-width:77%;
+  padding: 6px 20px;
+  border-radius: 30px;
+  
+
+  ${({ $types }) => $types === "admin"
+    ? css`
+      border: 1px solid #C7C7CB;
+      background: #FBFBFD;  
+    `
+    : css`
+      background:  #4C4CFF;
+      color: white;
+    `
+  }
+`
+const ChattingDate = styled.p`
+  color:  #828295;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.154px;
+`
+
+const DateLine = styled.div<Partial<Styled>>`
+${SC.Flex}
+font-size: 0.75rem;
+margin: 20px 0;
+padding: 5px 15px;
+border-radius: 12px;
+background: #E4E4F5;
+color:#4C4CFF;
+`
+
+const WebRTCStateBTN = styled.div<Partial<Styled>>`
+  ${SC.Flex}
+  ${SC.cursor}
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  &:hover {
+    background-color: darkgray;
+  }
+
+  ${({ $types }) => $types === "closeBTN" && css`
+    background-color: rgba(0, 0, 0, 0.50);
+    &:hover {
+    background-color:rgba(0, 0, 0, 0.30);
+  }
+  `}
+`
 
 
 export {
@@ -216,11 +405,29 @@ export {
   PurchaseSecondRowInner,
   CustomBar,
   CustomLine,
+  CustomDoughnut,
 
   // 민원상담관련
   CivilComplaintLists,
   ChatNumber,
   ChatRoomOutLine,
+  Video,
   ChatRoomList,
-
+  ChattingArea,
+  ChattingBtn,
+  UserInfoInnerBox,
+  UserInfoGrid,
+  ChattingBtnBox,
+  UserInfoInner,
+  InfoShowBTN,
+  LoadingImg,
+  ChatTextArea,
+  ChattingSettingBtn,
+  ChattingLayout,
+  ChattingBottomBox,
+  ChatInput,
+  ChattingDate,
+  ChattingMsg,
+  DateLine,
+  WebRTCStateBTN
 }

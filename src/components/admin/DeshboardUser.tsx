@@ -1,6 +1,7 @@
 import { FC } from "react";
 import * as SC from "../css";
 import { useAdminDeshboard } from "../../hooks/admin";
+import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi' 
 import {
   Chart as ChartJS,
   PointElement,
@@ -10,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Doughnut, PolarArea } from "react-chartjs-2";
+import dayjs from "dayjs";
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -27,10 +29,13 @@ export const DeshboardUser: FC = () => {
     userData,
 
     // Chart
+    onReduce,
     dataRatioOpts,
     userGenderRatio,
     userAgeRatio,
   } = useAdminDeshboard();
+  console.log("userData", userData)
+
   return (
     <SC.ChartLayout $bColor='blue' $padding='40px 10px'>
       <SC.FlexBox $jc='space-between' style={{ height: "42px" }}>
@@ -61,22 +66,18 @@ export const DeshboardUser: FC = () => {
                   }}>
                   <SC.CustomH3 $size={0.75} $color='textColorSub' children='가입 회원 수' />
                   <SC.CustomH3
-                    $size={1.5}
+                    $size={1}
                     children={
                       <>
-                        13
+                        {onReduce(userData.users)}
                         <span children='건' />
-                        <span
-                          style={{
-                            color: 13 - userData.preUser >= 0 ? "red" : "blue",
-                            marginLeft: "5px",
-                            fontSize: "12px",
-                          }}
-                          children={`${13 - userData.preUser >= 0
-                            ? "↑" + (13 - userData.preUser)
-                            : "↓" + (13 - userData.preUser)
-                            }명`}
-                        />
+                        {!!userData && onReduce(userData.users) - userData.preUser < 0
+															? <span style={{ fontSize: "10px", marginLeft: "5px", color:"red" }} 
+																	children={<><BiSolidDownArrow /> {!!userData && onReduce(userData.users) - userData.preUser}건</>} />
+															: !!userData && onReduce(userData.users) - userData.preUser > 0
+															&& <span style={{ fontSize: "10px", marginLeft: "5px", color:"blue"  }} 
+																	children={<><BiSolidUpArrow/> {!!userData && onReduce(userData.users) - userData.preUser}건</>} />
+														}
                       </>
                     }
                   />
@@ -101,14 +102,26 @@ export const DeshboardUser: FC = () => {
                     children='이번달 가입 회원 수'
                   />
                   <SC.CustomH3
-                    $size={1.5}
+                    $size={1}
                     children={
                       <>
-                        5<span children='건' />
+                      {!!userData && userData.users[dayjs().format("M")]}
+                        <span children='건' />
+                        {!!userData && userData.users[dayjs().format("M")] - userData.users[+dayjs().format("M")-1] < 0
+															? <span style={{ fontSize: "10px", marginLeft: "5px", color:"red" }} 
+																	children={<><BiSolidDownArrow /> {!!userData &&  userData.users[dayjs().format("M")] - userData.users[+dayjs().format("M")-1]}건</>} />
+															: !!userData &&  userData.users[dayjs().format("M")] - userData.users[+dayjs().format("M")-1] > 0
+															&& <span style={{ fontSize: "10px", marginLeft: "5px", color:"blue"  }} 
+																	children={<><BiSolidUpArrow/> {!!userData &&  userData.users[dayjs().format("M")] - userData.users[+dayjs().format("M")-1]}건</>} />
+														}
                       </>
                     }
                   />
-                  <SC.CustomH3 $size={0.75} style={{ visibility: "visible", height: "15px" }} />
+                  <SC.CustomH3
+                    $size={0.75}
+                    $color='textColorSub'
+                    children={`지난달, ${!!userData && userData.users[+dayjs().format("M")-1]}명`}
+                  />
                 </SC.FlexBox>
               </>
             )}
