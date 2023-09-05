@@ -34,7 +34,7 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
       ["로그아웃", "Log Out"],
     ],
     admin: [
-      ["관리자", "Admin Page", "admin"],
+      ["관리자페이지", "Admin Page", "admin"],
       ["로그아웃", "Log Out"],
     ],
   };

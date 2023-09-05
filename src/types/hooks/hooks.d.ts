@@ -161,6 +161,8 @@ export interface UseLogin extends AsyncHooksDefault {
 	onSubmitLogin: (e: FormEvent<HTMLFormElement>) => void;
 	onSnsLogin: (sns: string) => () => void;
 	onSignupClick: () => void;
+	onSubmitLoginUser: () => void;
+	onSubmitLoginAdmin: () => void;
 }
 
 /* / 13 useCheckEmailCodeTimer / -------------------------------------------------------- */

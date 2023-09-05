@@ -46,6 +46,21 @@ export const useLogin = (state: string): Type.UseLogin => {
     }
   };
 
+
+  const onSubmitLoginUser = () => {
+    onpostLoginRTK({
+      email : "test@final.com",
+      password : "00000000a*"
+    });
+  }
+
+  const onSubmitLoginAdmin = () => {
+    onpostLoginRTK({
+      email : "admin1@final.com",
+      password : "00000000a*"
+    });
+  }
+
   useEffect(() => {
     passwordRef && setValiditeMsgP(["", true]);
   }, [passwordRef]);
@@ -83,5 +98,7 @@ export const useLogin = (state: string): Type.UseLogin => {
     onSubmitLogin,
     onSnsLogin,
     onSignupClick,
+    onSubmitLoginUser,
+    onSubmitLoginAdmin,
   };
 };
