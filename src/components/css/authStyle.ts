@@ -140,7 +140,6 @@ ${CommonBoxStyles}
 
 const LoginSignupButton = sc.styled.div`
 ${cursor}
-  margin-top: 5px;
 `;
 
 export {

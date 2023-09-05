@@ -19,6 +19,8 @@ export const Login: React.FC = () => {
 		onSubmitLogin,
 		onSnsLogin,
 		onSignupClick,
+		onSubmitLoginUser,
+    onSubmitLoginAdmin,
 	} = useLogin(state);
 
 	useEffect(() => {
@@ -34,7 +36,7 @@ export const Login: React.FC = () => {
 		<>
 			<SC.AuthTitle>로그인</SC.AuthTitle>
 			<SC.FlexBox>
-				<SC.AuthForm onSubmit={onSubmitLogin} $gtc={"repeat(1, 1fr)"} $rgap={40}>
+				<SC.AuthForm onSubmit={onSubmitLogin} $gtc={"repeat(1, 1fr)"} $rgap={20}>
 					<SC.FlexBox $gap={12} $fd={"column"}>
 						<div>
 							<SC.SignupLabel>이메일</SC.SignupLabel>
@@ -64,8 +66,11 @@ export const Login: React.FC = () => {
 						<div>
 							<SC.AuthSubmitInput type='submit' value='이메일 로그인' $state={true} />
 						</div>
-
 						<SC.LoginSignupButton onClick={onSignupClick}>회원가입하기</SC.LoginSignupButton>
+						<SC.FlexBox $gap={20} style={{marginTop:"5px"}}>
+						<SC.LoginSignupButton onClick={onSubmitLoginUser}>테스트계정로그인(회원)</SC.LoginSignupButton>
+						<SC.LoginSignupButton onClick={onSubmitLoginAdmin}>테스트계정로그인(관리자)</SC.LoginSignupButton>
+						</SC.FlexBox>
 					</SC.FlexBox>
 
           <SC.FlexBox $gap={10} $fd={"column"}>
