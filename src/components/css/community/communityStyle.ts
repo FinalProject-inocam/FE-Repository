@@ -363,12 +363,11 @@ const CommuityWriteInput = styled.input`
 const MoreModal = styled.div<Partial<Styled>>`
 	${SC.Flex}
 	position: absolute;
-	top: -700px;
-	right: -100px;
+	top: 30px;
+	right: 0;
 	width: 126px;
-	height: 132px;
+	/* height: 132px; */
 	gap: 10px;
-	margin: 720px 5px 1049px 749px;
 	padding: 15px;
 	border-radius: 5px;
 	box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.15);
