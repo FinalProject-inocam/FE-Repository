@@ -164,7 +164,7 @@ export const AdminChatting: FC = () => {
           <UserInfoInner>
             <SC.CustomH1>신청정보</SC.CustomH1>
             <UserInfoInnerBox $gtc="100px 1fr" $rgap={10}>
-             {userInfoState && (<>
+             {userInfoState && userInfoState.userPurchaseList.length > 0 && (<>
               <h3>모델(주문번호)</h3>
               <div>{`${userInfoState.userPurchaseList[0].type}${userInfoState.userPurchaseList[0].trim}(주문번호 : ${userInfoState.userPurchaseList[0].purchaseId})`}</div>
               <h3>색상</h3>
