@@ -67,6 +67,7 @@ export const GetPopularLists: FC = () => {
 											$types='shortening'
 											$color={list.rank === 1 ? "lightgray3" : "lightgray2"}
 											children={<p children={list.title} />}
+											onClick={navigateHandler(list.postId)}
 										/>
 										<SC.PostingText
 											$color='lightgray2'
