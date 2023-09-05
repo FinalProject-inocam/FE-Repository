@@ -50,7 +50,7 @@ export const AdminChatting: FC = () => {
   }
 
 
-  if (!state) return <SC.FlexBox children={<img width="90%" src={ASS.innoLogo} alt="innoLogo" />} />
+  if (!state) return <SC.FlexBox children={<img width="50%" style={{opacity:"0.3"}} src={ASS.innoLogo} alt="innoLogo" />} />
   else return (
     <SC.GridBox $gtc={infoShow ? "minmax(500px, 1fr) 330px" : "minmax(500px, 1fr)"} $gtr="1fr">
       <SC.ChattingLayout $gtc="1fr" $gtr={showWebRTC ? "300px 1fr 40px" : "1fr 40px"}>
