@@ -152,7 +152,8 @@ const CivilComplaintLists = styled.div<Partial<Styled>>`
 
 const ChatNumber = styled.div<Partial<Styled>>`
   ${SC.Flex}
-  
+  width: 100%;
+  height: 25px;
   font-size: 0.875rem;
   border-radius: 30px;
   ${({ $bColor, theme }) => $bColor === 'blue'
