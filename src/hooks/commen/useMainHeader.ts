@@ -19,10 +19,10 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
   };
 
   const sideBarNav = [
-    ["Models", "innocar"],
-    ["Order", "innocar/order"],
-    ["Community", "community/1"],
-    ["Wrapping Shop", "wrapping"],
+    ["Models", "innocar", "innocar"],
+    ["Order", "innocar/order", "order"],
+    ["Community", "community/1", "community"],
+    ["Wrapping Shop", "wrapping", "wrapping"],
   ];
   const authNav = {
     noPermission: [
@@ -113,6 +113,6 @@ export const useMainHeader = (setState?: Type.SetState): Type.UseMainHeader => {
     sideBarNav,
     authNav,
     onNavigate,
-    pathname,
+    pathname
   };
 };

@@ -285,7 +285,7 @@ export const useSocketRoom = () => {
         username: sub
       })
     }
-
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sub, room, dispatch])
 
   const scrollToBottom = () => {
