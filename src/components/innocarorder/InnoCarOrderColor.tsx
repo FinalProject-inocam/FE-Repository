@@ -2,7 +2,6 @@
 import { FC, ChangeEvent, useEffect } from "react";
 import { styled } from "styled-components";
 import { Flex, FlexBox, cursor } from "../css/GlobalStyled";
-import * as RTK from "../../redux";
 import { Styled } from "../../types";
 import { check, whiteCheck } from "../../assets";
 
@@ -13,18 +12,16 @@ export const InnoCarOrderColor: FC<any> = ({
   setCarColor,
   carColors,
 }) => {
-  const dispatch = RTK.useAppDispatch();
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setCarColor(e.target.value);
   };
 
   useEffect(() => {
-    dispatch(RTK.setInnocarOrderData({ color: carColor }));
-    setColorPrice(carColor === "옐로우" && 80000);
-  }, [dispatch, carColor, setColorPrice]);
+    setColorPrice(carColor === "옐로우 (yellow)" && 80000);
+  }, [setColorPrice, carColor]);
 
   return (
-    <>
+    <div style={{ marginTop: "15px" }}>
       <CarColorOption>외장</CarColorOption>
       <CarCPName>
         <div>{carColor}</div>
@@ -46,7 +43,7 @@ export const InnoCarOrderColor: FC<any> = ({
                 <CarColorLabel htmlFor={item[0]} $color={item[0]}>
                   {carColor === item[1] && (
                     <CarColorCheck
-                      src={item[1] === "블랙" ? whiteCheck : check}
+                      src={item[1] === "블랙 (black)" ? whiteCheck : check}
                       alt="check"
                     />
                   )}
@@ -56,7 +53,7 @@ export const InnoCarOrderColor: FC<any> = ({
           ))}
         </FlexBox>
       </CarColorLayout>
-    </>
+    </div>
   );
 };
 

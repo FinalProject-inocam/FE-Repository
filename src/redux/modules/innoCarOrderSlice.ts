@@ -1,10 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface innoCarOrderSliceType {
+interface InnoCarOrderSliceType {
   type: string;
   price: number;
   trim: string;
   color: string;
+  gender: string;
+  phoneNumber: string;
+  usage: string;
+  zoneNo: string;
+  addressName: string;
+  alarm: boolean;
+  content: string;
 }
 
 const innoCarOrderSlice = createSlice({
@@ -13,7 +20,7 @@ const innoCarOrderSlice = createSlice({
   reducers: {
     setInnocarOrderData: (
       state,
-      action: PayloadAction<Partial<innoCarOrderSliceType>>
+      action: PayloadAction<Partial<InnoCarOrderSliceType>>
     ) => {
       return { ...state, ...action.payload };
     },
@@ -24,6 +31,6 @@ const innoCarOrderSlice = createSlice({
 });
 
 export const innoCarOrderReducer = innoCarOrderSlice.reducer;
-export const selectInnoCarOrder = (state: any) => state.innoCarOrderReducer; // 수정
+export const selectInnoCarOrder = (state: any) => state.innoCarOrderReducer;
 export const { setInnocarOrderData, deleteInnocarOrderData } =
   innoCarOrderSlice.actions;

@@ -71,7 +71,7 @@ const SignupGenderLabel = sc.styled.label<Partial<Styled>>`
   ${({ theme }) => theme.font.PretendardSB}
   font-size: 18px;
   font-weight: 600;
-  width: 185px;
+  width: ${({ $width }) => ($width ? $width : "185px")};
   color: ${({ $state, theme }) => ($state ? "white" : theme.color.blue)};
   border: 1px solid ${({ $state, theme }) =>
     $state ? "none" : theme.color.blue};

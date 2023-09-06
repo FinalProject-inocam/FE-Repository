@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useState, ChangeEvent, useEffect } from "react";
 import * as SC from "../css";
-import { useUserInput } from "../../hooks";
+import * as RTK from "../../redux";
 
 export const UserInput: FC<any> = ({
   name,
@@ -9,15 +9,37 @@ export const UserInput: FC<any> = ({
   inputRef,
   // submitted,
   value,
-  // validiteMsg,
-  // setValiditeMsg,
 }) => {
-  const { input, onBlurOrderUserDispatch, onChangeInput } = useUserInput({
-    name,
-    // submitted,
-    value,
-    // setValiditeMsg,
-  });
+  const [input, setInput] = useState<string>(value ? value : "");
+  const [checked, setChecked] = useState<boolean>(true);
+
+  const dispatch = RTK.useAppDispatch();
+
+  useEffect(() => {
+    setInput(value ? value : "");
+  }, [value]);
+
+  useEffect(() => {
+    !!input === true &&
+      dispatch(RTK.setInnocarOrderData({ [`${name}`]: input }));
+  }, [dispatch, input, name]);
+
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    name === "birthYear" && setChecked(true);
+    setInput(e.target.value);
+  };
+
+  const now = new Date();
+  const year = now.getFullYear();
+
+  const onBlurOrderUserDispatch = () => {
+    if (year - Number(input) >= 16 || name === "name") {
+      dispatch(RTK.setInnocarOrderData({ [`${name}`]: input }));
+    } else {
+      setChecked(false);
+      dispatch(RTK.setInnocarOrderData({ [`${name}`]: null }));
+    }
+  };
 
   return (
     <>
@@ -29,16 +51,8 @@ export const UserInput: FC<any> = ({
         placeholder={placeholder}
         ref={inputRef}
         $width={"100%"}
-        $state={true}
-        // $state={validiteMsg[1]}
+        $state={name === "name" ? true : checked}
       />
     </>
   );
 };
-
-{
-  /* <SC.ValidateInputMsg
-$signColor={validiteMsg[1]}
-children={validiteMsg[0]}
-/> */
-}
