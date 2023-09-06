@@ -31,9 +31,9 @@ export const InnoCar: React.FC = () => {
 
   return (
     <>
-      <SC.SectionFlex $fd='column' $jc='flex-start' ref={sectionRef1} $bColor="white" style={{paddingTop:"190px"}}>
+      <SC.SectionFlex $fd='column' ref={sectionRef1} $bColor="white" $gap={10}>
         <SC.CustomH1 $size={3} children="INNO-Create I"/>
-        <SectionRef1Img ref={sectionRef1ImgRef}><SC.FigureObjectFitImg width='1024px' height='500px' src={require('../../assets/porshce/porsche-normal.png')} alt='porsche-normal' types="innoCarSection1Img"/></SectionRef1Img>
+        <SectionRef1Img ref={sectionRef1ImgRef}><SC.FigureObjectFitImg width='1024px' height='450px' src={require('../../assets/porshce/porsche-normal.png')} alt='porsche-normal' types="innoCarSection1Img"/></SectionRef1Img>
         <Section1BtnFlex $gap={20}>
         <SectionFlex1Btn $bColor='lightgray3' onClick={onToggleCarCharacter} children="기술사양"/>
         <SectionFlex1Btn onClick={onNavigate({url:'order'})} children="주문하기" />
@@ -168,7 +168,7 @@ const Section1BtnFlex = styled.div<Partial<Styled>>`
 const SectionRef1Img = styled.div`
   opacity: 0;
   width: 100%;
-  transform:scale(1.5);
+  transform:scale(1);
   transition: all 1.5s linear;
 `
 
