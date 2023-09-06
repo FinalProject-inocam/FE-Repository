@@ -16,6 +16,7 @@ export const InnoCarOrderUser: FC<any> = ({
   inputRef3,
   inputRef4,
   inputRef5,
+  inputRef6,
 }) => {
   const {
     isLoading: UserIsLoading,
@@ -30,7 +31,9 @@ export const InnoCarOrderUser: FC<any> = ({
   return (
     <OrderUserLayout>
       <div>
-        <SignupLabel>이름</SignupLabel>
+        <SignupLabel>
+          이름<CheckStart>*</CheckStart>
+        </SignupLabel>
         <UserInput
           name={"name"}
           type={"text"}
@@ -42,7 +45,9 @@ export const InnoCarOrderUser: FC<any> = ({
       </div>
 
       <div>
-        <SignupLabel>출생년도</SignupLabel>
+        <SignupLabel>
+          출생년도<CheckStart>*</CheckStart>
+        </SignupLabel>
         <UserInput
           name={"birthYear"}
           type={"number"}
@@ -54,12 +59,16 @@ export const InnoCarOrderUser: FC<any> = ({
       </div>
 
       <div>
-        <SignupLabel>전화번호</SignupLabel>
+        <SignupLabel>
+          전화번호<CheckStart>*</CheckStart>
+        </SignupLabel>
         <UserThreeInput value={UserData?.phonNumber} inputRef={inputRef3} />
       </div>
 
       <div>
-        <SignupLabel>성별</SignupLabel>
+        <SignupLabel>
+          성별<CheckStart>*</CheckStart>
+        </SignupLabel>
         <UserRadioInput
           name={"gender"}
           id1={"genderM"}
@@ -69,11 +78,14 @@ export const InnoCarOrderUser: FC<any> = ({
           value2={"FEMALE"}
           children1={"남성"}
           children2={"여성"}
+          inputRef={inputRef6}
         />
       </div>
 
       <div>
-        <SignupLabel>주소</SignupLabel>
+        <SignupLabel>
+          주소<CheckStart>*</CheckStart>
+        </SignupLabel>
         <UserAddress inputRef1={inputRef4} inputRef2={inputRef5} />
       </div>
 
@@ -101,4 +113,9 @@ const OrderUserLayout = styled.div`
   flex-direction: column;
   gap: 20px;
   margin-top: 30px;
+`;
+
+const CheckStart = styled.span`
+  color: ${({ theme }) => theme.color.red};
+  padding-left: 2px;
 `;

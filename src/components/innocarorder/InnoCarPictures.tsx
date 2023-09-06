@@ -17,7 +17,7 @@ export const InnoCarPictures: FC<{ carColor: string }> = ({ carColor }) => {
       "https://finalimgbucket.s3.amazonaws.com/41217304-7cfa-4a2e-9b24-833eefb69af5",
     ],
     "그레이 (gray)": [
-      "https://finalimgbucket.s3.amazonaws.com/55e69d83-2229-485c-83ec-abb9cd296ae7",
+      "https://finalimgbucket.s3.amazonaws.com/c7859019-346a-4e00-991a-17f82cff46af",
       "https://finalimgbucket.s3.amazonaws.com/35b04c0c-e152-4d33-96d8-461b1c560bff",
     ],
     "레드 (red)": [
@@ -29,7 +29,7 @@ export const InnoCarPictures: FC<{ carColor: string }> = ({ carColor }) => {
       "https://finalimgbucket.s3.amazonaws.com/662806f0-67fa-4e98-bbd0-9424cdfdbaa8",
     ],
     "와인 (wine)": [
-      "https://finalimgbucket.s3.amazonaws.com/cf8e1578-187a-46ec-852d-361c6bee684a",
+      "https://finalimgbucket.s3.amazonaws.com/3142f3e0-d7b4-4f61-8893-40cae508a85a",
       "https://finalimgbucket.s3.amazonaws.com/1b212174-e468-4392-9b1c-83c9a0e205bb",
     ],
     "옐로우 (yellow)": [
@@ -70,13 +70,18 @@ export const InnoCarPictures: FC<{ carColor: string }> = ({ carColor }) => {
 };
 
 const CarLayout = styled.div`
-  background-color: black;
+  position: relative;
+  margin-top: 90px;
+  background-color: white;
   width: calc(100vw - 500px);
   height: 100%;
 `;
 
 const StyledSlider = styled(Slider)`
   position: relative;
+  margin-top: 2%;
+  height: 100%;
+
   .slick-prev::before,
   .slick-next::before {
     opacity: 0;
@@ -104,8 +109,6 @@ const StyledSlider = styled(Slider)`
 `;
 
 const CarImage = styled.img`
-  padding-top: 90px;
-  margin-top: 2%;
   width: 100%;
   height: 100%;
   object-fit: cover;

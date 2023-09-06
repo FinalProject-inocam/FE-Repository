@@ -12,6 +12,8 @@ interface InnoCarOrderSliceType {
   addressName: string;
   alarm: boolean;
   content: string;
+  name: string;
+  birthYear: string;
 }
 
 const innoCarOrderSlice = createSlice({

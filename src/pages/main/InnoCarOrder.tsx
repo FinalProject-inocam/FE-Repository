@@ -13,6 +13,7 @@ export const InnoCarOrder: React.FC = () => {
   const [trimPrice, setTrimPrice] = useState<number>(0);
   const [colorPrice, setColorPrice] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [resultModal, setResultModal] = useState(false);
 
   const [carColor, setCarColor] = useState<string>("화이트 (white)");
 
@@ -25,11 +26,14 @@ export const InnoCarOrder: React.FC = () => {
     ["yellow", "옐로우 (yellow)"],
   ];
 
+  const orderLayoutRef = useRef<HTMLDivElement | null>(null);
+
   const inputRef1 = useRef<HTMLInputElement | null>(null);
   const inputRef2 = useRef<HTMLInputElement | null>(null);
   const inputRef3 = useRef<HTMLInputElement | null>(null);
   const inputRef4 = useRef<HTMLInputElement | null>(null);
   const inputRef5 = useRef<HTMLInputElement | null>(null);
+  const inputRef6 = useRef<HTMLInputElement | null>(null);
 
   const slideWidth = 500;
   const totalPage = 3;
@@ -52,6 +56,7 @@ export const InnoCarOrder: React.FC = () => {
   const phoneValue = inputRef3.current?.value;
   const zoneNoValue = inputRef4.current?.value;
   const addressValue = inputRef5.current?.value;
+  const genderValue = inputRef6.current?.value;
 
   const getCarOrderInfo = RTK.useAppSelector(RTK.selectInnoCarOrder);
 
@@ -59,7 +64,14 @@ export const InnoCarOrder: React.FC = () => {
     RTK.usePostPurchasesMutation();
 
   const onClickDoneBtn = () => {
-    if (nameValue && birthValue && phoneValue && zoneNoValue && addressValue) {
+    if (
+      nameValue &&
+      birthValue &&
+      phoneValue &&
+      zoneNoValue &&
+      addressValue &&
+      genderValue
+    ) {
       onPostPurchase(getCarOrderInfo);
     } else {
       setIsModalOpen(true);
@@ -67,9 +79,9 @@ export const InnoCarOrder: React.FC = () => {
   };
 
   useEffect(() => {
-    isSuccess && <COMP.InnoCarOrderDone />;
+    isSuccess && setResultModal(true);
     isError && console.log(error);
-  });
+  }, [isSuccess, isError, error]);
 
   const updateSlidePosition = useCallback(() => {
     const offset = -slideIndex * slideWidth;
@@ -84,12 +96,25 @@ export const InnoCarOrder: React.FC = () => {
   useEffect(() => {
     dispatch(RTK.deleteInnocarOrderData());
     dispatch(RTK.setInnocarOrderData({ [`type`]: "INNO-Create I" }));
+    dispatch(RTK.setInnocarOrderData({ [`trim`]: "INNO I Air" }));
+    dispatch(RTK.setInnocarOrderData({ [`alarm`]: true }));
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(RTK.setInnocarOrderData({ [`color`]: carColor }));
   }, [dispatch, carColor]);
 
+  useEffect(() => {
+    orderLayoutRef.current &&
+      (orderLayoutRef.current.style.height = `${window.innerHeight}px`);
+    resultModal &&
+      orderLayoutRef.current &&
+      (orderLayoutRef.current.style.overflow = "hidden");
+  }, [orderLayoutRef, resultModal]);
+
   return (
     <div>
-      <Section $gtc="1fr 500px">
+      <Section $gtc="1fr 500px" ref={orderLayoutRef}>
         <COMP.InnoCarPictures carColor={carColor} />
 
         <Carousel>
@@ -116,7 +141,7 @@ export const InnoCarOrder: React.FC = () => {
               <CarNameInfo>INNO-Create I</CarNameInfo>
               <SC.FlexBox $ai={"end"} $jc={"none"}>
                 <CarOptionInfo>신청자 정보</CarOptionInfo>
-                <WarningText>* 모든 항목 기입 부탁드립니다.</WarningText>
+                <WarningText>* 는 필수 입력 항목 입니다.</WarningText>
               </SC.FlexBox>
               <COMP.InnoCarOrderUser
                 inputRef1={inputRef1}
@@ -124,6 +149,7 @@ export const InnoCarOrder: React.FC = () => {
                 inputRef3={inputRef3}
                 inputRef4={inputRef4}
                 inputRef5={inputRef5}
+                inputRef6={inputRef6}
               />
             </CarouselSlide>
 
@@ -166,7 +192,7 @@ export const InnoCarOrder: React.FC = () => {
             <>
               <PageBtn onClick={onClickPrevBtn} $direction="left">
                 <PageArrow src={preArrow} $direction="left" alt="화살표" />
-                문의 사항
+                정보 입력
               </PageBtn>
               <PageBtn onClick={onClickDoneBtn} $direction="end">
                 신청 완료
@@ -175,10 +201,11 @@ export const InnoCarOrder: React.FC = () => {
             </>
           )}
         </PageBtnLayout>
+        {resultModal && <COMP.InnoCarOrderDone />}
       </Section>
       {isModalOpen && (
         <COMP.Modal state={true} setState={setIsModalOpen}>
-          필수 항목들을 입력하세요
+          신청자 정보를 입력하세요
         </COMP.Modal>
       )}
     </div>
@@ -187,7 +214,9 @@ export const InnoCarOrder: React.FC = () => {
 
 const Section = styled.div<Partial<Type.Styled>>`
   ${SC.Grid}
-  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   height: 100vh;
 `;
 
