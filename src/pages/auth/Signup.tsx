@@ -2,6 +2,7 @@ import React from "react";
 import { useSignup } from "../../hooks";
 import SignupLogo from "../../assets/SignupLogo.png";
 import * as SC from "../../components";
+import { useLayoutRef } from "../../hooks/auth/useLayoutRef";
 
 export const Signup: React.FC = () => {
 	const {
@@ -18,11 +19,10 @@ export const Signup: React.FC = () => {
 		adminCheck,
 		onSubmitSign,
 	} = useSignup();
+	const LayoutRef = useLayoutRef()
 
 	return (
-		<>
-			<SC.AuthTitle>이노캠 모터스에 오신걸 환영합니다.</SC.AuthTitle>
-			<SC.FlexBox>
+			<SC.FlexBox ref={LayoutRef} style={{paddingTop:"90px"}}>
 				<SC.AuthForm onSubmit={onSubmitSign} $gap={40} $width={"920px"}>
 					<SC.FlexBox $fd={"column"} $gap={20}>
 						<SC.FlexBox>
@@ -105,6 +105,5 @@ export const Signup: React.FC = () => {
 					</SC.FlexBox>
 				</SC.AuthForm>
 			</SC.FlexBox>
-		</>
 	);
 };

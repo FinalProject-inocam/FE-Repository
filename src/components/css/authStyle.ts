@@ -17,7 +17,6 @@ const AuthForm = sc.styled.form<Partial<Styled>>`
   ${Grid}
   width: ${({ $width }) => $width};
   padding: 40px;
-  padding-top: 50px;
   background-color: ${({ theme }) => theme.color.white};
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 10px;

@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLogin, useRouter } from "../../hooks";
 import { kakaoIcon, naverIcon, googleIcon } from "../../assets";
 import * as SC from "../../components";
+import { styled } from "styled-components";
+import { useLayoutRef } from "../../hooks/auth/useLayoutRef";
 
 export const Login: React.FC = () => {
 	const { onNavigate, state } = useRouter();
@@ -23,19 +25,29 @@ export const Login: React.FC = () => {
     onSubmitLoginAdmin,
 	} = useLogin(state);
 
+	const [failModal, setFailModal] = useState<boolean>(false)
+
 	useEffect(() => {
 		if (isSuccess) {
 			onNavigate({
 				url: state === null || state === "/Signup" || state === "/Signup/admin" ? "/" : state,
 			})();
 		}
-		isError && console.log("query Err", error);
-	}, [isSuccess, state, isError, error, onNavigate]);
+	}, [isSuccess, state, onNavigate]);
+
+	useEffect(()=>{
+		isError && setFailModal(true)
+	}, [isError])
+
+	const LayoutRef = useLayoutRef()
 
 	return (
-		<>
-			<SC.AuthTitle>로그인</SC.AuthTitle>
-			<SC.FlexBox>
+			<SC.FlexBox ref={LayoutRef} style={{paddingTop:"90px"}}>
+				{isError && failModal 
+					&& <FailModalDiv onClick={() =>setFailModal(false)} children={<>
+					<div>{error as string}</div>
+					<CloseBTN children="닫기" />
+					</>} />}
 				<SC.AuthForm onSubmit={onSubmitLogin} $gtc={"repeat(1, 1fr)"} $rgap={20}>
 					<SC.FlexBox $gap={12} $fd={"column"}>
 						<div>
@@ -89,6 +101,32 @@ export const Login: React.FC = () => {
           </SC.FlexBox>
         </SC.AuthForm>
       </SC.FlexBox>
-    </>
   );
 };
+
+
+const FailModalDiv = styled.div`
+	${SC.Flex}
+	flex-direction: column;
+	gap: 10px;
+	position: absolute;
+	top: 50;
+	left: 50%;
+	border-radius: 30px;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	height: 100px;
+	padding: 20px;
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.8) 0px 3px 20px;
+`
+
+const CloseBTN = styled.div`
+	${SC.Flex}
+	${SC.cursor}
+	padding: 10px 30px;
+	border-radius: 20px;
+	border: none;
+	color:white;
+	background-color: ${({theme})=> theme.color.blue};
+`

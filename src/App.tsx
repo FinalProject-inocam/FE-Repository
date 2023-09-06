@@ -31,15 +31,14 @@ const App: React.FC = () => {
 						<Route path='wrapping/write' element={<Page.DecorationWrite />} />
 						<Route path='/mypage' element={<Page.MyPage />} />
 					</Route>
-				</Route>
 
-				{/* 헤더에 따른 중첩라우터 :: AuthRouter */}
-				<Route element={<Page.AuthRouter />}>
+					{/* Auth 관련부분 */}
 					<Route path='signup' element={<Page.Signup />} />
 					<Route path='signup/admin' element={<Page.Signup />} />
 					<Route path='login' element={<Page.Login />} />
 				</Route>
-        {/* <Route element={<Page.ProtectiveRouterA />}> */}
+
+        <Route element={<Page.ProtectiveRouterA />}>
           <Route path="/admin" element={<Suspense fallback={<div>Loading...</div>} children={<Page.LazyAdmin/>} />}>
             <Route index element={<Page.AdminDeshboard />} />
             <Route path="deliverymanagement" element={<Page.DeliveryManagement/>}/>
@@ -48,7 +47,8 @@ const App: React.FC = () => {
               <Route path="room" element={<AdminChatting />}/>
             </Route>
           </Route>
-        {/* </Route> */}
+        </Route>
+				
 				{/* Redirect 페이지 */}
 				<Route path='/api/auth/login/kakao' element={<Page.KakaoRedirect />} />
 				<Route path='/api/auth/login/google' element={<Page.GoogleRedirect />} />
