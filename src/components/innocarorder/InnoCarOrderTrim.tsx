@@ -11,6 +11,10 @@ export const InnoCarOrderTrim: FC<any> = ({ setTrimPrice }) => {
     setInput(e.target.value);
   };
 
+  // useEffect(() => {
+  //   !!input && dispatch(RTK.setInnocarOrderData({ trim: input }));
+  // }, [dispatch, input]);
+
   useEffect(() => {
     dispatch(RTK.setInnocarOrderData({ trim: input }));
     setTrimPrice(parseInt(input === "INNO I Air" ? "500800000" : "510800000"));
@@ -31,7 +35,7 @@ export const InnoCarOrderTrim: FC<any> = ({ setTrimPrice }) => {
         style={{ display: "none" }}
       />
       <CarTrimLabel htmlFor="air" $state={input === "INNO I Air"}>
-        <CarTrimText>INNO I 에어</CarTrimText>
+        <CarTrimText>INNO I Air</CarTrimText>
         <CarTrimPrice>50,080,0000 원</CarTrimPrice>
       </CarTrimLabel>
       <input
@@ -43,7 +47,7 @@ export const InnoCarOrderTrim: FC<any> = ({ setTrimPrice }) => {
         style={{ display: "none" }}
       />
       <CarTrimLabel htmlFor="light" $state={input === "INNO I Light"}>
-        <CarTrimText>INNO I 라이트</CarTrimText>
+        <CarTrimText>INNO I Light</CarTrimText>
         <CarTrimPrice>51,080,0000 원</CarTrimPrice>
       </CarTrimLabel>
     </SC.FlexBox>

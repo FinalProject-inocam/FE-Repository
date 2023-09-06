@@ -7,9 +7,10 @@ export const UserCheckInput: FC = () => {
   const [input, setInput] = useState<boolean>(true);
   const dispatch = RTK.useAppDispatch();
 
-  useEffect(() => {
-    !!input === true && dispatch(RTK.setInnocarOrderData({ [`alarm`]: input }));
-  }, [dispatch, input]);
+  //   useEffect(() => {
+  //     input === true && dispatch(RTK.setInnocarOrderData({ [`alarm`]: input }));
+  //     // eslint-disable-next-line
+  //   }, []);
 
   useEffect(() => {
     dispatch(RTK.setInnocarOrderData({ [`alarm`]: input }));
