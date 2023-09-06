@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-export const useButtonThrottle = (setState: any, delay: number) => {
+export const useLikeButtonThrottle = (callback: () => void, delay: number) => {
 	const handleThrottle = (callback: () => void, delay: number) => {
 		let timeId: NodeJS.Timeout | null = null;
 
@@ -13,12 +13,6 @@ export const useButtonThrottle = (setState: any, delay: number) => {
 		};
 	};
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const onThrottle = useCallback(
-		handleThrottle(() => {
-			setState((pre: boolean) => !pre);
-		}, delay),
-		[]
-	);
+	const onThrottle = useCallback(handleThrottle(callback, delay), [callback, delay]);
 	return onThrottle;
 };
