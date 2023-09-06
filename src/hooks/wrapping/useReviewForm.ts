@@ -1,4 +1,4 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import * as RTK from "../../redux";
 import * as Type from "../../types";
 import { selectReviewForm, useAppSelector } from "../../redux";
@@ -10,7 +10,7 @@ export const useReviewForm = (setPage:any): Type.UseReviewFormReturnType => {
 	const [compressed, setCompressed] = useState<boolean>(false);
 	const [compressedImg, setCompressedImg] = useState<File[] | null>(null);
 	const [previewImg, setPreviewImg] = useState<(string | ArrayBuffer | null)[]>([]);
-	const [onPostWSReviewRTK, queryInfo] = RTK.usePostWrappingCommentMutation();
+	const [onPostWSReviewRTK] = RTK.usePostWrappingCommentMutation();
 	const dispatch = RTK.useAppDispatch();
 
 	const onSubmitReview = (e: FormEvent<HTMLFormElement>) => {
@@ -29,8 +29,5 @@ export const useReviewForm = (setPage:any): Type.UseReviewFormReturnType => {
 		setPage(1)
 		dispatch(RTK.deleteReiewDate());
 	};
-	useEffect(() => {
-		console.log("queryInfo : ", queryInfo);
-	}, [queryInfo]);
 	return { previewImg, setPreviewImg, setCompressedImg, compressed, setCompressed, onSubmitReview };
 };

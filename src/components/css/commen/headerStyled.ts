@@ -198,6 +198,7 @@ const CopyRigte = styled(FooterP)`
 const DeskTopNav = styled.div`
 	${SC.Flex}
 	justify-content: space-between;
+	padding : 0 20px;
 	width: 100%;
 
 	@media (max-width: 1024px) {
@@ -207,15 +208,32 @@ const DeskTopNav = styled.div`
 
 const CustomUl = styled.ul`
 	${SC.Flex}
+	position: relative;
 	gap : 20px;
 `;
 
 const CustomLi = styled.li`
+	position: relative;
 	${SC.Flex}
 	${SC.cursor}
   list-style-type: none;
 	height: ${({ theme }) => theme.headerHeight.desktop};
+
+	&:hover {
+		color: ${({ theme }) => theme.color.blue};
+	}
 `;
+
+const HeaderStateLine = styled.div`
+	position: absolute;
+	top: 65%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	height: 3px;
+	background-color: ${({ theme }) => theme.color.blue};
+	border-radius: 50px;
+`
 
 export {
 	// SplashScreen 사이드바
@@ -241,4 +259,5 @@ export {
 	DeskTopNav,
 	CustomUl,
 	CustomLi,
+	HeaderStateLine
 };

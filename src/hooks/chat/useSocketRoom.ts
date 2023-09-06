@@ -260,12 +260,10 @@ export const useSocketRoom = () => {
       })
 
       socketRef.current.on("previousMsg", (data) => {
-        console.log("previousMsg", data)
         dispatch(RTK.setChatMsg(data))
       })
 
       socketRef.current.on("roomInfo", (data) => {
-        console.log(data)
         setUserInfoState(data)
         getUserInfoMemo(data.memo)
       })
@@ -275,7 +273,6 @@ export const useSocketRoom = () => {
       })
 
       socketRef.current.on("peerOut", () => {
-        // console.log(data)
       })
     }
     return () => {
@@ -288,7 +285,7 @@ export const useSocketRoom = () => {
         username: sub
       })
     }
-
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sub, room, dispatch])
 
   const scrollToBottom = () => {

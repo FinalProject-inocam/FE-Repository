@@ -59,13 +59,11 @@ export const useCommunityFormimgs = ({ imgs, setImgs, submited }: any) => {
 		setPreviewimg([]);
 		const deleteImg = [...imgs];
 		deleteImg.splice(idx, 1);
-		console.log("idx", idx, deleteImg);
 		setImgs(deleteImg);
 	};
 
 	useEffect(() => {
 		if (imgs.length > 0) {
-			console.log("리사이징 완료", imgs);
 			for (let i = 0; i < imgs.length; i++) {
 				let file = imgs[i];
 				let reader = new FileReader();

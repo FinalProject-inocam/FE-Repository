@@ -28,7 +28,6 @@ export const DetailReviewList: FC<any> = ({ page, setPage }) => {
 			}
 			dispatch(RTK.setMergeDate(data.content));
 			// setLoadingPage(null);
-			console.log("Merged Data:", getMergeData);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isSuccess]);

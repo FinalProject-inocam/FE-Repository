@@ -25,7 +25,6 @@ export const InnoCarOrderUser: FC<any> = ({
   if (UserIsLoading) <div> 로딩중 </div>;
   else if (UserIsError) <div> 에러 </div>;
   else {
-    console.log(UserData);
   }
 
   return (

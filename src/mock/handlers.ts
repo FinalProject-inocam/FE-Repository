@@ -112,8 +112,7 @@ export const handlers = [
 
   rest.get(
     `${process.env.REACT_APP_SERVER_API}/api/auth/checkcode`,
-    async (req, res, ctx) => {
-      console.log("req", req.url.searchParams.get("code"));
+    async (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
@@ -129,7 +128,6 @@ export const handlers = [
   rest.get<Type.UserInfo>(
     `${process.env.REACT_APP_SERVER_API}/api/auth/nickname`,
     async (req, res, ctx) => {
-      console.log("연습", req);
       const checkNickName = req.url.searchParams.get("nickname");
       const find =
         TestDB.logindata.find((user) => user.nickname === checkNickName) ||
@@ -341,9 +339,7 @@ export const handlers = [
   // postInoCarOrder - 차량출고 신청
   rest.post(
     `${process.env.REACT_APP_SERVER_API}/api/purchases`,
-    async (req, res, ctx) => {
-      console.log(req.body);
-
+    async (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
@@ -430,8 +426,8 @@ export const handlers = [
   // getWrapping - 랩핑샵 전체 조회
   rest.get(
     `${process.env.REACT_APP_SERVER_API}/api/shops`,
-    async (req, res, ctx) => {
-      console.log(req);
+    async (_, res, ctx) => {
+  
       return res(
         ctx.status(200),
         ctx.json({
@@ -445,8 +441,7 @@ export const handlers = [
 
   rest.get(
     `${process.env.REACT_APP_SERVER_API}/api/mypage`,
-    async (req, res, ctx) => {
-      console.log(req);
+    async (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
@@ -461,8 +456,7 @@ export const handlers = [
 
   rest.patch(
     `${process.env.REACT_APP_SERVER_API}/api/mypage`,
-    async (req, res, ctx) => {
-      console.log("req", req.body);
+    async (_, res, ctx) => {
 
       return res(
         ctx.status(200),

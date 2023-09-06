@@ -22,7 +22,6 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 	const getMergeData = RTK.useAppSelector(RTK.selectShopList);
 
 	useEffect(() => {
-		data && console.log(`data-리패치 :${page}`, data);
 		if (isSuccess) {
 			// page 1
 			if (page === 1) {

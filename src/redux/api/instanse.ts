@@ -33,7 +33,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: axiosType.AxiosResponse) => {
     if (response.headers.authorization) {
-      // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
       expiresTime.setMinutes(expiresTime.getMinutes() + 30);
       document.cookie = `accessToken=${
@@ -41,7 +40,6 @@ instance.interceptors.response.use(
       }; expires=${expiresTime.toUTCString()}; path=/;`;
     }
     if (response.headers.refresh) {
-      // console.log("config", response.headers.authorization);
       const expiresTime = new Date();
       expiresTime.setDate(expiresTime.getDate() + 14);
       document.cookie = `refreshToken=${

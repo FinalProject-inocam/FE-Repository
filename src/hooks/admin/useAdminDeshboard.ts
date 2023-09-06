@@ -48,7 +48,6 @@ export const useAdminDeshboard = (): any => {
 	};
 
 	const onBeforePeriod = () => {
-		console.log("동작??")
 		switch (getType[1]) {
 			case "week":
 				const minusWeek = dayjs(period).subtract(1, "week");
@@ -326,7 +325,6 @@ export const useAdminDeshboard = (): any => {
 		],
 	};
 
-	console.log(purchaseData);
 
 	return {
 		getType,

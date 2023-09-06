@@ -8,7 +8,6 @@ const chatMsgSlice = createSlice({
       return [...state, ...action.payload]
     },
     deleteChatMsg: () => { 
-      console.log("deleteChatMsg 동작해야지")
       return []
     }
   },

@@ -12,7 +12,6 @@ export const UserAddress: FC<any> = ({ inputRef1, inputRef2 }) => {
   const [input2, setInput2] = useState<string>("");
 
   const handleComplete = (data: any) => {
-    console.log(data);
     //address //address /없으면/ jibunAddress  // zonecode
     setInput(data.address ? data.address : data.jibunAddress);
     dispatch(RTK.setInnocarOrderData({ [`zoneNo`]: data.zonecode }));

@@ -60,7 +60,6 @@ export const SignUpEmailCheckCode: FC<any> = ({
         })
       );
     }
-    checkCodeIsError && console.log(checkCodeError);
   }, [
     checkCodeIsSuccess,
     checkCodeData,

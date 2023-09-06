@@ -60,7 +60,6 @@ export const AdminDeshboard: React.FC = () => {
 		purchaseAgeDonutData
 	} = useAdminDeshboard();
 
-	console.log("purchaseData", purchaseData)
 
 	return (
 		<SC.DeshboardGrid $gtc='1fr 380px' $gtr={`${window.innerHeight}px`} style={{ width: "100%" }}>
