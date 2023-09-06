@@ -10,6 +10,7 @@ import { Styled } from "../../types";
 import * as Hooks from "../../hooks";
 
 const CommentBox: React.FC<any> = ({ comment, children, postId }) => {
+	const { onNavigate } = Hooks.useRouter();
 	const [activeModal, setActiveModal] = useState(false);
 	const timehandle = Hooks.usePostingTime();
 	const { sub, nickname } = RTK.useAppSelector(RTK.selectDecode);
@@ -25,6 +26,7 @@ const CommentBox: React.FC<any> = ({ comment, children, postId }) => {
 	const [onDeleteComment] = RTK.useDeleteCommunityCommentMutation();
 	const onDeleteCommentHandler = (commentId: number, postId: number) => () => {
 		onDeleteComment({ commentId, postId });
+		onNavigate({ url: `/community/1` })();
 	};
 
 	return (
@@ -101,7 +103,6 @@ export const CommunityDetail: React.FC = () => {
 		isLoading: commentLoading,
 		isError: commentError,
 	} = RTK.useGetCommunityCommentQuery({ postId, page });
-	// console.log(commentsData, isSuccess, isFetching, commentLoading, commentError, setPage);
 
 	const fetchNextRef = Hooks.useInfinityThrottle(setPage, isFetching);
 
@@ -120,7 +121,10 @@ export const CommunityDetail: React.FC = () => {
 		return (
 			<SC.FlexBox $fd='column' $ai='start' $jc='start' $gap={30}>
 				<SC.SettingBtn
-					onClick={onNavigate({ url: state })}
+					onClick={() => {
+						onNavigate({ url: state });
+						console.log("동작");
+					}}
 					children={<SC.CustomP $height='47px' $bColor='white' $size={1.125} children='목록으로' />}
 				/>
 				<SC.PostList $jc='flex-start' $gap={50}>
@@ -149,7 +153,9 @@ export const CommunityDetail: React.FC = () => {
 						</SC.CommunityDetilHeart>
 						<SC.FlexBox style={{ width: "100%" }} $jc='space-between'>
 							<SC.SettingsBtn
-								onClick={onNavigate({ url: state })}
+								onClick={() => {
+									onNavigate({ url: state });
+								}}
 								$bColor='lightgray1'
 								$types='postinnerSettingBtn1'
 								children={

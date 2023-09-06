@@ -87,6 +87,7 @@ export const GetPopularLists: FC = () => {
 						height={"220px"}
 						src={newImgUrl ? newImgUrl : ASS.communityBanner}
 						alt='maicommunityNewCarnLogo'
+						onClick={onNavigate({ url: `/innocar` })}
 					/>
 					<SC.BannerText children='오늘의 신차' />
 				</SC.PositionRelavite>

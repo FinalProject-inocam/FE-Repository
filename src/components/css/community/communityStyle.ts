@@ -83,8 +83,8 @@ const RankNum = styled.div<Partial<Styled>>`
 const PostingText = styled.div<Partial<Styled>>`
 	p {
 		position: relative;
-		top: calc(1 * 0.079rem);
-		line-height: ${({ $height }) => ($height ? $height : "30px")};
+		/* top: calc(1 * 0.079rem);
+		line-height: ${({ $height }) => ($height ? $height : "30px")}; */
 		text-align: ${({ $tAlign }) => $tAlign};
 		font-size: 1rem;
 		font-weight: 600;

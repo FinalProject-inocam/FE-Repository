@@ -1,5 +1,5 @@
 import React from "react";
-import { useCommunityWrite } from "../../hooks";
+import * as Hooks from "../../hooks";
 import * as SC from "../../components";
 
 export const CommunityWrite: React.FC = () => {
@@ -13,7 +13,7 @@ export const CommunityWrite: React.FC = () => {
 		imgs,
 		setImgs,
 		submited,
-	} = useCommunityWrite();
+	} = Hooks.useCommunityWrite();
 
 	return (
 		<SC.FlexBox $fd='column' $ai='start' $jc='start' $gap={30}>
