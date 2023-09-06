@@ -1,11 +1,78 @@
 import React, { useState, useEffect } from "react"; // useEffect, useRef,
-import { useCommunityDetail, useInfinityThrottle } from "../../hooks";
+import { useCommunityDetail } from "../../hooks"; // useInfinityThrottle
 import * as SC from "../../components";
 import * as RTK from "../../redux";
 // import * as Type from "../../types";
-// import * as AS from "../../assets";
-import { communityBanner, heart, heartg } from "../../assets";
+import * as AS from "../../assets";
 import { useParams } from "react-router-dom";
+import { styled } from "styled-components";
+import { Styled } from "../../types";
+import * as Hooks from "../../hooks";
+
+const CommentBox: React.FC<any> = ({ comment, children, postId }) => {
+	const { onNavigate } = Hooks.useRouter();
+	const [activeModal, setActiveModal] = useState(false);
+	const timehandle = Hooks.usePostingTime();
+	const { sub, nickname } = RTK.useAppSelector(RTK.selectDecode);
+
+	const onModatToggle = () => {
+		setActiveModal((pre) => !pre);
+	};
+
+	const onMouseLeaveModal = () => {
+		activeModal && setActiveModal((pre) => !pre);
+	};
+
+	const [onDeleteComment] = RTK.useDeleteCommunityCommentMutation();
+	const onDeleteCommentHandler = (commentId: number, postId: number) => () => {
+		onDeleteComment({ commentId, postId });
+		onNavigate({ url: `/community/1` })();
+	};
+
+	return (
+		<CommentLayout $fd='column' $ai='start' $gap={10} onMouseLeave={onMouseLeaveModal}>
+			<SC.FlexBox style={{ width: "100%" }} $jc='space-between'>
+				<SC.FlexBox $gap={10}>
+					<SC.FlexBox $gap={5}>
+						{comment.isAdmin && (
+							<SC.FigureObjectFitImg width='14px' height='14px' src={AS.adminMark} alt='AdminImg' />
+						)}
+						<div>{comment.nickname}</div>
+					</SC.FlexBox>
+					<div>{timehandle(comment.createdAt)}</div>
+				</SC.FlexBox>
+				<SC.FigureImg
+					width='30px'
+					height='8px'
+					types='cursor'
+					src={AS.commentMoreButton}
+					alt='morebutton'
+					onClick={onModatToggle}
+				/>
+			</SC.FlexBox>
+			<CommentInnerText>{comment.comment}</CommentInnerText>
+			<CommentInnerText $color='blue' $fontW={700} children='답글쓰기' />
+			{activeModal && (
+				<SC.MoreModal key={comment.commentId} $fd='column' $ai='flex-start'>
+					{sub === "E001" && <div style={{ fontWeight: "bold", color: "#4c4cff" }}>유저 차단하기</div>}
+					<div style={{ fontWeight: "bold", color: "#1d1d1f" }}>신고하기</div>
+					<div style={{ fontWeight: "bold", color: "#1d1d1f" }}>차단하기</div>
+					{nickname === comment.nickname && (
+						<>
+							<div style={{ fontWeight: "bold", color: "#1d1d1f" }}>수정하기</div>
+							<div
+								onClick={onDeleteCommentHandler(comment.commentId, postId)}
+								style={{ fontWeight: "bold", color: "#1d1d1f" }}>
+								삭제하기
+							</div>
+						</>
+					)}
+				</SC.MoreModal>
+			)}
+			{children}
+		</CommentLayout>
+	);
+};
 
 export const CommunityDetail: React.FC = () => {
 	const { id: postId } = useParams<{ id: string }>();
@@ -36,25 +103,28 @@ export const CommunityDetail: React.FC = () => {
 		isLoading: commentLoading,
 		isError: commentError,
 	} = RTK.useGetCommunityCommentQuery({ postId, page });
-	console.log(commentsData, isSuccess, isFetching, commentLoading, commentError, setPage);
 
-	const fetchNextRef = useInfinityThrottle(setPage, isFetching);
+	const fetchNextRef = Hooks.useInfinityThrottle(setPage, isFetching);
 
+	console.log("page", page, "setPage", setPage, "fetchNextRef", fetchNextRef);
 	useEffect(() => {
 		if (isSuccess) {
-			console.log("동작하자");
-			// dispatch(RTK.setCommentData(commentsData.content));
+			// console.log("commentsData", commentsData);
 		}
 	}, [isSuccess, dispatch]);
 
-	if (isLoading || commentLoading) return <div>... 로딩중</div>;
-	else if (isError || commentError) return <div>에러발생... {JSON.stringify(error)}</div>;
+	if (isLoading) return <div>... 로딩중</div>;
+	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
-		const { content, isLike, likeCount, title, postId, nickname } = data; // createAt // imageUrls // postId // commentsList
+		const { content, isLike, likeCount, title, postId, nickname, imageUrls } = data; // createAt // imageUrls // postId // commentsList
+		console.log(imageUrls);
 		return (
 			<SC.FlexBox $fd='column' $ai='start' $jc='start' $gap={30}>
 				<SC.SettingBtn
-					onClick={onNavigate({ url: state })}
+					onClick={() => {
+						onNavigate({ url: state });
+						console.log("동작");
+					}}
 					children={<SC.CustomP $height='47px' $bColor='white' $size={1.125} children='목록으로' />}
 				/>
 				<SC.PostList $jc='flex-start' $gap={50}>
@@ -62,12 +132,12 @@ export const CommunityDetail: React.FC = () => {
 						<SC.CustomH1 $height='78px' $size={1.5} $types='bottomLine' children={title} />
 						<SC.PerDiv children={content} />
 						<SC.GridBox $gtc='repeat(3, 1fr)' $cgap={10}>
-							{Array.from({ length: 3 }, (_, idx) => idx).map((imgs) => (
+							{imageUrls.map((imgs: string) => (
 								<SC.FigureObjectFitImg
 									key={imgs}
 									width={"100%"}
 									types='postInnerImg'
-									src={communityBanner}
+									src={imgs}
 									alt='reviewImgs'
 								/>
 							))}
@@ -76,14 +146,16 @@ export const CommunityDetail: React.FC = () => {
 							<SC.FigureObjectFitImg
 								width={"18px"}
 								height={"16px"}
-								src={isLike ? heart : heartg}
+								src={isLike ? AS.heart : AS.heartg}
 								alt='heart'
 							/>
 							<SC.CustomP children={likeCount} />
 						</SC.CommunityDetilHeart>
 						<SC.FlexBox style={{ width: "100%" }} $jc='space-between'>
 							<SC.SettingsBtn
-								onClick={onNavigate({ url: state })}
+								onClick={() => {
+									onNavigate({ url: state });
+								}}
 								$bColor='lightgray1'
 								$types='postinnerSettingBtn1'
 								children={
@@ -137,83 +209,50 @@ export const CommunityDetail: React.FC = () => {
 							children={<SC.CustomP $height='45px' $bColor='blue' $size={1.25} children='작성' />}
 						/>
 					</div>
-					<SC.FlexBox style={{ width: "890px" }} $fd='column' $ai='start' $jc='start' $gap={20}></SC.FlexBox>
-					{commentsData.content.map((list: any) => (
-						<div key={list.commentId}>{list.comment}</div>
-					))}
-					{!commentsData.last && (
-						<div ref={fetchNextRef} style={{ width: "100%", height: "50px", backgroundColor: "yellow" }} />
-					)}
+					{/* 댓글공간 */}
+					<div style={{ width: "100%" }}>
+						{commentLoading ? (
+							<div>로딩 중...</div>
+						) : commentError ? (
+							<div>서버 끊김</div>
+						) : (
+							commentsData &&
+							commentsData.content.map((comment: any, idx: number) => (
+								<CommentBox key={comment.commentId} comment={comment} postId={postId}>
+									{idx === commentsData.size - 2 && (
+										<div
+											ref={fetchNextRef}
+											style={{
+												width: "100%",
+												height: "10px",
+												backgroundColor: "yellow",
+												position: "absolute",
+												bottom: 0,
+											}}
+										/>
+									)}
+								</CommentBox>
+							))
+						)}
+					</div>
 				</SC.PostList>
 			</SC.FlexBox>
 		);
 	}
 };
 
-/*
-	{commentsData.content.map((comment: Type.Comment) => (
-							<SC.FlexBox
-								style={{ width: "100%", gap: "10px", position: "relative" }}
-								key={comment.commentId}
-								$fd='column'
-								$ai='normal
-								'>
-								<SC.FlexBox
-									$fd='row'
-									$jc='space-between'
-									style={{ width: "100%", gap: "10px", position: "relative" }}>
-									<SC.FlexBox $gap={10}>
-										<div style={{ fontWeight: "600" }}>{comment.nickname}</div>
-										<div style={{ color: "#bbbbc9" }}>{comment.createdAt.split("T")[0]}</div>
-									</SC.FlexBox>
-									<div onClick={() => onMoreModalButton(comment.commentId)()}>
-										<SC.FigureImg
-											width='30px'
-											height='8px'
-											src={AS.commentMoreButton}
-											alt='morebutton'
-										/>
-									</div>
-									{activeModalCommentId === comment.commentId && (
-										<SC.MoreModal
-											ref={modalRef}
-											key={comment.commentId}
-											$fd='column'
-											$ai='flex-start'>
-											<div style={{ fontWeight: "bold", color: "#4c4cff" }}>유저 차단하기</div>
-											<div style={{ fontWeight: "bold", color: "#1d1d1f" }}>신고하기</div>
-											<div style={{ fontWeight: "bold", color: "#1d1d1f" }}>차단하기</div>
-										</SC.MoreModal>
-									)}
-								</SC.FlexBox>
+const CommentLayout = styled.section<Partial<Styled>>`
+	${SC.Flex}
+	position:relative;
+	width: 100%;
+	padding: 20px 0 20px 0;
+	border-bottom: 1px solid #bbbbc9;
+`;
 
-								<div style={{ padding: "0 20px" }}>{comment.comment}</div>
-
-								{decokenNickname === comment.nickname && (
-									<button onClick={onDeleteComment(postId, comment.commentId)} children='댓글삭제' />
-								)}
-							</SC.FlexBox>
-						))}
-
-
-
-							// modal
-	// const [activeModalCommentId, setActiveModalCommentId] = useState<number | null>(null);
-	// const onMoreModalButton = (commentId: number) => () => {
-	// 	setActiveModalCommentId((prevState) => (prevState === commentId ? null : commentId));
-	// };
-	// const modalRef = useRef<HTMLDivElement>(null);
-
-	// useEffect(() => {
-	// 	const handleClickOutside = (event: any) => {
-	// 		if (modalRef.current && !modalRef.current.contains(event.target)) {
-	// 			setActiveModalCommentId(null);
-	// 		}
-	// 	};
-	// 	document.addEventListener("mousedown", handleClickOutside);
-
-	// 	return () => {
-	// 		document.removeEventListener("mousedown", handleClickOutside);
-	// 	};
-	// }, []);
-*/
+const CommentInnerText = styled.div<Partial<Styled>>`
+	padding: 0 20px;
+	color: ${({ $color, theme }) => $color && theme.color[$color]};
+	font-weight: ${({ $fontW }) => $fontW && $fontW};
+	text-align: justify;
+	white-space: pre-line;
+`;

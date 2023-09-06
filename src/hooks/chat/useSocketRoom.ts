@@ -5,8 +5,8 @@ import * as RTK from "../../redux"
 import dayjs from "dayjs"
 
 export const useSocketRoom = () => {
-  const { onNavigate, getChatRoom } = useRouter();
-  const { nickname } = RTK.useAppSelector(RTK.selectDecode)
+  const { onNavigate, state } = useRouter();
+  const { sub } = RTK.useAppSelector(RTK.selectDecode)
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [chatListHeight, setChatListHeight] = useState<number>(650)
   /*
@@ -17,7 +17,7 @@ export const useSocketRoom = () => {
       04 sendMsg : 채팅메시지 관련 상태 
   */
 
-  const room = getChatRoom;
+  const room = state;
   const socketRef = useRef<Socket>();
   const [sendMsg, setSendMsg] = useState<string>("")
   const [userInfoState, setUserInfoState] = useState<any>({})
@@ -51,7 +51,7 @@ export const useSocketRoom = () => {
       02 settingBox : 화상채팅 등에 대한 우측 패널 제어 상태
   */
 
-  const [infoShow, setInfoShow] = useState<boolean>(false) // 사용자 Info
+  const [infoShow, setInfoShow] = useState<boolean>(true) // 사용자 Info
   const [settingBox, setSettingBox] = useState<boolean>(false) // 하단 설정박스 
 
   /*
@@ -72,13 +72,13 @@ export const useSocketRoom = () => {
         createdDateTime: Date.now(),
         id: Date.now(),
         room,
-        username: nickname
+        username: sub
       }]
       dispatch(RTK.setChatMsg([...newChat]))
       socketRef.current && socketRef.current.emit("sendMsg", {
         content: sendMsg,
         room,
-        username: nickname
+        username: sub
       })
       setSendMsg("")
     }
@@ -92,7 +92,7 @@ export const useSocketRoom = () => {
     socketRef.current && socketRef.current.emit("saveMemo", {
       content: userInfoMemo,
       room,
-      username: nickname
+      username: sub
     })
   }
 
@@ -107,7 +107,7 @@ export const useSocketRoom = () => {
   const onEndRoom = () => {
     socketRef.current && socketRef.current.emit("leaveRoom", {
       room,
-      username: nickname
+      username: sub
     })
     onBlurTextArea()
     setUserInfoState({})
@@ -256,7 +256,7 @@ export const useSocketRoom = () => {
     })
     if (socketRef.current) {
       socketRef.current.emit("joinRoom", {
-        username: nickname, room
+        username: sub, room
       })
 
       socketRef.current.on("previousMsg", (data) => {
@@ -285,11 +285,11 @@ export const useSocketRoom = () => {
       socketRef.current && socketRef.current.emit("saveMemo", {
         content: userInfoMemo,
         room,
-        username: nickname
+        username: sub
       })
     }
 
-  }, [nickname, room, dispatch])
+  }, [sub, room, dispatch])
 
   const scrollToBottom = () => {
     scrollRef.current && (scrollRef.current.scrollTop = scrollRef.current.scrollHeight)
@@ -318,7 +318,7 @@ export const useSocketRoom = () => {
       makeConnection()
 
       if (socketRef.current) {
-        socketRef.current.emit("joinRTC", { room, username: nickname })
+        socketRef.current.emit("joinRTC", { room, username: sub })
 
         socketRef.current.on("joinedRTC", async () => {
           setTimeout(() => {
@@ -362,20 +362,21 @@ export const useSocketRoom = () => {
 
   /* 
     설정박스 관련 useEffect 부 (2) ----------------------------------------------------------------------
-    getChatRoom 변경에 따른 상태 초기화 
+    state 변경에 따른 상태 초기화 
   */
 
 
   useEffect(() => {
     return () => {
-      setInfoShow(false)
+      setInfoShow(true)
       setSettingBox(false)
       setShowWebRTC(false)
       setMute(false)
       setCamara(false)
       getPeerStream(false)
+      getUserInfoMemo("")
     }
-  }, [getChatRoom])
+  }, [state])
 
 
 

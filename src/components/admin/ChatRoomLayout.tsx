@@ -10,7 +10,7 @@ export const ChatRoomLayout: FC<Type.ChatRoomLayoutProps> = ({ msg, type, peer, 
   const dispatch = useAppDispatch()
   const onEnterRoom = () => {
     dispatch(deleteChatMsg())
-    onNavigate({url:room})()
+    onNavigate({url:"room",  opts: { state: room }})()
   }
 
   return (

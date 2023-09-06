@@ -111,6 +111,12 @@ const Figure = sc.styled.figure<Partial<Styled>>`
   }
 
   ${({ $types }) =>
+		$types === "cursor" &&
+		sc.css`
+    ${cursor}
+  `}
+
+  ${({ $types }) =>
 		$types === "innocar" &&
 		sc.css`
     transition: all 0.3m linear;
@@ -175,7 +181,8 @@ const FigureObjectFit = sc.styled.figure<Partial<Styled>>`
   }
 
   ${({ $types }) =>
-  $types === "innoCarSection1Img" && sc.css`
+		$types === "innoCarSection1Img" &&
+		sc.css`
     margin: 0 auto;
     @media (max-width: 1024px) {
       width : 100%;

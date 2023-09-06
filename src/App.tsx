@@ -45,7 +45,7 @@ const App: React.FC = () => {
             <Route path="deliverymanagement" element={<Page.DeliveryManagement/>}/>
             <Route path="civilcomplaintmanagement" element={<Page.CivilComplaintManagement />}>
               <Route index element={<AdminChatting />}/>
-              <Route path=":id" element={<AdminChatting />}/>
+              <Route path="room" element={<AdminChatting />}/>
             </Route>
           </Route>
         {/* </Route> */}

@@ -6,7 +6,7 @@ import { Socket, io } from "socket.io-client"
 export const useChatRoomList = () => {
   const { onNavigate } = useRouter()
   const dispatch = useAppDispatch()
-  const { nickname } = useAppSelector(selectDecode)
+  const { sub } = useAppSelector(selectDecode)
 
   /*
     01 socketRef 소켓 관련 Ref
@@ -40,16 +40,19 @@ export const useChatRoomList = () => {
     });
 
     if (socketRef.current) {
+      socketRef.current.emit("connection", {username:sub})
       setSocketErr(false)
       // 01-01 접속후, 소켓이 연결되면, 사용자이름 보내기
-      nickname && socketRef.current.emit("connection", {username:nickname})
+      sub === "E001" && setInterval(() => {
+        socketRef.current && socketRef.current.emit("connection", {username:sub})
+      }, 1000)
 
        // 01-02 사용자이름 전송의 결과로, 룸리스트 
       socketRef.current.on("connected", room => {
         setRoomList(room)
       })
     }
-  }, [nickname])
+  }, [sub])
 
   /* 
     useEffect [3] --------------------------------------------------  
@@ -68,5 +71,5 @@ export const useChatRoomList = () => {
     }
   }, [])
 
-  return { nickname, roomList, socektErr,onNavigate, chatListHeight }
+  return { sub, roomList, socektErr,onNavigate, chatListHeight }
 }

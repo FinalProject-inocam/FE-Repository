@@ -48,6 +48,7 @@ export const useAdminDeshboard = (): any => {
 	};
 
 	const onBeforePeriod = () => {
+		console.log("동작??")
 		switch (getType[1]) {
 			case "week":
 				const minusWeek = dayjs(period).subtract(1, "week");
@@ -116,6 +117,10 @@ export const useAdminDeshboard = (): any => {
 				return;
 		}
 	};
+
+	const onReduce = (data: number[]) => {
+		return data.reduce((pre: number, cur: number) => pre + cur, 0)
+	}
 
 	/* ChartJS Opts //------------------------------------------------- */
 	const dataRatioOpts = {
@@ -257,7 +262,6 @@ export const useAdminDeshboard = (): any => {
 				borderColor: "rgba(76,76,255,0.3)",
 				backgroundColor: "rgba(76,76,255,0.8)",
 				borderRadius: 50,
-				borderSkipped: false,
 			},
 			{
 				type: "bar" as const,
@@ -271,6 +275,7 @@ export const useAdminDeshboard = (): any => {
 				data: purchaseData && purchaseData.cancel.values, // 취소
 				borderColor: "rgba(252,85,85,0.3)",
 				backgroundColor: "rgba(252,85,85,0.8)",
+				borderRadius: 50,
 			},
 		],
 	};
@@ -290,7 +295,14 @@ export const useAdminDeshboard = (): any => {
 		labels: purchaseData && purchaseData.age.labels,
 		datasets: [
 			{
-				data: purchaseData && purchaseData.age.values,
+				data: purchaseData && [
+					onReduce(purchaseData.age.values[0]),
+					onReduce(purchaseData.age.values[1]),
+					onReduce(purchaseData.age.values[2]),
+					onReduce(purchaseData.age.values[3]),
+					onReduce(purchaseData.age.values[4]),
+					onReduce(purchaseData.age.values[5]),
+				],
 				borderColor: [
 					"rgba(55,55,194,0.3)",
 					"rgba(97,97,245,0.3)",
@@ -309,6 +321,7 @@ export const useAdminDeshboard = (): any => {
 					"rgba(255,161,31,0.8)",
 					"rgba(252,85,85,0.8)",
 				],
+				tension: 0.5
 			},
 		],
 	};
@@ -334,6 +347,7 @@ export const useAdminDeshboard = (): any => {
 		purchaseData,
 
 		// Chart
+		onReduce,
 		dataRatioOpts,
 		barChartOpts,
 		userGenderRatio,
