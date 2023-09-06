@@ -3,7 +3,7 @@ import * as SC from "../css";
 import * as CP from ".";
 import { useMainHeader } from "../../hooks";
 import { FigureObjectFitImg } from "../atom";
-import { mainLogo, mainLogoB } from "../../assets/logo";
+import { innoLogoHeader, innoLogoHeaderB } from "../../assets/logo";
 
 export const MainHeader: React.FC = () => {
 	const { scrolly, pathname, onHanbagerToggle, onNaigateSidebarToggle, hanbagerToggle, setHanbagerToggle } =
@@ -21,7 +21,7 @@ export const MainHeader: React.FC = () => {
 						<FigureObjectFitImg
 							width={"179px"}
 							height={"50px"}
-							src={scrolly.scrolly <= scrolly.innerHeight || !pathState ? mainLogo : mainLogoB}
+							src={scrolly.scrolly <= scrolly.innerHeight || !pathState ? innoLogoHeader : innoLogoHeaderB}
 							alt='mainLogo'
 						/>
 					</SC.HeaderLogo>
