@@ -58,7 +58,7 @@ export const useMychat = ():any => {
 	
 	useEffect(()=>{
 		socketRef.current = io(`${process.env.REACT_APP_SERVER_API}`, {
-      reconnectionAttempts: 2,
+      reconnectionAttempts: 5,
       reconnectionDelay: 500
     })
 
@@ -169,6 +169,7 @@ export const useMychat = ():any => {
 
   const onToggleWebRTC = () => {
     setShowWebRTC(pre => !pre)
+    
     setMute(false)
     setCamara(false)
     setSettingBox(false)
@@ -182,6 +183,7 @@ export const useMychat = ():any => {
     setSettingBox(false)
     setMute(false)
     setCamara(false)
+    socketRef.current && socketRef.current.disconnect()
   }
 
   const onEndRoom = () => {
@@ -195,6 +197,7 @@ export const useMychat = ():any => {
     setSettingBox(false)
     setMute(false)
     setCamara(false)
+    socketRef.current && socketRef.current.disconnect()
   }
 
   useEffect(() => {
