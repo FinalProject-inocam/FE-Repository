@@ -301,7 +301,7 @@ const ChattingBtn = styled.div<Partial<Styled>>`
   ${SC.Flex}
   ${SC.cursor}
   width: 60px;
-  height: 40px;
+  height: ${({$types}) => $types ==="sendBtn" ? "40px" : "50px"};
   background-color : ${({ $bColor, theme }) => $bColor && theme.color[$bColor]};
 `
 

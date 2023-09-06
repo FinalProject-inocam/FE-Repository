@@ -13,6 +13,12 @@ export const useMychat = ():any => {
 	const dispatch = RTK.useAppDispatch()
 	const getChatMsg = RTK.useAppSelector(RTK.selectchatMsg)
 
+
+  const [settingBox, setSettingBox] = useState<boolean>(false) // 하단 설정박스 
+	const onSettingBtn = () => {
+    setSettingBox(pre => !pre)
+  }
+
 	const scrollToBottom = () => {
     scrollRef.current && (scrollRef.current.scrollTop = scrollRef.current.scrollHeight)
   };
@@ -80,12 +86,24 @@ export const useMychat = ():any => {
 
 
   // WebRTC 관련 
-  const [showWebRTC, setShowWebRTC] = useState<boolean>(true)
+  const [showWebRTC, setShowWebRTC] = useState<boolean>(false)
   const peerAVideoRef = useRef<HTMLVideoElement>(null);
   const peerBVideoRef = useRef<HTMLVideoElement>(null);
   const [peerStream, getPeerStream] = useState<boolean>(false)
   const peerRef = useRef<RTCPeerConnection>();
   const streamRef = useRef<MediaStream | null>(null)
+  const [mute, setMute] = useState<boolean>(false)
+  const [camera, setCamara] = useState<boolean>(false)
+
+  const onMute = () => {
+    streamRef.current && streamRef.current.getAudioTracks().forEach(track => track.enabled = !track.enabled)
+    setMute(pre => !pre)
+  }
+  const onCamera = () => {
+    streamRef.current && streamRef.current.getVideoTracks().forEach(track => track.enabled = !track.enabled)
+    setCamara(pre => !pre)
+  }
+
 
   const getMedia = async () => {
     try {
@@ -151,9 +169,38 @@ export const useMychat = ():any => {
     }
   }
 
+  const onToggleWebRTC = () => {
+    setShowWebRTC(pre => !pre)
+    setMute(false)
+    setCamara(false)
+    setSettingBox(false)
+    getPeerStream(false)
+  }
+
+  const onLeaveRoom = () => {
+    dispatch(RTK.deleteChatMsg())
+    setOpenChat(pre => !pre)
+    setShowWebRTC(false)
+    setSettingBox(false)
+    setMute(false)
+    setCamara(false)
+  }
+
+  const onEndRoom = () => {
+    socketRef.current && socketRef.current.emit("leaveRoom", {
+      room,
+      username: nickname
+    })
+    dispatch(RTK.deleteChatMsg())
+    setOpenChat(pre => !pre)
+    setShowWebRTC(false)
+    setSettingBox(false)
+    setMute(false)
+    setCamara(false)
+  }
 
   useEffect(() => {
-    if (openChat) {
+    if (showWebRTC) {
       getMedia()
       makeConnection()
 
@@ -180,13 +227,13 @@ export const useMychat = ():any => {
       }
     }
 
-    !openChat && stopMedia()
+    !showWebRTC && stopMedia()
 
     return () => {
       stopMedia()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openChat])
+  }, [showWebRTC])
 
 
 
@@ -200,16 +247,28 @@ export const useMychat = ():any => {
     scrollRef,
     sendMsg,
     getChatMsg,
+    settingBox,
     onOpenChatToggle,
     onChangeInput,
     onSendMsg,
     onSocketDate,
+    onSettingBtn,
 
     //WebRTC 관련 
      // WecRTC 부분
     showWebRTC,
     peerAVideoRef,
     peerBVideoRef,
-    peerStream
+    peerStream,
+
+    mute,
+    camera,
+
+    onMute,
+    onCamera,
+
+    onToggleWebRTC,
+    onLeaveRoom,
+    onEndRoom
   }
 }
