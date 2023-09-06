@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // useEffect, useRef,
+import React, { useState } from "react"; // useEffect, useRef,
 import { useCommunityDetail } from "../../hooks"; // useInfinityThrottle
 import * as SC from "../../components";
 import * as RTK from "../../redux";
@@ -77,7 +77,6 @@ const CommentBox: React.FC<any> = ({ comment, children, postId }) => {
 export const CommunityDetail: React.FC = () => {
 	const { id: postId } = useParams<{ id: string }>();
 	const [page, setPage] = useState<number>(1);
-	const dispatch = RTK.useAppDispatch();
 
 	const {
 		state,
@@ -98,7 +97,6 @@ export const CommunityDetail: React.FC = () => {
 
 	const {
 		data: commentsData,
-		isSuccess,
 		isFetching,
 		isLoading: commentLoading,
 		isError: commentError,
@@ -106,24 +104,18 @@ export const CommunityDetail: React.FC = () => {
 
 	const fetchNextRef = Hooks.useInfinityThrottle(setPage, isFetching);
 
-	console.log("page", page, "setPage", setPage, "fetchNextRef", fetchNextRef);
-	useEffect(() => {
-		if (isSuccess) {
-			// console.log("commentsData", commentsData);
-		}
-	}, [isSuccess, dispatch]);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
 		const { content, isLike, likeCount, title, postId, nickname, imageUrls } = data; // createAt // imageUrls // postId // commentsList
-		console.log(imageUrls);
+		
 		return (
 			<SC.FlexBox $fd='column' $ai='start' $jc='start' $gap={30}>
 				<SC.SettingBtn
 					onClick={() => {
 						onNavigate({ url: state });
-						console.log("동작");
+		
 					}}
 					children={<SC.CustomP $height='47px' $bColor='white' $size={1.125} children='목록으로' />}
 				/>

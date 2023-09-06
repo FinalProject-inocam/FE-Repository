@@ -24,7 +24,6 @@ export const useCommunityDetail = ({ setPage }: { setPage: any }): any => {
 	] = RTK.useDeleteCommunityMutation();
 
 	const onDeletePost = (postId: number | undefined) => () => {
-		console.log(postId);
 		onDeletePostRTK(postId);
 		onNavigate({ url: -1 })();
 	};

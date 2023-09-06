@@ -6,7 +6,6 @@ const communityFormSlice = createSlice({
 	initialState : {} as any,
 	reducers: {
 		setCommunityDate: (state, action: PayloadAction<any>) => {
-			console.log({...state, ...action.payload})
 			return { ...state, ...action.payload };
 		},
 		deleteCommunityDate: () => {

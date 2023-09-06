@@ -26,8 +26,6 @@ export const useSignup = (): Type.UseSignup => {
   const [onpostSignupRTK, { isSuccess, isError, error }] =
     RTK.usePostSignupMutation();
 
-  console.log(getSignup);
-
   const nAvailable = useSelector(RTK?.selectValiditeNMsg)[1];
   const birthYearValue = inputRef2.current?.value;
   const phonNumberValue = inputRef3.current?.value;

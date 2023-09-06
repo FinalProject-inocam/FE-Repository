@@ -1,12 +1,12 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import * as Type from "../../types";
+import { createSlice } from "@reduxjs/toolkit"; //PayloadAction
+// import * as Type from "../../types";
 
 const communityCommentSlice = createSlice({
 	name: "communityCommentSlice",
 	initialState: [] as any,
 	reducers: {
-		setCommentData: (state, action: PayloadAction<Type.CommunityComments[]>) => {
-			console.log(action.payload);
+		// setCommentData: (state, action: PayloadAction<Type.CommunityComments[]>) => {
+			setCommentData: (state) => {
 			return state;
 		},
 		deleteCommentData: (state) => {

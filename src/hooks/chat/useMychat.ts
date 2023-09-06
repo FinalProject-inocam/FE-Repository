@@ -67,12 +67,10 @@ export const useMychat = ():any => {
       })}
 
 			socketRef.current.on("previousMsg", (data) => {
-        console.log("previousMsg", data)
 				dispatch(RTK.setChatMsg(data))
       })
 
 			socketRef.current.on("readMsg", (data) => {
-				console.log("readMsg", data)
         dispatch(RTK.setChatMsg([data]))
       })
 
@@ -148,7 +146,6 @@ export const useMychat = ():any => {
   const createOffer = async () => {
     const offer = peerRef.current && await peerRef.current.createOffer();
     peerRef.current && peerRef.current.setLocalDescription(offer);
-    // console.log("createOffer", offer, peerRef.current && peerRef.current.addIceCandidate)
     socketRef.current && socketRef.current.emit("offer", { offer, room });
   };
 
@@ -234,11 +231,6 @@ export const useMychat = ():any => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showWebRTC])
-
-
-
-  console.log("setShowWebRTC", setShowWebRTC)
-
 
   return {
     // 채팅관련

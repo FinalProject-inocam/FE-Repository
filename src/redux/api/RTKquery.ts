@@ -19,14 +19,12 @@ const axiosBaseQuery =
 					return { data: auth.data.msg };
 				case "signup":
 					const signup = await instance({ url, method, data });
-					console.log(signup);
 					return { data: signup.data.msg };
 				case "logout":
 					const logout = await instanceLogout({ url, method, data });
 					return { data: logout.data.msg };
 				case "getCheck":
 					const getCheck = await instance({ url, method });
-					console.log(getCheck);
 					return { data: getCheck.data.msg };
 				case "multipart":
 					const postMultipart = await instance({
@@ -46,7 +44,7 @@ const axiosBaseQuery =
 					return { data: getAdminData.data.data.total };
 				default:
 					const res = await instance({ url, method, data });
-					// console.log(res);
+					
 
 					return { data: res.data.msg };
 			}

@@ -36,7 +36,7 @@ export const EditPurchase: React.FC<Type.CarOrderRes> = ({
   };
 
   const handleComplete = (data: any) => {
-    console.log(data);
+
 
     setCarOrderInfo({
       ...carOrderInfo,

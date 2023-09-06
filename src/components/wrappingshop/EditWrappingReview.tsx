@@ -42,8 +42,6 @@ export const EditWrappingReview: React.FC<Type.EditWrappingShopReview> = () => {
 	// };
 
 	// useEffect(() => {
-	// 	patchIsSuccess && console.log(data);
-	// 	patchIsError && console.log(error);
 	// }, [patchIsSuccess, data, patchIsError, error]);
 
 	return (

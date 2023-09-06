@@ -4,7 +4,6 @@ import * as Type from "../../types";
 import { useRouter } from "../useRouter";
 
 export const useLogin = (state: string): Type.UseLogin => {
-  console.log(state);
   const [submitted, setSubmitted] = useState<boolean>(true);
 
   const [validiteMsgE, setValiditeMsgE] = useState<[string, boolean]>([

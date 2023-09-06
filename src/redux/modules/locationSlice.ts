@@ -5,7 +5,6 @@ const locationSlice = createSlice({
   initialState: "" as string,
   reducers: {
     setLocationState: (_, action: PayloadAction<any>) => {
-      console.log("setLocationState.payload", action.payload);
       return action.payload;
     },
     deleteLocation: () => {
