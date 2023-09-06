@@ -27,11 +27,11 @@ export const MyPage: React.FC = () => {
 			<h2>MyPage</h2>
 			<button onClick={onNavigate({ url: "/chat" })}>채팅으로 이동하기</button>
 			<div>
-				<COMP.EditUser
+				{!!UserData && <COMP.EditUser
 					profileImg={UserData.profileImg}
 					nickname={UserData.nickname}
 					phoneNumber={UserData.phoneNumber}
-				/>
+				/>}
 				{/* {data &&
 					data.map(({ purchaseId, type, color, alarm, content, addressName, zoneNo }: Type.CarOrderRes) => (
 						<div key={purchaseId}>
