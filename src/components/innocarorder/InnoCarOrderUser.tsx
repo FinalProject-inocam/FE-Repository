@@ -16,7 +16,6 @@ export const InnoCarOrderUser: FC<any> = ({
   inputRef3,
   inputRef4,
   inputRef5,
-  inputRef6,
 }) => {
   const {
     isLoading: UserIsLoading,
@@ -78,7 +77,6 @@ export const InnoCarOrderUser: FC<any> = ({
           value2={"FEMALE"}
           children1={"남성"}
           children2={"여성"}
-          inputRef={inputRef6}
         />
       </div>
 

@@ -23,7 +23,6 @@ export const UserRadioInput: FC<UserRadioInputProps> = ({
   value2,
   children1,
   children2,
-  inputRef,
 }) => {
   const [input, setInput] = useState<string>(value ? value : "");
   const dispatch = RTK.useAppDispatch();
@@ -49,7 +48,6 @@ export const UserRadioInput: FC<UserRadioInputProps> = ({
         value={value1}
         onChange={onChangeInput}
         style={{ display: "none" }}
-        ref={inputRef}
       />
       <SC.SignupGenderLabel
         htmlFor={id1}
@@ -64,7 +62,6 @@ export const UserRadioInput: FC<UserRadioInputProps> = ({
         value={value2}
         onChange={onChangeInput}
         style={{ display: "none" }}
-        ref={inputRef}
       />
       <SC.SignupGenderLabel
         htmlFor={id2}

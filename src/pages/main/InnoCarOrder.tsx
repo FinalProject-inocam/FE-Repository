@@ -5,6 +5,7 @@ import * as SC from "../../components";
 import * as Type from "../../types";
 import { preArrow, nextArrow } from "../../assets";
 import * as RTK from "../../redux";
+import { useSelector } from "react-redux";
 
 export const InnoCarOrder: React.FC = () => {
   const dispatch = RTK.useAppDispatch();
@@ -33,7 +34,10 @@ export const InnoCarOrder: React.FC = () => {
   const inputRef3 = useRef<HTMLInputElement | null>(null);
   const inputRef4 = useRef<HTMLInputElement | null>(null);
   const inputRef5 = useRef<HTMLInputElement | null>(null);
-  const inputRef6 = useRef<HTMLInputElement | null>(null);
+
+  const orderInfo = useSelector(RTK?.selectInnoCarOrder);
+
+  console.log(!!orderInfo?.gender);
 
   const slideWidth = 500;
   const totalPage = 3;
@@ -56,7 +60,7 @@ export const InnoCarOrder: React.FC = () => {
   const phoneValue = inputRef3.current?.value;
   const zoneNoValue = inputRef4.current?.value;
   const addressValue = inputRef5.current?.value;
-  const genderValue = inputRef6.current?.value;
+  const genderValue = !!orderInfo?.gender;
 
   const getCarOrderInfo = RTK.useAppSelector(RTK.selectInnoCarOrder);
 
@@ -149,7 +153,6 @@ export const InnoCarOrder: React.FC = () => {
                 inputRef3={inputRef3}
                 inputRef4={inputRef4}
                 inputRef5={inputRef5}
-                inputRef6={inputRef6}
               />
             </CarouselSlide>
 

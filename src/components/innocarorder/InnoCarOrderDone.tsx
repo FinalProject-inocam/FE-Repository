@@ -32,9 +32,11 @@ export const InnoCarOrderDone: FC = () => {
   };
 
   const { onNavigate } = useRouter();
+  const dispatch = RTK.useAppDispatch();
 
   const onCheckBtnClick = (): void => {
     onNavigate({ url: "/mypage" })();
+    dispatch(RTK.deleteLoginDate());
   };
 
   const carImg: any = {
