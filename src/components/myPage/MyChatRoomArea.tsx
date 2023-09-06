@@ -42,7 +42,7 @@ export const MyChatRoomArea:FC = () => {
 				<SC.MyChatLayout $gtc={showWebRTC ? "320px 1fr" : "1fr"}>
 					{showWebRTC && 
 					<SC.MyChatVideoInner $fd="column">
-							<div style={{ position: "relative", overflow: "hidden" }}>
+							<div style={{ position: "relative", overflow: "hidden", width:"320px" }}>
               {!peerStream && <SC.MyChatLoadingImg src={ASS.loadingInnoLogo} alt="chattingLoading" />}
               <SC.MyChatVideo ref={peerBVideoRef} autoPlay $types="peerB" />
             </div>
