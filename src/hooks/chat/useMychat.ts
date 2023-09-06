@@ -25,6 +25,7 @@ export const useMychat = ():any => {
 
 	const onOpenChatToggle = () => {
 		setOpenChat(pre => !pre)
+    setShowWebRTC(false)
 	}
 
 	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
