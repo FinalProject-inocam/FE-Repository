@@ -7,4 +7,3 @@ export * from "./wrapping";
 export * from "./Home";
 export * from "./myPage";
 export * from "./chat";
-export * from "./InnoCarOrder";

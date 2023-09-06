@@ -20,7 +20,7 @@ export const InnoCarOrderTrim: FC<any> = ({ setTrimPrice }) => {
     <SC.FlexBox
       $fd={"column"}
       $jc={"space-between"}
-      style={{ height: "200px" }}
+      style={{ height: "200px", marginTop: "15px" }}
     >
       <input
         type="radio"
@@ -32,7 +32,7 @@ export const InnoCarOrderTrim: FC<any> = ({ setTrimPrice }) => {
       />
       <CarTrimLabel htmlFor="air" $state={input === "INNO I Air"}>
         <CarTrimText>INNO I 에어</CarTrimText>
-        <CarTrimText $types="price">50,080,0000 원</CarTrimText>
+        <CarTrimPrice>50,080,0000 원</CarTrimPrice>
       </CarTrimLabel>
       <input
         type="radio"
@@ -44,7 +44,7 @@ export const InnoCarOrderTrim: FC<any> = ({ setTrimPrice }) => {
       />
       <CarTrimLabel htmlFor="light" $state={input === "INNO I Light"}>
         <CarTrimText>INNO I 라이트</CarTrimText>
-        <CarTrimText $types="price">51,080,0000 원</CarTrimText>
+        <CarTrimPrice>51,080,0000 원</CarTrimPrice>
       </CarTrimLabel>
     </SC.FlexBox>
   );
@@ -54,22 +54,28 @@ const CarTrimLabel = styled.label<Partial<Styled>>`
   ${SC.cursor}
   height: 90px;
   width: 100%;
-  font-size: 20px;
-  font-weight: 600;
-  font-display: center;
   border-radius: 6px;
-  padding: 15px 24px;
+  padding: 20px 24px;
 
   border: 1px solid
-    ${({ theme, $state }) => ($state ? "#05141f" : theme.color.lightgray4)};
+    ${({ theme, $state }) =>
+      $state ? theme.color.blue : theme.color.lightgray4};
 
   box-shadow: ${({ $state }) =>
     $state ? "0 3px 6px 0 rgba(0,0,0,.16)" : "none"};
 `;
 
 const CarTrimText = styled.div<Partial<Styled>>`
-  font-size: 18px;
+  ${({ theme }) => theme.font.PretendardSB}
+  font-size: 16px;
   font-weight: 600;
-  color: ${({ $types, theme }) =>
-    $types === "price" ? theme.color.lightgray2 : "inherit"};
+  color: black;
+`;
+
+const CarTrimPrice = styled.div`
+  ${({ theme }) => theme.font.PretendardSB}
+  text-align: right;
+  font-size: 20px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.color.lightgray2};
 `;
