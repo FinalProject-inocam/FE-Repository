@@ -37,8 +37,8 @@ export const PurchaseInfo: FC<any> = ({ PurchasesData }) => {
     ["색상", PurchasesData?.color],
     [
       "문의사항",
-      PurchasesData?.content.length >= 22
-        ? PurchasesData?.content.substring(0, 22) + "..."
+      String(PurchasesData?.content).length >= 22
+        ? String(PurchasesData?.content).substring(0, 22) + "..."
         : PurchasesData?.content,
     ],
     ["메일알림", PurchasesData?.alarm ? "승인" : "차단"],

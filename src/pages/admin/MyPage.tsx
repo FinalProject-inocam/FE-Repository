@@ -20,7 +20,6 @@ export const MyPage: React.FC = () => {
     data: UserData,
   } = RTK.useGetMyPageQuery({});
 
-
   const myPageLayoutRef = useRef<HTMLDivElement | null>(null);
   const userImg = UserData?.profileImg;
 
@@ -34,9 +33,9 @@ export const MyPage: React.FC = () => {
             /^(\d{2,3})(\d{3,4})(\d{4})$/,
             `$1-$2-$3`
           )
-        : null,
+        : "",
     ],
-    ["출생년도", !!UserData?.birthYear ? UserData?.birthYear : null],
+    ["출생년도", !!UserData?.birthYear ? UserData?.birthYear : ""],
   ];
 
   useEffect(() => {
@@ -44,6 +43,8 @@ export const MyPage: React.FC = () => {
       (myPageLayoutRef.current.style.height = `${window.innerHeight}px`);
   }, [myPageLayoutRef]);
   console.log(UserData, PurchasesData);
+
+  console.log(PurchasesData && PurchasesData.length);
 
   if (UserIsLoading || PurchasesIsLoading) <div> 로딩중 </div>;
   else if (UserIsError || PurchasesIsError) <div> 에러 </div>;
@@ -87,13 +88,16 @@ export const MyPage: React.FC = () => {
           </UserBox>
         </UserLayout>
 
-        {/* {PurchasesData && PurchasesData.length === 0 ? (
-          <PurchasesDataNone>차량 신청 내역이 없습니다.</PurchasesDataNone>
+        {!!PurchasesData ? (
+          <>
+            <COMP.PurchaseInfo PurchasesData={PurchasesData[0]} />
+            {PurchasesData[1] && (
+              <COMP.PurchaseInfo PurchasesData={PurchasesData[1]} />
+            )}
+          </>
         ) : (
-          PurchasesData.map((item: any, idx: number) => (
-            <COMP.PurchaseInfo PurchasesData={item} key={idx} />
-          ))
-        )} */}
+          <PurchasesDataNone>차량 신청 내역이 없습니다.</PurchasesDataNone>
+        )}
       </MyPageLayout>
 
       {/* 채팅관련 */}
@@ -205,14 +209,14 @@ const UserInfoT = styled.div`
   width: 100%;
 `;
 
-// const PurchasesDataNone = styled.div`
-//   ${({ theme }) => theme.font.PretendardM};
-//   ${SC.Flex}
-//   width: 1440px;
-//   height: 40px;
-//   margin: 0 auto;
-//   background-color: white;
-//   border: 1px solid ${({ theme }) => theme.color.gray2};
-//   border-radius: 10px;
-//   font-size: 16px;
-// `;
+const PurchasesDataNone = styled.div`
+  ${({ theme }) => theme.font.PretendardM};
+  ${SC.Flex}
+  width: 1440px;
+  height: 40px;
+  margin: 0 auto;
+  background-color: white;
+  border: 1px solid ${({ theme }) => theme.color.gray2};
+  border-radius: 10px;
+  font-size: 16px;
+`;
