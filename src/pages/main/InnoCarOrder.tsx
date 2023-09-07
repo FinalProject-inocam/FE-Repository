@@ -15,6 +15,7 @@ export const InnoCarOrder: React.FC = () => {
   const [colorPrice, setColorPrice] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resultModal, setResultModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const [carColor, setCarColor] = useState<string>("화이트 (white)");
 
@@ -56,7 +57,7 @@ export const InnoCarOrder: React.FC = () => {
 
   // 마지막 버튼 눌렀을 때 테두리만 바뀌게 하기, 전송해서 에러메세지 받고 난 뒤!
   const nameValue = inputRef1.current?.value;
-  const birthValue = inputRef2.current?.value;
+  const birthValue = !!orderInfo?.birthYear;
   const phoneValue = inputRef3.current?.value;
   const zoneNoValue = inputRef4.current?.value;
   const addressValue = inputRef5.current?.value;
@@ -77,7 +78,13 @@ export const InnoCarOrder: React.FC = () => {
       genderValue
     ) {
       onPostPurchase(getCarOrderInfo);
+    } else if (!birthValue) {
+      setErrorMsg(
+        `만 16세 이상부터 신청이 가능합니다.<br />출생년도를 확인해주세요.`
+      );
+      setIsModalOpen(true);
     } else {
+      setErrorMsg("신청 필수 정보를 입력해주세요.");
       setIsModalOpen(true);
     }
   };
@@ -208,7 +215,7 @@ export const InnoCarOrder: React.FC = () => {
       </Section>
       {isModalOpen && (
         <COMP.Modal state={true} setState={setIsModalOpen}>
-          신청자 정보를 입력하세요
+          <div dangerouslySetInnerHTML={{ __html: errorMsg }}></div>
         </COMP.Modal>
       )}
     </div>
