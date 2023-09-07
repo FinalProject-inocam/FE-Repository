@@ -211,7 +211,7 @@ export const useMychat = ():any => {
         socketRef.current.on("joinedRTC", async () => {
           setTimeout(() => {
             streamRef.current && createOffer()
-          }, 3000)
+          }, 4000)
         })
 
         socketRef.current.on("getOffer", getoffer => {
