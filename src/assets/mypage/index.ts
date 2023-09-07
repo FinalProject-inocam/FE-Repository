@@ -1,3 +1,5 @@
-import mychat from './mychat.svg'
+import mychat from "./mychat.svg";
+import userinfologo from "./userinfologo.svg";
+import editicon from "./editicon.svg";
 
-export { mychat }
+export { mychat, userinfologo, editicon };
