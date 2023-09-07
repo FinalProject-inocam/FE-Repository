@@ -25,7 +25,6 @@ export const DeshboardUser: FC = () => {
     // RTKQ
     userLoading,
     userIsError,
-    userError,
     userData,
 
     // Chart
@@ -143,7 +142,7 @@ export const DeshboardUser: FC = () => {
                 {userLoading ? (
                   <div>로딩 중... </div>
                 ) : userIsError ? (
-                  <div>Error...{JSON.stringify(userError)}</div>
+                  <div>서버 꺼짐...</div>
                 ) : (
                   <>
                     <SC.FlexBox $gap={5}>
@@ -204,7 +203,7 @@ export const DeshboardUser: FC = () => {
                 {userLoading ? (
                   <div>로딩 중... </div>
                 ) : userIsError ? (
-                  <div>Error...{JSON.stringify(userError)}</div>
+                  <div>서버 꺼짐...</div>
                 ) : (
                   <>
                     <SC.FlexBox $gap={5}>
