@@ -45,20 +45,19 @@ export const useLogin = (state: string): Type.UseLogin => {
     }
   };
 
-
   const onSubmitLoginUser = () => {
     onpostLoginRTK({
-      email : "test@final.com",
-      password : "00000000a*"
+      email: "minji11@test.com",
+      password: "qwaszx789!!",
     });
-  }
+  };
 
   const onSubmitLoginAdmin = () => {
     onpostLoginRTK({
-      email : "admin1@final.com",
-      password : "00000000a*"
+      email: "admin1@final.com",
+      password: "00000000a*",
     });
-  }
+  };
 
   useEffect(() => {
     passwordRef && setValiditeMsgP(["", true]);
