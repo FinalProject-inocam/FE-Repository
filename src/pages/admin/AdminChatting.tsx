@@ -156,36 +156,35 @@ export const AdminChatting: FC = () => {
 
 
       {/* 상담관련 기록공간 */}
-      {infoShow && !!userInfoState.userInfo && (
         <SC.UserInfoGrid $gtc="1fr" $gtr="repeat(2, 237px) 1fr" $rgap={5}>
           <SC.UserInfoInner>
             <SC.CustomH1>기본정보</SC.CustomH1>
             <SC.UserInfoInnerBox $gtc="90px 1fr" $rgap={10}>
               <h3>닉네임</h3>
-              <div>{userInfoState && userInfoState.userInfo.nickname}</div>
+              <div>{infoShow && !!userInfoState.userInfo && userInfoState.userInfo.nickname}</div>
               <h3>이메일</h3>
-              <div>{userInfoState && userInfoState.userInfo.email}</div>
+              <div>{infoShow && !!userInfoState.userInfo && userInfoState.userInfo.email}</div>
               <h3>생년월일/성별</h3>
-              <div>{userInfoState && userInfoState.userInfo.birthYear}, {userInfoState && userInfoState.userInfo.gender}</div>
+              <div>{infoShow && !!userInfoState.userInfo && userInfoState.userInfo.birthYear}, {infoShow && !!userInfoState.userInfo && userInfoState.userInfo.gender}</div>
               <h3>연락처</h3>
-              <div>{userInfoState && userInfoState.userInfo.phoneNumber}</div>
+              <div>{infoShow && !!userInfoState.userInfo && userInfoState.userInfo.phoneNumber}</div>
             </SC.UserInfoInnerBox>
           </SC.UserInfoInner>
           <SC.UserInfoInner>
             <SC.CustomH1>신청정보 <span style={{fontSize:"0.75rem"}}>{`총 ${!!userInfoState.userPurchaseList ? userInfoState.userPurchaseList.length : 0}건`}</span></SC.CustomH1>
             <SC.UserInfoInnerBox $gtc="100px 1fr" $rgap={10}>
               <SC.FlexBox style={{position:"absolute", top:"30px", right:"30px", height:"25px"}} $gap={5}>
-              {userInfoState.userPurchaseList.length > 0 && purchaseList > 0 && <img src={ASS.purchaseBefore} alt="purchaseBefore" style={{display:"block", width:"30px", height:"30px", cursor:"pointer"}} onClick={onBeforePurchase} />}
-              {userInfoState.userPurchaseList.length-1  > purchaseList && <img src={ASS.purchaseNext}  alt="purchaseNext" style={{display:"block", width:"30px", height:"30px", cursor:"pointer"}} onClick={onNextPurchase} />}
+              {infoShow && !!userInfoState.userPurchaseList && userInfoState.userPurchaseList.length > 0 && purchaseList > 0 && <img src={ASS.purchaseBefore} alt="purchaseBefore" style={{display:"block", width:"30px", height:"30px", cursor:"pointer"}} onClick={onBeforePurchase} />}
+              {infoShow && !!userInfoState.userPurchaseList && userInfoState.userPurchaseList.length-1  > purchaseList && <img src={ASS.purchaseNext}  alt="purchaseNext" style={{display:"block", width:"30px", height:"30px", cursor:"pointer"}} onClick={onNextPurchase} />}
               </SC.FlexBox>
-              {userInfoState && userInfoState.userPurchaseList.length > 0 && (<>
+              {infoShow && !!userInfoState.userPurchaseList && userInfoState.userPurchaseList.length > 0 && (<>
                 <h3>모델(주문번호)</h3>
-                <div>{`${userInfoState.userPurchaseList[purchaseList].type}${userInfoState.userPurchaseList[purchaseList].trim}(주문번호 : ${userInfoState.userPurchaseList[purchaseList].purchaseId})`}</div>
+                <div>{infoShow && !!userInfoState.userPurchaseList && `${userInfoState.userPurchaseList[purchaseList].type}${userInfoState.userPurchaseList[purchaseList].trim}(주문번호 : ${userInfoState.userPurchaseList[purchaseList].purchaseId})`}</div>
                 <h3>색상</h3>
-                <div>{userInfoState.userPurchaseList[purchaseList].color}</div>
+                <div>{infoShow && !!userInfoState.userPurchaseList && userInfoState.userPurchaseList[purchaseList].color}</div>
                 <h3>예정출고일</h3>
-                <div>{userInfoState.userPurchaseList[purchaseList].deliveryDate !== "" 
-                  ? onSocketDate(userInfoState.userPurchaseList[purchaseList].deliveryDate, "YYYY-MM-DD, dddd") 
+                <div>{infoShow && !!userInfoState.userPurchaseList && userInfoState.userPurchaseList[purchaseList].deliveryDate !== "" 
+                  ? infoShow && !!userInfoState.userPurchaseList && onSocketDate(userInfoState.userPurchaseList[purchaseList].deliveryDate, "YYYY-MM-DD, dddd") 
                   : "미정"}</div>
                 <h3>요청사항</h3>
                 <div>{userInfoState.userPurchaseList[purchaseList].content}</div>
@@ -201,7 +200,6 @@ export const AdminChatting: FC = () => {
               placeholder="메모는 여기에 입력해주세요." />
           </SC.UserInfoInner>
         </SC.UserInfoGrid>
-      )}
     </SC.GridBox>
   )
 }
