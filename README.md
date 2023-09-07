@@ -66,6 +66,7 @@
     | Msw               | ^1.2.3   | 가상서버를 구축하여 개발시간을 줄이고자 채택                                                                                                                                                                                                        |
     | lottie            | ^1.2.3   | 스플래쉬 화면의 역동적인 애니메이션 효과를 위해 채택                                                                                                                                                                                                |
 
+
 ## 03 리팩토링 및 코드개선을 위한 노력
 
 ### 1차 리팩토링 - 8월 1일
@@ -75,37 +76,37 @@
 
 1. 코드유지보수 및 모듈의 재사용성 개선 : `"리엑트 모듈 인덱스"` 또는 `"바렐(rel) 모듈 인덱스"` 패턴
 
-    <details>
-    <summary>코드 살펴보기 </summary>
+   <details>
+   <summary>코드 살펴보기 </summary>
 
-    ```tsx
-    import Button from "./components/community";
-    import Modal from "./components/css";
-    import Header from "./components/atom";
-    ```
+   ```tsx
+   import Button from "./components/community";
+   import Modal from "./components/css";
+   import Header from "./components/atom";
+   ```
 
-    각 컴포넌트를 사용하려면 이렇게 여러줄의 임포트 구문이 필요합니다.
+   각 컴포넌트를 사용하려면 이렇게 여러줄의 임포트 구문이 필요합니다.
 
-    ```tsx
-    export * from "./community";
-    export * from "./css";
-    export * from "./atom";
-    ```
+   ```tsx
+   export * from "./community";
+   export * from "./css";
+   export * from "./atom";
+   ```
 
-    "components"디렉토리에 "index.ts" 파일을 추가하여 모든 컴포넌트를 내보내면
+   "components"디렉토리에 "index.ts" 파일을 추가하여 모든 컴포넌트를 내보내면
 
-    ```tsx
-    import { community, css, atom } from "../../components";
-    ```
+   ```tsx
+   import { community, css, atom } from "../../components";
+   ```
 
-    이와 같이 간결하게 컴포넌트들을 임포트 할 수 있습니다.
-    </details>
+   이와 같이 간결하게 컴포넌트들을 임포트 할 수 있습니다.
+   </details>
 
-    `"리엑트 모듈 인덱스"` 또는 `"바렐(rel) 모듈 인덱스"` 패턴을 통해 코드 구조정리
+   `"리엑트 모듈 인덱스"` 또는 `"바렐(rel) 모듈 인덱스"` 패턴을 통해 코드 구조정리
 
-    - 모듈관리용이성 : 여러 컴포넌트/파일을 단일 파일로 묶어서 관리
-    - 상대경로간소화 : 컴포넌트에서 해당 디렉토리 내의 파일을 가져올 때 단순하게 표현하게 함
-    - 이를 통해 상대경로 관리를 쉽게 처리하도록 하여 개발환경 개선을 시도
+   - 모듈관리용이성 : 여러 컴포넌트/파일을 단일 파일로 묶어서 관리
+   - 상대경로간소화 : 컴포넌트에서 해당 디렉토리 내의 파일을 가져올 때 단순하게 표현하게 함
+   - 이를 통해 상대경로 관리를 쉽게 처리하도록 하여 개발환경 개선을 시도
 
 </details>
 
@@ -447,23 +448,126 @@
 <summary>[ 두번째주제 ] 내용 살펴보기</summary>
 
 1.  <details>
-    <summary>React.lazy()</summary>
+    <summary>초기로딩 속도 개선을 위한 cloudfront</summary>
     <hr/>
-    내용이 들어갑니다.
-    <hr/>
+      목적 : 사용자 경험 향상을 한 초기 로딩 속도를 개선
+      <br/>
+      방법 : 배포 환경을 제어하고 있는 cloudfront의 캐싱기능을 활용하기로함. cloudfront의 캐싱은 엣지 로케이션에서 콘텐츠를 이루어지며 가까운 위치에서 데이터를 제공하여 사용자에게 빠르게 데이터를 전달해준다는 장점이 있음. 또한 조건부 요청 및 무효화를 통해 콘텐츠 업데이트를 관리함. 이를 통해 초기 로딩 속도를 높여냄.
+    <br/>
     </details>
 2.  <details>
+    <summary>React.lazy()</summary>
+    <hr/>
+      목적 : SPA 개발을 위한 컴포넌트 아키텍처인 리액트의 단점인 번들링을 제어하고자 함. 
+      <br/>
+      방법 : 무거운 컴포넌트가 많은 프로젝트 특성상 초기 번들 과정을 제어해야했음. React.lazy()를 사용하여 무거운 컴포넌트를 동적제어함으로 번들링을 줄일 수 있었음. 또한 이때 걸리는 로딩 시간 중의 사용자 경험 향상을 위해 Suspense를 사용하여 로딩화면 제어함.
+      
+      <br/>
+      lazy( ) 설정
+
+    ```tsx
+    export const LazyInnoCar = lazy(() =>
+      import("../main/InnoCar").then(({ InnoCar }) => ({ default: InnoCar }))
+    );
+    export const LazyCommunity = lazy(() =>
+      import("../main/Community").then(({ Community }) => ({
+        default: Community,
+      }))
+    );
+    ```
+
+    lazy( ) 활용
+
+    ```tsx
+    <Route
+      path="innocar"
+      element={
+        <Suspense
+          fallback={<div>Loading...</div>}
+          children={<Page.LazyInnoCar />}
+        />
+      }
+    />
+    ```
+
+    </details>
+
+3.  <details>
     <summary>리렌더링제어 - Form태그와 inputs</summary>
     <hr/>
-     내용이 들어갑니다.
-    <hr/>
+     목적 : 리액트의 리렌더링을 제어해 성능을 향상 하고자 함. 
+     <br />
+     방법 : 그 중에서도 잦은 리렌더링이 일어나는 Form 과 input 사이의 연관성을 단절시켜 상태 단위로 리렌터링이 제어가 이뤄질 수 있도록 함. 이 과정에서 컴포넌트-커스텀훅으로 코드를 분리하여 컴포넌트 재활용과 모듈화가 이뤄질 수 있도록 함.
+
+      <br />
+      input각각을 컴포넌트로 분리하여 관리
+
+    ```tsx
+      <SC.SignUpInputN
+      type='text'
+      name='nickname'
+      length={20}
+      inputRef={inputRef1}
+      submitted={submitted}
+      placeholder='닉네임을 입력해주세요'
+    />
+
+    <SC.SignUpInputP
+      name='password'
+      length={20}
+      inputRef={inputRef6}
+      submitted={submitted}
+      placeholder='비밀번호를 입력해 주세요.'
+    />
+    ```
+
     </details>
-3.  <details>
-          <summary>이미지 리사이징과 지연로딩</summary>
-          <hr/>
-          내용이 들어갑니다.
-          <hr/>
-          </details>
+
+4.  <details>
+    <summary>이미지 리사이징과 지연로딩</summary>
+    <hr/>
+    목적 : 백엔드와의 통신 속도를 높여 사용자 경험을 향상시키고자 함.
+    <br />
+    방법 : 특히 통신에서 커다란 용량을 차지하는 이미지 업로드 부분을 제어하기로 함. 이미지 업로드시 리사이징을 과정을 통해 파일의 용량을 줄여냄. 또한 이미지 지연로딩(required)을 통해 필요할 때만 이미지가 로딩이 될 수 있도록 하여 초기 로딩속도를 개선해냄.
+    <br/>
+    <br/>
+    이미지 리사이징
+
+    ```tsx
+    const formData = new FormData();
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(getCommunityData)], { type: "application/json" })
+    );
+    ```
+
+    </details>
+
+5.  <details>
+    <summary>중첩 라우트와 프로텍티드 라우터</summary>
+    <hr/>
+    목적 : 코드 모듈화와 초기 번들 크기 줄임으로 사용자 경험을 향상시키고자 함. 
+    <br/>
+    방법 : 중첩 라우트를 활용하여 각 헤더에 맞게 컴포넌트를 분리시킴으로 목적을 달성할 수 있었음. 또한 제한 페이지 접근을 관리하기 위해 중첩 라우트를 통한 프로텍티드 라우터를 사용함. 프로텍티드 라우터는 조건부 라우팅 설정을 통해 원하는 기능을 수행할 수 있도록 함.
+
+    <br/>
+    프로텍티드 라우터
+
+    ```tsx
+    export const ProtectiveRouter: React.FC = () => {
+      const { decodeLoaded, sub } = useProtectiveRouter();
+
+      return !decodeLoaded ? (
+        <div />
+      ) : sub ? (
+        <Outlet />
+      ) : (
+        <Navigate to={"/login"} replace={true} />
+      );
+    };
+    ```
+
+    </details>
     </details>
 
 ### [ 세번째주제 ] 개발의 두 측면의 경험 증진
