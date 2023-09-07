@@ -104,18 +104,16 @@ export const CommunityDetail: React.FC = () => {
 
 	const fetchNextRef = Hooks.useInfinityThrottle(setPage, isFetching);
 
-
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
 	else {
 		const { content, isLike, likeCount, title, postId, nickname, imageUrls } = data; // createAt // imageUrls // postId // commentsList
-		
+
 		return (
 			<SC.FlexBox $fd='column' $ai='start' $jc='start' $gap={30}>
 				<SC.SettingBtn
 					onClick={() => {
-						onNavigate({ url: state });
-		
+						onNavigate({ url: `/community/1` })();
 					}}
 					children={<SC.CustomP $height='47px' $bColor='white' $size={1.125} children='목록으로' />}
 				/>

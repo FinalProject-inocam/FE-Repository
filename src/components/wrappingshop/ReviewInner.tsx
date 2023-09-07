@@ -6,7 +6,12 @@ export const ReviewInner: FC<{
 	reviews: any;
 	setPage?: any;
 	shopId?: string;
-}> = ({ reviews: { reviewId, nickname, star, revisit, createAt, review, imageUrls, likeCount, isLike }, shopId }) => {
+	setEdit: any;
+}> = ({
+	reviews: { reviewId, nickname, star, revisit, createAt, review, imageUrls, likeCount, isLike },
+	shopId,
+	// setEdit,
+}) => {
 	return (
 		<SC.ReviewListLayout $gtc='80px 1fr' $cgap={20}>
 			<SC.CustomH3 $types='nickname'>{nickname}</SC.CustomH3>
@@ -25,6 +30,7 @@ export const ReviewInner: FC<{
 					createAt={createAt}
 					nickname={nickname}
 					shopId={shopId}
+					// setEdit={setEdit}
 				/>
 				<div>{review}</div>
 				<CP.ReviewList

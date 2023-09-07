@@ -1,11 +1,19 @@
 import { FC } from "react";
-import * as CP from "..";
+// import * as CP from "..";
 import * as SC from "../css";
 import * as AS from "../../assets";
 import * as Type from "../../types";
 import * as Hooks from "../../hooks";
 
-export const ReviewBar: FC<Type.ReviewBarProps> = ({ reviewId, star, revisit, createAt, nickname, shopId }) => {
+export const ReviewBar: FC<Type.ReviewBarProps> = ({
+	reviewId,
+	star,
+	revisit,
+	createAt,
+	nickname,
+	shopId,
+	setEdit,
+}) => {
 	const { onDeleteShopComment, formatDate, currentUser } = Hooks.useReviewBar();
 	return (
 		<SC.FlexBox $fd='row' $jc='space-between' style={{ width: "100%" }}>
@@ -25,14 +33,15 @@ export const ReviewBar: FC<Type.ReviewBarProps> = ({ reviewId, star, revisit, cr
 				</SC.DetailScoreDiv>
 				<SC.ReviewRevisit>{revisit && revisit ? "재방문의사" : ""}</SC.ReviewRevisit>
 			</SC.FlexBox>
-			<SC.FlexBox>
+			<div>
 				<SC.ReviewMenuInner $jc='flex-end' $gap={10}>
-					{currentUser === nickname && <CP.EditWrappingReview reviewId={reviewId} shopId={shopId} />}
+					{/* {currentUser === nickname && <CP.EditWrappingReview reviewId={reviewId} shopId={shopId} />} */}
+					{/* <p onClick={setEdit((pre) => !pre)}>수정</p> */}
 					<p style={{ color: "red" }}>신고</p>
 					{currentUser === nickname && <p onClick={onDeleteShopComment(shopId, reviewId)}>삭제</p>}
 					<p>{formatDate(createAt)}</p>
 				</SC.ReviewMenuInner>
-			</SC.FlexBox>
+			</div>
 		</SC.FlexBox>
 	);
 };
