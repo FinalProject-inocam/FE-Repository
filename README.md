@@ -269,31 +269,170 @@
   1.  <details>
       <summary>사용자측면 : 루트경로의 Three.js와 스플래시 스크린</summary>
       <hr/>
-      내용이 들어갑니다.
+
+      ```tsx
+      const { nodes, materials } = useGLTF("/scene.gltf") as IGLTF;
+      ```
+      public 폴더에 저장되어 있는 `gltf`파일을 불러오는 부분이 루트경로에 있었기에, 사용자로 하여금 웹페이지 첫 진입시 지루함을 줄 수 있는 부분이 발생되었습니다. 
+
+      개선은 스플래시 스크린을 도입함으로 해당문제에 접근했습니다. 초기 3초의 시간을 주어 사용자에게 먼저 화면을 보여주고, 충분히 useGLTF의 로딩문제가 해결되었을 때 화면을 보여주는 처리를 했습니다. 
+
+      `Three.js`는 저희 프로젝트에서 도전한 기술 중에 하나입니다. 정적화면에 생동감을 주기 위해 3D개체를 넣는 부분을 고려했고, glft 파일을 통해 해당 기술을 구현했습니다. 진행 과정에서 `directionalLight`조명을 주는 부분과  `camera`의 위치과 화각을 잡는 부분에 있어서의 여러움이 있었지만, 협업을 통해 자료를 조사했고 해당 기술을 구현했습니다. 나아가 이벤트를 주기 위해 더블클릭시 3D 개체가 회전하는 부분을 제어했습니다. 해당 부분을 useSpring 훅을 통해서 애니메이션으로 제어하고자 하여 jsx에서 먼저 구현하고, tsx에 적용하는 부분에서 발생된 타입 문제로 애니메이션 효과는 더하지 못함에 아쉬움이 남습니다.
+
       <hr/>
       </details>  
   2.  <details>
-      <summary>웹RTC의 동적 offer생성과 로딩이미지 : </summary>
+      <summary>채팅과 웹RTC의 동적 offer생성, 그리고 로딩이미지 : </summary>
       <hr/>
-       내용이 들어갑니다. 
+      01<br/>
+      민원상담과 관련되 기능을 구현 하며 실시간 통신을 지원하고, 브라우저의 범용적 확장을 지원하는 socket.io-client를 도입하였습니다. 
+
+      먼저 채팅과 관련된 부분입니다. 라우팅 전략에 따라 채팅과 관련된 경로는 2개였습니다. 중첩라우팅에 따라 chat 라우터가 있었고, 조회된 room을 :id로 하여 상세경로로 들어가게 했습니다. 문제는 url에 `room`이름이 노출된다는 이슈가 있었습니다. 이는 룸으로 상대방의 채팅방에 접속할 수 있다는 것을 의미하기도 하여 보안에 문제가 있었습니다. 
+
+      ```tsx
+      const onEnterRoom = () => {
+        dispatch(deleteChatMsg())
+        onNavigate({url:"room",  opts: { state: room }})()
+      }
+      ```
+
+      해당문제는 클릭이벤트로 채팅방에 접속할 때, React-route-dom에서 제공하는 state 메소드에 은닉하였고, 해당 정보를 추출하여 소켓통신을 하게 함으로 해당 문제를 해결했습니다. 
+
+      02<br/>
+      다음으로는 웹RTC의 시그널링과 관련된 문제입니다. 문제는 먼저 접속한 Peer가 상대 Peer가 영상정보를 생성하기 전에 발송하는 candidate를 받아버려 화상통신이 되지 않는다는 문제였습니다. 이 부분을 개선하고자, setTimeOut을 통해 offer 생성을 제어하였습니다. 
+
+      ```tsx
+        useEffect(() => {
+        if (showWebRTC) {
+          getMedia()
+          makeConnection()
+
+          if (socketRef.current) {
+            socketRef.current.emit("joinRTC", { room, username: sub })
+
+            socketRef.current.on("joinedRTC", async () => {
+              setTimeout(() => {
+                streamRef.current && createOffer()
+              }, 3000)
+            })
+
+            socketRef.current.on("getOffer", getoffer => {
+              createAnswer(getoffer)
+            })
+
+            socketRef.current.on("getAnswer", getanswer => {
+              peerRef.current && peerRef.current.setRemoteDescription(getanswer);
+            })
+
+            socketRef.current.on("getCandidate", getcandidata => {
+              peerRef.current && peerRef.current.addIceCandidate(getcandidata);
+            })
+          }
+        }
+      ```
+
+      그러나 이러한 제어는 사용자로 하여금 빈화면을 바라보게 함으로 연결되었습니다. 이 문제에 대한 제어로 동적이미지(.git)를 삽입하여 기다림에 대한 지루함을 개선하고자 하였습니다. 
+
+      ```tsx
+      return ( 
+      {/* ...  */}
+
+      <SC.GridBox $gtc="1fr 2fr" $gtr="1fr" style={{ position: "relative" }}>
+        <SC.Video ref={peerAVideoRef} autoPlay />
+        <div style={{ position: "relative", overflow: "hidden" }}>
+          {/* 동적 이미지를 삽입한 부분입니다.  */}
+          {!peerStream && <SC.LoadingImg src={ASS.loadingInnoLogo} alt="chattingLoading" />}
+          <SC.Video ref={peerBVideoRef} autoPlay />
+        </div>
+
+
+        <SC.FlexBox style={{ position: "absolute", bottom: "10px", left: "10px" }} $gap={10}>
+          <SC.WebRTCStateBTN
+            onClick={onMute}
+            children={<img
+              alt="mikeState" src={!mute ? ASS.mikeOn : ASS.mikeOff} />} />
+          <SC.WebRTCStateBTN
+            onClick={onCamera}
+            children={<img
+              alt="cameraState" src={!camera ? ASS.cameraOn : ASS.cameraOff} />} />
+        </SC.FlexBox>
+        <SC.WebRTCStateBTN
+          $types="closeBTN"
+          style={{ position: "absolute", top: "10px", right: "10px" }}
+          onClick={onToggleWebRTC}
+          children={<img
+            alt="closeBTN" src={ASS.closeBTN} />} />
+      </SC.GridBox>
+      )
+      ```
+
       <hr/>
       </details>  
   3.  <details>
       <summary>개발자측면 : 프로젝트 자동화 및 환경변수의 보안문제 </summary>
       <hr/>
-      내용이 들어갑니다.
+      01<br/>
+      먼저는 AWS의 IAM을 생성하여 S3로 파일을 간편하게 업로드 하기 위한 준비를 했습니다. 
+      
+      [관련 내용 정리, 19Edwin92 Github](https://github.com/19Edwin92/FrentEnd-study/blob/main/CICD/03S3-IAM%20설정.md)
+
+      02<br/>
+      다음으로는 .yml 파일을 작성함으로 GitHubActions로 CD를 구성하는 일이었습니다. 최종프로젝트를 준비하며, 이전에 시도한 내용들이 있어서 쉽게 해당 내용을 구성할 수 있었습니다. 저희는 dev가 변경되면 지속적 배포가 동작하도록 설정하였습니다. 
+
+      [코드 살펴보기](https://github.com/FinalProject-inocam/FE-Repository/blob/dev/.github/workflows/main.yml)
+
+      03<br/>
+      다음으로는 민간한 환경변수와 관련된 설정입니다. 프로젝트 파일에서 git 체계에서 제외처리를 했더라도, 빌드파일시에 환경변수 업로드다는 점의 문제를 인지했고, 환경변수를 github.actions.secrets에서 생성되게 함으로 보안성을 높였습니다. 
       <hr/>
       </details>
   4.  <details>
       <summary>개발자측면 : 빠른 API 설계를 위한 msw 구축 </summary>
       <hr/>
-      내용이 들어갑니다.
+      프로트개발에서 고민되는 부분은 서버개발이 완료되기까지 API를 전달받지 못한다는 부분의 문제입니다. 관련 문제를 개선하고 프론트엔드 개발을 향상하기 위해서 msw를 구축하여, 사전에 API에 대한 점검을 진행했습니다. 명세서를 기준으로 작성하여 추후 백엔드 개발자와 실제 API 통신을 했을 때 발생될 수 있는 상황들을 사전에 제어함으로 효율적인 대화가 이뤄질 수 있는 준비를 마련했습니다. 
       <hr/>
       </details>    
   5.  <details>
       <summary>개발자측면 : 중복제거를 위한 리액트 모듈 인덱스와 컨테이터 컴포넌트로서의 커스텀 훅 모듈화 </summary>
       <hr/>
-      내용이 들어갑니다.
+      리액트 모듈 인덱스를 도입하여 import 구문을 감소시켰습니다. export를 통해서 컴포넌트 단위로 파일을 연결지을 때, 해당 방법을 사용하지 않는다면 import 구문이 무거워진다는 부분을 인지하여 해당 부분을 개선하고자 했습니다. 이를 통해 간결한 소스코드 작성을 이루었고, 해당 폴더 내에서 파일이동을 자유롭게 할 수 있도록 마련함으로 소스코드 개발측면의 향상을 이루어냈습니다. 
+
+      ```tsx
+      import React from "react";
+      import * as SC from "../css";
+      import * as Type from "../../types";
+      import { useSignupInput } from "../../hooks";
+      import * as RTK from "../../redux";
+      ```
+
+      다음으로는 커링함수와 즉시실행을 통하여 이벤트를 제어했으며, 함수들을 컴포넌트 단위에서 커스텀훅으로 분리하여 뷰화면과 로직부분을 각각 작성하게 함으로 각 부분의 유지보수가 원할하게 진행될 수 있도록 코드를 개선하였습니다. 
+
+      ```tsx
+      export const Signup: React.FC = () => {
+        const {
+          inputRef1,
+          inputRef2,
+          inputRef3,
+          inputRef4,
+          inputRef5,
+          inputRef6,
+          inputRef7,
+          inputRef8,
+          submitted,
+          check,
+          adminCheck,
+          onSubmitSign,
+        } = useSignup();
+        const LayoutRef = useLayoutRef()
+
+        return (
+            <SC.FlexBox ref={LayoutRef} style={{paddingTop:"90px"}}>
+              <SC.AuthForm onSubmit={onSubmitSign} $gap={40} $width={"920px"}>
+              {/* ... */}
+              </SC.AuthForm>
+            </SC.FlexBox>  
+        )
+      } 
+      ```
       <hr/>
       </details>        
 </details> 
