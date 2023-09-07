@@ -6,7 +6,7 @@ export const ReviewInner: FC<{
 	reviews: any;
 	setPage?: any;
 	shopId?: string;
-	setEdit: any;
+	setEdit?: any;
 }> = ({
 	reviews: { reviewId, nickname, star, revisit, createAt, review, imageUrls, likeCount, isLike },
 	shopId,

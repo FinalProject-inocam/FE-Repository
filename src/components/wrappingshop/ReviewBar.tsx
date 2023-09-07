@@ -12,7 +12,7 @@ export const ReviewBar: FC<Type.ReviewBarProps> = ({
 	createAt,
 	nickname,
 	shopId,
-	setEdit,
+	// setEdit,
 }) => {
 	const { onDeleteShopComment, formatDate, currentUser } = Hooks.useReviewBar();
 	return (
