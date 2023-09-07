@@ -1,9 +1,27 @@
 # INNO-Moters
 
-[01 SKILLS](#01-skills)<br/>
-[02 서비스 아키택처 스타일 및 기술적 의사결정](#02-서비스-아키택처-스타일-및-기술적-의사결정)<br/>
-[03 리팩토링 및 코드개션을 위한 노력](#03-리팩토링-및-코드개선을-위한-노력)<br/>
-[04 트러블 슈팅 및 도전기술](#04-트러블-슈팅-및-도전기술)<br/>
+### [01 SKILLS](#01-skills)<br/>
+### [02 서비스 아키택처 스타일 및 기술적 의사결정](#02-서비스-아키택처-스타일-및-기술적-의사결정)<br/>
+
+- [02-01 서비스 아키택처](#서비스-아키택처)<br/>
+- [02-02 기술적 의사결정](#기술적-의사결정라이브러리)<br/>
+
+### [03 리팩토링 및 코드개션을 위한 노력](#03-리팩토링-및-코드개선을-위한-노력)<br/>
+
+- [03-01 1차 리팩토링](#1차-리팩토링---8월-1일)<br/>
+- [03-02 2차 리팩토링](#2차-리팩토링---8월-11-12일)<br/>
+- [03-02 3~5차 리팩토링](#35차-리팩토링하단의-트러블슈팅과-도전기술에-기록)<br/>
+
+### [04 트러블 슈팅 및 도전기술](#04-트러블-슈팅-및-도전기술)<br/>
+
+- [04-01 첫번째주제 : 상태관리와 관련하여](#첫번째주제--상태관리와-관련하여)<br/>
+  - RTK
+  - RTKQ
+  - ContextAPI
+  - ThemeProvier
+- [04-02 두번째주제 : 성능최적화외 관련하여](#두번째주제--성능최적화와-관련하여)<br/>
+- [04-03 세번째주제 : 개발의 두 측면의 경험 증진](#세번째주제--개발의-두-측면의-경험-증진)<br/>
+
 ## 01 SKILLS
 <div align="center">
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/><img src="https://img.shields.io/badge/CSS3-blue?style=flat-square&logo=CSS3&logoColor=white"/><img src="https://img.shields.io/badge/JavaScript-yellow?style=flat-square&logo=JavaScript&logoColor=white"/><img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/><img src="https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=Redux&logoColor=white"/><img src="https://img.shields.io/badge/React Router-CA4245?style=flat-square&logo=React Router&logoColor=white"/><img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=Axios&logoColor=white"/></br><img src="https://img.shields.io/badge/styledcomponents-DB7093?style=flat-square&logo=styledcomponents&logoColor=white"/><img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat-square&logo=Chartdotjs&logoColor=white"/><img src="https://img.shields.io/badge/Three.js-000000?style=flat-square&logo=threedotjs&logoColor=white"/><img src="https://img.shields.io/badge/Socket.io-010101?style=flat-square&logo=Socketdotio&logoColor=white"/><img src="https://img.shields.io/badge/MSW-eb7434?style=flat-square&logo=&logoColor=white"/></br><img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=GitHub&logoColor=white"/><img src="https://img.shields.io/badge/GitHubActions-2088FF?style=flat-square&logo=GitHubActions&logoColor=white"/><img src="https://img.shields.io/badge/AmazonAWS-232F3E?style=flat-square&logo=AmazonAWS&logoColor=white"/><img src="https://img.shields.io/badge/AmazonS3-569A31?style=flat-square&logo=AmazonS3&logoColor=white"/><img src="https://img.shields.io/badge/AWS CloudFront-000000?style=flat-square&logo=AmazonAWS&logoColor=white"/><img src="https://img.shields.io/badge/AWS Router53-000000?style=flat-square&logo=AmazonAWS&logoColor=white"/>
@@ -15,20 +33,25 @@
 
     <img src="https://raw.githubusercontent.com/FinalProject-inocam/.github/main/profile/img/005.png">
 
-      01 GitHubActions
-        secret을 사용하여 민감한 정보들을 저장하여 보안을 강화했고 워크플로우 파일 내에서 불러와 환경변수로 사용
-        CI/CD를 통해 코드를 빌드하고, 테스트를 실행한 후, 모든 테스트가 통과하면 자동으로 배포
+    01 `GitHubActions`<br/>
+    <strong>secret</strong> : 을 사용하여 민감한 정보들을 저장하여 보안을 강화했고 워크플로우 파일 내에서 불러와 환경변수로 사용
+    <strong>CI/CD Pipeline</strong> : main 브랜치에 코드가 푸시되면, GitHub Actions 워크플로우가 자동으로 실행.
+          코드를 빌드하고, 테스트와 통합 테스트를 실행하여 모든 테스트가 통과하면 AWS S3로 자동 빌드, 배포함
 
-      02 AWS S3
-        AWS에서 제공하는 객체 스토리지 서비스로 데이터를 암호화 하여 안전하게 관리함
-        
-      03 AWS CludFront
-        CloudFront를 이용하여 S3에 저장된 콘텐츠를 제어, 캐싱을 사용하여 S3에 요청 횟수를 줄여 비용을 절감하고 이미지나 비디오를 
+    02 `AWS S3`<br/>
+      AWS에서 제공하는 객체 스토리지로 정적파일(HTML, CSS, JS, 이미지 등) S3 버킷에 저장하여 빠르게 제공
+      모든 데이터를 SSE를 사용하여 암호화 되어 저장함.
+      
+    03 `AWS CludFront`<br/>
+      CloudFront를 이용하여 S3에 저장된 콘텐츠를 배포, 캐싱을 사용하여 S3에 요청 횟수를 줄여 비용을 절감하고 이미지나 비디오를 빠르게 전달할 수 있게 함. SSL을 사용하여 HTTPS 사용을 통해 보안을 강화함.
 
-      04 AWS Route53
+    04 `AWS Route53`<br/>
+      Route 53의 높은 가용성과 확장성을 활용하여 웹서비스의 DNS를 안정적으로 관리.
+      가용성과 확장성이 뛰어난 DNS 웹 서비스. 가비아로 구매한 도메인을 등록 연동하여 웹서비스 제공.
+      서버의 상태를 모니터링 하고, 문제가 발생할 경우 트래픽을 백업 서버로 자동 전환.
 
-      05 ACM
-- ### 라이브러리 
+
+- ### 기술적 의사결정(라이브러리) 
   |라이브러리명|버전|기술적 의사결정|
   |:--|:--|:--|
   |Typescript|^4.4.2| TypeScript는 정적 타이핑 제공하고 타입을 명확하게 지정할 수 있으므로 컴파일 시점에서 오류를 확인할 수 있어 에러의 가능성을 줄일 수 있고, 코드가독성과 유지보수에 이점이 있어 코드를 명확하게 전달 할 수 있으므로 팀원들간의 협업의 장점이 있어 채택|
@@ -39,11 +62,13 @@
   |ThreeJS|^0.155.0| 인터렉티브한 화면 구성을 위해 완성도가 높은 라이브러리 활용|
   |Socket.io|^4.7.2| 민원상담 차원을 위한 실시간성과 다양한 브라우저에 호환되는 점을 보고 일반채팅과 화상채팅을 위해 채택|
   |axios|^1.4.0| API 호출 및 HTTP 요청을 처리하기 위해 간단한 사용법과 호환성을 이유로 채택| 
-  
+  |Msw|^1.2.3| 가상서버를 구축하여 개발시간을 줄이고자 채택|   
+  |lottie|^1.2.3| 스플래쉬 화면의 역동적인 애니메이션 효과를 위해 채택|   
 
 ## 03 리팩토링 및 코드개선을 위한 노력
+### 1차 리팩토링 - 8월 1일
 <details>
-<summary>1차 리팩토링 - 8월 1일</summary>
+<summary>내용 살펴보기</summary>
 
 1. 코드유지보수 및 모듈의 재사용성 개선 : `"리엑트 모듈 인덱스"` 또는 `"바렐(rel) 모듈 인덱스"` 패턴
 
@@ -79,10 +104,11 @@
     - 상대경로간소화 : 컴포넌트에서 해당 디렉토리 내의 파일을 가져올 때 단순하게 표현하게 함
     - 이를 통해 상대경로 관리를 쉽게 처리하도록 하여 개발환경 개선을 시도
 
-  </details>
+</details>
 
+### 2차 리팩토링 - 8월 11-12일
 <details>
-  <summary>2차 리팩토링 - 8월 11-12일</summary>
+  <summary>내용살펴보기</summary>
 
 1. 성능최적화와 코드 스플리팅(React.lazy)
 
@@ -177,14 +203,13 @@
     </details>
 
 
-    <details>
-    <summary>3~5차 리팩토링(하단의 트러블슈팅과 도전기술에 기록)</summary>
-    </details>
+### 3~5차 리팩토링(하단의 트러블슈팅과 도전기술에 기록)
 
 
-## 04 트러블 슈팅 및 도전기술     
+## 04 트러블 슈팅 및 도전기술   
+### [ 첫번째주제 ] 상태관리와 관련하여
 <details>
-<summary>[ 첫번째주제 ] 상태관리와 관련하여</summary>
+<summary>[ 첫번째주제 ] 내용 살펴보기</summary>
   
   1.  <details>
       <summary>전역상태관리와 RTK</summary>
@@ -213,8 +238,9 @@
  
 </details>
 
+### [ 두번째주제 ] 성능최적화와 관련하여
 <details>
-<summary>[ 두번째주제 ] 성능최적화와 관련하여</summary>
+<summary>[ 두번째주제 ] 내용 살펴보기</summary>
 
   1.  <details>
       <summary>React.lazy()</summary>
@@ -236,8 +262,9 @@
       </details>  
 </details> 
 
+### [ 세번째주제 ] 개발의 두 측면의 경험 증진
 <details>
-<summary>[ 세번째주제 ] 개발의 두 측면의 경험 증진</summary>
+<summary>[ 세번째주제 ] 내용 살펴보기</summary>
 
   1.  <details>
       <summary>사용자측면 : 루트경로의 Three.js와 스플래시 스크린</summary>
