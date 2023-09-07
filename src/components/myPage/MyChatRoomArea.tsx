@@ -57,6 +57,12 @@ export const MyChatRoomArea:FC = () => {
                 children={<img
                   alt="cameraState" src={!camera ? ASS.cameraOn : ASS.cameraOff} />} />
             </SC.FlexBox>
+            <SC.WebRTCStateBTN
+              $types="closeBTN"
+              style={{ position: "absolute", top: "10px", right: "10px" }}
+              onClick={onToggleWebRTC}
+              children={<img
+                alt="closeBTN" src={ASS.closeBTN} />} />
 
 						</SC.MyChatVideoInner>
 					}

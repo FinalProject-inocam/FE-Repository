@@ -251,7 +251,7 @@ export const useSocketRoom = () => {
   const dispatch = RTK.useAppDispatch()
   useEffect(() => {
     socketRef.current = io(`${process.env.REACT_APP_SERVER_API}`, {
-      reconnectionAttempts: 2,
+      reconnectionAttempts: 5,
       reconnectionDelay: 500
     })
     if (socketRef.current) {
@@ -368,6 +368,7 @@ export const useSocketRoom = () => {
       setInfoShow(true)
       setSettingBox(false)
       setShowWebRTC(false)
+      setUserInfoState({})
       setMute(false)
       setCamara(false)
       getPeerStream(false)
