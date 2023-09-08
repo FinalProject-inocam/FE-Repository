@@ -13,7 +13,10 @@ const reviewFormSlice = createSlice({
 		setReviewDate: (state, action: PayloadAction<Partial<Type.ReviewSliceType>>) => {
 			return { ...state, ...action.payload };
 		},
-		deleteReiewDate: () => {
+		updateReview: (state, action: PayloadAction<Partial<Type.ReviewSliceType>>) => {
+			return { ...state, ...action.payload };
+		},
+		deleteReviewDate: () => {
 			return { revisit: 0, review: "" };
 		},
 	},
@@ -27,4 +30,4 @@ export const selectReviewFormRevisit = (state: { ReviewFormReducer: Type.ReviewS
 	state.ReviewFormReducer.revisit;
 export const selectReviewFormReview = (state: { ReviewFormReducer: Type.ReviewSliceType }) =>
 	state.ReviewFormReducer.review;
-export const { setReviewDate, deleteReiewDate } = reviewFormSlice.actions;
+export const { setReviewDate, updateReview, deleteReviewDate } = reviewFormSlice.actions;

@@ -327,18 +327,33 @@ const RevisitRadioLabel = styled.label<Partial<Type.Styled>>`
 	border-radius: 5px;
 	color: ${({ theme }) => theme.color.lightgray2};
 
-	${({ $state, theme }) =>
-		$state === 1
-			? css`
-					background-color: ${theme.color.lightblue};
-					color: ${theme.color.blue};
-					border-color: ${theme.color.blue};
-			  `
-			: $state === 2 &&
-			  css`
-					color: ${theme.color.red};
-					border-color: ${theme.color.red};
-			  `};
+	${({ $type, $state, theme }) => {
+		if ($type === "edit") {
+			return $state === 1
+				? css`
+						background-color: ${theme.color.lightblue};
+						color: ${theme.color.blue};
+						border-color: ${theme.color.blue};
+				  `
+				: $state === 2 &&
+						css`
+							color: ${theme.color.red};
+							border-color: ${theme.color.red};
+						`;
+		} else if ($type === "create") {
+			return $state === 1
+				? css`
+						background-color: ${theme.color.lightblue};
+						color: ${theme.color.blue};
+						border-color: ${theme.color.blue};
+				  `
+				: $state === 2 &&
+						css`
+							color: ${theme.color.red};
+							border-color: ${theme.color.red};
+						`;
+		}
+	}};
 `;
 
 const TextaAreaLayout = styled.div`
@@ -378,6 +393,31 @@ const ReviewListLayout = styled.form<Partial<Type.Styled>>`
 	width: 100%;
 	padding-bottom: 30px;
 	border-bottom: 3px solid #eee;
+`;
+
+// EditWrappingReview
+const EditButton = styled.button<Partial<Type.Styled>>`
+	${cursor}
+	width: 118px;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid blue;
+	background-color: ${({ theme }) => theme.color.blue};
+	color: white;
+`;
+
+const EditCancleButton = styled.button<Partial<Type.Styled>>`
+	${cursor}
+	width: 118px;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	border-radius: 5px;
+	border: none;
+	background-color: ${({ theme }) => theme.color.gray};
+	color: black;
 `;
 
 export {
@@ -444,6 +484,9 @@ export {
 	ReviewImage,
 
 	// EditWrappingReview
+	EditButton,
+	EditCancleButton,
+
 	// ReviewList
 	Likebutton,
 };

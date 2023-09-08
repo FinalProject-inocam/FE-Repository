@@ -6,6 +6,7 @@ export type SetState = Dispatch<SetStateAction<boolean>>;
 export interface EditWrappingShopReview {
 	shopId: string | undefined;
 	reviewId: number;
+	setEdit: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FigureImg {
@@ -64,6 +65,7 @@ export interface ReviewBarProps {
 	createAt: string;
 	nickname: string;
 	shopId: string | undefined;
+	setEdit: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ReviewListProps {
@@ -106,10 +108,10 @@ export interface TechnicalListInnerProps {
 
 /* / ChatRoomLayoutProps 컴포넌트 / -------------------------------------------------------- */
 export interface ChatRoomLayoutProps {
-  msg : string;
-  type : string;
-  peer : string ;
-  room : string;
-  bColor ?: string;
-  color ?: string;
+	msg: string;
+	type: string;
+	peer: string;
+	room: string;
+	bColor?: string;
+	color?: string;
 }
