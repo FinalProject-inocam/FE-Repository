@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import * as Type from "../../types";
 import * as SC from "../css";
 // import * as AS from "../../assets";
@@ -20,6 +20,17 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 
 	const dispatch = RTK.useAppDispatch();
 	const getMergeData = RTK.useAppSelector(RTK.selectShopList);
+	const [innerSize, setInnerSize] = useState<boolean>(false);
+	useEffect(() => {
+		const onListSize = () => {
+			window.innerHeight <= 890 ? setInnerSize(true) : setInnerSize(false);
+		};
+		onListSize();
+		window.addEventListener("resize", onListSize);
+		return () => {
+			window.removeEventListener("resize", onListSize);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -37,24 +48,28 @@ export const WrappingContent: FC<Partial<Type.UseWrapping>> = ({
 	return (
 		<SC.ContentArea $ai='flex-start'>
 			<SC.ContentLayout $fd='column' $jc='flex-start' $gap={50}>
-				<SC.FlexBox $fd='column' $jc='space-between' $gap={50} style={{ paddingTop: "50px" }}>
+				<SC.FlexBox
+					$fd='column'
+					$jc='space-between'
+					$gap={50}
+					style={{ paddingTop: "50px", display: innerSize ? "none" : "block" }}>
 					<div style={{ width: "100%" }}>
 						<SC.WrappingTitle>
 							내 주변에 총 {getMergeData && getMergeData?.shopList.length}개의{" "}
 						</SC.WrappingTitle>
 						<SC.WrappingTitle>랩핑샵을 찾았어요!</SC.WrappingTitle>
 					</div>
-					{/* <SC.WrappingSearchBox $fd='space between'>
-						<SC.WrappingSearchInput />
-						<SC.SearchIcon src={AS.searchIcon} alt='serchIcon' />
-					</SC.WrappingSearchBox> */}
-					{/* <SC.WrappingSort>
-						<SC.WrappingSortItem>인기순</SC.WrappingSortItem>
-						<SC.WrappingSortItem>거리순</SC.WrappingSortItem>
-					</SC.WrappingSort> */}
 				</SC.FlexBox>
+				{/* {innerSize && (
+					<div style={{ height: "50px" }}>{getMergeData && getMergeData?.shopList.length}개의 랩핑샵</div>
+				)} */}
 
 				<div>
+					{innerSize && (
+						<SC.FlexBox $ai='flex-end' $jc='flex-end' style={{ height: "70px", fontWeight: "500" }}>
+							{getMergeData && getMergeData?.shopList.length}개의 랩핑샵
+						</SC.FlexBox>
+					)}
 					<SC.WrappingSortList>
 						{isLoading ? (
 							<div>로딩중</div>
