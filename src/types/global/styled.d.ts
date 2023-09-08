@@ -25,6 +25,7 @@ export interface Styled {
 	$padding: string;
 	$shadow: string;
 	$spans: number[];
+	$type: string;
 
 	// Felx-Grid
 	$gap: number;

@@ -13,7 +13,6 @@ export const DetailReviewList: FC<any> = ({ page, setPage }) => {
 		page,
 	});
 	const fetchNextRef = useInfinityThrottle(setPage, isFetching);
-	// const [edit, setEdit] = useState(false);
 
 	if (isLoading) return <div>... 로딩중</div>;
 	else if (isError) return <div>에러발생... {JSON.stringify(error)}</div>;
@@ -30,14 +29,8 @@ export const DetailReviewList: FC<any> = ({ page, setPage }) => {
 				}}>
 				{data &&
 					data.content.map((reviews: Type.TotalWrappingShopReview) => (
-						<div>
-							<CP.ReviewInner
-								reviews={reviews}
-								key={reviews.reviewId}
-								shopId={shopId}
-								// setEdit={setEdit}
-							/>
-							{/* {edit ? ({currentUser === nickname && <CP.EditWrappingReview reviewId={reviewId} shopId={shopId} />}) : null} */}
+						<div key={reviews.reviewId}>
+							<CP.ReviewInner reviews={reviews} key={reviews.reviewId} shopId={shopId} />
 						</div>
 					))}
 

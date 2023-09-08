@@ -12,7 +12,7 @@ export const ReviewBar: FC<Type.ReviewBarProps> = ({
 	createAt,
 	nickname,
 	shopId,
-	// setEdit,
+	setEdit,
 }) => {
 	const { onDeleteShopComment, formatDate, currentUser } = Hooks.useReviewBar();
 	return (
@@ -35,8 +35,7 @@ export const ReviewBar: FC<Type.ReviewBarProps> = ({
 			</SC.FlexBox>
 			<div>
 				<SC.ReviewMenuInner $jc='flex-end' $gap={10}>
-					{/* {currentUser === nickname && <CP.EditWrappingReview reviewId={reviewId} shopId={shopId} />} */}
-					{/* <p onClick={setEdit((pre) => !pre)}>수정</p> */}
+					{currentUser === nickname ? <p onClick={() => setEdit((pre: boolean) => !pre)}>수정</p> : null}
 					<p style={{ color: "red" }}>신고</p>
 					{currentUser === nickname && <p onClick={onDeleteShopComment(shopId, reviewId)}>삭제</p>}
 					<p>{formatDate(createAt)}</p>

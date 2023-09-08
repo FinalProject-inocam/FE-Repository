@@ -15,7 +15,7 @@ export const RevisitRadio: FC = () => {
 				onChange={onChangeRevisit}
 				style={{ display: "none" }}
 			/>
-			<SC.RevisitRadioLabel htmlFor='reviewOn' $state={getRevisit === 1 ? 1 : 0}>
+			<SC.RevisitRadioLabel htmlFor='reviewOn' $type='create' $state={getRevisit === 1 ? 1 : 0}>
 				재방문 의사
 			</SC.RevisitRadioLabel>
 			<input
@@ -26,7 +26,7 @@ export const RevisitRadio: FC = () => {
 				onChange={onChangeRevisit}
 				style={{ display: "none" }}
 			/>
-			<SC.RevisitRadioLabel htmlFor='reviewOff' $state={getRevisit === 2 ? 2 : 0}>
+			<SC.RevisitRadioLabel htmlFor='reviewOff' $type='create' $state={getRevisit === 2 ? 2 : 0}>
 				재방문 없음
 			</SC.RevisitRadioLabel>
 		</SC.FlexBox>
