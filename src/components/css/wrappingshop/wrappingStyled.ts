@@ -92,6 +92,7 @@ const WrappingSortItem = styled.div`
 const WrappingSortList = styled.div`
 	width: 350px;
 	height: 571.5px;
+
 	overflow-y: scroll;
 	&::-webkit-scrollbar {
 		width: 8px;
